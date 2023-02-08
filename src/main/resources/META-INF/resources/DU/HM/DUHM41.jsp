@@ -21,18 +21,6 @@
                         <EF:EFOption label="是" value="是" />
                         <EF:EFOption label="否" value="否" />
                     </EF:EFSelect>
-                    <%--<EF:EFSelect ename="inqu_status-0-solidProduct" cname="委外产品化" colWidth="4" enable="true" >
-                        <EF:EFOption label="全部" value="%" />
-                        <EF:EFOption label="是" value="是" />
-                        <EF:EFOption label="否" value="否" />
-                    </EF:EFSelect>
-
-                    <EF:EFSelect ename="inqu_status-0-ironMud" cname="含铁尘泥" colWidth="4" enable="true" >
-                        <EF:EFOption label="全部" value="%" />
-                        <EF:EFOption label="是" value="是" />
-                        <EF:EFOption label="否" value="否" />
-                    </EF:EFSelect>--%>
-
 
                     <EF:EFInput ename="inqu_status-0-P_ename" style="display:none"/>
                 </EF:EFRegion>
