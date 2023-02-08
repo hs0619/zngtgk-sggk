@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2020-09-07 21:55:08
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.t_ha_dischargeport 
+		 DISCHARGEPORTID  VARCHAR   NOT NULL   primarykey, 
+		 DISCHARGEPORTNAME  VARCHAR, 
+		 PROCID  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 SIGNFORM  VARCHAR, 
+		 DISCHARGEMODE  VARCHAR, 
+		 LONGITUDE  VARCHAR, 
+		 LATITUDE  VARCHAR, 
+		 POSITION  VARCHAR, 
+		 EXECUTIONSTANDARD  VARCHAR, 
+		 SETRIGHT  VARCHAR, 
+		 IMPORTANTPORT  VARCHAR, 
+		 ISMAP  VARCHAR, 
+		 DESCRIPTION  VARCHAR, 
+		 OUTTO  VARCHAR, 
+		 OUTTYPE  VARCHAR, 
+		 OUTRULE  VARCHAR, 
+		 COUNTRYPOINT  VARCHAR, 
+		 CITYPOINT  VARCHAR, 
+		 COMPANYPOINT  VARCHAR, 
+		 CLEANPOINT  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb14">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb14">
+		SELECT
+				DISCHARGEPORTID	as "dischargeportid",  <!-- 排口编号 -->
+				DISCHARGEPORTNAME	as "dischargeportname",  <!-- 排口名称 -->
+				ISFORMAL	as "isformal",  <!-- 所属工序 -->
+				PROCID	as "procid",  <!-- 所属工序 -->
+				MONITORID	as "monitorid",  <!-- 排口类型 -->
+				SIGNFORM	as "signform",  <!-- 标志牌形式 -->
+				DISCHARGEMODE	as "dischargemode",  <!-- 排放方式 -->
+				LONGITUDE	as "longitude",  <!-- 排放口经度 -->
+				LATITUDE	as "latitude",  <!-- 排放口纬度 -->
+				POSITION	as "position",  <!-- 所在位置 -->
+				EXECUTIONSTANDARD	as "executionstandard",  <!-- 执行标准 -->
+				SETRIGHT	as "setright",  <!-- 设置是否符合要求 -->
+				IMPORTANTPORT	as "importantport",  <!-- 排口重要分级 -->
+				ISMAP	as "ismap",  <!-- 地图展示 -->
+				DESCRIPTION	as "description",  <!-- 备注 -->
+				OUTTO	as "outto",  <!-- 排放去向废水 -->
+				OUTTYPE	as "outtype",  <!-- 排放形式废水 -->
+				OUTRULE	as "outrule",  <!-- 排放规律废水 -->
+				COUNTRYPOINT	as "countrypoint",  <!-- 国控点 -->
+				CITYPOINT	as "citypoint",  <!-- 市控点 -->
+				COMPANYPOINT	as "companypoint",  <!-- 内控点 -->
+				CLEANPOINT	as "cleanpoint",  <!-- 超低排放点 -->
+				STATUS	as "status",  <!-- 状态位 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime" <!-- 修改时间 -->
+		FROM ${hbSchema}.t_ha_dischargeport WHERE 1=1 
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME like '%$dischargeportname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  DISCHARGEPORTID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_ha_dischargeport WHERE 1=1
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME = #dischargeportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="signform">
+			SIGNFORM = #signform#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargemode">
+			DISCHARGEMODE = #dischargemode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="longitude">
+			LONGITUDE = #longitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="latitude">
+			LATITUDE = #latitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="position">
+			POSITION = #position#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="executionstandard">
+			EXECUTIONSTANDARD = #executionstandard#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="setright">
+			SETRIGHT = #setright#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="importantport">
+			IMPORTANTPORT = #importantport#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismap">
+			ISMAP = #ismap#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outto">
+			OUTTO = #outto#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outtype">
+			OUTTYPE = #outtype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outrule">
+			OUTRULE = #outrule#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT = #companypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="cleanpoint">
+			CLEANPOINT = #cleanpoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_ha_dischargeport (DISCHARGEPORTID,  <!-- 排口编号 -->
+										DISCHARGEPORTNAME,  <!-- 排口名称 -->
+										ISFORMAL,
+										PROCID,  <!-- 所属工序 -->
+										MONITORID,  <!-- 排口类型 -->
+										SIGNFORM,  <!-- 标志牌形式 -->
+										DISCHARGEMODE,  <!-- 排放方式 -->
+										LONGITUDE,  <!-- 排放口经度 -->
+										LATITUDE,  <!-- 排放口纬度 -->
+										POSITION,  <!-- 所在位置 -->
+										EXECUTIONSTANDARD,  <!-- 执行标准 -->
+										SETRIGHT,  <!-- 设置是否符合要求 -->
+										IMPORTANTPORT,  <!-- 排口重要分级 -->
+										ISMAP,  <!-- 地图展示 -->
+										DESCRIPTION,  <!-- 备注 -->
+										OUTTO,  <!-- 排放去向废水 -->
+										OUTTYPE,  <!-- 排放形式废水 -->
+										OUTRULE,  <!-- 排放规律废水 -->
+										COUNTRYPOINT,  <!-- 国控点 -->
+										CITYPOINT,  <!-- 市控点 -->
+										COMPANYPOINT,  <!-- 内控点 -->
+										CLEANPOINT,  <!-- 超低排放点 -->
+										STATUS,  <!-- 状态位 -->
+										CREATOR,  <!-- 新增人 -->
+										CREATED_TIME
+										)		 
+	    VALUES (#dischargeportid#, #dischargeportname#, #isformal#, #procid#, #monitorid#, #signform#, #dischargemode#, #longitude#, #latitude#, #position#, #executionstandard#, #setright#, #importantport#, #ismap#, #description#, #outto#, #outtype#, #outrule#, #countrypoint#, #citypoint#, #companypoint#, #cleanpoint#, #status#, #creator#, #createdTime#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_ha_dischargeport WHERE 
+			DISCHARGEPORTID = #dischargeportid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_ha_dischargeport 
+		SET 
+					DISCHARGEPORTNAME	= #dischargeportname#,   <!-- 排口名称 -->  
+					ISFORMAL	= #isformal#,   <!-- 排口名称 -->  
+					PROCID	= #procid#,   <!-- 所属工序 -->  
+					MONITORID	= #monitorid#,   <!-- 排口类型 -->  
+					SIGNFORM	= #signform#,   <!-- 标志牌形式 -->  
+					DISCHARGEMODE	= #dischargemode#,   <!-- 排放方式 -->  
+					LONGITUDE	= #longitude#,   <!-- 排放口经度 -->  
+					LATITUDE	= #latitude#,   <!-- 排放口纬度 -->  
+					POSITION	= #position#,   <!-- 所在位置 -->  
+					EXECUTIONSTANDARD	= #executionstandard#,   <!-- 执行标准 -->  
+					SETRIGHT	= #setright#,   <!-- 设置是否符合要求 -->  
+					IMPORTANTPORT	= #importantport#,   <!-- 排口重要分级 -->  
+					ISMAP	= #ismap#,   <!-- 地图展示 -->  
+					DESCRIPTION	= #description#,   <!-- 备注 -->  
+					OUTTO	= #outto#,   <!-- 排放去向废水 -->  
+					OUTTYPE	= #outtype#,   <!-- 排放形式废水 -->  
+					OUTRULE	= #outrule#,   <!-- 排放规律废水 -->  
+					COUNTRYPOINT	= #countrypoint#,   <!-- 国控点 -->  
+					CITYPOINT	= #citypoint#,   <!-- 市控点 -->  
+					COMPANYPOINT	= #companypoint#,   <!-- 内控点 -->  
+					CLEANPOINT	= #cleanpoint#,   <!-- 超低排放点 -->  
+					STATUS	= #status#,   <!-- 状态位 -->  
+					<!-- CREATOR	= #creator#,   新增人  
+					CREATED_TIME	= #createdTime#,   新增时间   -->
+					MODIFIER	= #modifier#,   <!-- 修改人 -->  
+					UPDATED_TIME	= #updatedTime#  <!-- 修改时间 -->  
+			WHERE 	
+			DISCHARGEPORTID = #dischargeportid#
+	</update>
+	
+	<!-- 根据排口id查询排口名称、国控/内控线 -->
+	<select id="queryPortNameAndLine" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb14">
+		SELECT
+				DISCHARGEPORTID	as "dischargeportid",  <!-- 排口编号 -->
+				DISCHARGEPORTNAME	as "dischargeportname",  <!-- 排口名称 -->
+				ISFORMAL	as "isformal",  <!-- 所属工序 -->
+				PROCID	as "procid",  <!-- 所属工序 -->
+				MONITORID	as "monitorid",  <!-- 排口类型 -->
+				SIGNFORM	as "signform",  <!-- 标志牌形式 -->
+				DISCHARGEMODE	as "dischargemode",  <!-- 排放方式 -->
+				LONGITUDE	as "longitude",  <!-- 排放口经度 -->
+				LATITUDE	as "latitude",  <!-- 排放口纬度 -->
+				POSITION	as "position",  <!-- 所在位置 -->
+				EXECUTIONSTANDARD	as "executionstandard",  <!-- 执行标准 -->
+				SETRIGHT	as "setright",  <!-- 设置是否符合要求 -->
+				IMPORTANTPORT	as "importantport",  <!-- 排口重要分级 -->
+				ISMAP	as "ismap",  <!-- 地图展示 -->
+				DESCRIPTION	as "description",  <!-- 备注 -->
+				OUTTO	as "outto",  <!-- 排放去向废水 -->
+				OUTTYPE	as "outtype",  <!-- 排放形式废水 -->
+				OUTRULE	as "outrule",  <!-- 排放规律废水 -->
+				COUNTRYPOINT	as "countrypoint",  <!-- 国控点 -->
+				CITYPOINT	as "citypoint",  <!-- 市控点 -->
+				COMPANYPOINT	as "companypoint",  <!-- 内控点 -->
+				CLEANPOINT	as "cleanpoint",  <!-- 超低排放点 -->
+				STATUS	as "status",  <!-- 状态位 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime" <!-- 修改时间 -->
+		FROM ${hbSchema}.t_ha_dischargeport WHERE  STATUS = '1'
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  DISCHARGEPORTID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+  
+</sqlMap>

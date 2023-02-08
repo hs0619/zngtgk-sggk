@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <!--      
+         table information  
+         Generate time :2021-08-27 11:24:32
+         table comment :综合指标实绩
+         tableName :TDUHM310
+         MUUID    VARCHAR  NOT NULL   编号  ,
+         YEAR    VARCHAR  NULL   年  ,
+         MONTH    VARCHAR  NULL   月  ,
+         TYPE    VARCHAR  NULL   状态  ,
+         REMARK    VARCHAR  NULL   备注 		 		
+    -->
+    <sqlMap namespace="tduhm3200">
+    <select id="query" parameterClass="java.util.HashMap" 
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3200">
+		SELECT
+		S_MUUID  as  "smuuid"  , <!--  编号  -->
+		YEAR  as  "year"  , <!--  年  -->
+		MONTH  as  "month"  , <!--  月  -->
+		TYPE  as  "type"  , <!--  状态  -->
+		REMARK  as  "remark"  <!--  备注  -->
+		      
+        FROM ${hbSchema}.TDUHM3200 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="smuuid">
+              S_MUUID = #smuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="year">
+              YEAR = #year#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="month">
+              MONTH = #month#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="type">
+              TYPE = #type#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="remark">
+              REMARK = #remark#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+           <isNotEmpty property="orderBy">
+              $orderBy$
+           </isNotEmpty>
+         </dynamic>
+    </select>
+
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.TDUHM3200 WHERE 1=1
+                    <isNotEmpty prepend=" AND " property="smuuid">
+                S_MUUID = #smuuid#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="year">
+                YEAR = #year#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="month">
+                MONTH = #month#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="type">
+                TYPE = #type#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="remark">
+                REMARK = #remark#
+            </isNotEmpty>
+            </select>
+
+
+
+
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM3200 (
+                           S_MUUID  ,   <!--  编号  -->
+                           YEAR  ,   <!--  年  -->
+                           MONTH  ,   <!--  月  -->
+                           TYPE  ,   <!--  状态  -->
+                           REMARK    <!--  备注  -->
+                               )
+        VALUES (
+          #smuuid: VARCHAR#   ,
+          #year: VARCHAR#   ,
+          #month: VARCHAR#   ,
+          #type: VARCHAR#   ,
+          #remark: VARCHAR#   		)
+	</insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.TDUHM3200  WHERE
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${hbSchema}.TDUHM3200
+        SET
+		        <!--  月  -->
+			TYPE = #type#          <!--  状态  -->
+        WHERE
+    <isNotEmpty  property="S_MUUID">
+        S_MUUID = #S_MUUID#
+    </isNotEmpty>
+    
+    </update>
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3200">
+        SELECT
+        S_MUUID as "smuuid"
+        FROM ${hbSchema}.TDUHM3200 order by S_MUUID DESC limit 1
+    </select>
+
+
+    </sqlMap>

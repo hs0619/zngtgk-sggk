@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DUHM41">
+        <select id="query" resultClass="java.util.HashMap">
+            SELECT
+            SOLID_ID              as "solidId",
+            SOLID_CODE              as "solidCode",
+            SOLID_CODES              as "solidCodes",
+            SOLID_NAME              as "solidName",
+            SOLID_TYPE              as "solidType",
+            STATE                   as "state",
+            RANK                    as "rank",
+            SOLID_STATE               as "solidState",
+            INDUSTRIAL_DISPOSAL AS "industrialDisposal",
+            SOLID_PRODUCT AS "solidProduct",
+            REMARK                    as "remark"
+            FROM ${hbSchema}.T_HM_solidwaste_config
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="node">
+                    SOLID_TYPE = #node#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="industrialDisposal">
+                    INDUSTRIAL_DISPOSAL = #industrialDisposal#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="solidType">
+                    SOLID_TYPE  = #solidType#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="solidName">
+                    SOLID_NAME LIKE #solidName#
+                </isNotEmpty>
+            </dynamic>
+            order by SOLID_ID asc
+        </select>
+
+        <select id="search" resultClass="java.util.HashMap">
+            SELECT
+            SOLID_ID              as "solidId",
+            SOLID_CODE              as "solidCode",
+            SOLID_CODES              as "solidCodes",
+            SOLID_NAME              as "solidName",
+            SOLID_TYPE              as "solidType",
+            STATE                   as "state",
+            RANK                    as "rank",
+            SOLID_STATE               as "solidState",
+
+            INDUSTRIAL_DISPOSAL               as "industrialDisposal",
+            SOLID_PRODUCT               as "solidProduct",
+            IRON_MUD               as "ironMud",
+            REMARK                    as "remark"
+            FROM ${hbSchema}.T_HM_solidwaste_config
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="ironMud">
+                    IRON_MUD = #ironMud#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="solidProduct">
+                    SOLID_PRODUCT = #solidProduct#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="P_ename">
+                    SOLID_TYPE like #P_ename#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="solidState">
+                    SOLID_STATE like #solidState#
+                </isNotEmpty>
+            </dynamic>
+            order by SOLID_ID asc
+        </select>
+
+
+    <select id="searchA" resultClass="java.util.HashMap">
+        SELECT
+        SOLID_ID              as "solidId",
+        SOLID_CODE              as "solidCode",
+        SOLID_CODES              as "solidCodes",
+        SOLID_NAME              as "solidName",
+        SOLID_TYPE              as "solidType",
+        STATE                   as "state",
+        RANK                    as "rank",
+        SOLID_STATE               as "solidState",
+        INDUSTRIAL_DISPOSAL               as "industrialDisposal",
+        SOLID_PRODUCT               as "solidProduct",
+        IRON_MUD               as "ironMud",
+        REMARK                    as "remark"
+        FROM ${hbSchema}.T_HM_solidwaste_config
+        <dynamic prepend="WHERE">
+            <isNotEmpty prepend=" AND " property="ironMud">
+                IRON_MUD = #ironMud#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="solidProduct">
+                SOLID_PRODUCT = #solidProduct#
+            </isNotEmpty>
+            <isNotEmpty prepend=" and " property="solidState">
+                SOLID_STATE like #solidState#
+            </isNotEmpty>
+            <isNotEmpty prepend=" and " property="solidName">
+                SOLID_NAME like  #solidName#
+            </isNotEmpty>
+        </dynamic>
+        order by SOLID_ID asc
+    </select>
+
+
+    <select id="queryListID" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hm.domain.DUHM41">
+        SELECT
+        SOLID_ID              as "solidId",
+        SOLID_TYPE    as "SolidType",
+        SOLID_NAME    as "SolidName",
+        SOLID_CODE  as  "solidCode",
+        RANK     as   "rank"
+        FROM ${hbSchema}.T_HM_solidwaste_config
+        where SOLID_STATE = '启用'
+        <isNotEmpty prepend=" AND " property="solidType">
+            SOLID_TYPE = #solidType#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="solidName">
+            SOLID_NAME LIKE #solidName#
+        </isNotEmpty>
+        order by SOLID_ID asc
+    </select>
+
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hm.domain.DUHM41">
+        SELECT
+        SOLID_ID              as "solidId"
+        FROM ${hbSchema}.T_HM_solidwaste_config
+        order by SOLID_ID desc
+        limit 1
+    </select>
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.T_HM_solidwaste_config (
+        SOLID_ID,
+        SOLID_NAME  ,
+        SOLID_CODES  ,
+        STATE  ,
+        RANK  ,
+        SOLID_STATE  ,
+        SOLID_PRODUCT,
+        IRON_MUD,
+        REMARK
+        )
+        VALUES (
+        #solidId: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #solidState: VARCHAR#   ,
+        #solidProduct: VARCHAR#   ,
+        #ironMud: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+
+
+    <insert id="insert1">
+        INSERT INTO ${hbSchema}.T_HM_solidwaste_config (
+        SOLID_ID,
+        SOLID_NAME  ,
+        SOLID_CODES  ,
+        SOLID_TYPE  ,
+        STATE  ,
+        RANK  ,
+        SOLID_STATE  ,
+        SOLID_PRODUCT,
+        IRON_MUD,
+        REMARK
+        )
+        VALUES (
+        #solidId: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidType: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #solidState: VARCHAR#   ,
+        #solidProduct: VARCHAR#   ,
+        #ironMud: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+
+    <insert id="insert2">
+        INSERT INTO ${hbSchema}.T_HM_solidwaste_config (
+        SOLID_ID,
+        SOLID_NAME  ,
+        SOLID_CODE  ,
+        SOLID_CODES  ,
+        SOLID_TYPE  ,
+        STATE  ,
+        RANK  ,
+        SOLID_STATE  ,
+        SOLID_PRODUCT,
+        IRON_MUD,
+        INDUSTRIAL_DISPOSAL,
+        REMARK
+        )
+        VALUES (
+        #solidId: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidCode: VARCHAR#   ,
+        #solidCode: VARCHAR#   ,
+        #solidType: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #solidState: VARCHAR#   ,
+        #solidProduct: VARCHAR#   ,
+        #ironMud: VARCHAR#   ,
+        #industrialDisposal: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.T_HM_solidwaste_config  WHERE SOLID_ID = #solidId#
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${hbSchema}.T_HM_solidwaste_config
+        SET
+        SOLID_NAME = #solidName#     ,
+        SOLID_CODE = #solidCode#     ,
+        SOLID_CODES = #solidCode#     ,
+        SOLID_TYPE = #solidType#     ,
+        STATE = #state#     ,
+        RANK = #rank#     ,
+        SOLID_STATE = #solidState#,
+
+        INDUSTRIAL_DISPOSAL = #industrialDisposal#,
+        SOLID_PRODUCT = #solidProduct#,
+        IRON_MUD = #ironMud#,
+        REMARK = #remark#
+        WHERE
+        SOLID_ID = #solidId#
+    </update>
+
+    <select id="queryType" resultClass="java.util.HashMap">
+        SELECT
+        SOLID_ID              as "solidId",
+        SOLID_CODE              as "solidCode",
+        SOLID_CODES              as "solidCodes",
+        SOLID_NAME              as "solidName",
+        SOLID_TYPE              as "solidType",
+        STATE                   as "state",
+        RANK                    as "rank",
+        SOLID_STATE               as "solidState",
+        REMARK                    as "remark"
+        FROM ${hbSchema}.T_HM_solidwaste_config
+        <dynamic prepend="WHERE">
+            <isNotEmpty prepend=" AND " property="type">
+                SOLID_TYPE = #type#
+            </isNotEmpty>
+        </dynamic>
+        order by "ABS"(RANK)
+    </select>
+
+
+    <select id="query1" resultClass="java.util.HashMap">
+        SELECT
+        SOLID_ID              as "solidId",
+        SOLID_CODE              as "solidCode",
+        SOLID_CODES              as "solidCodes",
+        SOLID_NAME              as "solidName",
+        SOLID_TYPE              as "solidType",
+        STATE                   as "state",
+        RANK                    as "rank",
+        SOLID_STATE               as "solidState",
+        REMARK                    as "remark"
+        FROM ${hbSchema}.T_HM_solidwaste_config
+        <dynamic prepend="WHERE">
+            <isNotEmpty prepend=" AND " property="solidType">
+                SOLID_TYPE != #solidType#
+            </isNotEmpty>
+        </dynamic>
+        order by SOLID_ID asc
+    </select>
+
+
+
+    <select id="querySolidType" resultClass="com.baosight.sggk.du.hm.domain.DUHM41">
+        SELECT
+        SOLID_CODES              as "solidCodes",
+        SOLID_NAME              as "solidName"
+        FROM ${hbSchema}.T_HM_solidwaste_config
+       WHERE
+                SOLID_TYPE = '固废名称'
+        order by SOLID_ID asc
+    </select>
+
+
+</sqlMap>

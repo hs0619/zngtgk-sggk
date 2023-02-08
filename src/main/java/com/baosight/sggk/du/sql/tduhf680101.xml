@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-15 16:47:06
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HF_INSTRUMENT_UNUSUAL 
+		 SITEID  VARCHAR   NOT NULL, 
+		 TYPE  VARCHAR, 
+		 CONTENT  VARCHAR, 
+		 REASON  VARCHAR, 
+		 MEASURE  VARCHAR, 
+		 RESULT  VARCHAR, 
+		 USERID  VARCHAR, 
+		 BEGINTIME  VARCHAR, 
+		 ENDTIME  VARCHAR
+	-->
+<sqlMap namespace="tduhf680101">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf680101">
+		SELECT
+				SITEID	as "siteid",  
+				TYPE	as "type",  
+				CONTENT	as "content",  
+				REASON	as "reason",  
+				MEASURE	as "measure",  
+				RESULT	as "result",  
+				USERID	as "userid",  
+				BEGINTIME	as "begintime",  
+				ENDTIME	as "endtime" 
+		FROM ${hbSchema}.T_HF_INSTRUMENT_UNUSUAL WHERE 1=1
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryDeclare" parameterClass="java.util.HashMap" 
+			resultClass="java.util.HashMap">
+		SELECT
+				t1.SITEID	as "siteid",  
+				t1.TYPE	as "type",  
+				t1.CONTENT	as "content",  
+				t1.REASON	as "reason",  
+				t1.MEASURE	as "measure",  
+				t1.RESULT	as "result",  
+				t1.USERID	as "userid",  
+				t1.BEGINTIME	as "begintime",  
+				t1.ENDTIME	as "endtime",
+				t2.SITEID,
+				t2.SITENAME as sitename,
+				t2.DEPARTMENTID as departmentid
+		FROM 
+			${hbSchema}.T_HF_INSTRUMENT_UNUSUAL  t1
+		LEFT JOIN 
+			${hbSchema}.VIEW_T_HA_SITE t2
+		ON 
+			t1.SITEID = t2.SITEID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="begintime">
+			t1.BEGINTIME  <![CDATA[ >= ]]>  #begintime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endtime">
+			t1.ENDTIME  <![CDATA[ <= ]]>  #endtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			t2.DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		
+			
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_INSTRUMENT_UNUSUAL WHERE 1=1
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="content">
+			CONTENT = #content#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reason">
+			REASON = #reason#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="measure">
+			MEASURE = #measure#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="result">
+			RESULT = #result#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userid">
+			USERID = #userid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="begintime">
+			BEGINTIME = #begintime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endtime">
+			ENDTIME = #endtime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_INSTRUMENT_UNUSUAL (SITEID,
+										TYPE,
+										CONTENT,
+										REASON,
+										MEASURE,
+										RESULT,
+										USERID,
+										BEGINTIME,
+										ENDTIME
+										)		 
+	    VALUES (#siteid:VARCHAR#, #type:VARCHAR#, #content:VARCHAR#, #reason:VARCHAR#, #measure:VARCHAR#, #result:VARCHAR#, #userid:VARCHAR#, #begintime:VARCHAR#, #endtime:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HF_INSTRUMENT_UNUSUAL WHERE 
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_INSTRUMENT_UNUSUAL 
+		SET 
+		SITEID	= #siteid#, 
+					TYPE	= #type#, 
+					CONTENT	= #content#, 
+					REASON	= #reason#, 
+					MEASURE	= #measure#, 
+					RESULT	= #result#, 
+					USERID	= #userid#, 
+					BEGINTIME	= #begintime#, 
+					ENDTIME	= #endtime#
+			WHERE 	
+	</update>
+  
+</sqlMap>

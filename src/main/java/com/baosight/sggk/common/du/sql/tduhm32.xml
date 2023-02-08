@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <!--      
+         table information  
+         Generate time :2021-08-24 11:10:12
+         table comment :每月废气工序排放
+         tableName :TDUHM32
+         MUUID    NUMBER NOT NULL   编号  ,
+         AGGREGATE_NAME    VARCHAR  NULL   总计  ,
+         EXHAUSTEMISSION_GROSS    VARCHAR  NULL   尾气排放总量  ,
+         DUST    VARCHAR  NULL   尘  ,
+         SULFUR_DIOXIDE    VARCHAR  NULL   二氧化硫  ,
+         OXYNITRIDE    VARCHAR  NULL   氮氧化物  ,
+         YIELDS    VARCHAR  NULL   产量  ,
+         PRODUCT_DUST    VARCHAR  NULL   尘  ,
+         PRODUCT_SULFURDIOXIDE    VARCHAR  NULL   二氧化硫  ,
+         PRODUCT_OXYNITRIDE    VARCHAR  NULL   产品氮氧化物 		 		
+    -->
+    <sqlMap namespace="tduhm32">
+    <select id="query" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm32">
+		SELECT
+		F_MUUID  as  "fmuuid"  , <!--  编号  -->
+		AGGREGATE_NAME  as  "aggregateName"  , <!--  总计  -->
+		EXHAUSTEMISSION_GROSS  as  "exhaustemissionGross"  , <!--  尾气排放总量  -->
+		DUST  as  "dust"  , <!--  尘  -->
+		SULFUR_DIOXIDE  as  "sulfurDioxide"  , <!--  二氧化硫  -->
+		OXYNITRIDE  as  "oxynitride"  , <!--  氮氧化物  -->
+		YIELDS  as  "yields"  , <!--  产量  -->
+		PRODUCT_DUST  as  "productDust"  , <!--  尘  -->
+		PRODUCT_SULFURDIOXIDE  as  "productSulfurdioxide"  , <!--  二氧化硫  -->
+		PRODUCT_OXYNITRIDE  as  "productOxynitride" ,
+        S_MUUID as "smuuid",
+        A_MUUID  as  "amuuid",<!--  产品氮氧化物  -->
+        DATE  as "date"
+		      
+        FROM ${hbSchema}.TDUHM32 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="fmuuid">
+              F_MUUID = #fmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="aggregateName">
+              AGGREGATE_NAME = #aggregateName#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="exhaustemissionGross">
+              EXHAUSTEMISSION_GROSS = #exhaustemissionGross#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="dust">
+              DUST = #dust#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sulfurDioxide">
+              SULFUR_DIOXIDE = #sulfurDioxide#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="oxynitride">
+              OXYNITRIDE = #oxynitride#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yields">
+              YIELDS = #yields#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productDust">
+              PRODUCT_DUST = #productDust#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productSulfurdioxide">
+              PRODUCT_SULFURDIOXIDE = #productSulfurdioxide#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productOxynitride">
+              PRODUCT_OXYNITRIDE = #productOxynitride#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="smuuid">
+           S_MUUID = #smuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="amuuid">
+            A_MUUID = #amuuid#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+           <isNotEmpty property="orderBy">
+              $orderBy$
+           </isNotEmpty>
+         </dynamic>
+    </select>
+
+    <select id="querySuoYou" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        F_MUUID  as  "fmuuid"  , <!--  编号  -->
+        AGGREGATE_NAME  as  "aggregateName"  , <!--  总计  -->
+        EXHAUSTEMISSION_GROSS  as  "exhaustemissionGross"  , <!--  尾气排放总量  -->
+        DUST  as  "dust"  , <!--  尘  -->
+        SULFUR_DIOXIDE  as  "sulfurDioxide"  , <!--  二氧化硫  -->
+        OXYNITRIDE  as  "oxynitride"  , <!--  氮氧化物  -->
+        YIELDS  as  "yields"  , <!--  产量  -->
+        PRODUCT_DUST  as  "productDust"  , <!--  尘  -->
+        PRODUCT_SULFURDIOXIDE  as  "productSulfurdioxide"  , <!--  二氧化硫  -->
+        PRODUCT_OXYNITRIDE  as  "productOxynitride" ,
+        S_MUUID as "smuuid",
+        A_MUUID  as  "amuuid",<!--  产品氮氧化物  -->
+        DATE  as "date"
+
+        FROM ${hbSchema}.TDUHM32 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="fmuuid">
+            F_MUUID = #fmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="aggregateName">
+            AGGREGATE_NAME = #aggregateName#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="exhaustemissionGross">
+            EXHAUSTEMISSION_GROSS = #exhaustemissionGross#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="dust">
+            DUST = #dust#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sulfurDioxide">
+            SULFUR_DIOXIDE = #sulfurDioxide#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="oxynitride">
+            OXYNITRIDE = #oxynitride#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yields">
+            YIELDS = #yields#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productDust">
+            PRODUCT_DUST = #productDust#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productSulfurdioxide">
+            PRODUCT_SULFURDIOXIDE = #productSulfurdioxide#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productOxynitride">
+            PRODUCT_OXYNITRIDE = #productOxynitride#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="smuuid">
+            S_MUUID = #smuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="amuuid">
+            A_MUUID = #amuuid#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+        </dynamic>
+    </select>
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.TDUHM32 WHERE 1=1
+                    <isNotEmpty prepend=" AND " property="fmuuid">
+               F_MUUID = #fmuuid#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="aggregateName">
+                AGGREGATE_NAME = #aggregateName#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="exhaustemissionGross">
+                EXHAUSTEMISSION_GROSS = #exhaustemissionGross#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="dust">
+                DUST = #dust#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="sulfurDioxide">
+                SULFUR_DIOXIDE = #sulfurDioxide#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="oxynitride">
+                OXYNITRIDE = #oxynitride#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="yields">
+                YIELDS = #yields#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="productDust">
+                PRODUCT_DUST = #productDust#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="productSulfurdioxide">
+                PRODUCT_SULFURDIOXIDE = #productSulfurdioxide#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="productOxynitride">
+                PRODUCT_OXYNITRIDE = #productOxynitride#
+            </isNotEmpty>
+
+    <isNotEmpty prepend=" AND " property="smuuid">
+        S_MUUID = #smuuid#
+    </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="amuuid">
+            A_MUUID = #amuuid#
+        </isNotEmpty>
+            </select>
+
+
+
+
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM32 (
+                           F_MUUID  ,   <!--  编号  -->
+                           AGGREGATE_NAME  ,   <!--  总计  -->
+                           EXHAUSTEMISSION_GROSS  ,   <!--  尾气排放总量  -->
+                           DUST  ,   <!--  尘  -->
+                           SULFUR_DIOXIDE  ,   <!--  二氧化硫  -->
+                           OXYNITRIDE  ,   <!--  氮氧化物  -->
+                           YIELDS  ,   <!--  产量  -->
+                           PRODUCT_DUST  ,   <!--  尘  -->
+                           PRODUCT_SULFURDIOXIDE  ,   <!--  二氧化硫  -->
+                           PRODUCT_OXYNITRIDE ,
+                            S_MUUID,
+                             A_MUUID,<!--  产品氮氧化物  -->
+        DATE
+                               )
+        VALUES (
+          #fmuuid: NUMERIC#  ,
+          #aggregateName: VARCHAR#   ,
+          #exhaustemissionGross: VARCHAR#   ,
+          #dust: VARCHAR#   ,
+          #sulfurDioxide: VARCHAR#   ,
+          #oxynitride: VARCHAR#   ,
+          #yields: VARCHAR#   ,
+          #productDust: VARCHAR#   ,
+          #productSulfurdioxide: VARCHAR#   ,
+          #productOxynitride: VARCHAR#  ,
+        #smuuid:VARCHAR#,
+        #amuuid:VARCHAR#,
+        #date:VARCHAR#
+        )
+	</insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.TDUHM32  WHERE F_MUUID = #fmuuid#
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${hbSchema}.TDUHM32
+        SET
+        F_MUUID = #fmuuid#     ,     <!--  编号  -->
+        AGGREGATE_NAME = #aggregateName#     ,     <!--  总计  -->
+        EXHAUSTEMISSION_GROSS = #exhaustemissionGross#     ,     <!--  尾气排放总量  -->
+        DUST = #dust#     ,     <!--  尘  -->
+        SULFUR_DIOXIDE = #sulfurDioxide#     ,     <!--  二氧化硫  -->
+        OXYNITRIDE = #oxynitride#     ,     <!--  氮氧化物  -->
+        YIELDS = #yields#     ,     <!--  产量  -->
+        PRODUCT_DUST = #productDust#     ,     <!--  尘  -->
+        PRODUCT_SULFURDIOXIDE = #productSulfurdioxide#     ,     <!--  二氧化硫  -->
+        PRODUCT_OXYNITRIDE = #productOxynitride#  ,      <!--  产品氮氧化物  -->
+        S_MUUID=#smuuid#,
+        DATE=#date#
+        WHERE F_MUUID = #fmuuid#
+
+    </update>
+
+
+    <update id="update1">
+        UPDATE  ${hbSchema}.TDUHM32
+        SET
+        F_MUUID = #fmuuid#     ,     <!--  编号  -->
+        AGGREGATE_NAME = #aggregateName#     ,     <!--  总计  -->
+        EXHAUSTEMISSION_GROSS = #exhaustemissionGross#     ,     <!--  尾气排放总量  -->
+        DUST = #dust#     ,     <!--  尘  -->
+        SULFUR_DIOXIDE = #sulfurDioxide#     ,     <!--  二氧化硫  -->
+        OXYNITRIDE = #oxynitride#     ,     <!--  氮氧化物  -->
+        YIELDS = #yields#     ,     <!--  产量  -->
+        PRODUCT_DUST = #productDust#     ,     <!--  尘  -->
+        PRODUCT_SULFURDIOXIDE = #productSulfurdioxide#     ,     <!--  二氧化硫  -->
+        PRODUCT_OXYNITRIDE = #productOxynitride#  ,      <!--  产品氮氧化物  -->
+        S_MUUID=#smuuid#
+        WHERE F_MUUID = #fmuuid#
+
+    </update>
+    <select id="query1" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3200">
+        SELECT
+        S_MUUID as "smuuid" , <!--  编号  -->
+
+        YEAR as "year" , <!--  年  -->
+        MONTH as "month" , <!--  月  -->
+        TYPE as "type",<!--  状态  -->
+        REMARK as "remark"
+        FROM ${hbSchema}.TDUHM3200 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="smuuid">
+            S_MUUID = #smuuid#
+        </isNotEmpty>
+
+        <isNotEmpty prepend=" AND " property="year">
+            YEAR = #year#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="month">
+            MONTH = #month#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="type">
+            TYPE = #type#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="type">
+            REMARK = #remark#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                MONTH asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+
+    <select id="condition" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3200">
+        SELECT
+        S_MUUID as "smuuid" , <!--  编号  -->
+
+        YEAR as "year" , <!--  年  -->
+        MONTH as "month" , <!--  月  -->
+        TYPE as "type" , <!--  状态  -->
+        REMARK as "remark"
+        FROM ${hbSchema}.TDUHM3200 where 1=1
+        <isNotEmpty prepend=" AND " property="YEAR">
+            YEAR = #YEAR#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="MONTH">
+            MONTH = #MONTH#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                MONTH asc
+            </isEmpty>
+        </dynamic>
+    </select>
+    <select id="condition1" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3200">
+        SELECT YEAR
+        FROM ${hbSchema}.TDUHM3200 where 1=1
+        <isNotEmpty prepend=" AND " property="YEAR">
+            YEAR = #YEAR#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="MONTH">
+            MONTH = #MONTH#
+        </isNotEmpty>
+
+    </select>
+
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm32">
+        SELECT
+        F_MUUID as "fmuuid"
+        FROM ${hbSchema}.TDUHM32 order by F_MUUID DESC limit 1
+    </select>
+
+    <select id="queryTime" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        F_MUUID  as  "fmuuid"  , <!--  编号  -->
+        AGGREGATE_NAME  as  "aggregateName"  , <!--  总计  -->
+        EXHAUSTEMISSION_GROSS  as  "exhaustemissionGross"  , <!--  尾气排放总量  -->
+        DUST  as  "dust"  , <!--  尘  -->
+        SULFUR_DIOXIDE  as  "sulfurDioxide"  , <!--  二氧化硫  -->
+        OXYNITRIDE  as  "oxynitride"  , <!--  氮氧化物  -->
+        YIELDS  as  "yields"  , <!--  产量  -->
+        PRODUCT_DUST  as  "productDust"  , <!--  尘  -->
+        PRODUCT_SULFURDIOXIDE  as  "productSulfurdioxide"  , <!--  二氧化硫  -->
+        PRODUCT_OXYNITRIDE  as  "productOxynitride" ,
+        S_MUUID as "smuuid",
+        A_MUUID  as  "amuuid",<!--  产品氮氧化物  -->
+        DATE  as "date"
+        FROM ${hbSchema}.TDUHM32 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="fmuuid">
+            F_MUUID = #fmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="aggregateName">
+            AGGREGATE_NAME = #aggregateName#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="exhaustemissionGross">
+            EXHAUSTEMISSION_GROSS = #exhaustemissionGross#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="dust">
+            DUST = #dust#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sulfurDioxide">
+            SULFUR_DIOXIDE = #sulfurDioxide#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="oxynitride">
+            OXYNITRIDE = #oxynitride#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yields">
+            YIELDS = #yields#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productDust">
+            PRODUCT_DUST = #productDust#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productSulfurdioxide">
+            PRODUCT_SULFURDIOXIDE = #productSulfurdioxide#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="productOxynitride">
+            PRODUCT_OXYNITRIDE = #productOxynitride#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="smuuid">
+            S_MUUID = #smuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="amuuid">
+            A_MUUID = #amuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="date">
+            DATE = #date#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+        </dynamic>
+
+    </select>
+
+    <select id="queryTime1" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        select
+        SUM(EXHAUSTEMISSION_GROSS) AS exhaustemissionGross ,
+        SUM(DUST) AS dust,
+        SUM(SULFUR_DIOXIDE) AS sulfurDioxide,
+        SUM(OXYNITRIDE) AS oxynitride ,
+        SUM(YIELDS) AS yields
+
+
+          FROM  IPLAT.TDUHM32  WHERE 1=1
+        <isNotEmpty prepend=" AND " property="date">
+            DATE = #date#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="basics_plus">
+            BASICS_PLUS = #basics_plus#
+        </isNotEmpty>
+
+    </select>
+
+    <select id="queryShaojie" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        F_MUUID  as  "fmuuid"  , <!--  编号  -->
+        AGGREGATE_NAME  as  "aggregateName"  , <!--  总计  -->
+        EXHAUSTEMISSION_GROSS  as  "exhaustemissionGross"  , <!--  尾气排放总量  -->
+        DUST  as  "dust"  , <!--  尘  -->
+        SULFUR_DIOXIDE  as  "sulfurDioxide"  , <!--  二氧化硫  -->
+        OXYNITRIDE  as  "oxynitride"  , <!--  氮氧化物  -->
+        YIELDS  as  "yields"  , <!--  产量  -->
+        PRODUCT_DUST  as  "productDust"  , <!--  尘  -->
+        PRODUCT_SULFURDIOXIDE  as  "productSulfurdioxide"  , <!--  二氧化硫  -->
+        PRODUCT_OXYNITRIDE  as  "productOxynitride" ,
+        S_MUUID as "smuuid",
+        A_MUUID  as  "amuuid",<!--  产品氮氧化物  -->
+        DATE  as "date",
+        BASICS_PLUS as basicsPlus
+        FROM ${hbSchema}.TDUHM32 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="aggregateName">
+            AGGREGATE_NAME = #aggregateName#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="date">
+            DATE = #date#
+        </isNotEmpty>
+
+    </select>
+
+
+
+</sqlMap>

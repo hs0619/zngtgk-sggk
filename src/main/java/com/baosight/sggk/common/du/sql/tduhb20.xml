@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-08-25 10:08:26
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_FACILITYINFO 
+		 FACILITYID  VARCHAR   NOT NULL   primarykey, 
+		 FACILITYCODE  VARCHAR, 
+		 FACILITYNAME  VARCHAR, 
+		 POLLUTANTNAME  VARCHAR, 
+		 FACILITYTYPE  VARCHAR, 
+		 ORIGIN  VARCHAR, 
+		 HANDMETHOD  VARCHAR, 
+		 NUMBERS  VARCHAR, 
+		 HANDABILITY  VARCHAR, 
+		 SHANDNUM  VARCHAR, 
+		 RUNTIME  VARCHAR, 
+		 HANDFACTORS  VARCHAR, 
+		 PORTID  VARCHAR, 
+		 PORTNAME  VARCHAR, 
+		 DEVICECODE  VARCHAR, 
+		 DEVICEMODEL  VARCHAR, 
+		 MOTORMODEL  VARCHAR, 
+		 CONTROLLERMODEL  VARCHAR, 
+		 SITUATION  VARCHAR, 
+		 OUTSTANDARD  VARCHAR, 
+		 FACILITYDEPART  VARCHAR, 
+		 ISEXECUTE  VARCHAR, 
+		 REMARK  VARCHAR, 
+		 TYPE  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR, 
+		 PROCEDUREID  VARCHAR, 
+		 HANDABILITY_ACT  VARCHAR, 
+		 DEVICEAREA  VARCHAR, 
+		 DEVICEFLOW  VARCHAR, 
+		 DEVICENAMES  VARCHAR
+	-->
+<sqlMap namespace="tduhb20">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb20">
+		SELECT
+				t1.FACILITYID	as "facilityid",  
+				t1.FACILITYCODE	as "facilitycode",  
+				t1.FACILITYNAME	as "facilityname",  
+				t1.POLLUTANTNAME	as "pollutantname",  
+				t1.FACILITYTYPE	as "facilitytype",  
+				t1.ORIGIN	as "origin",  
+				t1.HANDMETHOD	as "handmethod",  
+				t1.NUMBERS	as "numbers",  
+				t1.HANDABILITY	as "handability",  
+				t1.SHANDNUM	as "shandnum",  
+				t1.RUNTIME	as "runtime",  
+				t1.HANDFACTORS	as "handfactors",  
+				t1.PORTID	as "portid",  
+				t1.PORTNAME	as "portname",  
+				t1.DEVICECODE	as "devicecode",  
+				t1.DEVICEMODEL	as "devicemodel",  
+				t1.MOTORMODEL	as "motormodel",  
+				t1.CONTROLLERMODEL	as "controllermodel",  
+				t1.SITUATION	as "situation",  
+				t1.OUTSTANDARD	as "outstandard",  
+				t1.FACILITYDEPART	as "facilitydepart",  
+				t1.ISEXECUTE	as "isexecute",  
+				t1.REMARK	as "remark",  
+				t1.TYPE	as "type",  
+				t1.STATUS	as "status",  
+				t1.CREATOR	as "creator",  
+				t1.CREATED_TIME	as "createdTime",  
+				t1.MODIFIER	as "modifier",  
+				t1.UPDATED_TIME	as "updatedTime",  
+				t1.DEPARTMENTID	as "departmentid",  
+				t1.PROCEDUREID	as "procedureid",  
+				t1.HANDABILITY_ACT	as "handabilityAct",  
+				t1.DEVICEAREA	as "devicearea",  
+				t1.DEVICEFLOW	as "deviceflow",  
+				t1.DEVICENAMES	as "devicenames" ,
+				t1.craft	as "craft",
+				t1.filter	as "filter",
+				t1.MARK	as "mark",
+				t2.DEPARTMENT_name as "departmentname",
+				t3.DEPARTMENT_name as "procedurename"
+		FROM ${hbSchema}.T_HA_FACILITYINFO t1
+		left join ${hbSchema}.T_HA_DEPARTMENT t2 on t1.DEPARTMENTID=t2.DEPARTMENT_ID
+		left join ${hbSchema}.T_HA_DEPARTMENT t3 on t1.PROCEDUREID=t3.DEPARTMENT_ID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			t1.DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			t1.PROCEDUREID = #procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityid">
+			t1.FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			t1.portid like  '%$portid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			t1.TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitycode">
+			t1.FACILITYCODE like '%$facilitycode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityname">
+			t1.FACILITYNAME like '%$facilityname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.FACILITYID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!-- <select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb20">
+		SELECT
+				FACILITYID	as "facilityid",  
+				FACILITYCODE	as "facilitycode",  
+				FACILITYNAME	as "facilityname",  
+				POLLUTANTNAME	as "pollutantname",  
+				FACILITYTYPE	as "facilitytype",  
+				ORIGIN	as "origin",  
+				HANDMETHOD	as "handmethod",  
+				NUMBERS	as "numbers",  
+				HANDABILITY	as "handability",  
+				SHANDNUM	as "shandnum",  
+				RUNTIME	as "runtime",  
+				HANDFACTORS	as "handfactors",  
+				PORTID	as "portid",  
+				PORTNAME	as "portname",  
+				DEVICECODE	as "devicecode",  
+				DEVICEMODEL	as "devicemodel",  
+				MOTORMODEL	as "motormodel",  
+				CONTROLLERMODEL	as "controllermodel",  
+				SITUATION	as "situation",  
+				OUTSTANDARD	as "outstandard",  
+				FACILITYDEPART	as "facilitydepart",  
+				ISEXECUTE	as "isexecute",  
+				REMARK	as "remark",  
+				TYPE	as "type",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",  
+				DEPARTMENTID	as "departmentid",  
+				PROCEDUREID	as "procedureid",  
+				HANDABILITY_ACT	as "handabilityAct",  
+				DEVICEAREA	as "devicearea",  
+				DEVICEFLOW	as "deviceflow",  
+				DEVICENAMES	as "devicenames" ,
+				craft	as "craft",
+				filter	as "filter",
+				MARK	as "mark"
+		FROM ${hbSchema}.T_HA_FACILITYINFO 
+		
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			PROCEDUREID = #procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			portid like  '%$portid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitycode">
+			FACILITYCODE like '%$facilitycode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityname">
+			FACILITYNAME like '%$facilityname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  FACILITYID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select> -->
+	
+	<select id="queryByZT" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb20">
+		SELECT
+				FACILITYID	as "facilityid",  
+				FACILITYCODE	as "facilitycode",  
+				FACILITYNAME	as "facilityname",  
+				POLLUTANTNAME	as "pollutantname",  
+				FACILITYTYPE	as "facilitytype",  
+				ORIGIN	as "origin",  
+				HANDMETHOD	as "handmethod",  
+				NUMBERS	as "numbers",  
+				HANDABILITY	as "handability",  
+				SHANDNUM	as "shandnum",  
+				RUNTIME	as "runtime",  
+				HANDFACTORS	as "handfactors",  
+				PORTID	as "portid",  
+				PORTNAME	as "portname",  
+				DEVICECODE	as "devicecode",  
+				DEVICEMODEL	as "devicemodel",  
+				MOTORMODEL	as "motormodel",  
+				CONTROLLERMODEL	as "controllermodel",  
+				SITUATION	as "situation",  
+				OUTSTANDARD	as "outstandard",  
+				FACILITYDEPART	as "facilitydepart",  
+				ISEXECUTE	as "isexecute",  
+				REMARK	as "remark",  
+				TYPE	as "type",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",  
+				DEPARTMENTID	as "departmentid",  
+				PROCEDUREID	as "procedureid",  
+				HANDABILITY_ACT	as "handabilityAct",  
+				DEVICEAREA	as "devicearea",  
+				DEVICEFLOW	as "deviceflow",  
+				DEVICENAMES	as "devicenames" ,
+				craft	as "craft",
+				filter	as "filter",
+				MARK	as "mark"
+		FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="facilitycode">
+			FACILITYCODE IN (#facilitycode#)
+		</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  FACILITYID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryBYPortId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb20">
+		SELECT
+				t1.FACILITYID	as "facilityid",  
+				t1.FACILITYCODE	as "facilitycode",  
+				t1.FACILITYNAME	as "facilityname",  
+				t1.POLLUTANTNAME	as "pollutantname",  
+				t1.FACILITYTYPE	as "facilitytype",  
+				t1.ORIGIN	as "origin",  
+				t1.HANDMETHOD	as "handmethod",  
+				t1.NUMBERS	as "numbers",  
+				t1.HANDABILITY	as "handability",  
+				t1.SHANDNUM	as "shandnum",  
+				t1.RUNTIME	as "runtime",  
+				t1.HANDFACTORS	as "handfactors",  
+				t1.PORTID	as "portid",  
+				t1.PORTNAME	as "portname",  
+				t1.DEVICECODE	as "devicecode",  
+				t1.DEVICEMODEL	as "devicemodel",  
+				t1.MOTORMODEL	as "motormodel",  
+				t1.CONTROLLERMODEL	as "controllermodel",  
+				t1.SITUATION	as "situation",  
+				t1.OUTSTANDARD	as "outstandard",  
+				t1.FACILITYDEPART	as "facilitydepart",  
+				t1.ISEXECUTE	as "isexecute",  
+				t1.REMARK	as "remark",  
+				t1.TYPE	as "type",  
+				t1.STATUS	as "status",  
+				t1.CREATOR	as "creator",  
+				t1.CREATED_TIME	as "createdTime",  
+				t1.MODIFIER	as "modifier",  
+				t1.UPDATED_TIME	as "updatedTime",
+				t1.DEPARTMENTID	as "departmentid",  
+				t1.PROCEDUREID	as "procedureid",  
+				t1.HANDABILITY_ACT	as "handabilityAct",  
+				t1.DEVICEAREA	as "devicearea",  
+				t1.DEVICEFLOW	as "deviceflow",  
+				t1.DEVICENAMES	as "devicenames",
+				t1.craft	as "craft",
+				t1.filter	as "filter",
+				t1.MARK	as "mark",
+				t2.DISCHARGEPORTID as "dischargeportid"
+		FROM
+			${hbSchema}.T_HA_FACILITYINFO t1
+		LEFT JOIN 
+			${hbSchema}.T_HA_PORT_FACILITYINFO t2
+		ON 
+			t1.FACILITYID = t2.FACILITYID
+		WHERE 
+			1=1
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			t2.DISCHARGEPORTID =#dischargeportid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.FACILITYID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<delete id="deletessfs">
+		DELETE FROM ${hbSchema}.T_HA_PORT_FACILITYINFO WHERE 
+			FACILITYID = #facilityid# and
+			DISCHARGEPORTID =#dischargeportid#
+	</delete>
+	
+	
+	<select id="queryForUpdate" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb20">
+		SELECT
+				t1.FACILITYID	as "facilityid",  
+				t1.FACILITYCODE	as "facilitycode",  
+				t1.FACILITYNAME	as "facilityname",  
+				t1.POLLUTANTNAME	as "pollutantname",  
+				t1.FACILITYTYPE	as "facilitytype",  
+				t1.ORIGIN	as "origin",  
+				t1.HANDMETHOD	as "handmethod",  
+				t1.NUMBERS	as "numbers",  
+				t1.HANDABILITY	as "handability",  
+				t1.SHANDNUM	as "shandnum",  
+				t1.RUNTIME	as "runtime",  
+				t1.HANDFACTORS	as "handfactors",  
+				t1.DEVICECODE	as "devicecode",  
+				t1.DEVICEMODEL	as "devicemodel",  
+				t1.MOTORMODEL	as "motormodel",  
+				t1.CONTROLLERMODEL	as "controllermodel",  
+				t1.SITUATION	as "situation",  
+				t1.OUTSTANDARD	as "outstandard",  
+				t1.FACILITYDEPART	as "facilitydepart",  
+				t1.ISEXECUTE	as "isexecute",  
+				t1.REMARK	as "remark",  
+				t1.TYPE	as "type",  
+				t1.STATUS	as "status",  
+				t1.CREATOR	as "creator",  
+				t1.CREATED_TIME	as "createdTime",  
+				t1.MODIFIER	as "modifier",  
+				t1.UPDATED_TIME	as "updatedTime",
+				t1.DEPARTMENTID	as "departmentid",  
+				t1.PROCEDUREID	as "procedureid",  
+				t1.HANDABILITY_ACT	as "handabilityAct",  
+				t1.DEVICEAREA	as "devicearea",  
+				t1.DEVICEFLOW	as "deviceflow",  
+				t1.DEVICENAMES	as "devicenames",
+				t1.craft	as "craft",
+				t1.filter	as "filter",
+				t1.MARK	as "mark",
+				t2.DISCHARGEPORTID as "dischargeportid",
+				t3.DISCHARGEPORTCODE	as "portid",  
+				t3.DISCHARGEPORTNAME	as "portname" 
+		FROM
+			${hbSchema}.T_HA_FACILITYINFO t1
+		LEFT JOIN 
+			${hbSchema}.T_HA_PORT_FACILITYINFO t2
+		ON 
+			t1.FACILITYID = t2.FACILITYID
+		LEFT JOIN
+			${hbSchema}.T_HA_DISCHARGEPORT t3
+		ON 
+			t2.DISCHARGEPORTID = t3.DISCHARGEPORTID
+		WHERE 
+			1=1
+		<isNotEmpty prepend=" AND " property="facilityid">
+			t1.FACILITYID = #facilityid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.FACILITYID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+	<select id="queryId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb20">
+		SELECT
+				FACILITYID	as "facilityid",  
+				FACILITYCODE	as "facilitycode",  
+				FACILITYNAME	as "facilityname",  
+				POLLUTANTNAME	as "pollutantname",  
+				FACILITYTYPE	as "facilitytype",  
+				ORIGIN	as "origin",  
+				HANDMETHOD	as "handmethod",  
+				NUMBERS	as "numbers",  
+				HANDABILITY	as "handability",  
+				SHANDNUM	as "shandnum",  
+				RUNTIME	as "runtime",  
+				HANDFACTORS	as "handfactors",  
+				PORTID	as "portid",  
+				PORTNAME	as "portname",  
+				DEVICECODE	as "devicecode",  
+				DEVICEMODEL	as "devicemodel",  
+				MOTORMODEL	as "motormodel",  
+				CONTROLLERMODEL	as "controllermodel",  
+				SITUATION	as "situation",  
+				OUTSTANDARD	as "outstandard",  
+				FACILITYDEPART	as "facilitydepart",  
+				ISEXECUTE	as "isexecute",  
+				REMARK	as "remark",  
+				TYPE	as "type",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",  
+				DEPARTMENTID	as "departmentid",  
+				PROCEDUREID	as "procedureid",  
+				HANDABILITY_ACT	as "handabilityAct",  
+				DEVICEAREA	as "devicearea",
+				DEVICEFLOW	as "deviceflow",
+				DEVICENAMES	as "devicenames" ,
+				craft	as "craft",
+				filter	as "filter",
+				MARK	as "mark"
+		FROM ${hbSchema}.T_HA_FACILITYINFO order by FACILITYID desc fetch first 1 rows only
+	</select>
+	
+	
+	
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitycode">
+			FACILITYCODE = #facilitycode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityname">
+			FACILITYNAME = #facilityname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			type = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			PROCEDUREID = #procedureid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitycode">
+			FACILITYCODE = #facilitycode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityname">
+			FACILITYNAME = #facilityname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pollutantname">
+			POLLUTANTNAME = #pollutantname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitytype">
+			FACILITYTYPE = #facilitytype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="origin">
+			ORIGIN = #origin#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handmethod">
+			HANDMETHOD = #handmethod#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="numbers">
+			NUMBERS = #numbers#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handability">
+			HANDABILITY = #handability#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="shandnum">
+			SHANDNUM = #shandnum#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="runtime">
+			RUNTIME = #runtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handfactors">
+			HANDFACTORS = #handfactors#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portname">
+			PORTNAME = #portname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicecode">
+			DEVICECODE = #devicecode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicemodel">
+			DEVICEMODEL = #devicemodel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="motormodel">
+			MOTORMODEL = #motormodel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="controllermodel">
+			CONTROLLERMODEL = #controllermodel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="situation">
+			SITUATION = #situation#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outstandard">
+			OUTSTANDARD = #outstandard#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitydepart">
+			FACILITYDEPART = #facilitydepart#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isexecute">
+			ISEXECUTE = #isexecute#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remark">
+			REMARK = #remark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			PROCEDUREID = #procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handabilityAct">
+			HANDABILITY_ACT = #handabilityAct#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicearea">
+			DEVICEAREA = #devicearea#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="deviceflow">
+			DEVICEFLOW = #deviceflow#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicenames">
+			DEVICENAMES = #devicenames#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_FACILITYINFO (FACILITYID,
+										FACILITYCODE,
+										FACILITYNAME,
+										POLLUTANTNAME,
+										FACILITYTYPE,
+										ORIGIN,
+										HANDMETHOD,
+										NUMBERS,
+										HANDABILITY,
+										SHANDNUM,
+										RUNTIME,
+										HANDFACTORS,
+										PORTID,
+										PORTNAME,
+										DEVICECODE,
+										DEVICEMODEL,
+										MOTORMODEL,
+										CONTROLLERMODEL,
+										SITUATION,
+										OUTSTANDARD,
+										FACILITYDEPART,
+										ISEXECUTE,
+										REMARK,
+										TYPE,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										DEPARTMENTID,
+										PROCEDUREID,
+										HANDABILITY_ACT,
+										DEVICEAREA,
+										DEVICEFLOW,
+										DEVICENAMES,
+										craft,
+										filter,
+										MARK
+										)		 
+	    VALUES (#facilityid:VARCHAR#, #facilitycode:VARCHAR#, #facilityname:VARCHAR#, #pollutantname:VARCHAR#,
+	      	#facilitytype:VARCHAR#, #origin:VARCHAR#, #handmethod:VARCHAR#, #numbers:VARCHAR#,
+	      	#handability:VARCHAR#, #shandnum:VARCHAR#, #runtime:VARCHAR#, #handfactors:VARCHAR#,
+	      	#portid:VARCHAR#, #portname:VARCHAR#, #devicecode:VARCHAR#, #devicemodel:VARCHAR#,
+	      	#motormodel:VARCHAR#, #controllermodel:VARCHAR#, #situation:VARCHAR#, #outstandard:VARCHAR#,
+	      	#facilitydepart:VARCHAR#, #isexecute:VARCHAR#, #remark:VARCHAR#, #type:VARCHAR#,
+	      	#status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#,
+	      	#updatedTime:VARCHAR#, #departmentid:VARCHAR#, #procedureid:VARCHAR#, #handabilityAct:VARCHAR#,
+	      	 #devicearea:VARCHAR#, #deviceflow:VARCHAR#, #devicenames:VARCHAR#,#craft:VARCHAR#, #filter:VARCHAR#
+	      	 , #mark:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 
+			FACILITYID = #facilityid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO 
+		SET 
+					FACILITYCODE	= #facilitycode#, 
+					FACILITYNAME	= #facilityname#, 
+					POLLUTANTNAME	= #pollutantname#, 
+					FACILITYTYPE	= #facilitytype#, 
+					ORIGIN	= #origin#, 
+					HANDMETHOD	= #handmethod#, 
+					NUMBERS	= #numbers#, 
+					HANDABILITY	= #handability#, 
+					SHANDNUM	= #shandnum#, 
+					RUNTIME	= #runtime#, 
+					HANDFACTORS	= #handfactors#, 
+					PORTID	= #portid#, 
+					PORTNAME	= #portname#, 
+					DEVICECODE	= #devicecode#, 
+					DEVICEMODEL	= #devicemodel#, 
+					MOTORMODEL	= #motormodel#, 
+					CONTROLLERMODEL	= #controllermodel#, 
+					SITUATION	= #situation#, 
+					OUTSTANDARD	= #outstandard#, 
+					FACILITYDEPART	= #facilitydepart#, 
+					ISEXECUTE	= #isexecute#, 
+					REMARK	= #remark#, 
+					TYPE	= #type#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					DEPARTMENTID	= #departmentid#, 
+					PROCEDUREID	= #procedureid#, 
+					HANDABILITY_ACT	= #handabilityAct#, 
+					DEVICEAREA	= #devicearea#, 
+					DEVICEFLOW	= #deviceflow#, 
+					DEVICENAMES	= #devicenames#
+			WHERE 	
+			FACILITYID = #facilityid#
+	</update>
+
+
+	<!-- <update id="updateForFQFacility">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO
+		<dynamic prepend="SET ">
+			<isNotEmpty property="facilitycode" prepend=","><![CDATA[ FACILITYCODE = #facilitycode# ]]></isNotEmpty>
+			<isNotEmpty property="facilityname" prepend=","><![CDATA[ FACILITYNAME = #facilityname# ]]></isNotEmpty>
+			<isNotEmpty property="facilitytype" prepend=","><![CDATA[ FACILITYTYPE = #facilitytype# ]]></isNotEmpty>
+			<isNotEmpty property="runtime" prepend=","><![CDATA[ RUNTIME = #runtime# ]]></isNotEmpty>
+			<isNotEmpty property="numbers" prepend=","><![CDATA[ NUMBERS = #numbers# ]]></isNotEmpty>
+			<isNotEmpty property="pollutantname" prepend=","><![CDATA[ POLLUTANTNAME = #pollutantname# ]]></isNotEmpty>
+			<isNotEmpty property="handability" prepend=","><![CDATA[ HANDABILITY = #handability# ]]></isNotEmpty>
+			<isNotEmpty property="handabilityAct" prepend=","><![CDATA[ HANDABILITY_ACT = #handabilityAct# ]]></isNotEmpty>
+			<isNotEmpty property="devicearea" prepend=","><![CDATA[ DEVICEAREA = #devicearea# ]]></isNotEmpty>
+			<isNotEmpty property="deviceflow" prepend=","><![CDATA[ DEVICEFLOW = #deviceflow# ]]></isNotEmpty>
+			<isNotEmpty property="isexecute" prepend=","><![CDATA[ ISEXECUTE = #isexecute# ]]></isNotEmpty>
+			<isNotEmpty property="remark" prepend=","><![CDATA[ REMARK = #remark# ]]></isNotEmpty>
+			<isNotEmpty property="devicemodel" prepend=","><![CDATA[ DEVICEMODEL = #devicemodel# ]]></isNotEmpty>
+			<isNotEmpty property="motormodel" prepend=","><![CDATA[ MOTORMODEL = #motormodel# ]]></isNotEmpty>
+			<isNotEmpty property="situation" prepend=","><![CDATA[ SITUATION = #situation# ]]></isNotEmpty>
+			<isNotEmpty property="modifier" prepend=","><![CDATA[ MODIFIER = #modifier# ]]></isNotEmpty>
+			<isNotEmpty property="updatedTime" prepend=","><![CDATA[ UPDATED_TIME = #updatedTime# ]]></isNotEmpty>
+			<isNotEmpty property="mark" prepend=","><![CDATA[ MARK = #mark# ]]></isNotEmpty>
+			<isNotEmpty property="craft" prepend=","><![CDATA[ CRAFT = #craft# ]]></isNotEmpty>
+			<isNotEmpty property="filter" prepend=","><![CDATA[ FILTER = #filter# ]]></isNotEmpty>
+			<isNotEmpty property="departmentid" prepend=","><![CDATA[ departmentid = #departmentid# ]]></isNotEmpty>
+			<isNotEmpty property="procedureid" prepend=","><![CDATA[ procedureid = #procedureid# ]]></isNotEmpty>
+		</dynamic>
+		WHERE
+			FACILITYID = #facilityid#
+	</update> -->
+	<update id="updateForFQFacility">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO 
+		SET 
+			FACILITYCODE	= #facilitycode#, 
+			FACILITYNAME	= #facilityname#, 
+			FACILITYTYPE	= #facilitytype#,
+			RUNTIME	= #runtime#,
+			NUMBERS	= #numbers#,
+			POLLUTANTNAME	= #pollutantname#,
+			HANDABILITY	= #handability#, 
+			HANDABILITY_ACT	= #handabilityAct#, 
+			DEVICEAREA	= #devicearea#, 
+			DEVICEFLOW	= #deviceflow#, 
+			ISEXECUTE	= #isexecute#, 
+			REMARK	= #remark#, 
+			DEVICEMODEL	= #devicemodel#, 
+			MOTORMODEL	= #motormodel#, 
+			SITUATION	= #situation#, 
+			MODIFIER	= #modifier#, 
+			UPDATED_TIME	= #updatedTime# ,
+			
+			craft	= #craft#,
+			filter	= #filter#,
+			MARK = #mark#,
+			departmentid = #departmentid#,
+			procedureid = #procedureid#
+		WHERE 	
+			FACILITYID = #facilityid#
+	</update>
+	
+	
+	<update id="updateFQ">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO 
+		SET 
+			PORTID	= #portid# 
+		WHERE 	
+		FACILITYID = #facilityid#
+	</update>
+	
+	
+	<update id="updateEnvdevicInfo">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO 
+		SET 
+			DEVICECODE	= #devicecode#
+		WHERE 	
+		FACILITYID = #facilityid#
+	</update>
+
+	<!-- <update id="updateWasteWater">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO
+		<dynamic prepend="SET ">
+			<isNotEmpty property="facilitycode" prepend=","><![CDATA[ FACILITYCODE = #facilitycode# ]]></isNotEmpty>
+			<isNotEmpty property="facilityname" prepend=","><![CDATA[ FACILITYNAME = #facilityname# ]]></isNotEmpty>
+			<isNotEmpty property="facilitytype" prepend=","><![CDATA[ FACILITYTYPE = #facilitytype# ]]></isNotEmpty>
+			<isNotEmpty property="origin" prepend=","><![CDATA[ ORIGIN	= #origin# ]]></isNotEmpty>
+			<isNotEmpty property="handmethod" prepend=","><![CDATA[ HANDMETHOD	= #handmethod# ]]></isNotEmpty>
+			<isNotEmpty property="facilitydepart" prepend=","><![CDATA[ FACILITYDEPART	= #facilitydepart# ]]></isNotEmpty>
+			<isNotEmpty property="numbers" prepend=","><![CDATA[ NUMBERS = #numbers# ]]></isNotEmpty>
+			<isNotEmpty property="handability" prepend=","><![CDATA[ HANDABILITY = #handability# ]]></isNotEmpty>
+			<isNotEmpty property="shandnum" prepend=","><![CDATA[ SHANDNUM	= #shandnum# ]]></isNotEmpty>
+			<isNotEmpty property="isexecute" prepend=","><![CDATA[ ISEXECUTE = #isexecute# ]]></isNotEmpty>
+			<isNotEmpty property="remark" prepend=","><![CDATA[ REMARK = #remark# ]]></isNotEmpty>
+			<isNotEmpty property="handfactors" prepend=","><![CDATA[ HANDFACTORS	= #handfactors# ]]></isNotEmpty>
+			<isNotEmpty property="outstandard" prepend=","><![CDATA[ OUTSTANDARD	= #outstandard# ]]></isNotEmpty>
+			<isNotEmpty property="runtime" prepend=","><![CDATA[ RUNTIME = #runtime# ]]></isNotEmpty>
+			<isNotEmpty property="situation" prepend=","><![CDATA[ SITUATION = #situation# ]]></isNotEmpty>
+			<isNotEmpty property="devicemodel" prepend=","><![CDATA[ DEVICEMODEL	= #devicemodel# ]]></isNotEmpty>
+			<isNotEmpty property="motormodel" prepend=","><![CDATA[ MOTORMODEL	= #motormodel# ]]></isNotEmpty>
+			<isNotEmpty property="controllermodel" prepend=","><![CDATA[ CONTROLLERMODEL	= #controllermodel# ]]></isNotEmpty>
+			<isNotEmpty property="modifier" prepend=","><![CDATA[ MODIFIER = #modifier# ]]></isNotEmpty>
+			<isNotEmpty property="updatedTime" prepend=","><![CDATA[ UPDATED_TIME = #updatedTime# ]]></isNotEmpty>
+
+			<isNotEmpty property="mark" prepend=","><![CDATA[ MARK	= #mark# ]]></isNotEmpty>
+			<isNotEmpty property="departmentid" prepend=","><![CDATA[ departmentid = #departmentid# ]]></isNotEmpty>
+			<isNotEmpty property="procedureid" prepend=","><![CDATA[ procedureid = #procedureid# ]]></isNotEmpty>
+		</dynamic>
+			WHERE
+			FACILITYID = #facilityid#
+	</update> -->
+	<update id="updateWasteWater">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO 
+		SET 
+		
+					FACILITYTYPE	= #facilitytype#,
+					FACILITYCODE	= #facilitycode#, 
+					FACILITYNAME	= #facilityname#, 
+					ORIGIN	= #origin#, 
+					HANDMETHOD	= #handmethod#, 
+					FACILITYDEPART	= #facilitydepart#, 
+					NUMBERS	= #numbers#, 
+					HANDABILITY	= #handability#, 
+					SHANDNUM	= #shandnum#, 
+					ISEXECUTE	= #isexecute#, 
+					REMARK	= #remark#, 
+					HANDFACTORS	= #handfactors#, 
+					OUTSTANDARD	= #outstandard#, 
+					RUNTIME	= #runtime#, 
+					SITUATION	= #situation#,
+					DEVICEMODEL	= #devicemodel#, 
+					MOTORMODEL	= #motormodel#, 
+					CONTROLLERMODEL	= #controllermodel#, 
+					MODIFIER	= #modifier#,
+					UPDATED_TIME	= #updatedTime#,
+					
+					MARK = #mark#,
+					departmentid = #departmentid#,
+					procedureid = #procedureid#
+			WHERE 	
+			FACILITYID = #facilityid#
+	</update>
+	<select id="executesql"  parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+      $sqlMap$
+    </select>
+</sqlMap>

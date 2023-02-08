@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-02-25 15:58:06 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_DEPART_INPUT_RUNTIME CLOCK VARCHAR NOT NULL primarykey, 
+	ITEMCODE VARCHAR NOT NULL primarykey, ITEMVALUE DECIMAL, REMARK VARCHAR -->
+<sqlMap namespace="tduhd0201">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd0201">
+		SELECT
+		CLOCK as "clock",
+		ITEMCODE as "itemcode",
+		ITEMVALUE as
+		"itemvalue",
+		REMARK as "remark"
+		FROM
+		${hbSchema}.T_HD_DEPART_INPUT_RUNTIME WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK like '$clock$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				CLOCK asc,
+				ITEMCODE asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	<select id="queryBydate" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd0201">
+		SELECT
+		CLOCK as "clock",
+		ITEMCODE as "itemcode",
+		ITEMVALUE as
+		"itemvalue",
+		REMARK as "remark"
+		FROM
+		${hbSchema}.T_HD_DEPART_INPUT_RUNTIME WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK =#clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HD_DEPART_INPUT_RUNTIME WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK like '$clock$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="clock"> CLOCK = #clock# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemcode"> ITEMCODE = #itemcode# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemvalue"> ITEMVALUE = #itemvalue# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="remark"> REMARK = #remark# 
+		</isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_DEPART_INPUT_RUNTIME
+		(CLOCK,
+		ITEMCODE,
+		ITEMVALUE,
+		REMARK
+		)
+		VALUES (#clock:VARCHAR#,
+		#itemcode:VARCHAR#, #itemvalue:NUMERIC#,
+		#remark:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_DEPART_INPUT_RUNTIME
+		WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_DEPART_INPUT_RUNTIME
+		SET
+		ITEMVALUE = #itemvalue:NUMERIC#,
+		REMARK = #remark#
+		WHERE
+		CLOCK = #clock#
+		AND
+		ITEMCODE = #itemcode#
+	</update>
+
+
+</sqlMap>

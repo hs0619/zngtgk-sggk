@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-14 14:25:44
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.VIEW_T_HA_SITE 
+		 SITEID  VARCHAR   NOT NULL, 
+		 SITENAME  VARCHAR, 
+		 PORTID  VARCHAR   NOT NULL, 
+		 ISARTIFICIAL  VARCHAR, 
+		 ISONLINE  VARCHAR, 
+		 CLASSIFYID  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 MNID  VARCHAR, 
+		 DISCHARGEPORTNAME  VARCHAR, 
+		 ISFORMAL  VARCHAR, 
+		 PROCID  VARCHAR, 
+		 LATITUDE  VARCHAR, 
+		 LONGITUDE  VARCHAR, 
+		 ISMAP  VARCHAR, 
+		 CITYPOINT  VARCHAR, 
+		 COMPANYPOINT  VARCHAR, 
+		 COUNTRYPOINT  VARCHAR, 
+		 MONITORNAME  VARCHAR, 
+		 PROCEDURENAME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR, 
+		 DEPARTMENTNAME  VARCHAR
+	-->
+<sqlMap namespace="tduhf6802">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf6802">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				ISFORMAL	as "isformal",  
+				PROCID	as "procid",  
+				LATITUDE	as "latitude",  
+				LONGITUDE	as "longitude",  
+				ISMAP	as "ismap",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				COUNTRYPOINT	as "countrypoint",  
+				MONITORNAME	as "monitorname",  
+				PROCEDURENAME	as "procedurename",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENTNAME	as "departmentname" 
+		FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryByDeptid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf6802">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				ISFORMAL	as "isformal",  
+				PROCID	as "procid",  
+				LATITUDE	as "latitude",  
+				LONGITUDE	as "longitude",  
+				ISMAP	as "ismap",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				COUNTRYPOINT	as "countrypoint",  
+				MONITORNAME	as "monitorname",  
+				PROCEDURENAME	as "procedurename",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENTNAME	as "departmentname" 
+		FROM ${hbSchema}.VIEW_T_HA_SITE WHERE DEPARTMENTID like '$departmentid$' 
+			and ISONLINE='1' and status='1'
+	</select>
+	
+	<!--根据用户选择的检测点id，查询对应的该监测点下的因子列表  -->
+	<select id="querySiteListBySiteId" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+			SELECT
+				FACTORID as "factorid",  
+				SITEID as "siteid",
+				UNIT as "unit",
+				FACTORNAME as "factorname",
+				DATASOURCE	as "datasource"
+			FROM
+				${hbSchema}.VIEW_T_HA_SITE_FACTOR
+			WHERE 1=1
+			<isNotEmpty prepend=" AND " property="portid">
+				SITEID = #portid#
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="portid">
+				DATASOURCE = #datasource#
+			</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+				<isNotEmpty property="orderBy">
+					$orderBy$
+				</isNotEmpty>
+				<isEmpty property="orderBy">
+					FACTORID asc
+				</isEmpty>
+			</dynamic>
+
+	</select>
+	
+	<!--根据监测点id，查询监测点名称和国控/内控线  -->
+	<select id="queryPortNameAndLine" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf6802">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				ISFORMAL	as "isformal",  
+				PROCID	as "procid",  
+				LATITUDE	as "latitude",  
+				LONGITUDE	as "longitude",  
+				ISMAP	as "ismap",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				COUNTRYPOINT	as "countrypoint",  
+				MONITORNAME	as "monitorname",  
+				PROCEDURENAME	as "procedurename",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENTNAME	as "departmentname" 
+		FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME = #sitename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME = #dischargeportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL = #isformal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="latitude">
+			LATITUDE = #latitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="longitude">
+			LONGITUDE = #longitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismap">
+			ISMAP = #ismap#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT = #companypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME = #monitorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedurename">
+			PROCEDURENAME = #procedurename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME = #departmentname#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.VIEW_T_HA_SITE (SITEID,
+										SITENAME,
+										PORTID,
+										ISARTIFICIAL,
+										ISONLINE,
+										CLASSIFYID,
+										MONITORID,
+										MNID,
+										DISCHARGEPORTNAME,
+										ISFORMAL,
+										PROCID,
+										LATITUDE,
+										LONGITUDE,
+										ISMAP,
+										CITYPOINT,
+										COMPANYPOINT,
+										COUNTRYPOINT,
+										MONITORNAME,
+										PROCEDURENAME,
+										DEPARTMENTID,
+										DEPARTMENTNAME
+										)		 
+	    VALUES (#siteid:VARCHAR#, #sitename:VARCHAR#, #portid:VARCHAR#, #isartificial:VARCHAR#, #isonline:VARCHAR#, #classifyid:VARCHAR#, #monitorid:VARCHAR#, #mnid:VARCHAR#, #dischargeportname:VARCHAR#, #isformal:VARCHAR#, #procid:VARCHAR#, #latitude:VARCHAR#, #longitude:VARCHAR#, #ismap:VARCHAR#, #citypoint:VARCHAR#, #companypoint:VARCHAR#, #countrypoint:VARCHAR#, #monitorname:VARCHAR#, #procedurename:VARCHAR#, #departmentid:VARCHAR#, #departmentname:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.VIEW_T_HA_SITE 
+		SET 
+		SITEID	= #siteid#, 
+					SITENAME	= #sitename#, 
+					PORTID	= #portid#, 
+					ISARTIFICIAL	= #isartificial#, 
+					ISONLINE	= #isonline#, 
+					CLASSIFYID	= #classifyid#, 
+					MONITORID	= #monitorid#, 
+					MNID	= #mnid#, 
+					DISCHARGEPORTNAME	= #dischargeportname#, 
+					ISFORMAL	= #isformal#, 
+					PROCID	= #procid#, 
+					LATITUDE	= #latitude#, 
+					LONGITUDE	= #longitude#, 
+					ISMAP	= #ismap#, 
+					CITYPOINT	= #citypoint#, 
+					COMPANYPOINT	= #companypoint#, 
+					COUNTRYPOINT	= #countrypoint#, 
+					MONITORNAME	= #monitorname#, 
+					PROCEDURENAME	= #procedurename#, 
+					DEPARTMENTID	= #departmentid#, 
+					DEPARTMENTNAME	= #departmentname#
+			WHERE 	
+	</update>
+  
+</sqlMap>

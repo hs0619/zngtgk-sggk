@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-05-27 15:20:24
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HC_ABNORMAL 
+		 ABNORMAL_ID  VARCHAR   NOT NULL   primarykey, 
+		 SITEID  VARCHAR, 
+		 SITENAME  VARCHAR, 
+		 SITUATION_STATUS  VARCHAR, 
+		 ABNORMAL_STATUS  VARCHAR, 
+		 ABNORMAL_REASON  VARCHAR, 
+		 FACTOR_NAME  VARCHAR, 
+		 REMARK_STATUS  VARCHAR, 
+		 REMARKS_NAME  VARCHAR, 
+		 REMARKS_CONTENT  VARCHAR, 
+		 ABNORMAL_START_TIME  VARCHAR, 
+		 ABNORMAL_END_TIME  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR
+	-->
+<sqlMap namespace="tduhc5104">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc5104">
+		SELECT
+				ABNORMAL_ID	as "abnormalId",  
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				SITUATION_STATUS	as "situationStatus",  
+				ABNORMAL_STATUS	as "abnormalStatus",  
+				ABNORMAL_REASON	as "abnormalReason",  
+				FACTOR_NAME	as "factorName",  
+				REMARK_STATUS	as "remarkStatus",  
+				REMARKS_NAME	as "remarksName",  
+				REMARKS_CONTENT	as "remarksContent",  
+				ABNORMAL_START_TIME	as "abnormalStartTime",  
+				ABNORMAL_END_TIME	as "abnormalEndTime",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",  
+				DEPARTMENTID	as "departmentid" 
+		FROM ${hbSchema}.T_HC_ABNORMAL WHERE 1=1
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  ABNORMAL_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HC_ABNORMAL WHERE 1=1
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME = #sitename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="situationStatus">
+			SITUATION_STATUS = #situationStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalStatus">
+			ABNORMAL_STATUS = #abnormalStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalReason">
+			ABNORMAL_REASON = #abnormalReason#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorName">
+			FACTOR_NAME = #factorName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remarkStatus">
+			REMARK_STATUS = #remarkStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remarksName">
+			REMARKS_NAME = #remarksName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remarksContent">
+			REMARKS_CONTENT = #remarksContent#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalStartTime">
+			ABNORMAL_START_TIME = #abnormalStartTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalEndTime">
+			ABNORMAL_END_TIME = #abnormalEndTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HC_ABNORMAL (ABNORMAL_ID,
+										SITEID,
+										SITENAME,
+										SITUATION_STATUS,
+										ABNORMAL_STATUS,
+										ABNORMAL_REASON,
+										FACTOR_NAME,
+										REMARK_STATUS,
+										REMARKS_NAME,
+										REMARKS_CONTENT,
+										ABNORMAL_START_TIME,
+										ABNORMAL_END_TIME,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										DEPARTMENTID
+										)		 
+	    VALUES (#abnormalId:VARCHAR#, #siteid:VARCHAR#, #sitename:VARCHAR#, #situationStatus:VARCHAR#, #abnormalStatus:VARCHAR#, #abnormalReason:VARCHAR#, #factorName:VARCHAR#, #remarkStatus:VARCHAR#, #remarksName:VARCHAR#, #remarksContent:VARCHAR#, #abnormalStartTime:VARCHAR#, #abnormalEndTime:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #departmentid:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HC_ABNORMAL WHERE 
+			ABNORMAL_ID = #abnormalId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HC_ABNORMAL 
+		SET 
+					SITEID	= #siteid#, 
+					SITENAME	= #sitename#, 
+					SITUATION_STATUS	= #situationStatus#, 
+					ABNORMAL_STATUS	= #abnormalStatus#, 
+					ABNORMAL_REASON	= #abnormalReason#, 
+					FACTOR_NAME	= #factorName#, 
+					REMARK_STATUS	= #remarkStatus#, 
+					REMARKS_NAME	= #remarksName#, 
+					REMARKS_CONTENT	= #remarksContent#, 
+					ABNORMAL_START_TIME	= #abnormalStartTime#, 
+					ABNORMAL_END_TIME	= #abnormalEndTime#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					DEPARTMENTID	= #departmentid#
+			WHERE 	
+			ABNORMAL_ID = #abnormalId#
+	</update>
+  
+</sqlMap>

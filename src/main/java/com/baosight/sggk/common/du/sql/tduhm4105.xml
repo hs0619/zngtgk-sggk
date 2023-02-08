@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhm4105">
+        <select id="query" resultClass="java.util.HashMap">
+            SELECT
+            MUUID AS "muuId",
+            PERIOD AS "period",
+            t4105.SOLID_ID AS "solidId",
+            t41.SOLID_NAME AS "solidName",
+            t41.SOLID_CODE AS "solidCode",
+            t4105.OUTPUT AS "output",
+            t4105.UTILIZATION AS "utilization",
+            t4105.UTILIZATION_RATE AS "utilizationRate",
+            t4105.BACK_OUTPUT AS "backOutput",
+            t4105.BACK_RATE AS "backRate",
+            t4105.BACK_PRICE AS "backPrice",
+            t4105.BACK_TOTAL AS "backTotal",
+            t4105.OUTER_VALUE AS "outerValue",
+            t4105.OUTER_PRICE AS "outerPrice",
+            t4105.OUTER_TOTAL AS "outerTotal",
+            t4105.DISPOSE_VALUES AS "disposeValue",
+            t4105.DISPOSE_RATE AS "disposeRate"
+            FROM
+            IPLAT.TDUHM4105 t4105
+            JOIN TDUHM41 t41 ON t4105.SOLID_ID = t41.SOLID_ID
+            WHERE
+            1 = 1
+            <isNotEmpty prepend=" AND " property="muuid">
+                t4105.FATHER_ID = #muuid#
+            </isNotEmpty>
+            ORDER BY
+            t4105.MUUID ASC
+        </select>
+
+    <insert id="insert">
+        INSERT INTO ${platSchema}.TDUHM4100 (
+        MUUID,
+        PERIOD,
+        FACTORY,
+        STATE,
+        REMARK
+        )
+        VALUES (
+        #muuId: VARCHAR#   ,
+        #period: VARCHAR#   ,
+        #factory: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #remark: VARCHAR#   )
+    </insert>
+
+
+
+    <insert id="insert2" parameterClass="java.util.Map">
+        INSERT INTO ${platSchema}.TDUHM4105 (
+        MUUID,
+        PERIOD,
+        FATHER_ID,
+        SOLID_ID
+        )
+        VALUES
+        (
+        #muuId#,
+        #period#,
+        #fatherId#,
+        #solidId#
+        )
+    </insert>
+
+
+    <delete id="delete">
+        DELETE FROM ${platSchema}.TDUHM4100  WHERE SOLID_ID = #solidId#
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${platSchema}.TDUHM4100
+        SET
+        REMARK = #remark#
+        WHERE
+        MUUID = #muuId#
+    </update>
+
+    <update id="updateA">
+        UPDATE  ${platSchema}.TDUHM4105
+        SET
+        OUTPUT = #output#       ,
+        BACK_OUTPUT = #backOutput#       ,
+        BACK_PRICE = #backPrice#       ,
+        BACK_TOTAL = #backTotal#       ,
+        OUTER_PRICE = #outerPrice#       ,
+        OUTER_TOTAL = #outerTotal#
+        WHERE
+        MUUID = #muuId#
+    </update>
+
+    <update id="put">
+        UPDATE  ${platSchema}.TDUHM4100
+        SET
+        STATE = '已完成'
+        WHERE
+        MUUID = #MUUID#
+    </update>
+
+
+
+    <select id="queryGf"  resultClass="java.util.HashMap">
+        SELECT
+        SUM(T4105.OUTPUT) as output,
+        SUM(T4105.BACK_OUTPUT) as backOutput,
+        SUM(T4105.BACK_TOTAL) as backTotal,
+        SUM(T4105.OUTER_TOTAL) as outerTotal,
+        T4105.PERIOD as period ,
+        T41.SOLID_NAME as solidName,
+        T41.SOLID_CODE as solidCode,
+        T41.SOLID_TYPE as  solidType,
+        T4105.SOLID_ID as solidId,
+        T4105.UTILIZATION AS "utilization",
+        T4105.UTILIZATION_RATE AS "utilizationRate",
+        T4105.BACK_RATE AS "backRate",
+        T4105.BACK_PRICE AS "backPrice",
+        T4105.OUTER_VALUE AS "outerValue",
+        T4105.OUTER_PRICE AS "outerPrice",
+        T4105.DISPOSE_VALUES AS "disposeValue",
+        T4105.DISPOSE_RATE AS "disposeRate",
+        T41.STATE as "state"
+        FROM
+        TDUHM4105 AS T4105
+        INNER JOIN TDUHM4100 AS T4100 ON T4105.FATHER_ID = T4100.MUUID
+        INNER JOIN TDUHM41 AS T41 ON T4105.SOLID_ID = T41.SOLID_ID
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            T4105.PERIOD  = #period#
+        </isNotEmpty>
+<!--        <isNotEmpty prepend="AND" property="muuId">-->
+<!--            T4105.FATHER_ID IN-->
+<!--            <iterate open="(" close=")" conjunction="," property="muuId">-->
+<!--                #muuId[]#-->
+<!--            </iterate>-->
+<!--        </isNotEmpty>-->
+        GROUP BY
+        T4105.SOLID_ID
+    </select>
+
+
+    <select id="queryZH"  resultClass="java.util.HashMap">
+        SELECT
+        T4105.MUUID AS "muuId",
+        T4105.PERIOD AS "period",
+        T4105.SOLID_ID AS "solidId",
+        T4105.OUTPUT AS "output",
+        T4105.UTILIZATION AS "utilization",
+        T4105.UTILIZATION_RATE AS "utilizationRate",
+        T4105.BACK_OUTPUT AS "backOutput",
+        T4105.BACK_RATE AS "backRate",
+        T4105.BACK_PRICE AS "backPrice",
+        T4105.BACK_TOTAL AS "backTotal",
+        T4105.OUTER_VALUE AS "outerValue",
+        T4105.OUTER_PRICE AS "outerPrice",
+        T4105.OUTER_TOTAL AS "outerTotal",
+        T4105.DISPOSE_VALUES AS "disposeValue",
+        T4105.DISPOSE_RATE AS "disposeRate",
+        T41.SOLID_NAME AS solidName,
+        T41.SOLID_CODE AS solidCode
+        FROM ${platSchema}.TDUHM4105 AS T4105 
+        LEFT JOIN TDUHM41 AS T41 ON  T4105.SOLID_ID=T41.SOLID_ID
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="muuId">
+            FATHER_ID = #muuId#
+        </isNotEmpty>
+    </select>
+
+    </sqlMap>

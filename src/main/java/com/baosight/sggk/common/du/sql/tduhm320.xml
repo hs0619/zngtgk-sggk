@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <!--      
+         table information  
+         Generate time :2021-08-30 18:07:36
+         table comment :废气工序基础数据
+         tableName :TDUHM320
+         MUUID    VARCHAR  NOT NULL   编号  ,
+         BASICS_NAME    VARCHAR  NULL   废气工序  ,
+         BASICS_TYPE    VARCHAR  NULL   父级名称  ,
+         BASICS_RANK    VARCHAR  NULL   排序  ,
+         BASICS_PLUS    VARCHAR  NULL   是否加入总计  ,
+         BASICS_INVOKE    VARCHAR  NULL   启用/停用  ,
+         BASICS_STATE    VARCHAR  NULL   备注 		 		
+    -->
+    <sqlMap namespace="tduhm320">
+    <select id="query" parameterClass="java.util.HashMap" 
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm320">
+		SELECT
+		A_MUUID  as  "amuuid"  , <!--  编号  -->
+		BASICS_NAME  as  "basicsName"  , <!--  废气工序  -->
+		BASICS_TYPE  as  "basicsType"  , <!--  父级名称  -->
+		BASICS_RANK  as  "basicsRank"  , <!--  排序  -->
+		BASICS_PLUS  as  "basicsPlus"  , <!--  是否加入总计  -->
+		BASICS_INVOKE  as  "basicsInvoke"  , <!--  启用/停用  -->
+		BASICS_STATE  as  "basicsState"  <!--  备注  -->
+
+        FROM ${hbSchema}.TDUHM320
+        <dynamic prepend="WHERE">
+        <isNotEmpty prepend=" AND " property="node">
+            BASICS_TYPE = #node#
+        </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="BASICS_TYPE">
+                BASICS_TYPE != #BASICS_TYPE#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="BASICS_PLUS">
+                BASICS_PLUS = #BASICS_PLUS#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="basicsInvoke">
+                BASICS_INVOKE = #basicsInvoke#
+            </isNotEmpty>
+    </dynamic>
+    </select>
+
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.TDUHM320 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="node">
+            BASICS_TYPE = #node#
+        </isNotEmpty>
+            </select>
+
+
+
+
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM320 (
+                           A_MUUID  ,   <!--  编号  -->
+                           BASICS_NAME  ,   <!--  废气工序  -->
+                           BASICS_TYPE  ,   <!--  父级名称  -->
+                           BASICS_RANK  ,   <!--  排序  -->
+                           BASICS_PLUS  ,   <!--  是否加入总计  -->
+                           BASICS_INVOKE  ,   <!--  启用/停用  -->
+                           BASICS_STATE    <!--  备注  -->
+                               )
+        VALUES (
+          #amuuid: VARCHAR#   ,
+          #basicsName: VARCHAR#   ,
+          #basicsType: VARCHAR#   ,
+          #basicsRank: VARCHAR#   ,
+          #basicsPlus: VARCHAR#   ,
+          #basicsInvoke: VARCHAR#   ,
+          #basicsState: VARCHAR#   		)
+	</insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.TDUHM320  WHERE A_MUUID = #amuuid#
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${hbSchema}.TDUHM320
+        SET
+			A_MUUID = #amuuid#     ,     <!--  编号  -->
+			BASICS_NAME = #basicsName#     ,     <!--  废气工序  -->
+			BASICS_TYPE = #basicsType#     ,     <!--  父级名称  -->
+			BASICS_RANK = #basicsRank#     ,     <!--  排序  -->
+			BASICS_PLUS = #basicsPlus#     ,     <!--  是否加入总计  -->
+			BASICS_INVOKE = #basicsInvoke#     ,     <!--  启用/停用  -->
+			BASICS_STATE = #basicsState#        <!--  备注  -->
+        WHERE A_MUUID = #amuuid#
+    
+    </update>
+    <select id="search" resultClass="java.util.HashMap">
+            SELECT
+        A_MUUID  as  "amuuid"  ,
+        BASICS_NAME  as  "basicsName"  , <!--  废气工序  -->
+        BASICS_TYPE  as  "basicsType"  , <!--  父级名称  -->
+        BASICS_RANK  as  "basicsRank"  , <!--  排序  -->
+        BASICS_PLUS  as  "basicsPlus"  , <!--  是否加入总计  -->
+        BASICS_INVOKE  as  "basicsInvoke"  , <!--  启用/停用  -->
+        BASICS_STATE  as  "basicsState"
+    FROM ${hbSchema}.TDUHM320
+    <dynamic prepend="WHERE">
+        <isNotEmpty prepend=" AND " property="basicsType">
+            BASICS_TYPE like #basicsType#
+        </isNotEmpty>
+
+    </dynamic>
+    </select>
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm320">
+        SELECT
+        A_MUUID as "Amuuid"
+        FROM ${hbSchema}.TDUHM320 order by A_MUUID DESC limit 1
+    </select>
+
+
+    <select id="query1" parameterClass="java.util.HashMap">
+        SELECT
+        A_MUUID  as  "amuuid"  , <!--  编号  -->
+        BASICS_NAME  as  "basicsName"
+
+
+        FROM ${hbSchema}.TDUHM320
+        <dynamic prepend="WHERE">
+            <isNotEmpty prepend=" AND " property="amuuid">
+                A_MUUID = #amuuid#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="basicsName">
+                BASICS_NAME = #basicsName#
+            </isNotEmpty>
+        </dynamic>
+    </select>
+    </sqlMap>

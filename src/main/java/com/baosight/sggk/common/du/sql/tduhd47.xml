@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-03-02 15:25:04 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_TOTAL_REPORT MONITORID VARCHAR NOT NULL primarykey,
+	FACTORID VARCHAR NOT NULL primarykey, DEPARTMENTID VARCHAR NOT NULL primarykey,
+	CLOCK VARCHAR NOT NULL primarykey, QUARTER1 DECIMAL, QUARTER2 DECIMAL, QUARTER3
+	DECIMAL, QUARTER4 DECIMAL -->
+<sqlMap namespace="tduhd47">
+	<select id="query" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhd47">
+		select
+		a.MONITORID AS "monitorid",
+		a.FACTORID AS "factorid",
+		a.CLOCK AS "clock",
+		a.REPORT AS "report",
+		b.UNIT as "unit"
+		 from
+		${hbSchema}.T_HD_TOTAL_REPORT AS a
+		left join ${hbSchema}.T_HD_TOTAL_PLAN_FACTOR as b on a.MONITORID= b.MONITORID AND a.FACTORID = b.FACTORID
+		where 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.factorid =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="clock">
+			a.CLOCK =
+			#clock#
+		</isNotEmpty>
+
+
+	</select>
+
+	<select id="count" resultClass="int">
+		select count(*)
+		from
+		(select department_id as departmentid,monitorid as
+		monitorid,factorid as factorid,'$clock$' as clock,unit as unit
+		from
+		${hbSchema}.t_ha_department d,${hbSchema}.t_hd_total_plan_factor f
+		where d.totalplan='1') as a
+		left join ${hbSchema}.T_HD_TOTAL_REPORT
+		b
+		on(a.departmentid=b.departmentid and a.monitorid=b.monitorid and
+		a.factorid=b.factorid and a.clock=b.clock)
+		where 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.factorid =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.departmentid =
+			#departmentid#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="monitorid"> MONITORID = #monitorid#
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="factorid"> FACTORID =
+		#factorid# </isNotEmpty> <isNotEmpty prepend=" AND " property="departmentid">
+		DEPARTMENTID = #departmentid# </isNotEmpty> <isNotEmpty prepend=" AND " property="clock">
+		CLOCK = #clock# </isNotEmpty> <isNotEmpty prepend=" AND " property="quarter1">
+		QUARTER1 = #quarter1# </isNotEmpty> <isNotEmpty prepend=" AND " property="quarter2">
+		QUARTER2 = #quarter2# </isNotEmpty> <isNotEmpty prepend=" AND " property="quarter3">
+		QUARTER3 = #quarter3# </isNotEmpty> <isNotEmpty prepend=" AND " property="quarter4">
+		QUARTER4 = #quarter4# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_TOTAL_REPORT
+		(MONITORID,
+		FACTORID,
+		CLOCK,
+		REPORT
+		)
+		VALUES (#monitorid:VARCHAR#, #factorid:VARCHAR#,
+		#clock:VARCHAR#,#report:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_TOTAL_REPORT WHERE
+		MONITORID = #monitorid# AND
+		FACTORID = #factorid# AND
+		CLOCK = #clock#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_TOTAL_REPORT
+		SET
+		MONITORID = #monitorid:NUMERIC#,
+	  	FACTORID = #factorid:NUMERIC#,
+		CLOCK = #clock:NUMERIC#,
+		REPORT = #report:NUMERIC#
+		WHERE
+		MONITORID =
+		#monitorid# AND
+		FACTORID = #factorid#
+		AND
+		CLOCK = #clock#
+	</update>
+
+	<select id="queryTotalPlanMonitor"
+			parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb08">
+		SELECT
+		MONITORID as "monitorid",  <!-- 监测类型编号 -->
+		MONITORNAME as "monitorname"
+		FROM ${hbSchema}.t_ha_monitor
+		where
+		MONITORID in(select monitorid from
+		${hbSchema}.t_hd_total_plan_factor)
+	</select>
+	<select id="queryTotalPlanFactor"
+			parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+		FACTORID as "factorid",  <!-- 因子编号 -->
+		FACTORNAME as "factorname"  <!-- 因子名称 -->
+		FROM ${hbSchema}.t_ha_factor
+		WHERE factorid IN (
+		SELECT factorid
+		FROM ${hbSchema}.t_hd_total_plan_factor
+		where 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			monitorid =
+			#monitorid#
+		</isNotEmpty>
+		)
+
+	</select>
+</sqlMap>

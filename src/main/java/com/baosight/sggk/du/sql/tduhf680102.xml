@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-15 15:13:01
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HF_POLLDISCHARGE 
+		 POLLID  VARCHAR   NOT NULL   primarykey, 
+		 DEPARTMENTID  VARCHAR   NOT NULL, 
+		 STATUS  VARCHAR   NOT NULL, 
+		 TITLE  VARCHAR, 
+		 BEGINTIME  VARCHAR, 
+		 ENDTIME  VARCHAR, 
+		 REASON  VARCHAR, 
+		 CHANGE  VARCHAR, 
+		 SERVICE  VARCHAR, 
+		 MEASURE  VARCHAR, 
+		 DECLARENAME  VARCHAR, 
+		 PHONE  VARCHAR, 
+		 DECLARETIME  VARCHAR   NOT NULL, 
+		 OPINION  VARCHAR, 
+		 AUDITOR  VARCHAR, 
+		 AUDITTIME  VARCHAR, 
+		 SUMUP  VARCHAR, 
+		 REALBEGINTIME  VARCHAR, 
+		 REALENDTIME  VARCHAR, 
+		 DISCHARGEPORTID  VARCHAR, 
+		 FACILITYID  VARCHAR, 
+		 CONDITION  VARCHAR, 
+		 ISTONG  VARCHAR
+	-->
+<sqlMap namespace="tduhf680102">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf680102">
+		SELECT
+				POLLID	as "pollid",  <!-- 申报编号 -->
+				DEPARTMENTID	as "departmentid",  <!-- 单位 -->
+				STATUS	as "status",  <!-- 当前状态 -->
+				TITLE	as "title",  <!-- 申报标题 -->
+				BEGINTIME	as "begintime",  <!-- 申请开始时间 -->
+				ENDTIME	as "endtime",  <!-- 申请结束时间 -->
+				REASON	as "reason",  <!-- 变更原因 -->
+				CHANGE	as "change",  <!-- 变更内容 -->
+				SERVICE	as "service",  <!-- 维护检修内容 -->
+				MEASURE	as "measure",  <!-- 环保应急措施 -->
+				DECLARENAME	as "declarename",  <!-- 填报人姓名 -->
+				PHONE	as "phone",  <!-- 联系电话 -->
+				DECLARETIME	as "declaretime",  <!-- 报送时间 -->
+				OPINION	as "opinion",  <!-- 审核意见 -->
+				AUDITOR	as "auditor",  <!-- 审核人 -->
+				AUDITTIME	as "audittime",  <!-- 审核时间 -->
+				SUMUP	as "sumup",  <!-- 排放情况小结 -->
+				REALBEGINTIME	as "realbegintime",  
+				REALENDTIME	as "realendtime",  
+				DISCHARGEPORTID	as "dischargeportid",  
+				FACILITYID	as "facilityid",  
+				CONDITION	as "condition",  
+				ISTONG	as "istong" 
+		FROM ${hbSchema}.T_HF_POLLDISCHARGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="pollid">
+			POLLID = #pollid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  POLLID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryPollution" parameterClass="java.util.HashMap" 
+			resultClass="java.util.HashMap">
+		SELECT
+				t1.POLLID	as "pollid",  <!-- 申报编号 -->
+				t1.DEPARTMENTID	as "departmentid",  <!-- 单位 -->
+				t1.STATUS	as "status",  <!-- 当前状态 -->
+				t1.TITLE	as "title",  <!-- 申报标题 -->
+				t1.BEGINTIME	as "begintime",  <!-- 申请开始时间 -->
+				t1.ENDTIME	as "endtime",  <!-- 申请结束时间 -->
+				t1.REASON	as "reason",  <!-- 变更原因 -->
+				t1.CHANGE	as "change",  <!-- 变更内容 -->
+				t1.SERVICE	as "service",  <!-- 维护检修内容 -->
+				t1.MEASURE	as "measure",  <!-- 环保应急措施 -->
+				t1.DECLARETIME	as "declaretime",  <!-- 报送时间 -->
+				t2.DEPARTMENT_ID,
+				t2.DEPARTMENT_NAME as departmentname
+
+		FROM 
+			${hbSchema}.T_HF_POLLDISCHARGE t1 
+		LEFT JOIN 
+			${hbSchema}.T_HA_DEPARTMENT t2
+		ON 
+			t1.DEPARTMENTID = t2.DEPARTMENT_ID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="pollid">
+			t1.POLLID = #pollid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="begintime">
+			t1.BEGINTIME  <![CDATA[ >= ]]>  #begintime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endtime">
+			t1.ENDTIME  <![CDATA[ <= ]]>  #endtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			t1.DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		
+		
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.POLLID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_POLLDISCHARGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="pollid">
+			POLLID = #pollid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="pollid">
+			POLLID = #pollid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="title">
+			TITLE = #title#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="begintime">
+			BEGINTIME = #begintime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endtime">
+			ENDTIME = #endtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reason">
+			REASON = #reason#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="change">
+			CHANGE = #change#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="service">
+			SERVICE = #service#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="measure">
+			MEASURE = #measure#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="declarename">
+			DECLARENAME = #declarename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="phone">
+			PHONE = #phone#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="declaretime">
+			DECLARETIME = #declaretime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="opinion">
+			OPINION = #opinion#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="auditor">
+			AUDITOR = #auditor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="audittime">
+			AUDITTIME = #audittime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sumup">
+			SUMUP = #sumup#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="realbegintime">
+			REALBEGINTIME = #realbegintime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="realendtime">
+			REALENDTIME = #realendtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="condition">
+			CONDITION = #condition#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="istong">
+			ISTONG = #istong#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_POLLDISCHARGE (POLLID,  <!-- 申报编号 -->
+										DEPARTMENTID,  <!-- 单位 -->
+										STATUS,  <!-- 当前状态 -->
+										TITLE,  <!-- 申报标题 -->
+										BEGINTIME,  <!-- 申请开始时间 -->
+										ENDTIME,  <!-- 申请结束时间 -->
+										REASON,  <!-- 变更原因 -->
+										CHANGE,  <!-- 变更内容 -->
+										SERVICE,  <!-- 维护检修内容 -->
+										MEASURE,  <!-- 环保应急措施 -->
+										DECLARENAME,  <!-- 填报人姓名 -->
+										PHONE,  <!-- 联系电话 -->
+										DECLARETIME,  <!-- 报送时间 -->
+										OPINION,  <!-- 审核意见 -->
+										AUDITOR,  <!-- 审核人 -->
+										AUDITTIME,  <!-- 审核时间 -->
+										SUMUP,  <!-- 排放情况小结 -->
+										REALBEGINTIME,
+										REALENDTIME,
+										DISCHARGEPORTID,
+										FACILITYID,
+										CONDITION,
+										ISTONG
+										)		 
+	    VALUES (#pollid:VARCHAR#, #departmentid:VARCHAR#, #status:VARCHAR#, #title:VARCHAR#, #begintime:VARCHAR#, #endtime:VARCHAR#, #reason:VARCHAR#, #change:VARCHAR#, #service:VARCHAR#, #measure:VARCHAR#, #declarename:VARCHAR#, #phone:VARCHAR#, #declaretime:VARCHAR#, #opinion:VARCHAR#, #auditor:VARCHAR#, #audittime:VARCHAR#, #sumup:VARCHAR#, #realbegintime:VARCHAR#, #realendtime:VARCHAR#, #dischargeportid:VARCHAR#, #facilityid:VARCHAR#, #condition:VARCHAR#, #istong:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HF_POLLDISCHARGE WHERE 
+			POLLID = #pollid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_POLLDISCHARGE 
+		SET 
+					DEPARTMENTID	= #departmentid#,   <!-- 单位 -->
+					STATUS	= #status#,   <!-- 当前状态 -->
+					TITLE	= #title#,   <!-- 申报标题 -->
+					BEGINTIME	= #begintime#,   <!-- 申请开始时间 -->
+					ENDTIME	= #endtime#,   <!-- 申请结束时间 -->
+					REASON	= #reason#,   <!-- 变更原因 -->
+					CHANGE	= #change#,   <!-- 变更内容 -->
+					SERVICE	= #service#,   <!-- 维护检修内容 -->
+					MEASURE	= #measure#,   <!-- 环保应急措施 -->
+					DECLARENAME	= #declarename#,   <!-- 填报人姓名 -->
+					PHONE	= #phone#,   <!-- 联系电话 -->
+					DECLARETIME	= #declaretime#,   <!-- 报送时间 -->
+					OPINION	= #opinion#,   <!-- 审核意见 -->
+					AUDITOR	= #auditor#,   <!-- 审核人 -->
+					AUDITTIME	= #audittime#,   <!-- 审核时间 -->
+					SUMUP	= #sumup#,   <!-- 排放情况小结 -->
+					REALBEGINTIME	= #realbegintime#, 
+					REALENDTIME	= #realendtime#, 
+					DISCHARGEPORTID	= #dischargeportid#, 
+					FACILITYID	= #facilityid#, 
+					CONDITION	= #condition#, 
+					ISTONG	= #istong#
+			WHERE 	
+			POLLID = #pollid#
+	</update>
+  
+</sqlMap>

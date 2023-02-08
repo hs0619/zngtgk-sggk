@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information -->
+<sqlMap namespace="tduhc52">
+
+	<select id="queryDatas" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select
+		d.siteid,c.mn,c.factorid,c.datatime,c.avg,d.highlimit,d.lowlimit
+		from
+		${hbSchema}.DATATABLE_DAY_2021 c
+		left join
+		(select
+		a.siteid,a.monitorid,a.mnid,b.factorid,b.highlimit,b.lowlimit from
+		${hbSchema}.t_ha_site a left join ${hbSchema}.t_ha_portfactor b
+		on(a.portid=b.portid)) d
+		on(c.mn=d.mnid and c.factorid=d.factorid)
+		where 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			d.siteid = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			d.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			startdate
+			>=#startdate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			enddate &lt;#enddate#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				d.siteid
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	
+	
+</sqlMap>

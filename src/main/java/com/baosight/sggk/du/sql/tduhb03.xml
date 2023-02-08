@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tduhb03">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb03">
+		SELECT
+				PROCEDURE_ID	as "procedureId",  <!-- 工序编号 -->
+				PROCEDURE_NAME	as "procedureName",  <!-- 工序名称 -->
+				DEPARTMENTID	as "departmentid",
+				SORT as "sort"
+		FROM ${hbSchema}.t_ha_procedure WHERE 1=1
+		<isNotEmpty prepend=" AND " property="procedureId">
+			PROCEDURE_ID = #procedureId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SORT asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_ha_procedure WHERE 1=1
+		<isNotEmpty prepend=" AND " property="procedureId">
+			PROCEDURE_ID = #procedureId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="procedureId">
+			PROCEDURE_ID = #procedureId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureName">
+			PROCEDURE_NAME = #procedureName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	-->
+</sqlMap>

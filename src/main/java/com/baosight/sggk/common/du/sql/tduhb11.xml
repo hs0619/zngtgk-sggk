@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-27 15:30:39
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.VIEW_T_HA_SITE_FACTOR 
+		 FACTORID  VARCHAR   NOT NULL, 
+		 USEZS  VARCHAR, 
+		 DATASOURCE  VARCHAR   NOT NULL, 
+		 SITEID  VARCHAR   NOT NULL, 
+		 SITENAME  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 MNID  VARCHAR, 
+		 ISONLINE  VARCHAR, 
+		 ISARTIFICIAL  VARCHAR, 
+		 FACTORNAME  VARCHAR, 
+		 UNIT  VARCHAR, 
+		 MONITORNAME  VARCHAR, 
+		 DISCHARGEPORTID  VARCHAR, 
+		 DISCHARGEPORTNAME  VARCHAR, 
+		 PROCID  VARCHAR, 
+		 COUNTRYPOINT  VARCHAR, 
+		 CITYPOINT  VARCHAR, 
+		 COMPANYPOINT  VARCHAR, 
+		 HIGHLIMIT  VARCHAR, 
+		 LOWLIMIT  VARCHAR, 
+		 NKHIGHLIMIT  VARCHAR, 
+		 NKLOWLIMIT  VARCHAR, 
+		 PROCEDURE_ID  VARCHAR, 
+		 PROCEDURE_NAME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR, 
+		 DEPARTMENT_NAME  VARCHAR
+	-->
+<sqlMap namespace="tduhb11">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb11">
+		SELECT
+				FACTORID	as "factorid",  
+				USEZS	as "usezs",  
+				DATASOURCE	as "datasource",  
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				ISONLINE	as "isonline",  
+				ISARTIFICIAL	as "isartificial",  
+				FACTORNAME	as "factorname",  
+				UNIT	as "unit",  
+				MONITORNAME	as "monitorname",  
+				DISCHARGEPORTID	as "dischargeportid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				PROCID	as "procid",  
+				COUNTRYPOINT	as "countrypoint",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				HIGHLIMIT	as "highlimit",  
+				LOWLIMIT	as "lowlimit",  
+				NKHIGHLIMIT	as "nkhighlimit",  
+				NKLOWLIMIT	as "nklowlimit",  
+				PROCEDURE_ID	as "procedureId",  
+				PROCEDURE_NAME	as "procedureName",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENT_NAME	as "departmentName" 
+		FROM ${hbSchema}.VIEW_T_HA_SITE_FACTOR WHERE 1=1
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!-- 黄 -->
+	<select id="queryBySiteid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb11">
+		SELECT
+				FACTORID	as "factorid",  <!-- 因子编号 -->
+				FACTORNAME	as "factorname",  <!-- 因子名称 -->
+				UNIT	as "unit",  <!-- 单位 -->
+				HIGHLIMIT	as "highlimit",  
+				LOWLIMIT	as "lowlimit"  
+		FROM ${hbSchema}.VIEW_T_HA_SITE_FACTOR 
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			siteid = #siteid#
+		</isNotEmpty>
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.VIEW_T_HA_SITE_FACTOR WHERE 1=1
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="usezs">
+			USEZS = #usezs#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="datasource">
+			DATASOURCE = #datasource#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME = #sitename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorname">
+			FACTORNAME = #factorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="unit">
+			UNIT = #unit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME = #monitorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME = #dischargeportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT = #companypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="highlimit">
+			HIGHLIMIT = #highlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="lowlimit">
+			LOWLIMIT = #lowlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="nkhighlimit">
+			NKHIGHLIMIT = #nkhighlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="nklowlimit">
+			NKLOWLIMIT = #nklowlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureId">
+			PROCEDURE_ID = #procedureId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureName">
+			PROCEDURE_NAME = #procedureName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentName">
+			DEPARTMENT_NAME = #departmentName#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.VIEW_T_HA_SITE_FACTOR (FACTORID,
+										USEZS,
+										DATASOURCE,
+										SITEID,
+										SITENAME,
+										MONITORID,
+										MNID,
+										ISONLINE,
+										ISARTIFICIAL,
+										FACTORNAME,
+										UNIT,
+										MONITORNAME,
+										DISCHARGEPORTID,
+										DISCHARGEPORTNAME,
+										PROCID,
+										COUNTRYPOINT,
+										CITYPOINT,
+										COMPANYPOINT,
+										HIGHLIMIT,
+										LOWLIMIT,
+										NKHIGHLIMIT,
+										NKLOWLIMIT,
+										PROCEDURE_ID,
+										PROCEDURE_NAME,
+										DEPARTMENTID,
+										DEPARTMENT_NAME
+										)		 
+	    VALUES (#factorid:VARCHAR#, #usezs:VARCHAR#, #datasource:VARCHAR#, #siteid:VARCHAR#, #sitename:VARCHAR#, #monitorid:VARCHAR#, #mnid:VARCHAR#, #isonline:VARCHAR#, #isartificial:VARCHAR#, #factorname:VARCHAR#, #unit:VARCHAR#, #monitorname:VARCHAR#, #dischargeportid:VARCHAR#, #dischargeportname:VARCHAR#, #procid:VARCHAR#, #countrypoint:VARCHAR#, #citypoint:VARCHAR#, #companypoint:VARCHAR#, #highlimit:VARCHAR#, #lowlimit:VARCHAR#, #nkhighlimit:VARCHAR#, #nklowlimit:VARCHAR#, #procedureId:VARCHAR#, #procedureName:VARCHAR#, #departmentid:VARCHAR#, #departmentName:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.VIEW_T_HA_SITE_FACTOR WHERE 
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.VIEW_T_HA_SITE_FACTOR 
+		SET 
+		FACTORID	= #factorid#, 
+					USEZS	= #usezs#, 
+					DATASOURCE	= #datasource#, 
+					SITEID	= #siteid#, 
+					SITENAME	= #sitename#, 
+					MONITORID	= #monitorid#, 
+					MNID	= #mnid#, 
+					ISONLINE	= #isonline#, 
+					ISARTIFICIAL	= #isartificial#, 
+					FACTORNAME	= #factorname#, 
+					UNIT	= #unit#, 
+					MONITORNAME	= #monitorname#, 
+					DISCHARGEPORTID	= #dischargeportid#, 
+					DISCHARGEPORTNAME	= #dischargeportname#, 
+					PROCID	= #procid#, 
+					COUNTRYPOINT	= #countrypoint#, 
+					CITYPOINT	= #citypoint#, 
+					COMPANYPOINT	= #companypoint#, 
+					HIGHLIMIT	= #highlimit#, 
+					LOWLIMIT	= #lowlimit#, 
+					NKHIGHLIMIT	= #nkhighlimit#, 
+					NKLOWLIMIT	= #nklowlimit#, 
+					PROCEDURE_ID	= #procedureId#, 
+					PROCEDURE_NAME	= #procedureName#, 
+					DEPARTMENTID	= #departmentid#, 
+					DEPARTMENT_NAME	= #departmentName#
+			WHERE 	
+	</update>
+  
+</sqlMap>

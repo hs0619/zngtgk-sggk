@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tduhm51">
+    <select id="query" resultClass="java.util.HashMap">
+        SELECT
+        MUUID as "muuid",
+        MYNAME as "myName"
+        FROM ${hbSchema}.TDUHM51 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="muuid">
+            MUUID = #muuid#
+        </isNotEmpty>
+    </select>
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.TDUHM51 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="muuid">
+            MUUID = #muuid#
+        </isNotEmpty>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM51 (
+        MUUID,
+        MYNAME
+        )
+        VALUES (#muuid:VARCHAR#, #myName:VARCHAR#)
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.TDUHM51 WHERE
+        MUUID = #muuid#
+    </delete>
+    <update id="update">
+        UPDATE ${hbSchema}.TDUHM51
+        SET
+        MYNAME=#myName#
+        WHERE
+        MUUID = #muuid#
+    </update>
+
+</sqlMap>

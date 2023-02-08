@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhb2601">
+
+
+	<select id="loadTopNodes" resultClass="java.util.HashMap">
+        SELECT
+        t1.DEPARTMENT_ID as "id",
+        t1.DEPARTMENT_NAME as "text",   
+        case when (select count(*) from ${hbSchema}.VIEW_T_HA_SITE t2
+		where t2.DEPARTMENTID = t1.DEPARTMENT_ID) > 0 
+        then 0 else 1 end as "leaf"
+        FROM ${hbSchema}.T_HA_DEPARTMENT t1
+        WHERE t1.PARENTID = 'root'
+        order by t1.DEPARTMENT_ID asc
+    </select>
+
+    <select id="loadChildNodes" resultClass="java.util.HashMap">
+        SELECT
+        DEPARTMENTID,
+        SITEID as "id",
+        SITENAME  as "text"  
+        FROM ${hbSchema}.VIEW_T_HA_SITE
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="pid">
+			DEPARTMENTID = #pid#
+		</isNotEmpty>
+    </select>
+
+
+
+
+</sqlMap>

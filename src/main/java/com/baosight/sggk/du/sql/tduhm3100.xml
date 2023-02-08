@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <!--      
+         table information  
+         Generate time :2021-09-13 16:46:46
+         table comment :基础项目录入
+         tableName :TDUHM3100
+         X_MUUID    VARCHAR  NULL   项目编号  ,
+         SHARE_PROJECT    VARCHAR  NULL   项目  ,
+         P_MUUID    VARCHAR  NULL   实绩编号 		 		
+    -->
+    <sqlMap namespace="tduhm3100">
+    <select id="query" parameterClass="java.util.HashMap" 
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3100">
+		SELECT
+		X_MUUID  as  "xMuuid"  , <!--  项目编号  -->
+		SHARE_PROJECT  as  "shareProject"   <!--  项目  -->
+
+		      
+        FROM ${hbSchema}.TDUHM3100 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="xMuuid">
+              X_MUUID = #xMuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="shareProject">
+            SHARE_PROJECT like '%$shareProject$%'
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+           <isNotEmpty property="orderBy">
+              $orderBy$
+           </isNotEmpty>
+         </dynamic>
+    </select>
+
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.TDUHM3100 WHERE 1=1
+                    <isNotEmpty prepend=" AND " property="xMuuid">
+                X_MUUID = #xMuuid#
+            </isNotEmpty>
+                    <isNotEmpty prepend=" AND " property="shareProject">
+                SHARE_PROJECT like '%$shareProject$%'
+            </isNotEmpty>
+
+            </select>
+
+
+
+
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM3100 (
+                           X_MUUID  ,   <!--  项目编号  -->
+                           SHARE_PROJECT     <!--  项目  -->
+                              <!--  实绩编号  -->
+                               )
+        VALUES (
+          #xMuuid: VARCHAR#   ,
+          #shareProject: VARCHAR#
+           		)
+	</insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.TDUHM3100  WHERE X_MUUID = #xMuuid#
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${hbSchema}.TDUHM3100
+        SET
+			X_MUUID = #xMuuid#     ,     <!--  项目编号  -->
+			SHARE_PROJECT = #shareProject#          <!--  项目  -->
+			       <!--  实绩编号  -->
+        WHERE
+        X_MUUID = #xMuuid#
+    </update>
+
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm3100">
+        SELECT
+        X_MUUID as "xMuuid"
+        FROM ${hbSchema}.TDUHM3100 order by X_MUUID DESC limit 1
+    </select>
+    </sqlMap>

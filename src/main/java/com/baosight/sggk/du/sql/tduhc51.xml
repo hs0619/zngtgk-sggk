@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-03-11 13:38:36 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HA_ALARM_OVERLIMIT DATATIME VARCHAR NOT NULL primarykey, 
+	MN VARCHAR NOT NULL primarykey, SITEID VARCHAR, SITENAME VARCHAR, FACTORID 
+	VARCHAR NOT NULL primarykey, FACTORNAME VARCHAR, QN VARCHAR, ST VARCHAR, 
+	CN VARCHAR NOT NULL primarykey, VALUEZS VARCHAR, ALARMTYPE VARCHAR, ALARMSTATUS 
+	VARCHAR, ALARMINFO VARCHAR, SENDTIME VARCHAR, SENDSTATUS VARCHAR, FILLTIME 
+	VARCHAR, FILLSTATUS VARCHAR, FILLMAN VARCHAR, FILLID VARCHAR, PORTNAME VARCHAR, 
+	PORTID VARCHAR, HLIMIT VARCHAR, LOWLIMIT VARCHAR, NKHLIMIT VARCHAR, NKLOWLIMIT 
+	VARCHAR, CONTROL_LINE VARCHAR, STANDARD_VALUE VARCHAR, VALUE_REAL VARCHAR -->
+<sqlMap namespace="tduhc51">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhc51">
+		SELECT
+		DATATIME as "datatime",
+		MN as "mn",
+		SITEID as "siteid",
+		SITENAME as "sitename",
+		FACTORID as "factorid",
+		FACTORNAME as "factorname",
+		QN as "qn",
+		ST as "st",
+		CN as "cn",
+		VALUEZS as "valuezs",
+		ALARMTYPE as "alarmtype",
+		ALARMSTATUS as "alarmstatus",
+		ALARMINFO as "alarminfo",
+		SENDTIME as "sendtime",
+		SENDSTATUS as "sendstatus",
+		FILLTIME as "filltime",
+		FILLSTATUS as "fillstatus",
+		FILLMAN as "fillman",
+		FILLID as "fillid",
+		PORTNAME as "portname",
+		PORTID as "portid",
+		HLIMIT as "hlimit",
+		LOWLIMIT as "lowlimit",
+		NKHLIMIT as "nkhlimit",
+		NKLOWLIMIT as "nklowlimit",
+		CONTROL_LINE as "controlLine",
+		STANDARD_VALUE as "standardValue",
+		VALUE_REAL as "valueReal"
+		FROM ${hbSchema}.T_HA_ALARM_OVERLIMIT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="datatime">
+			DATATIME = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mn">
+			MN = #mn#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="cn">
+			CN = #cn#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				DATATIME asc,
+				MN asc,
+				FACTORID asc,
+				CN asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_ALARM_OVERLIMIT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="datatime">
+			DATATIME = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mn">
+			MN = #mn#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="cn">
+			CN = #cn#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="datatime"> DATATIME = #datatime# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="mn"> MN = #mn# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="siteid"> SITEID = #siteid# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="sitename"> SITENAME = #sitename# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="factorid"> FACTORID = #factorid# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="factorname"> FACTORNAME = #factorname# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="qn"> QN = #qn# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="st"> ST = #st# </isNotEmpty> <isNotEmpty 
+		prepend=" AND " property="cn"> CN = #cn# </isNotEmpty> <isNotEmpty prepend=" 
+		AND " property="valuezs"> VALUEZS = #valuezs# </isNotEmpty> <isNotEmpty prepend=" 
+		AND " property="alarmtype"> ALARMTYPE = #alarmtype# </isNotEmpty> <isNotEmpty 
+		prepend=" AND " property="alarmstatus"> ALARMSTATUS = #alarmstatus# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="alarminfo"> ALARMINFO = #alarminfo# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="sendtime"> SENDTIME = 
+		#sendtime# </isNotEmpty> <isNotEmpty prepend=" AND " property="sendstatus"> 
+		SENDSTATUS = #sendstatus# </isNotEmpty> <isNotEmpty prepend=" AND " property="filltime"> 
+		FILLTIME = #filltime# </isNotEmpty> <isNotEmpty prepend=" AND " property="fillstatus"> 
+		FILLSTATUS = #fillstatus# </isNotEmpty> <isNotEmpty prepend=" AND " property="fillman"> 
+		FILLMAN = #fillman# </isNotEmpty> <isNotEmpty prepend=" AND " property="fillid"> 
+		FILLID = #fillid# </isNotEmpty> <isNotEmpty prepend=" AND " property="portname"> 
+		PORTNAME = #portname# </isNotEmpty> <isNotEmpty prepend=" AND " property="portid"> 
+		PORTID = #portid# </isNotEmpty> <isNotEmpty prepend=" AND " property="hlimit"> 
+		HLIMIT = #hlimit# </isNotEmpty> <isNotEmpty prepend=" AND " property="lowlimit"> 
+		LOWLIMIT = #lowlimit# </isNotEmpty> <isNotEmpty prepend=" AND " property="nkhlimit"> 
+		NKHLIMIT = #nkhlimit# </isNotEmpty> <isNotEmpty prepend=" AND " property="nklowlimit"> 
+		NKLOWLIMIT = #nklowlimit# </isNotEmpty> <isNotEmpty prepend=" AND " property="controlLine"> 
+		CONTROL_LINE = #controlLine# </isNotEmpty> <isNotEmpty prepend=" AND " property="standardValue"> 
+		STANDARD_VALUE = #standardValue# </isNotEmpty> <isNotEmpty prepend=" AND 
+		" property="valueReal"> VALUE_REAL = #valueReal# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_ALARM_OVERLIMIT
+		(DATATIME,
+		MN,
+		SITEID,
+		SITENAME,
+		FACTORID,
+		FACTORNAME,
+		QN,
+		ST,
+		CN,
+		VALUEZS,
+		ALARMTYPE,
+		ALARMSTATUS,
+		ALARMINFO,
+		SENDTIME,
+		SENDSTATUS,
+		FILLTIME,
+		FILLSTATUS,
+		FILLMAN,
+		FILLID,
+		PORTNAME,
+		PORTID,
+		HLIMIT,
+		LOWLIMIT,
+		NKHLIMIT,
+		NKLOWLIMIT,
+		CONTROL_LINE,
+		STANDARD_VALUE,
+		VALUE_REAL
+		)
+		VALUES (#datatime:VARCHAR#, #mn:VARCHAR#, #siteid:VARCHAR#,
+		#sitename:VARCHAR#, #factorid:VARCHAR#, #factorname:VARCHAR#,
+		#qn:VARCHAR#, #st:VARCHAR#, #cn:VARCHAR#, #valuezs:VARCHAR#,
+		#alarmtype:VARCHAR#, #alarmstatus:VARCHAR#, #alarminfo:VARCHAR#,
+		#sendtime:VARCHAR#, #sendstatus:VARCHAR#, #filltime:VARCHAR#,
+		#fillstatus:VARCHAR#, #fillman:VARCHAR#, #fillid:VARCHAR#,
+		#portname:VARCHAR#, #portid:VARCHAR#, #hlimit:VARCHAR#,
+		#lowlimit:VARCHAR#, #nkhlimit:VARCHAR#, #nklowlimit:VARCHAR#,
+		#controlLine:VARCHAR#, #standardValue:VARCHAR#, #valueReal:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_ALARM_OVERLIMIT WHERE
+		DATATIME = #datatime# AND
+		MN = #mn# AND
+		FACTORID = #factorid# AND
+		CN = #cn#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_ALARM_OVERLIMIT
+		SET
+		SITEID = #siteid#,
+		SITENAME = #sitename#,
+		FACTORNAME = #factorname#,
+		QN = #qn#,
+		ST = #st#,
+		VALUEZS = #valuezs#,
+		ALARMTYPE = #alarmtype#,
+		ALARMSTATUS = #alarmstatus#,
+		ALARMINFO = #alarminfo#,
+		SENDTIME = #sendtime#,
+		SENDSTATUS = #sendstatus#,
+		FILLTIME = #filltime#,
+		FILLSTATUS = #fillstatus#,
+		FILLMAN = #fillman#,
+		FILLID = #fillid#,
+		PORTNAME = #portname#,
+		PORTID = #portid#,
+		HLIMIT = #hlimit#,
+		LOWLIMIT = #lowlimit#,
+		NKHLIMIT = #nkhlimit#,
+		NKLOWLIMIT = #nklowlimit#,
+		CONTROL_LINE = #controlLine#,
+		STANDARD_VALUE = #standardValue#,
+		VALUE_REAL = #valueReal#
+		WHERE
+		DATATIME = #datatime# AND
+		MN = #mn# AND
+		FACTORID = #factorid# AND
+		CN = #cn#
+	</update>
+
+
+	<update id="updateFillid">
+		UPDATE ${hbSchema}.T_HA_ALARM_OVERLIMIT
+		SET
+		FILLID = #fillid#
+
+		WHERE
+		DATATIME = #datatime# AND
+		MN = #mn# AND
+		FACTORID = #factorid# AND
+		CN = #cn#
+	</update>
+
+	<update id="updateFillid2">
+		UPDATE ${hbSchema}.T_HA_ALARM_OVERLIMIT
+		SET
+		FILLID = #fillid#
+		WHERE
+		DATATIME gt;= #starttime# and
+		 DATATIME lt;=#endtime# and
+		 siteid = #siteid# AND
+		FACTORNAME = #factorname# AND
+		CN = #cn#
+	</update>
+	
+	<!-- 撤回修改fillid -->
+	<update id="updateFillid3">
+		UPDATE ${hbSchema}.T_HA_ALARM_OVERLIMIT
+		SET
+		FILLID = #fillid#
+
+		WHERE
+		FILLID = #declareId# 
+	</update>
+
+	<select id="queryAlarmJoinDeclareInfo"
+		parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT DISTINCT
+		t1.DATATIME "datatime",
+		substr(t1.DATATIME,1,13) "showtime",
+		t1.MN as "mn",
+		t1.SITEID as "siteid",
+		t1.SITENAME as "sitename",
+		t1.FACTORID as "factorid",
+		t1.FACTORNAME as "factorname",
+		t1.QN as "qn",
+		t1.ST as "st",
+		t1.CN as "cn",
+		t1.VALUEZS as "valuezs",
+		t1.ALARMTYPE as "alarmtype",
+		t1.ALARMSTATUS as "alarmstatus",
+		t1.ALARMINFO as "alarminfo",
+		t1.SENDTIME as "sendtime",
+		t1.SENDSTATUS as "sendstatus",
+		t1.FILLTIME as "filltime",
+		t1.FILLSTATUS as "fillstatus",
+		t1.FILLMAN as "fillman",
+		t1.FILLID as "fillid",
+		t1.PORTNAME as "portname",
+		t1.PORTID as "portid",
+		t1.HLIMIT as "hlimit",
+		t1.LOWLIMIT as "lowlimit",
+		t1.NKHLIMIT as "nkhlimit",
+		t1.NKLOWLIMIT as "nklowlimit",
+		t1.CONTROL_LINE as "controlLine",
+		t1.STANDARD_VALUE as "standardValue",
+		t1.VALUE_REAL as "valueReal" ,
+
+		t2.DECLARE_ID as "declareId",
+		t2.DECLARE_REASON as "declareReason" ,
+		t2.DECLARE_STATUS as "declareStatus",
+		t2.AUDIT_STATUS as "auditStatus",
+		t2.AUDIT_STATUS_NAME as "auditStatusName",
+		t2.FAULT_TYPE as "faultType",
+		t2.ABNORMAL_START_TIME as "abnormalStartTime",
+		t2.ABNORMAL_END_TIME as "abnormalEndTime",
+		t2.FACTOR_NAMES as "factorNames",
+		t2.TREATMENT_MEASURES as "treatmentMeasures",
+		t2.DECLARANT as "declarant",
+		t2.PHONE as "phone",
+		t2.REPORT_TIME as "reportTime",
+
+		t3.DEPARTID as "companyId",
+		t4.haltstatus as "haltstatus"
+
+		FROM
+		${hbSchema}.T_HA_ALARM_OVERLIMIT t1
+		LEFT JOIN
+		${hbSchema}.T_HF_ABNORMAL_DECLARE t2
+		ON
+		t1.FILLID = t2.DECLARE_ID
+		LEFT JOIN
+		${hbSchema}.T_HA_SITE t3
+		ON
+		t1.SITEID = t3.SITEID
+		LEFT JOIN
+    	(
+	        SELECT
+	            t5.siteid,
+	            t5.status AS haltstatus,
+	            t5.BEGINTIME,
+	            t5.ENDTIME
+	        FROM
+			${hbSchema}.T_HF_HALTDECLARE t5 where t5.STATUS='s2') t4
+		ON 
+		t1.siteid=t4.siteid and substr(t1.DATATIME,1,13)&lt;=SUBSTR(t4.ENDTIME,1,13) and substr(t1.DATATIME,1,13)&gt;=SUBSTR(t4.BEGINTIME,1,13)
+			and (t1.FILLID is null or t1.FILLID='')
+		WHERE 1=1 
+		<!-- and t3.DEPARTID like '$companyId$' -->
+		<isNotEmpty prepend=" AND " property="startTime">
+			t1.DATATIME  <![CDATA[ >= ]]> #startTime#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="startTime">
+			t1.DATATIME  <![CDATA[ <= ]]> #endTime#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="cn">
+			t1.CN = #cn#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="controlLine">
+			t1.CONTROL_LINE = #controlLine#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="st">
+			t1.ST = #st#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.monitorid = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.factorid = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companyId">
+			t3.DEPARTID like #companyId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.siteid = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmtype">
+			t1.alarmtype in ($alarmtype$)
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sifts">
+			t1.siteid  not in ($sifts$)
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="fillid">
+			(t1.FILLID  is null or  t1.FILLID ='')
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="auditStatus">
+			t2.AUDIT_STATUS like #auditStatus#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				MN asc,
+				FACTORID asc,
+				DATATIME asc,
+				CN asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="queryOverByDept" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhc51">
+		SELECT
+		substr(a.DATATIME,6,8) as "datatime",
+		a.MN as "mn",
+		a.SITEID as
+		"siteid",
+		a.SITENAME as "sitename",
+		FACTORID as "factorid",
+		FACTORNAME as
+		"factorname",
+		VALUEZS as "valuezs",
+		HLIMIT as "hlimit",
+		LOWLIMIT as
+		"lowlimit",
+		NKHLIMIT as
+		"nkhlimit",
+		NKLOWLIMIT as "nklowlimit",
+		VALUE_REAL as "valueReal",
+		alarminfo as "alarminfo"
+		FROM
+		${hbSchema}.T_HA_ALARM_OVERLIMIT a
+		left join ${hbSchema}.VIEW_T_HA_SITE
+		b
+		on(a.siteid=b.siteid)
+		WHERE 1=1 and b.DEPARTMENTID like
+		'$departmentId$'
+		<isNotEmpty prepend=" AND " property="startTime">
+			a.DATATIME  <![CDATA[ >= ]]>
+			#startTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endTime">
+			a.DATATIME  <![CDATA[ <= ]]>
+			#endTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="cn">
+			a.cn =
+			#cn#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="controlLine">
+			a.CONTROL_LINE =
+			#controlLine#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmtype">
+			a.alarmtype in
+			($alarmtype$)
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.DATATIME desc,
+				a.siteid asc,
+				FACTORID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	<delete id="compareInfo">
+		DELETE FROM ${hbSchema}.T_HA_ALARM_OVERLIMIT WHERE
+			DATATIME = #datatime# AND
+			MN = #mn# AND
+			FACTORID = #factorid# AND
+			CN = #cn# and
+			ALARMTYPE= #alarmtype#
+	</delete>
+	
+	 <update id="updatesql"  parameterClass="java.util.HashMap" >
+      $sqlMap$
+    </update>
+</sqlMap>

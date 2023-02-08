@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-08-04 9:06:36
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_DISCHARGEPORT 
+		 DISCHARGEPORTID  VARCHAR   NOT NULL   primarykey, 
+		 DISCHARGEPORTNAME  VARCHAR, 
+		 ISFORMAL  VARCHAR   NOT NULL, 
+		 PROCID  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 SIGNFORM  VARCHAR, 
+		 DISCHARGEMODE  VARCHAR, 
+		 LONGITUDE  VARCHAR, 
+		 LATITUDE  VARCHAR, 
+		 POSITION  VARCHAR, 
+		 EXECUTIONSTANDARD  VARCHAR, 
+		 SETRIGHT  VARCHAR, 
+		 IMPORTANTPORT  VARCHAR, 
+		 ISMAP  VARCHAR, 
+		 DESCRIPTION  VARCHAR, 
+		 OUTTO  VARCHAR, 
+		 OUTTYPE  VARCHAR, 
+		 OUTRULE  VARCHAR, 
+		 COUNTRYPOINT  VARCHAR, 
+		 CITYPOINT  VARCHAR, 
+		 COMPANYPOINT  VARCHAR, 
+		 CLEANPOINT  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR, 
+		 DISCHARGEPORTCODE  VARCHAR, 
+		 DEPARTID  VARCHAR, 
+		 EXHAUSTHEIGHT  VARCHAR, 
+		 EXHAUSTINSIDE  VARCHAR, 
+		 PORT_TEMPERATURE  VARCHAR, 
+		 DISCHARGE_CLASSIFY  VARCHAR
+	-->
+<sqlMap namespace="tduhb05">
+
+		<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb05">
+		SELECT
+				DISCHARGEPORTID	as "dischargeportid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				DISCHARGEPORTCODE	as "dischargeportcode",  
+				ISFORMAL	as "isformal",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				MONITORID	as "monitorid",  
+				SIGNFORM	as "signform",  
+				DISCHARGEMODE	as "dischargemode",  
+				LONGITUDE	as "longitude",  
+				LATITUDE	as "latitude",  
+				POSITION	as "position",  
+				EXECUTIONSTANDARD	as "executionstandard",  
+				SETRIGHT	as "setright",  
+				IMPORTANTPORT	as "importantport",  
+				ISMAP	as "ismap",  
+				DESCRIPTION	as "description",  
+				OUTTO	as "outto",  
+				OUTTYPE	as "outtype",  
+				OUTRULE	as "outrule",  
+				EXHAUSTHEIGHT	as "exhaustheight",  
+				EXHAUSTINSIDE	as "exhaustinside",  
+				COUNTRYPOINT	as "countrypoint",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				CLEANPOINT	as "cleanpoint",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",
+				PORT_TEMPERATURE	as "portTemperature",  
+				DISCHARGE_CLASSIFY	as "dischargeClassify" 
+		FROM ${hbSchema}.T_HA_DISCHARGEPORT WHERE 1=1
+		
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportcode">
+			DISCHARGEPORTCODE like '%$dischargeportcode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME like '%$dischargeportname$%'
+		</isNotEmpty>
+		<!--<isNotEmpty prepend=" AND " property="dischargeClassify">-->
+			<!--DISCHARGE_CLASSIFY  in ($dischargeClassify$)-->
+		<!--</isNotEmpty>-->
+			<isNotEmpty prepend=" AND " property="isformal">
+				ISFORMAL =  #isformal#
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="status">
+				STATUS =  #status#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="dischargeClassify">
+				DISCHARGE_CLASSIFY IN
+				<iterate open="(" close=")" conjunction="," property="dischargeClassify">
+					#dischargeClassify[]#
+				</iterate>
+			</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+            dischargeportcode asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb05">
+		SELECT
+				DISCHARGEPORTID	as "dischargeportid",  
+				DISCHARGEPORTCODE	as "dischargeportcode",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				ISFORMAL	as "isformal",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				MONITORID	as "monitorid",  
+				SIGNFORM	as "signform",  
+				DISCHARGEMODE	as "dischargemode",  
+				LONGITUDE	as "longitude",  
+				LATITUDE	as "latitude",  
+				POSITION	as "position",  
+				EXECUTIONSTANDARD	as "executionstandard",  
+				SETRIGHT	as "setright",  
+				IMPORTANTPORT	as "importantport",  
+				ISMAP	as "ismap",  
+				DESCRIPTION	as "description",  
+				OUTTO	as "outto",  
+				OUTTYPE	as "outtype",  
+				OUTRULE	as "outrule",  
+				EXHAUSTHEIGHT	as "exhaustheight",  
+				EXHAUSTINSIDE	as "exhaustinside",  
+				COUNTRYPOINT	as "countrypoint",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				CLEANPOINT	as "cleanpoint",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",
+				PORT_TEMPERATURE	as "portTemperature",  
+				DISCHARGE_CLASSIFY	as "dischargeClassify" 
+		FROM ${hbSchema}.T_HA_DISCHARGEPORT order by DISCHARGEPORTID desc fetch first 1 rows only
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_DISCHARGEPORT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportcode">
+			DISCHARGEPORTCODE like '%$dischargeportcode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME like '%$dischargeportname$%'
+		</isNotEmpty>
+	</select>
+	
+	
+	<select id="queryPortCode" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb05">
+		SELECT
+				t1.DISCHARGEPORTID	as "dischargeportid",  
+				t1.DISCHARGEPORTCODE	as "dischargeportcode",  
+				t1.DISCHARGEPORTNAME	as "dischargeportname",   
+				t1.DEPARTID	as "departid",  
+				t1.PROCID	as "procid",  
+				t1.MONITORID	as "monitorid",  
+				t1.DISCHARGEMODE	as "dischargemode",  
+				t1.STATUS	as "status"
+		FROM 
+			${hbSchema}.T_HA_DISCHARGEPORT t1
+		LEFT JOIN
+			${hbSchema}.T_HA_SITE t2
+		ON
+			t1.DISCHARGEPORTID = t2.PORTID
+		WHERE 1=1
+		
+		<isNotEmpty prepend=" AND " property="siteid">
+			t2.SITEID = #siteid#
+		</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  DISCHARGEPORTID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME = #dischargeportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL = #isformal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="signform">
+			SIGNFORM = #signform#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargemode">
+			DISCHARGEMODE = #dischargemode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="longitude">
+			LONGITUDE = #longitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="latitude">
+			LATITUDE = #latitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="position">
+			POSITION = #position#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="executionstandard">
+			EXECUTIONSTANDARD = #executionstandard#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="setright">
+			SETRIGHT = #setright#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="importantport">
+			IMPORTANTPORT = #importantport#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismap">
+			ISMAP = #ismap#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outto">
+			OUTTO = #outto#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outtype">
+			OUTTYPE = #outtype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outrule">
+			OUTRULE = #outrule#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT = #companypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="cleanpoint">
+			CLEANPOINT = #cleanpoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportcode">
+			DISCHARGEPORTCODE = #dischargeportcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="exhaustheight">
+			EXHAUSTHEIGHT = #exhaustheight#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="exhaustinside">
+			EXHAUSTINSIDE = #exhaustinside#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portTemperature">
+			PORT_TEMPERATURE = #portTemperature#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeClassify">
+			DISCHARGE_CLASSIFY = #dischargeClassify#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_DISCHARGEPORT (DISCHARGEPORTID,
+										DISCHARGEPORTNAME,
+										ISFORMAL,
+										PROCID,
+										MONITORID,
+										SIGNFORM,
+										DISCHARGEMODE,
+										LONGITUDE,
+										LATITUDE,
+										POSITION,
+										EXECUTIONSTANDARD,
+										SETRIGHT,
+										IMPORTANTPORT,
+										ISMAP,
+										DESCRIPTION,
+										OUTTO,
+										OUTTYPE,
+										OUTRULE,
+										COUNTRYPOINT,
+										CITYPOINT,
+										COMPANYPOINT,
+										CLEANPOINT,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										DISCHARGEPORTCODE,
+										DEPARTID,
+										EXHAUSTHEIGHT,
+										EXHAUSTINSIDE,
+										PORT_TEMPERATURE,
+										DISCHARGE_CLASSIFY
+										)		 
+	    VALUES (#dischargeportid:VARCHAR#, #dischargeportname:VARCHAR#, #isformal:VARCHAR#, #procid:VARCHAR#, #monitorid:VARCHAR#, #signform:VARCHAR#, #dischargemode:VARCHAR#, #longitude:VARCHAR#, #latitude:VARCHAR#, #position:VARCHAR#, #executionstandard:VARCHAR#, #setright:VARCHAR#, #importantport:VARCHAR#, #ismap:VARCHAR#, #description:VARCHAR#, #outto:VARCHAR#, #outtype:VARCHAR#, #outrule:VARCHAR#, #countrypoint:VARCHAR#, #citypoint:VARCHAR#, #companypoint:VARCHAR#, #cleanpoint:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #dischargeportcode:VARCHAR#, #departid:VARCHAR#, #exhaustheight:VARCHAR#, #exhaustinside:VARCHAR#, #portTemperature:VARCHAR#, #dischargeClassify:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_DISCHARGEPORT WHERE 
+			DISCHARGEPORTID = #dischargeportid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_DISCHARGEPORT 
+		SET 
+					DISCHARGEPORTNAME	= #dischargeportname#, 
+					ISFORMAL	= #isformal#, 
+					PROCID	= #procid#, 
+					MONITORID	= #monitorid#, 
+					SIGNFORM	= #signform#, 
+					DISCHARGEMODE	= #dischargemode#, 
+					LONGITUDE	= #longitude#, 
+					LATITUDE	= #latitude#, 
+					POSITION	= #position#, 
+					EXECUTIONSTANDARD	= #executionstandard#, 
+					SETRIGHT	= #setright#, 
+					IMPORTANTPORT	= #importantport#, 
+					ISMAP	= #ismap#, 
+					DESCRIPTION	= #description#, 
+					OUTTO	= #outto#, 
+					OUTTYPE	= #outtype#, 
+					OUTRULE	= #outrule#, 
+					COUNTRYPOINT	= #countrypoint#, 
+					CITYPOINT	= #citypoint#, 
+					COMPANYPOINT	= #companypoint#, 
+					CLEANPOINT	= #cleanpoint#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					DISCHARGEPORTCODE	= #dischargeportcode#, 
+					DEPARTID	= #departid#, 
+					EXHAUSTHEIGHT	= #exhaustheight#, 
+					EXHAUSTINSIDE	= #exhaustinside#, 
+					PORT_TEMPERATURE	= #portTemperature#, 
+					DISCHARGE_CLASSIFY	= #dischargeClassify#
+			WHERE 	
+			DISCHARGEPORTID = #dischargeportid#
+	</update>
+	
+	<update id="updatePortInfo">
+		UPDATE ${hbSchema}.T_HA_DISCHARGEPORT 
+		SET 
+					DISCHARGEPORTNAME	= #dischargeportname#, 
+					ISFORMAL	= #isformal#, 
+					PROCID	= #procid#, 
+					MONITORID	= #monitorid#, 
+					SIGNFORM	= #signform#, 
+					DISCHARGEMODE	= #dischargemode#, 
+					LONGITUDE	= #longitude#, 
+					LATITUDE	= #latitude#, 
+					POSITION	= #position#, 
+					EXECUTIONSTANDARD	= #executionstandard#, 
+					SETRIGHT	= #setright#, 
+					<!-- IMPORTANTPORT	= #importantport#,  -->
+					ISMAP	= #ismap#, 
+					DESCRIPTION	= #description#, 
+					OUTTO	= #outto#, 
+					OUTTYPE	= #outtype#, 
+					OUTRULE	= #outrule#, 
+					COUNTRYPOINT	= #countrypoint#, 
+					CITYPOINT	= #citypoint#, 
+					COMPANYPOINT	= #companypoint#, 
+					CLEANPOINT	= #cleanpoint#, 
+					STATUS	= #status#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					DISCHARGEPORTCODE	= #dischargeportcode#, 
+					DEPARTID	= #departid#, 
+					EXHAUSTHEIGHT	= #exhaustheight#, 
+					EXHAUSTINSIDE	= #exhaustinside#, 
+					PORT_TEMPERATURE	= #portTemperature#, 
+					DISCHARGE_CLASSIFY	= #dischargeClassify#
+			WHERE 	
+			DISCHARGEPORTID = #dischargeportid#
+	</update>
+
+	<!-- 统计不同类型排口 -->
+	<select id="queryDischargeport"  parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb05">
+		SELECT
+		DISCHARGEPORTID	as "dischargeportid",
+		DISCHARGEPORTNAME	as "dischargeportname",
+		DISCHARGEPORTCODE	as "dischargeportcode",
+		ISFORMAL	as "isformal",
+		DEPARTID	as "departid",
+		PROCID	as "procid",
+		MONITORID	as "monitorid",
+		SIGNFORM	as "signform",
+		DISCHARGEMODE	as "dischargemode",
+		LONGITUDE	as "longitude",
+		LATITUDE	as "latitude",
+		POSITION	as "position",
+		EXECUTIONSTANDARD	as "executionstandard",
+		SETRIGHT	as "setright",
+		IMPORTANTPORT	as "importantport",
+		ISMAP	as "ismap",
+		DESCRIPTION	as "description",
+		OUTTO	as "outto",
+		OUTTYPE	as "outtype",
+		OUTRULE	as "outrule",
+		EXHAUSTHEIGHT	as "exhaustheight",
+		EXHAUSTINSIDE	as "exhaustinside",
+		COUNTRYPOINT	as "countrypoint",
+		CITYPOINT	as "citypoint",
+		COMPANYPOINT	as "companypoint",
+		CLEANPOINT	as "cleanpoint",
+		STATUS	as "status",
+		CREATOR	as "creator",
+		CREATED_TIME	as "createdTime",
+		MODIFIER	as "modifier",
+		UPDATED_TIME	as "updatedTime",
+		PORT_TEMPERATURE	as "portTemperature",
+		DISCHARGE_CLASSIFY	as "dischargeClassify"
+		FROM
+		${hbSchema}.T_HA_DISCHARGEPORT
+		WHERE
+		1 = 1
+		AND STATUS = '1'
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =  #monitorid#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL =  #isformal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeClassify">
+			DISCHARGE_CLASSIFY !=  #dischargeClassify#
+		</isNotEmpty>
+	</select>
+
+</sqlMap>

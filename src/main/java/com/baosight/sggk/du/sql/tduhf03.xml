@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-10 15:16:20
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_DEPARTMENTEX 
+		 DEPARTMENT_ID  VARCHAR   NOT NULL   primarykey, 
+		 DEPARTMENT_NAME  VARCHAR   NOT NULL, 
+		 PARENTID  VARCHAR   NOT NULL, 
+		 ENV  VARCHAR, 
+		 ENV_COEF  VARCHAR, 
+		 ENV_WEIGHT  VARCHAR
+	-->
+<sqlMap namespace="tduhf03">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf03">
+		SELECT
+				DEPARTMENT_ID	as "departmentid",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				ENV	as "env",  
+				ENV_COEF	as "envCoef",  
+				ENV_WEIGHT	as "envWeight" 
+		FROM ${hbSchema}.T_HA_DEPARTMENTEX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENT_ID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="env">
+			ENV = #env#
+		</isNotEmpty>
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_DEPARTMENTEX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentName">
+			DEPARTMENT_NAME = #departmentName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="env">
+			ENV = #env#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="envCoef">
+			ENV_COEF = #envCoef#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="envWeight">
+			ENV_WEIGHT = #envWeight#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_DEPARTMENTEX (DEPARTMENT_ID,
+										DEPARTMENT_NAME,
+										PARENTID,
+										ENV,
+										ENV_COEF,
+										ENV_WEIGHT
+										)		 
+	    VALUES (#departmentId:VARCHAR#, #departmentName:VARCHAR#, #parentid:VARCHAR#, #env:VARCHAR#, #envCoef:VARCHAR#, #envWeight:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_DEPARTMENTEX WHERE 
+			DEPARTMENT_ID = #departmentId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENTEX 
+		SET 
+					DEPARTMENT_NAME	= #departmentName#, 
+					PARENTID	= #parentid#, 
+					ENV	= #env#, 
+					ENV_COEF	= #envCoef#, 
+					ENV_WEIGHT	= #envWeight#
+			WHERE 	
+			DEPARTMENT_ID = #departmentId#
+	</update>
+  
+</sqlMap>

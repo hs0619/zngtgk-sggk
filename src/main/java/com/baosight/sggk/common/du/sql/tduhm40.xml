@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhm40">
+<!--    查询数据录入表的信息-->
+    <select id="query" resultClass="java.util.HashMap">
+        SELECT
+        MUUID  as  "muuId"  ,
+        PERIOD as "period",
+        TARGET_NAME as "targetName",
+        OUTPUT as "output"
+        FROM ${platSchema}.TDUHM40 t02 join TDUHM4001 t01 on t02.TARGET_ID=t01.TARGET_ID
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+    </select>
+
+<!--查看统计表的信息-->
+    <select id="DETAILS" resultClass="java.util.HashMap">
+        SELECT
+        MUUID                          as "muuId",
+        t02.TARGET_NAME                       as "targetName",
+        TARGET_CODE                       as "targetCode",
+        UNIT                               as "unit",
+        BASE_NUMBER                   as "baseNumber",
+        YESTERYEAR_VALUE                as "yesteryearValue",
+        THISYEAR_VALUE                  as "thisyearValue",
+        INCREASE                       as "increase",
+        t02.REMARK                         as "remark"
+        FROM ${platSchema}.TDUHM4000 t02 join TDUHM4001 t01 on t02.TARGET_ID=t01.TARGET_ID
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+        order by MUUID asc
+    </select>
+
+<!--    查询录入表的最大ID-->
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm40">
+        SELECT
+        MUUID as "muuId"
+        FROM ${platSchema}.TDUHM40 WHERE  1=1 order by MUUID desc  fetch first  1 rows only
+    </select>
+
+<!--查询统计表的最大ID-->
+    <select id="queryId2" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm4000">
+        SELECT
+        MUUID as "muuId"
+        FROM ${platSchema}.TDUHM4000 WHERE  1=1 order by MUUID desc  fetch first  1 rows only
+    </select>
+
+
+<!--查询当年一月的基期数-->
+    <select id="queryBase" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm4000">
+        SELECT
+        BASE_NUMBER as "baseNumber"
+        FROM ${platSchema}.TDUHM4000
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+    </select>
+
+<!--查询去年全年累计值-->
+    <select id="queryYester" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm4000">
+        SELECT
+        THISYEAR_VALUE as "yesteryearValue"
+        FROM ${platSchema}.TDUHM4000
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+    </select>
+
+<!--查询今年到当前月的累计值-->
+    <select id="queryThis" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm4000">
+        SELECT
+        THISYEAR_VALUE as "thisyearValue"
+        FROM ${platSchema}.TDUHM4000
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+    </select>
+
+    <select id="count" resultClass="int">
+            SELECT COUNT(*) FROM ${platSchema}.TDUHM40 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD = #period#
+        </isNotEmpty>
+                </select>
+
+<!--    往数据录入表中加数据添加-->
+        <insert id="insert">
+            INSERT INTO ${platSchema}.TDUHM40 (
+            MUUID,
+            PERIOD,
+            TARGET_ID
+            )
+            VALUES (
+            #muuId: VARCHAR#   ,
+            #period: VARCHAR#   ,
+            #targetId: VARCHAR#  	)
+    	</insert>
+
+<!--往统计表中加数据-->
+    <insert id="insert2">
+        INSERT INTO ${platSchema}.TDUHM4000 (
+        MUUID,
+        YEAR,
+        MONTH,
+        FATHER_ID,
+        TARGET_ID,
+        BASE_NUMBER,
+        YESTERYEAR_VALUE,
+        THISYEAR_VALUE,
+        INCREASE,
+        REMARK
+        )
+        VALUES (
+        #muuId: VARCHAR#   ,
+        #year: VARCHAR#   ,
+        #month: VARCHAR#   ,
+        #fatherId: VARCHAR#   ,
+        #targetId: VARCHAR#   ,
+        #baseNumber: VARCHAR#   ,
+        #yesteryearValue: VARCHAR#   ,
+        #thisyearValue: VARCHAR#   ,
+        #increase: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+<!--    修改录入表中的-->
+        <update id="update">
+            UPDATE  ${platSchema}.TDUHM40
+            SET
+            OUTPUT = #output#
+            WHERE
+            MUUID = #muuId#
+        </update>
+
+
+    <update id="updateA">
+        UPDATE  ${platSchema}.TDUHM4000
+        SET
+        BASE_NUMBER = #baseNumber#,
+        REMARK =#remark#
+        WHERE
+        MUUID = #muuId#
+    </update>
+
+    <select id="queryJN" resultClass="java.util.HashMap">
+        SELECT
+        MUUID  as  "muuId"  ,
+        PERIOD as "period",
+        TARGET_ID as "targetId",
+        OUTPUT as "output"
+        FROM ${platSchema}.TDUHM40
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="period">
+            PERIOD <![CDATA[ <= ]]> #period#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="date">
+            PERIOD <![CDATA[ >= ]]> #date#
+        </isNotEmpty>
+    </select>
+
+
+    <select id="queryQN" resultClass="java.util.HashMap">
+        SELECT
+        MUUID  as  "muuId"  ,
+        PERIOD as "period",
+        TARGET_ID as "targetId",
+        OUTPUT as "output"
+        FROM ${platSchema}.TDUHM40
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="enddateQN">
+            PERIOD <![CDATA[ <= ]]> #enddateQN#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="strdateQN">
+            PERIOD <![CDATA[ >= ]]> #strdateQN#
+        </isNotEmpty>
+    </select>
+
+</sqlMap>

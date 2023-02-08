@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-23 15:29:54
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE 
+		 AVDID  VARCHAR   NOT NULL   primarykey, 
+		 PERSONID  VARCHAR, 
+		 DISCHARGEPORTID  VARCHAR, 
+		 SITEID  VARCHAR
+	-->
+<sqlMap namespace="tduhb26">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb26">
+		SELECT
+				AVDID	as "avdid",  
+				PERSONID	as "personid",  
+				DISCHARGEPORTID	as "dischargeportid",  
+				SITEID	as "siteid" 
+		FROM ${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="avdid">
+			AVDID = #avdid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="personid">
+			PERSONID = #personid#
+		</isNotEmpty>
+		
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  AVDID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="avdid">
+			AVDID = #avdid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="avdid">
+			AVDID = #avdid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="personid">
+			PERSONID = #personid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE (AVDID,
+										PERSONID,
+										DISCHARGEPORTID,
+										SITEID
+										)		 
+	    VALUES (#avdid:VARCHAR#, #personid:VARCHAR#, #dischargeportid:VARCHAR#, #siteid:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE WHERE 
+			AVDID = #avdid#
+	</delete>
+
+	<delete id="deleteByPersonId">
+		DELETE FROM 
+			${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE 
+		WHERE 
+			PERSONID = #personid#
+	</delete>
+
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_ALARMPERSON_VIEW_SITE 
+		SET 
+					PERSONID	= #personid#, 
+					DISCHARGEPORTID	= #dischargeportid#, 
+					SITEID	= #siteid#
+			WHERE 	
+			AVDID = #avdid#
+	</update>
+	
+	
+	<select id="queryPortIdBySiteId"  parameterClass="java.util.HashMap" 
+	    resultClass="java.util.HashMap" >
+		SELECT 
+			 PORTID as portid
+		FROM 
+			${hbSchema}.VIEW_T_HA_SITE 
+		WHERE 
+			SITEID = #siteid#
+	</select>
+	
+	
+	
+	
+	
+	
+  
+</sqlMap>

@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-08 10:41:30
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_SITE 
+		 SITEID  VARCHAR   NOT NULL   primarykey, 
+		 SITENAME  VARCHAR, 
+		 DEPARTID  VARCHAR   NOT NULL, 
+		 PROCID  VARCHAR   NOT NULL, 
+		 PORTID  VARCHAR   NOT NULL, 
+		 ISARTIFICIAL  VARCHAR, 
+		 ISONLINE  VARCHAR, 
+		 CLASSIFYID  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 MNID  VARCHAR, 
+		 DESCRIPTION  VARCHAR, 
+		 SORT  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb07">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS =  #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryBySiteid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				PORTID	as "portid"  
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+	</select>
+	
+	<!-- 黄 -->
+	<select id="queryIdAndName" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PORTID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	</select>
+	
+		<select id="queryId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE order by SITEID desc fetch first 1 rows only
+	</select>
+	
+	<select id="queryInfo" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				t1.SITEID	as "siteid",  
+				t1.SITENAME	as "sitename",  
+				t1.DEPARTID	as "departid", 
+				t4.DEPARTMENT_NAME	as "departname",  
+				t1.PROCID	as "procid",  
+				t3.DEPARTMENT_NAME	as "procname",  
+				t1.PORTID	as "portid",  
+				t2.DISCHARGEPORTNAME	as "portname",  
+				t2.DISCHARGEPORTCODE	as "dischargeportcode",  
+				t1.ISARTIFICIAL	as "isartificial",  
+				t1.ISONLINE	as "isonline",  
+				t1.CLASSIFYID	as "classifyid",  
+				t1.MONITORID	as "monitorid",  
+				t1.MNID	as "mnid",  
+				t1.DESCRIPTION	as "description",  
+				t1.SORT	as "sort",  
+				t1.STATUS	as "status",  
+				t1.CREATOR	as "creator",  
+				t1.CREATED_TIME	as "createdTime",  
+				t1.MODIFIER	as "modifier",  
+				t1.UPDATED_TIME	as "updatedTime" ,
+                t5.useflag  as "useflag"
+		FROM ${hbSchema}.T_HA_SITE t1 
+        left join ${hbSchema}.T_HA_DISCHARGEPORT t2 on t1.PORTID = t2.DISCHARGEPORTID
+        left join ${hbSchema}.T_HA_DEPARTMENT t3 on t3.DEPARTMENT_ID = t2.PROCID
+        left join ${hbSchema}.T_HA_DEPARTMENT t4 on t4.DEPARTMENT_ID = t2.DEPARTID
+        left join ${hbSchema}.T_HA_SITE_EX t5 on t1.mnid=t5.mnid
+
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			t1.PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			t1.PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			t2.DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			t1.ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			t1.ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			t1.CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			t1.SITENAME like '%$sitename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			t2.countrypoint = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			t2.citypoint = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			t2.companypoint = #companypoint#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!-- <select id="queryInfo" parameterClass="java.util.HashMap" 
+			resultClass="java.util.HashMap">
+		SELECT
+				t1.SITEID	as "siteid",  
+				t1.SITENAME	as "sitename",  
+				t1.DEPARTID	as "departid", 
+				t4.DEPARTMENT_NAME	as "departname",  
+				t1.PROCID	as "procid",  
+				t3.DEPARTMENT_NAME	as "procname",  
+				t1.PORTID	as "portid",  
+				t2.DISCHARGEPORTNAME	as "portname",  
+				t2.DISCHARGEPORTCODE	as "dischargeportcode",  
+				t1.ISARTIFICIAL	as "isartificial",  
+				t1.ISONLINE	as "isonline",  
+				t1.CLASSIFYID	as "classifyid",  
+				t1.MONITORID	as "monitorid",  
+				t1.MNID	as "mnid",  
+				t1.DESCRIPTION	as "description",  
+				t1.SORT	as "sort",  
+				t1.STATUS	as "status",  
+				t1.CREATOR	as "creator",  
+				t1.CREATED_TIME	as "createdTime",  
+				t1.MODIFIER	as "modifier",  
+				t1.UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE t1 
+        left join ${hbSchema}.T_HA_DISCHARGEPORT t2 on t1.PORTID = t2.DISCHARGEPORTID
+        left join ${hbSchema}.T_HA_DEPARTMENT t3 on t3.DEPARTMENT_ID = t2.PROCID
+        left join ${hbSchema}.T_HA_DEPARTMENT t4 on t4.DEPARTMENT_ID = t2.DEPARTID WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			t1.PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			t4.DEPARTMENT_ID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			t1.PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			t1.ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			t1.ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			t1.CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			t1.SITENAME like '%$sitename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			t2.countrypoint = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			t2.citypoint = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			t2.companypoint = #companypoint#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		 CAST(t1.SORT as INT) asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select> -->
+	
+	<select id="queryOLorHMSite" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  CAST(SORT as INT) asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryManualSite" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryByProcid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>	
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="sortIsExist" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+	<select id="queryBigSortList" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="sort">
+			CAST(SORT as INT) <![CDATA[ >= ]]> #sort#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SORT asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryBySortDesc" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				DEPARTID	as "departid",  
+				PROCID	as "procid",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITE 
+		order by CAST(SORT as INT) desc fetch first 1 rows only
+			
+	</select>
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME = #sitename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			DEPARTID = #departid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_SITE (SITEID,
+										SITENAME,
+										DEPARTID,
+										PROCID,
+										PORTID,
+										ISARTIFICIAL,
+										ISONLINE,
+										CLASSIFYID,
+										MONITORID,
+										MNID,
+										DESCRIPTION,
+										SORT,
+										STATUS,
+										CREATOR,
+										CREATED_TIME
+										)		 
+	    VALUES (#siteid:VARCHAR#, #sitename:VARCHAR#, #departid:VARCHAR#, #procid:VARCHAR#, #portid:VARCHAR#, #isartificial:VARCHAR#, #isonline:VARCHAR#, #classifyid:VARCHAR#, #monitorid:VARCHAR#, #mnid:VARCHAR#, #description:VARCHAR#, #sort:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_SITE WHERE 
+			SITEID = #siteid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+					SITENAME	= #sitename#, 
+					DEPARTID	= #departid#, 
+					PROCID	= #procid#, 
+					PORTID	= #portid#, 
+					ISARTIFICIAL	= #isartificial#, 
+					ISONLINE	= #isonline#, 
+					CLASSIFYID	= #classifyid#, 
+					MONITORID	= #monitorid#, 
+					MNID	= #mnid#, 
+					DESCRIPTION	= #description#, 
+					SORT	= #sort#, 
+					STATUS	= #status#,  
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#
+			WHERE 	
+			SITEID = #siteid#
+	</update>
+	
+	<update id="updateTwo">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+					SITENAME	= #sitename#, 
+					DEPARTID	= #departid#, 
+					PROCID	= #procid#, 
+					PORTID	= #portid#, 
+					ISARTIFICIAL	= #isartificial#, 
+					ISONLINE	= #isonline#, 
+					CLASSIFYID	= #classifyid#, 
+					MONITORID	= #monitorid#, 
+					MNID	= #mnid#, 
+					DESCRIPTION	= #description#, 
+					STATUS	= #status#,  
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#
+			WHERE 	
+			SITEID = #siteid#
+	</update>
+	
+	
+	<update id="updatePortId">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+			PORTID	= #portid#, 
+			MODIFIER	= #modifier#, 
+			UPDATED_TIME	= #updatedTime#
+		WHERE 	
+			SITEID = #siteid#
+	</update>
+	
+	
+	<update id="updateSortVal">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+			SORT = #sort#
+		WHERE 	
+		SITEID = #siteid#
+	</update>
+	
+	
+	<update id="sortBigToSmall">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+			SORT = CAST(SORT as INT) + 1
+		WHERE 	
+			CAST(SORT as INT) <![CDATA[ < ]]> #sortOld#
+		AND
+			CAST(SORT as INT) <![CDATA[ >= ]]> #sortNew#
+	</update>
+	
+	<update id="sortSmallToBig">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+			SORT = CAST(SORT as INT)  - 1
+		WHERE 	
+			CAST(SORT as INT) <![CDATA[ > ]]> #sortOld#
+		AND
+			CAST(SORT as INT) <![CDATA[ <= ]]> #sortNew#
+	</update>
+	
+	
+	<update id="updateByPortDelete">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+			PORTID	= #portid#
+		WHERE 	
+		SITEID = #siteid#
+	</update>
+	
+	
+	<update id="updateDepAndProByPortid">
+		UPDATE ${hbSchema}.T_HA_SITE 
+		SET 
+			DEPARTID	= #departid#, 
+			PROCID	= #procid#
+
+		WHERE 	
+			PORTID	= #portid#
+	</update>
+	
+	<!-- 统计在线/人工监测点个数 -->
+  <select id="querySum" resultClass="int">
+		SELECT
+		COUNT(*)
+		FROM
+		${hbSchema}.T_HA_SITE t1
+		WHERE
+		1 = 1
+		AND t1.STATUS = '1'
+		<isNotEmpty prepend=" AND " property="classifyid">
+			 t1.CLASSIFYID =  #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			t1.ISONLINE =  #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			t1.ISARTIFICIAL =  #isartificial#
+		</isNotEmpty>
+	</select>
+	<!-- 统计不同类型排口个数 -->
+	<select id="queryDischargeport" resultClass="int">
+		SELECT
+			COUNT(*)
+			FROM
+				${hbSchema}.T_HA_DISCHARGEPORT
+			WHERE
+				1 = 1
+		AND STATUS = '1'
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =  #monitorid#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL =  #isformal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeClassify">
+			DISCHARGE_CLASSIFY !=  #dischargeClassify#
+		</isNotEmpty>
+	</select>
+
+	<!-- 统计在线/人工监测点 -->
+	<select id="querySumDate" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">
+		SELECT
+		t1.SITEID	as "siteid",
+		t1.SITENAME	as "sitename",
+		t1.DEPARTID	as "departid",
+		t4.DEPARTMENT_NAME	as "departname",
+		t1.PROCID	as "procid",
+		t3.DEPARTMENT_NAME	as "procname",
+		t1.PORTID	as "portid",
+		t2.DISCHARGEPORTNAME	as "portname",
+		t2.DISCHARGEPORTCODE	as "dischargeportcode",
+		t1.ISARTIFICIAL	as "isartificial",
+		t1.ISONLINE	as "isonline",
+		t1.CLASSIFYID	as "classifyid",
+		t1.MONITORID	as "monitorid",
+		t1.MNID	as "mnid",
+		t1.DESCRIPTION	as "description",
+		t1.SORT	as "sort",
+		t1.STATUS	as "status",
+		t1.CREATOR	as "creator",
+		t1.CREATED_TIME	as "createdTime",
+		t1.MODIFIER	as "modifier",
+		t1.UPDATED_TIME	as "updatedTime" ,
+		t5.useflag  as "useflag"
+		FROM
+		${hbSchema}.T_HA_SITE t1
+		left join ${hbSchema}.T_HA_DISCHARGEPORT t2 on t1.PORTID = t2.DISCHARGEPORTID
+		left join ${hbSchema}.T_HA_DEPARTMENT t3 on t3.DEPARTMENT_ID = t2.PROCID
+		left join ${hbSchema}.T_HA_DEPARTMENT t4 on t4.DEPARTMENT_ID = t2.DEPARTID
+		left join ${hbSchema}.T_HA_SITE_EX t5 on t1.mnid=t5.mnid
+		WHERE
+		1 = 1
+		AND t1.STATUS = '1'
+		<isNotEmpty prepend=" AND " property="classifyid">
+			t1.CLASSIFYID =  #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			t1.ISONLINE =  #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			t1.ISARTIFICIAL =  #isartificial#
+		</isNotEmpty>
+	</select>
+</sqlMap>

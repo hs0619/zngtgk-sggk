@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-25 16:09:19
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.XS_USER 
+		 USER_ID  VARCHAR   NOT NULL   primarykey, 
+		 LOGIN_NAME  VARCHAR   NOT NULL, 
+		 PASSWORD  VARCHAR   NOT NULL, 
+		 STATUS  VARCHAR   NOT NULL, 
+		 USER_NAME  VARCHAR   NOT NULL, 
+		 GENDER  VARCHAR   NOT NULL, 
+		 MOBILE  VARCHAR   NOT NULL, 
+		 EMAIL  VARCHAR   NOT NULL, 
+		 USER_TYPE  VARCHAR   NOT NULL, 
+		 ACCOUNT_EXPIRE_DATE  VARCHAR   NOT NULL, 
+		 PWD_EXPIRE_DATE  VARCHAR   NOT NULL, 
+		 IS_LOCKED  VARCHAR   NOT NULL, 
+		 SORT_INDEX  DECIMAL, 
+		 REC_CREATOR  VARCHAR   NOT NULL, 
+		 REC_CREATE_TIME  VARCHAR, 
+		 REC_REVISOR  VARCHAR, 
+		 REC_REVISE_TIME  VARCHAR, 
+		 PWD_REVISE_DATE  VARCHAR, 
+		 PWD_REVISOR  VARCHAR, 
+		 ARCHIVE_FLAG  VARCHAR, 
+		 USER_GROUP_ENAME  VARCHAR
+	-->
+<sqlMap namespace="DUHB2802">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hb.domain.DUHB2802">
+		SELECT
+				USER_ID	as "userId",  <!-- 用户ID -->
+				LOGIN_NAME	as "loginName",  
+				PASSWORD	as "password",  
+				STATUS	as "status",  
+				USER_NAME	as "userName",  
+				GENDER	as "gender",  <!-- 性别1男2女 -->
+				MOBILE	as "mobile",  
+				EMAIL	as "email",  
+				USER_TYPE	as "userType",  
+				ACCOUNT_EXPIRE_DATE	as "accountExpireDate",  
+				PWD_EXPIRE_DATE	as "pwdExpireDate",  
+				IS_LOCKED	as "isLocked",  
+				SORT_INDEX	as "sortIndex",  <!-- 排序 -->
+				REC_CREATOR	as "recCreator",  
+				REC_CREATE_TIME	as "recCreateTime",  <!-- 创建时间 -->
+				REC_REVISOR	as "recRevisor",  <!-- 修改人 -->
+				REC_REVISE_TIME	as "recReviseTime",  <!-- 修改时间 -->
+				PWD_REVISE_DATE	as "pwdReviseDate",  <!-- 密码修改时间 -->
+				PWD_REVISOR	as "pwdRevisor",  <!-- 密码修改人 -->
+				ARCHIVE_FLAG	as "archiveFlag",  <!-- 归档标记 -->
+				USER_GROUP_ENAME	as "userGroupEname" <!-- 用户组 -->
+		FROM ${hbSchema}.XS_USER WHERE 1=1
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="loginName">
+			LOGIN_NAME = #loginName#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  USER_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryAll" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hb.domain.DUHB2802">
+		SELECT
+				
+				LOGIN_NAME	as "loginName",
+				USER_NAME	as "userName"
+				
+		FROM ${hbSchema}.XS_USER WHERE 1=1
+		
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.XS_USER WHERE 1=1
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="loginName">
+			LOGIN_NAME = #loginName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="password">
+			PASSWORD = #password#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userName">
+			USER_NAME = #userName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="gender">
+			GENDER = #gender#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mobile">
+			MOBILE = #mobile#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="email">
+			EMAIL = #email#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userType">
+			USER_TYPE = #userType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="accountExpireDate">
+			ACCOUNT_EXPIRE_DATE = #accountExpireDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pwdExpireDate">
+			PWD_EXPIRE_DATE = #pwdExpireDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isLocked">
+			IS_LOCKED = #isLocked#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sortIndex">
+			SORT_INDEX = #sortIndex#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreator">
+			REC_CREATOR = #recCreator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreateTime">
+			REC_CREATE_TIME = #recCreateTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recRevisor">
+			REC_REVISOR = #recRevisor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recReviseTime">
+			REC_REVISE_TIME = #recReviseTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pwdReviseDate">
+			PWD_REVISE_DATE = #pwdReviseDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pwdRevisor">
+			PWD_REVISOR = #pwdRevisor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="archiveFlag">
+			ARCHIVE_FLAG = #archiveFlag#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userGroupEname">
+			USER_GROUP_ENAME = #userGroupEname#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.XS_USER (USER_ID,  <!-- 用户ID -->
+										LOGIN_NAME,
+										PASSWORD,
+										STATUS,
+										USER_NAME,
+										GENDER,  <!-- 性别1男2女 -->
+										MOBILE,
+										EMAIL,
+										USER_TYPE,
+										ACCOUNT_EXPIRE_DATE,
+										PWD_EXPIRE_DATE,
+										IS_LOCKED,
+										SORT_INDEX,  <!-- 排序 -->
+										REC_CREATOR,
+										REC_CREATE_TIME,  <!-- 创建时间 -->
+										REC_REVISOR,  <!-- 修改人 -->
+										REC_REVISE_TIME,  <!-- 修改时间 -->
+										PWD_REVISE_DATE,  <!-- 密码修改时间 -->
+										PWD_REVISOR,  <!-- 密码修改人 -->
+										ARCHIVE_FLAG,  <!-- 归档标记 -->
+										USER_GROUP_ENAME  <!-- 用户组 -->
+										)		 
+	    VALUES (#userId:VARCHAR#, #loginName:VARCHAR#, #password:VARCHAR#, #status:VARCHAR#, #userName:VARCHAR#, #gender:VARCHAR#, #mobile:VARCHAR#, #email:VARCHAR#, #userType:VARCHAR#, #accountExpireDate:VARCHAR#, #pwdExpireDate:VARCHAR#, #isLocked:VARCHAR#, #sortIndex:NUMERIC#, #recCreator:VARCHAR#, #recCreateTime:VARCHAR#, #recRevisor:VARCHAR#, #recReviseTime:VARCHAR#, #pwdReviseDate:VARCHAR#, #pwdRevisor:VARCHAR#, #archiveFlag:VARCHAR#, #userGroupEname:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.XS_USER WHERE 
+			USER_ID = #userId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.XS_USER 
+		SET 
+					LOGIN_NAME	= #loginName#, 
+					PASSWORD	= #password#, 
+					STATUS	= #status#, 
+					USER_NAME	= #userName#, 
+					GENDER	= #gender#,   <!-- 性别1男2女 -->
+					MOBILE	= #mobile#, 
+					EMAIL	= #email#, 
+					USER_TYPE	= #userType#, 
+					ACCOUNT_EXPIRE_DATE	= #accountExpireDate#, 
+					PWD_EXPIRE_DATE	= #pwdExpireDate#, 
+					IS_LOCKED	= #isLocked#, 
+					SORT_INDEX	= #sortIndex:NUMERIC#,   <!-- 排序 -->
+					REC_CREATOR	= #recCreator#, 
+					REC_CREATE_TIME	= #recCreateTime#,   <!-- 创建时间 -->
+					REC_REVISOR	= #recRevisor#,   <!-- 修改人 -->
+					REC_REVISE_TIME	= #recReviseTime#,   <!-- 修改时间 -->
+					PWD_REVISE_DATE	= #pwdReviseDate#,   <!-- 密码修改时间 -->
+					PWD_REVISOR	= #pwdRevisor#,   <!-- 密码修改人 -->
+					ARCHIVE_FLAG	= #archiveFlag#,   <!-- 归档标记 -->
+					USER_GROUP_ENAME	= #userGroupEname#  <!-- 用户组 -->
+			WHERE 	
+			USER_ID = #userId#
+	</update>
+  
+</sqlMap>

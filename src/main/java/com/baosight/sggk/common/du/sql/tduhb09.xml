@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-29 15:09:40
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_MONITORTOFACTOR 
+		 MONITORID  VARCHAR   NOT NULL   primarykey, 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 STATUS  VARCHAR
+	-->
+<sqlMap namespace="tduhb09">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb09">
+		SELECT
+				MONITORID	as "monitorid",  
+				FACTORID	as "factorid",  
+				STATUS	as "status" 
+		FROM ${hbSchema}.T_HA_MONITORTOFACTOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  MONITORID asc, 
+    		  FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_MONITORTOFACTOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_MONITORTOFACTOR (MONITORID,
+										FACTORID,
+										STATUS
+										)		 
+	    VALUES (#monitorid:VARCHAR#, #factorid:VARCHAR#, #status:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_MONITORTOFACTOR WHERE 
+			MONITORID = #monitorid# AND 
+			FACTORID = #factorid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_MONITORTOFACTOR 
+		SET 
+								STATUS	= #status#
+			WHERE 	
+			MONITORID = #monitorid# AND 
+			FACTORID = #factorid#
+	</update>
+  
+</sqlMap>

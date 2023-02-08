@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-05-07 15:53:28
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_ALARM_PERSON_INFO 
+		 ALARM_PERSON_IDENTITY  VARCHAR   NOT NULL   primarykey, 
+		 ALARM_PERSON_LOGINNAME  VARCHAR, 
+		 ALARM_PERSON_NAME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR, 
+		 DEPARTMENT_NAME  VARCHAR, 
+		 PHONE  VARCHAR, 
+		 MONITOR_TYPE  VARCHAR, 
+		 ALARM_START_TIME  VARCHAR, 
+		 ALARM_END_TIME  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATEDTIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATEDTIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb25">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb25">
+		SELECT
+				ALARM_PERSON_IDENTITY	as "alarmPersonIdentity",  
+				ALARM_PERSON_LOGINNAME	as "alarmPersonLoginname",  
+				ALARM_PERSON_NAME	as "alarmPersonName",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PHONE	as "phone",  
+				MONITOR_TYPE	as "monitorType",  
+				ALARM_START_TIME	as "alarmStartTime",  
+				ALARM_END_TIME	as "alarmEndTime",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATEDTIME	as "createdtime",  
+				MODIFIER	as "modifier",  
+				UPDATEDTIME	as "updatedtime" 
+		FROM ${hbSchema}.T_HA_ALARM_PERSON_INFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="alarmPersonIdentity">
+			ALARM_PERSON_IDENTITY = #alarmPersonIdentity#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend=" AND " property="alarmPersonLoginname">
+			ALARM_PERSON_LOGINNAME like '%$alarmPersonLoginname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmPersonName">
+			ALARM_PERSON_NAME like '%$alarmPersonName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  ALARM_PERSON_IDENTITY asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryByUserId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb25">
+		SELECT
+				ALARM_PERSON_IDENTITY	as "alarmPersonIdentity",  <!-- 报警人ID -->
+				ALARM_PERSON_LOGINNAME	as "alarmPersonLoginname",  <!-- 报警人登录名 -->
+				ALARM_PERSON_NAME	as "alarmPersonName",  <!-- 报警人姓名 -->
+				DEPARTMENTID	as "departmentid",   <!-- 报警人所在部门的id -->
+				DEPARTMENT_NAME	as "departmentName",  <!--报警人所在部门名称  -->
+				PHONE	as "phone",        <!-- 报警人电话 -->
+				MONITOR_TYPE	as "monitorType",   <!-- 监测类型:  99 全部; 1 实时监控; 2 小时监控; 3 日均监控 -->
+				ALARM_START_TIME	as "alarmStartTime",  <!-- 报警开始时间 -->
+				ALARM_END_TIME	as "alarmEndTime",  <!-- 报警结束时间 -->
+				STATUS	as "status",           <!-- 开启状态：0 	未使用; 1 正在使用 -->
+				CREATOR	as "creator",  
+				CREATEDTIME	as "createdtime",  
+				MODIFIER	as "modifier",  
+				UPDATEDTIME	as "updatedtime"
+		FROM 
+			${hbSchema}.T_HA_ALARM_PERSON_INFO
+		WHERE
+			 ALARM_PERSON_IDENTITY  = #alarmPersonIdentity#
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  ALARM_PERSON_IDENTITY asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_ALARM_PERSON_INFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="alarmPersonIdentity">
+			ALARM_PERSON_IDENTITY = #alarmPersonIdentity#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="alarmPersonIdentity">
+			ALARM_PERSON_IDENTITY = #alarmPersonIdentity#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmPersonLoginname">
+			ALARM_PERSON_LOGINNAME = #alarmPersonLoginname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmPersonName">
+			ALARM_PERSON_NAME = #alarmPersonName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentName">
+			DEPARTMENT_NAME = #departmentName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="phone">
+			PHONE = #phone#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorType">
+			MONITOR_TYPE = #monitorType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmStartTime">
+			ALARM_START_TIME = #alarmStartTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmEndTime">
+			ALARM_END_TIME = #alarmEndTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdtime">
+			CREATEDTIME = #createdtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedtime">
+			UPDATEDTIME = #updatedtime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_ALARM_PERSON_INFO (ALARM_PERSON_IDENTITY,
+										ALARM_PERSON_LOGINNAME,
+										ALARM_PERSON_NAME,
+										DEPARTMENTID,
+										DEPARTMENT_NAME,
+										PHONE,
+										MONITOR_TYPE,
+										ALARM_START_TIME,
+										ALARM_END_TIME,
+										STATUS,
+										CREATOR,
+										CREATEDTIME,
+										MODIFIER,
+										UPDATEDTIME
+										)		 
+	    VALUES (#alarmPersonIdentity:VARCHAR#, #alarmPersonLoginname:VARCHAR#, #alarmPersonName:VARCHAR#, #departmentid:VARCHAR#, #departmentName:VARCHAR#, #phone:VARCHAR#, #monitorType:VARCHAR#, #alarmStartTime:VARCHAR#, #alarmEndTime:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdtime:VARCHAR#, #modifier:VARCHAR#, #updatedtime:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_ALARM_PERSON_INFO WHERE 
+			ALARM_PERSON_IDENTITY = #alarmPersonIdentity#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_ALARM_PERSON_INFO 
+		SET 
+					ALARM_PERSON_LOGINNAME	= #alarmPersonLoginname#, 
+					ALARM_PERSON_NAME	= #alarmPersonName#, 
+					DEPARTMENTID	= #departmentid#, 
+					DEPARTMENT_NAME	= #departmentName#, 
+					PHONE	= #phone#, 
+					MONITOR_TYPE	= #monitorType#, 
+					ALARM_START_TIME	= #alarmStartTime#, 
+					ALARM_END_TIME	= #alarmEndTime#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATEDTIME	= #createdtime#, 
+					MODIFIER	= #modifier#, 
+					UPDATEDTIME	= #updatedtime#
+			WHERE 	
+			ALARM_PERSON_IDENTITY = #alarmPersonIdentity#
+	</update>
+  
+</sqlMap>

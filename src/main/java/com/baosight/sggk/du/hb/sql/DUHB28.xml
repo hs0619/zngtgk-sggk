@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-25 10:11:17
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_XS_USER_EX 
+		 RID  VARCHAR   NOT NULL   primarykey, 
+		 USER_ID  VARCHAR   NOT NULL, 
+		 DEPARTMENT_ID  VARCHAR   NOT NULL
+	-->
+<sqlMap namespace="DUHB28">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hb.domain.DUHB28">
+		SELECT
+				RID	as "rid",  <!-- 唯一ID -->
+				USER_ID	as "userId",  <!-- 系统账户 -->
+				DEPARTMENT_ID	as "departmentId" <!-- 部门编号 -->
+		FROM ${hbSchema}.T_HA_XS_USER_EX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rid">
+			RID = #rid#
+		</isNotEmpty>
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  RID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	<select id="queryByDepartmentId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hb.domain.DUHB28">
+		SELECT
+				RID	as "rid",  <!-- 唯一ID -->
+				USER_ID	as "userId",  <!-- 系统账户 -->
+				DEPARTMENT_ID	as "departmentId" <!-- 部门编号 -->
+		FROM ${hbSchema}.T_HA_XS_USER_EX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID like '%$userId$%'
+		</isNotEmpty>
+	</select>
+	<select id="queryByUserId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hb.domain.DUHB28">
+		SELECT
+				RID	as "rid",  <!-- 唯一ID -->
+				USER_ID	as "userId",  <!-- 系统账户 -->
+				DEPARTMENT_ID	as "departmentId" <!-- 部门编号 -->
+		FROM ${hbSchema}.T_HA_XS_USER_EX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_XS_USER_EX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rid">
+			RID = #rid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="rid">
+			RID = #rid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_XS_USER_EX (RID,  <!-- 唯一ID -->
+										USER_ID,  <!-- 系统账户 -->
+										DEPARTMENT_ID  <!-- 部门编号 -->
+										)		 
+	    VALUES (#rid:VARCHAR#, #userId:VARCHAR#, #departmentId:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_XS_USER_EX WHERE 
+			RID = #rid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_XS_USER_EX 
+		SET 
+					USER_ID	= #userId#,   <!-- 系统账户 -->
+					DEPARTMENT_ID	= #departmentId#  <!-- 部门编号 -->
+			WHERE 	
+			RID = #rid#
+	</update>
+  
+</sqlMap>

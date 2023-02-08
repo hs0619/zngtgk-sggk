@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-05 16:36:10
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX 
+		 ANNEX_ID  VARCHAR   NOT NULL   primarykey, 
+		 DECLARE_ID  VARCHAR, 
+		 ANNEX_PATH  VARCHAR, 
+		 FILE_SIZE  VARCHAR, 
+		 UPLOADER  VARCHAR, 
+		 UPLOAD_TIME  VARCHAR, 
+		 ANNEX_NAME  VARCHAR, 
+		 ANNEX_TYPE  VARCHAR
+	-->
+<sqlMap namespace="tduhf6801">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf6801">
+		SELECT
+				ANNEX_ID	as "annexId",  
+				DECLARE_ID	as "declareId",  
+				ANNEX_PATH	as "annexPath",  
+				FILE_SIZE	as "fileSize",  
+				UPLOADER	as "uploader",  
+				UPLOAD_TIME	as "uploadTime",  
+				ANNEX_NAME	as "annexName",  
+				ANNEX_TYPE	as "annexType" ,
+				uploadid	as "uploadid"
+		FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="annexId">
+			ANNEX_ID = #annexId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="declareId">
+			DECLARE_ID = #declareId#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  ANNEX_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="annexId">
+			ANNEX_ID = #annexId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="annexId">
+			ANNEX_ID = #annexId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="declareId">
+			DECLARE_ID = #declareId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="annexPath">
+			ANNEX_PATH = #annexPath#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="fileSize">
+			FILE_SIZE = #fileSize#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="uploader">
+			UPLOADER = #uploader#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="uploadTime">
+			UPLOAD_TIME = #uploadTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="annexName">
+			ANNEX_NAME = #annexName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="annexType">
+			ANNEX_TYPE = #annexType#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX (ANNEX_ID,
+										DECLARE_ID,
+										ANNEX_PATH,
+										FILE_SIZE,
+										UPLOADER,
+										UPLOAD_TIME,
+										ANNEX_NAME,
+										ANNEX_TYPE,
+										uploadid
+										)		 
+	    VALUES (#annexId:VARCHAR#, #declareId:VARCHAR#, #annexPath:VARCHAR#, #fileSize:VARCHAR#, #uploader:VARCHAR#, 
+	    	#uploadTime:VARCHAR#, #annexName:VARCHAR#, #annexType:VARCHAR#, #uploadid:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX WHERE 
+			ANNEX_ID = #annexId#
+	</delete>
+	
+	<delete id="deleteByDeclareid">
+		DELETE FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX WHERE 
+			DECLARE_ID	= #declareId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_ABNORMAL_DECLARE_ANNEX 
+		SET 
+					DECLARE_ID	= #declareId#, 
+					ANNEX_PATH	= #annexPath#, 
+					FILE_SIZE	= #fileSize#, 
+					UPLOADER	= #uploader#, 
+					UPLOAD_TIME	= #uploadTime#, 
+					ANNEX_NAME	= #annexName#, 
+					ANNEX_TYPE	= #annexType#
+			WHERE 	
+			ANNEX_ID = #annexId#
+	</update>
+  
+</sqlMap>

@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+<sqlMap namespace="tduhb01">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				CAST(SORT as INT)	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				totalplan	as "totalplan",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				DEP_PRO_ID	as "depProId",
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totalplan">
+			totalplan = #totalplan#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="level">
+			level = #level#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  CAST(SORT as INT)  asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryByLevel" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				CAST(SORT as INT)	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				DEP_PRO_ID	as "depProId",
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="level">
+			level = #level#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totalplan">
+			totalplan = #totalplan#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  CAST(SORT as INT)  asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryInfo" parameterClass="java.util.HashMap" 
+			resultClass="java.util.HashMap">
+		SELECT
+				t1.DEPARTMENT_ID	as "departmentId",  
+				t1.DEPARTMENT_NAME	as "departmentName",  
+				t1.PARENTID	as "parentid", 
+				t2.DEPARTMENT_NAME	as "parentname",  
+				t1.TYPE	as "type",  
+				t1.LEVEL	as "level",  
+				t1.DESCRIPTION	as "description",  
+				t1.SORT	as "sort",  
+				t1.STATUS	as "status",  
+				t1.totalplan	as "totalplan",  
+				t1.CREATOR	as "creator",  
+				t1.CREATED_TIME	as "createdTime",  
+				t1.MODIFIER	as "modifier",  
+				t1.DEP_PRO_ID	as "depProId",
+				t1.UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_DEPARTMENT t1 left join ${hbSchema}.T_HA_DEPARTMENT t2 on t1.PARENTID = t2.DEPARTMENT_ID WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			t1.DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			t1.PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			t1.TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="level">
+			t1.level = #level#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totalplan">
+			t1.totalplan in  (#totalplan#)
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentName">
+			t1.DEPARTMENT_NAME like '%$departmentName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentname">
+			t2.DEPARTMENT_NAME like '%$parentname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		 CAST(t1.SORT as INT) asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryId" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				DEP_PRO_ID	as "depProId",
+				UPDATED_TIME	as "updatedTime" 
+		FROM 
+			${hbSchema}.T_HA_DEPARTMENT 
+		WHERE  1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID LIKE 'DEP%'
+		</isNotEmpty>
+		order by DEPARTMENT_ID desc fetch first 1 rows only
+	</select>
+	
+	<select id="queryId_pro" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				DEP_PRO_ID	as "depProId",
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM 
+			${hbSchema}.T_HA_DEPARTMENT 
+		WHERE 
+			DEPARTMENT_ID LIKE 'PRO%'
+		order by DEPARTMENT_ID desc fetch first 1 rows only
+	</select>
+	
+	
+	<select id="queryDepPro" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				DEP_PRO_ID	as "depProId",
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime" 
+		FROM 
+			${hbSchema}.T_HA_DEPARTMENT 
+		WHERE 
+			DEP_PRO_ID LIKE 'DEP%'
+		AND 
+			PARENTID = #parentid# 
+		order by DEPARTMENT_ID desc fetch first 1 rows only
+	</select>
+	
+	
+	
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+	</select>
+	
+	<!--根据排序值查出大于该排序值的所有数据集合  -->
+	<select id="queryBigSortList" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier", 
+				DEP_PRO_ID	as "depProId", 
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			CAST(SORT as INT) <![CDATA[ >= ]]> #sort#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SORT desc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+
+	
+	<!--查询厂部信息列表，倒序排列  -->
+	<select id="queryMaxSort" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier", 
+				DEP_PRO_ID	as "depProId", 
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  CAST(SORT as INT) desc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="sortIsExist" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				TYPE	as "type",  
+				LEVEL	as "level",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				DEP_PRO_ID	as "depProId",
+				UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 1=1
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+	</select>
+	
+	
+	
+	
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentName">
+			DEPARTMENT_NAME = #departmentName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="level">
+			LEVEL = #level#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_DEPARTMENT (DEPARTMENT_ID,
+										DEPARTMENT_NAME,
+										PARENTID,
+										DESCRIPTION,
+										LEVEL,
+										SORT,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										TOTALPLAN,
+										TYPE,
+										DEP_PRO_ID
+										)		 
+	    VALUES (#departmentId:VARCHAR#, #departmentName:VARCHAR#, #parentid:VARCHAR#, #description:VARCHAR#, 
+	    	#level:VARCHAR#, #sort:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, 
+	    		#modifier:VARCHAR#, #updatedTime:VARCHAR#, #totalplan:VARCHAR#, #type:VARCHAR#, #depProId:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_DEPARTMENT WHERE 
+			DEPARTMENT_ID = #departmentId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+					DEPARTMENT_NAME	= #departmentName#, 
+					PARENTID	= #parentid#, 
+					DESCRIPTION	= #description#, 
+					LEVEL	= #level#, 
+					SORT	= #sort#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					TOTALPLAN	= #totalplan#, 
+					TYPE	= #type#, 
+					DEP_PRO_ID	= #depProId#
+			WHERE 	
+			DEPARTMENT_ID = #departmentId#
+	</update>
+	
+	<!--修改排序值  -->
+	<update id="reSortDep">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+			SORT = #sort#
+		WHERE 	
+		DEPARTMENT_ID = #departmentId#,
+		TYPE	= #type#, 
+		PARENTID	= #parentid#
+	</update>
+	
+	<update id="updateSortVal">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+			SORT = #sort#
+		WHERE 	
+		DEPARTMENT_ID = #departmentId#
+	</update>
+	
+	
+	<update id="updateDepartInfo">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+					DEPARTMENT_NAME	= #departmentName#, 
+					PARENTID	= #parentid#, 
+					DESCRIPTION	= #description#, 
+					LEVEL	= #level#, 
+					STATUS	= #status#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					TYPE	= #type#,
+					totalplan	= #totalplan#
+			WHERE 	
+			DEPARTMENT_ID = #departmentId#
+	</update>
+	
+	<update id="updateProceInfo">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+					DEPARTMENT_NAME	= #departmentName#, 
+					PARENTID	= #parentid#, 
+					DESCRIPTION	= #description#, 
+					LEVEL	= #level#, 
+					STATUS	= #status#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					TYPE	= #type#,
+					DEP_PRO_ID	= #depProId#
+			WHERE 	
+			DEPARTMENT_ID = #departmentId#
+	</update>
+	
+	<update id="sortBigToSmall">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+			SORT = CAST(SORT as INT) + 1
+		WHERE 	
+			CAST(SORT as INT) <![CDATA[ < ]]> #sortOld#
+		AND
+			CAST(SORT as INT) <![CDATA[ >= ]]> #sortNew#
+		AND 
+			PARENTID = #parentid#
+		AND 
+			TYPE = #type#
+	</update>
+	
+	<update id="sortSmallToBig">
+		UPDATE ${hbSchema}.T_HA_DEPARTMENT 
+		SET 
+			SORT = CAST(SORT as INT)  - 1
+		WHERE 	
+			CAST(SORT as INT) <![CDATA[ > ]]> #sortOld#
+		AND
+			CAST(SORT as INT) <![CDATA[ <= ]]> #sortNew#
+		AND 
+			PARENTID	= #parentid#
+		AND 
+			TYPE = #type#
+	</update>
+	
+	
+  
+</sqlMap>

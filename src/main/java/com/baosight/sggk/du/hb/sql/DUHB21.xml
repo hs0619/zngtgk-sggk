@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DUHB21">
+
+    <select id="query"  parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+      $sqlMap$
+    </select>
+    
+    <select id="querySite" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.mgrzhb.common.du.domain.Tduhb05">
+		SELECT
+				SITEID	as "siteid",  <!-- 监测点编号 -->
+				SITENAME	as "sitename",  <!-- 监测点名称 -->
+				PORTID	as "portid",  <!-- 对应排口编号 -->
+				ISARTIFICIAL	as "isartificial",  <!-- 是否人工 -->
+				ISONLINE	as "isonline",  <!-- 是否在线 -->
+				CLASSIFYID	as "classifyid",  <!-- 人工监测类型编号 -->
+				MONITORID	as "monitorid",  <!-- 在线监测类型编号 -->
+				MNID	as "mnid"  <!-- MN编号 -->
+		FROM ${hbSchema}.t_ha_site WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME like '%$sitename$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc, 
+    		  PORTID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+    
+    <select id="queryFactor" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.mgrzhb.du.hb.domain.DUHB21">
+		SELECT
+				t1.FACTORID	as "factorid",  <!-- 因子编号 -->
+				t2.siteid	as "siteid",  <!-- 因子编号 -->
+				t2.sitename	as "sitename",  <!-- 因子编号 -->
+				t2.mnid	as "mnid",  <!-- 因子编号 -->
+				t3.FACTORname	as "factorname"  <!-- 因子编号 -->
+		FROM ${hbSchema}.t_ha_sitefactor t1
+		left join ${hbSchema}.t_ha_site t2 on t1.siteid=t2.siteid
+		left join ${hbSchema}.t_ha_factor t3 on t1.FACTORID=t3.FACTORID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			t1.TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.factorid in( #factorid#)
+		</isNotEmpty>
+			order by t1.factorid
+	</select>
+    
+</sqlMap>

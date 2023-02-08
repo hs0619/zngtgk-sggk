@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2020-12-02 14:44:13 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_TAXANDTOTAL_DETAIL CLOCK VARCHAR NOT NULL primarykey, 
+	ITEMCODE VARCHAR NOT NULL primarykey, MONITORID VARCHAR NOT NULL primarykey, 
+	FACTORID VARCHAR NOT NULL primarykey, COMPUTERMODE VARCHAR NOT NULL, SHAREITEM 
+	VARCHAR, ISTOTAL VARCHAR NOT NULL, ISTAX VARCHAR NOT NULL, LIMIT VARCHAR -->
+<sqlMap namespace="tduhd4001">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd4001">
+		SELECT
+		CLOCK as "clock",
+		ITEMCODE as "itemcode",
+		MONITORID as
+		"monitorid",
+		a.FACTORID as "factorid",
+		b.FACTORNAME AS "factorname",
+		COMPUTERMODE as "computermode",
+		ISTOTAL as "istotal",
+		ISTAX as "istax",
+		LIMIT as "limit",
+		EQUIVALUE as "equivalue",
+		taxsourcecode as "taxsourcecode",
+		unittax as "unittax"
+		FROM ${hbSchema}.T_HD_TAXANDTOTAL_DETAIL a
+		LEFT JOIN
+		${hbSchema}.T_HA_FACTOR b ON a.factorid=b.factorid
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.FACTORID =
+			#factorid#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.FACTORID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HD_TAXANDTOTAL_DETAIL WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="clock"> CLOCK = #clock# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemcode"> ITEMCODE = #itemcode# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="monitorid"> MONITORID = #monitorid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="factorid"> FACTORID = 
+		#factorid# </isNotEmpty> <isNotEmpty prepend=" AND " property="computermode"> 
+		COMPUTERMODE = #computermode# </isNotEmpty> <isNotEmpty prepend=" AND " property="shareitem"> 
+		SHAREITEM = #shareitem# </isNotEmpty> <isNotEmpty prepend=" AND " property="istotal"> 
+		ISTOTAL = #istotal# </isNotEmpty> <isNotEmpty prepend=" AND " property="istax"> 
+		ISTAX = #istax# </isNotEmpty> <isNotEmpty prepend=" AND " property="limit"> 
+		LIMIT = #limit# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_TAXANDTOTAL_DETAIL
+		(CLOCK,
+		ITEMCODE,
+		MONITORID,
+		FACTORID,
+		COMPUTERMODE,
+		ISTOTAL,
+		ISTAX,
+		LIMIT,
+		EQUIVALUE,
+		taxsourcecode ,
+		unittax 
+		)
+		VALUES (#clock:VARCHAR#, #itemcode:VARCHAR#, #monitorid:VARCHAR#,
+		#factorid:VARCHAR#, #computermode:VARCHAR#,
+		#istotal:VARCHAR#,
+		#istax:VARCHAR#, #limit:VARCHAR#, #equivalue:VARCHAR#, #taxsourcecode:VARCHAR#, #unittax:VARCHAR#)
+	</insert>
+
+	<!-- 按月份删除 -->
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_DETAIL WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode# AND
+		MONITORID = #monitorid#
+		AND FACTORID = #factorid#
+	</delete>
+	<!-- 按月份删除 -->
+	<delete id="deleteAllExpress"> 
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS WHERE 1=1
+			and clock = #clock#
+			and itemcode = #itemcode#
+			and monitorid = #monitorid#
+			and factorid = #factorid#
+	</delete>
+	<!-- 按年删除 -->
+	<delete id="deleteAllExpress2"> 
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS WHERE 1=1
+			and clock like '%$year$%'
+			and itemcode = #itemcode#
+	</delete>
+	<!-- 按年删除 -->
+	<delete id="deleteAllFactor">
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_DETAIL WHERE 1=1
+			and clock like '%$year$%'
+			and itemcode = #itemcode#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_TAXANDTOTAL_DETAIL
+		SET
+		COMPUTERMODE = #computermode#,
+		ISTOTAL = #istotal#,
+		ISTAX = #istax#,
+		LIMIT = #limit#,
+		EQUIVALUE = #equivalue#,
+		taxsourcecode = #taxsourcecode#,
+		unittax = #unittax#
+		WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode# AND
+		MONITORID = #monitorid# AND
+		FACTORID = #factorid#
+	</update>
+	<select id="queryPKFactor" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT
+		distinct
+		a.FACTORID AS "factorid",
+		b.FACTORNAME AS "factorname",
+		a.highlimit as "limit"
+		FROM t_ha_portfactor a left join t_ha_factor b
+		on(a.factorid=b.factorid) WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.FACTORID =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			a.portid = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.FACTORID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+</sqlMap>

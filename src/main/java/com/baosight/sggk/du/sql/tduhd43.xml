@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-03-02 15:25:04 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_TOTAL_PLAN_VALUE MONITORID VARCHAR NOT NULL primarykey, 
+	FACTORID VARCHAR NOT NULL primarykey, DEPARTMENTID VARCHAR NOT NULL primarykey, 
+	CLOCK VARCHAR NOT NULL primarykey, QUARTER1 DECIMAL, QUARTER2 DECIMAL, QUARTER3 
+	DECIMAL, QUARTER4 DECIMAL -->
+<sqlMap namespace="tduhd43">
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd43">
+		select a.departmentid,a.procedureid,a.itemcode,a.itemname,
+		a.licenceid,a.factorid,
+		sum(zl_finalvalue) as finalvalue
+		
+		from ${hbSchema}.v_hd_taxandtotal_detail a
+		left join ${hbSchema}.t_hd_taxandtotal_value b
+		on(a.itemcode=b.itemcode and a.clock=b.clock and a.monitorid=b.monitorid and
+		a.factorid=b.factorid)
+		where a.istotal='1'
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.factorid =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startclock">
+			a.clock >=
+			#startclock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endclock">
+			<![CDATA[ a.clock <= #endclock# ]]>
+		</isNotEmpty>
+		group by a.departmentid,a.procedureid,a.itemcode,a.itemname,
+			a.licenceid,a.monitorid,a.factorid
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.departmentid,a.procedureid,a.itemcode,a.factorid
+			</isEmpty>
+		</dynamic>
+		
+	</select>
+	
+	<select id="queryTax" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd43">
+		select a.departmentid,a.procedureid,a.itemcode,a.itemname,
+		a.licenceid,a.factorid,b.equivalent,b.tax,
+		sum(tax_finalvalue) as finalvalue,
+		sum(b.totalequivalent) as totalequivalent,
+		sum(b.totaltax) as totaltax,
+		sum(b.reductiontax) as reductiontax
+		from ${hbSchema}.v_hd_taxandtotal_detail a
+		left join ${hbSchema}.t_hd_taxandtotal_value b
+		on(a.itemcode=b.itemcode and a.clock=b.clock and a.monitorid=b.monitorid and
+		a.factorid=b.factorid)
+		where a.istax='1'
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.factorid =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startclock">
+			a.clock >=
+			#startclock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endclock">
+			<![CDATA[ a.clock <= #endclock# ]]>
+		</isNotEmpty>
+		group by a.departmentid,a.procedureid,a.itemcode,a.itemname,
+			a.licenceid,a.monitorid,a.factorid,b.equivalent,b.tax
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.departmentid,a.procedureid,a.itemcode,a.factorid
+			</isEmpty>
+		</dynamic>
+		
+	</select>
+
+	<select id="count" resultClass="int">
+		select count(*)
+		from
+		(select department_id as departmentid,monitorid as
+		monitorid,factorid as factorid,'$clock$' as clock,unit as unit
+		from
+		${hbSchema}.t_ha_department d,${hbSchema}.t_hd_total_plan_factor f
+		where d.totalplan='1') as a
+		left join ${hbSchema}.t_hd_total_plan_value
+		b
+		on(a.departmentid=b.departmentid and a.monitorid=b.monitorid and
+		a.factorid=b.factorid and a.clock=b.clock)
+		where 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.factorid =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.departmentid =
+			#departmentid#
+		</isNotEmpty>
+	</select>
+
+	
+</sqlMap>

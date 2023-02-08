@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhm400">
+        <select id="query" resultClass="java.util.HashMap">
+            SELECT
+            MUUID as "muuid",
+            PERIOD as "period",
+            TARGET_ID as "targetId",
+            TARGET_NAME as "targetName",
+            BASE_NUMBER as "baseNumber"
+            FROM ${platSchema}.TDUHM400
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="period">
+                    PERIOD = #period#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="targetId">
+                    TARGET_ID = #targetId#
+                </isNotEmpty>
+            </dynamic>
+        </select>
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm400">
+        SELECT
+        MUUID              as "muuid"
+        FROM ${platSchema}.TDUHM400 WHERE  1=1 order by MUUID desc  fetch first  1 rows only
+        
+    </select>
+
+    <insert id="insert">
+        INSERT INTO ${platSchema}.TDUHM400 (
+        MUUID ,
+        TARGET_ID  ,
+        TARGET_NAME  ,
+        PERIOD,
+        BASE_NUMBER
+        )
+        VALUES (
+        #muuId: VARCHAR#  ,
+        #targetId: VARCHAR#   ,
+        #targetName: VARCHAR#  ,
+        #period: VARCHAR#  ,
+        #baseNumber:VARCHAR#
+        )
+    </insert>
+
+
+    <update id="update">
+        UPDATE  ${platSchema}.TDUHM400
+        SET
+        BASE_NUMBER =#baseNumber#
+        WHERE
+        TARGET_ID = #targetId#
+        AND
+        PERIOD = #period#
+    </update>
+</sqlMap>

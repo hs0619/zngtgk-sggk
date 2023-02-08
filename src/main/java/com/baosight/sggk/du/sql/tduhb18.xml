@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-03-04 11:00:30 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HA_ENVDEVICE ENVDEVICEID VARCHAR NOT NULL primarykey, 
+	DEVICEID VARCHAR, DEVICENAME VARCHAR, SOURCENAME VARCHAR, FACTORNAME VARCHAR, 
+	OUTTYPE VARCHAR, PROCESSID VARCHAR, PROCESSNAME VARCHAR, PROCESSTYPE VARCHAR, 
+	CANUSE VARCHAR, PROCESSINFO VARCHAR, PORTID VARCHAR, PORTNAME VARCHAR, ISRIGHT 
+	VARCHAR, PORTTYPE VARCHAR, OTHER VARCHAR, DEVICETYPE VARCHAR, OUTTO VARCHAR, 
+	PORTOUTTYPE VARCHAR, OUTRULE VARCHAR, STATUS VARCHAR, CREATOR VARCHAR, CREATED_TIME 
+	VARCHAR, MODIFIER VARCHAR, UPDATED_TIME VARCHAR -->
+<sqlMap namespace="tduhb18">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhb18">
+		SELECT
+		ENVDEVICEID as "envdeviceid",
+		DEVICEID as "deviceid",
+		DEVICENAME   as "devicename",
+		SOURCENAME as "sourcename",
+		FACTORNAME as "factorname",
+		OUTTYPE as "outtype",
+		PROCESSID as "processid",
+		PROCESSNAME as "processname",
+		PROCESSTYPE as "processtype",
+		CANUSE as "canuse",
+		PROCESSINFO as "processinfo",
+		PORTID as "portid",
+		PORTNAME as "portname",
+		ISRIGHT as "isright",
+		PORTTYPE as "porttype",
+		OTHER as "other",
+		DEVICETYPE as "devicetype",
+		OUTTO as "outto",
+		PORTOUTTYPE as  "portouttype",
+		OUTRULE as "outrule",
+		STATUS as "status",
+		CREATOR as "creator",
+		CREATED_TIME as "createdTime",
+		MODIFIER as "modifier",
+		UPDATED_TIME as "updatedTime"
+		FROM ${hbSchema}.T_HA_ENVDEVICE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="envdeviceid">
+			ENVDEVICEID = #envdeviceid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicetype">
+			DEVICETYPE =  #devicetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="deviceid">
+			DEVICEID like '%$deviceid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicename">
+			DEVICENAME like '%$devicename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outtype">
+			outtype like '%$outtype$%'
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend=" AND " property="portid">
+			portid like '%$portid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portname">
+			PORTNAME like '%$portname$%'
+		</isNotEmpty> -->
+		
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				ENVDEVICEID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	
+	<select id="queryByEnvdevicIds" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhb18">
+		SELECT
+		ENVDEVICEID as "envdeviceid",
+		DEVICEID as "deviceid",
+		DEVICENAME
+		as "devicename",
+		SOURCENAME as "sourcename",
+		FACTORNAME as "factorname",
+		OUTTYPE as "outtype",
+		PROCESSID as "processid",
+		PROCESSNAME as
+		"processname",
+		PROCESSTYPE as "processtype",
+		CANUSE as "canuse",
+		PROCESSINFO as "processinfo",
+		PORTID as "portid",
+		PORTNAME as
+		"portname",
+		ISRIGHT as "isright",
+		PORTTYPE as "porttype",
+		OTHER as
+		"other",
+		DEVICETYPE as "devicetype",
+		OUTTO as "outto",
+		PORTOUTTYPE as
+		"portouttype",
+		OUTRULE as "outrule",
+		STATUS as "status",
+		CREATOR as
+		"creator",
+		CREATED_TIME as "createdTime",
+		MODIFIER as "modifier",
+		UPDATED_TIME as "updatedTime"
+		FROM ${hbSchema}.T_HA_ENVDEVICE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="envdeviceid">
+			ENVDEVICEID NOT IN (#envdeviceid#)
+			
+		</isNotEmpty>
+		
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				ENVDEVICEID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	
+
+	<select id="queryId" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhb18">
+		SELECT
+		ENVDEVICEID as "envdeviceid",
+		DEVICEID as "deviceid",
+		DEVICENAME as "devicename",
+		SOURCENAME as "sourcename",
+		FACTORNAME as
+		"factorname",
+		OUTTYPE as "outtype",
+		PROCESSID as "processid",
+		PROCESSNAME as "processname",
+		PROCESSTYPE as "processtype",
+		CANUSE as
+		"canuse",
+		PROCESSINFO as "processinfo",
+		PORTID as "portid",
+		PORTNAME as
+		"portname",
+		ISRIGHT as "isright",
+		PORTTYPE as "porttype",
+		OTHER as
+		"other",
+		DEVICETYPE as "devicetype",
+		OUTTO as "outto",
+		PORTOUTTYPE as
+		"portouttype",
+		OUTRULE as "outrule",
+		STATUS as "status",
+		CREATOR as
+		"creator",
+		CREATED_TIME as "createdTime",
+		MODIFIER as "modifier",
+		UPDATED_TIME as "updatedTime"
+		FROM ${hbSchema}.T_HA_ENVDEVICE order by
+		ENVDEVICEID desc fetch first 1
+		rows only
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_ENVDEVICE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="envdeviceid">
+			ENVDEVICEID =
+			#envdeviceid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicetype">
+			DEVICETYPE =
+			#devicetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="deviceid">
+			DEVICEID like
+			'%$deviceid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicename">
+			DEVICENAME like
+			'%$devicename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			portid = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outtype">
+			outtype = #outtype#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="envdeviceid"> ENVDEVICEID = #envdeviceid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="deviceid"> DEVICEID = 
+		#deviceid# </isNotEmpty> <isNotEmpty prepend=" AND " property="devicename"> 
+		DEVICENAME = #devicename# </isNotEmpty> <isNotEmpty prepend=" AND " property="sourcename"> 
+		SOURCENAME = #sourcename# </isNotEmpty> <isNotEmpty prepend=" AND " property="factorname"> 
+		FACTORNAME = #factorname# </isNotEmpty> <isNotEmpty prepend=" AND " property="outtype"> 
+		OUTTYPE = #outtype# </isNotEmpty> <isNotEmpty prepend=" AND " property="processid"> 
+		PROCESSID = #processid# </isNotEmpty> <isNotEmpty prepend=" AND " property="processname"> 
+		PROCESSNAME = #processname# </isNotEmpty> <isNotEmpty prepend=" AND " property="processtype"> 
+		PROCESSTYPE = #processtype# </isNotEmpty> <isNotEmpty prepend=" AND " property="canuse"> 
+		CANUSE = #canuse# </isNotEmpty> <isNotEmpty prepend=" AND " property="processinfo"> 
+		PROCESSINFO = #processinfo# </isNotEmpty> <isNotEmpty prepend=" AND " property="portid"> 
+		PORTID = #portid# </isNotEmpty> <isNotEmpty prepend=" AND " property="portname"> 
+		PORTNAME = #portname# </isNotEmpty> <isNotEmpty prepend=" AND " property="isright"> 
+		ISRIGHT = #isright# </isNotEmpty> <isNotEmpty prepend=" AND " property="porttype"> 
+		PORTTYPE = #porttype# </isNotEmpty> <isNotEmpty prepend=" AND " property="other"> 
+		OTHER = #other# </isNotEmpty> <isNotEmpty prepend=" AND " property="devicetype"> 
+		DEVICETYPE = #devicetype# </isNotEmpty> <isNotEmpty prepend=" AND " property="outto"> 
+		OUTTO = #outto# </isNotEmpty> <isNotEmpty prepend=" AND " property="portouttype"> 
+		PORTOUTTYPE = #portouttype# </isNotEmpty> <isNotEmpty prepend=" AND " property="outrule"> 
+		OUTRULE = #outrule# </isNotEmpty> <isNotEmpty prepend=" AND " property="status"> 
+		STATUS = #status# </isNotEmpty> <isNotEmpty prepend=" AND " property="creator"> 
+		CREATOR = #creator# </isNotEmpty> <isNotEmpty prepend=" AND " property="createdTime"> 
+		CREATED_TIME = #createdTime# </isNotEmpty> <isNotEmpty prepend=" AND " property="modifier"> 
+		MODIFIER = #modifier# </isNotEmpty> <isNotEmpty prepend=" AND " property="updatedTime"> 
+		UPDATED_TIME = #updatedTime# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_ENVDEVICE (ENVDEVICEID,
+		DEVICEID,
+		DEVICENAME,
+		SOURCENAME,
+		FACTORNAME,
+		OUTTYPE,
+		PROCESSID,
+		PROCESSNAME,
+		PROCESSTYPE,
+		CANUSE,
+		PROCESSINFO,
+		PORTID,
+		PORTNAME,
+		ISRIGHT,
+		PORTTYPE,
+		OTHER,
+		DEVICETYPE,
+		OUTTO,
+		PORTOUTTYPE,
+		OUTRULE,
+		STATUS,
+		CREATOR,
+		CREATED_TIME
+		)
+		VALUES (#envdeviceid:VARCHAR#, #deviceid:VARCHAR#,
+		#devicename:VARCHAR#,
+		#sourcename:VARCHAR#, #factorname:VARCHAR#,
+		#outtype:VARCHAR#,
+		#processid:VARCHAR#, #processname:VARCHAR#,
+		#processtype:VARCHAR#,
+		#canuse:VARCHAR#, #processinfo:VARCHAR#,
+		#portid:VARCHAR#,
+		#portname:VARCHAR#, #isright:VARCHAR#,
+		#porttype:VARCHAR#,
+		#other:VARCHAR#, #devicetype:VARCHAR#,
+		#outto:VARCHAR#,
+		#portouttype:VARCHAR#, #outrule:VARCHAR#,
+		#status:VARCHAR#,
+		#creator:VARCHAR#, #createdTime:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_ENVDEVICE WHERE
+		ENVDEVICEID = #envdeviceid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_ENVDEVICE
+		SET
+		DEVICEID =
+		#deviceid#,
+		DEVICENAME = #devicename#,
+		SOURCENAME = #sourcename#,
+		FACTORNAME = #factorname#,
+		OUTTYPE = #outtype#,
+		PROCESSID = #processid#,
+		PROCESSNAME = #processname#,
+		PROCESSTYPE = #processtype#,
+		CANUSE =
+		#canuse#,
+		PROCESSINFO = #processinfo#,
+		PORTID = #portid#,
+		PORTNAME =
+		#portname#,
+		ISRIGHT = #isright#,
+		PORTTYPE = #porttype#,
+		OTHER = #other#,
+		DEVICETYPE = #devicetype#,
+		OUTTO = #outto#,
+		PORTOUTTYPE = #portouttype#,
+		OUTRULE = #outrule#,
+		STATUS = #status#,
+		MODIFIER = #modifier#,
+		UPDATED_TIME = #updatedTime#
+		WHERE
+		ENVDEVICEID = #envdeviceid#
+	</update>
+	
+	<update id="updateForDevice">
+		UPDATE ${hbSchema}.T_HA_ENVDEVICE
+		SET
+			DEVICEID = #deviceid#,
+			DEVICENAME = #devicename#,
+			SOURCENAME = #sourcename#,
+			FACTORNAME = #factorname#,
+			OUTTYPE = #outtype#,
+			OTHER = #other#,
+			MODIFIER = #modifier#,
+			UPDATED_TIME = #updatedTime#
+		WHERE
+			ENVDEVICEID = #envdeviceid#
+	</update>
+	<!--修改废水产污设施  -->
+	<update id="updateForFQDevice">
+		UPDATE ${hbSchema}.T_HA_ENVDEVICE
+		SET
+			DEVICEID = #deviceid#,
+			DEVICENAME = #devicename#,
+			OUTTO = #outto#,
+			PORTOUTTYPE = #portouttype#,
+			OUTRULE = #outrule#,
+			FACTORNAME = #factorname#,
+			OTHER = #other#,
+			MODIFIER = #modifier#,
+			UPDATED_TIME = #updatedTime#
+		WHERE
+			ENVDEVICEID = #envdeviceid#
+	</update>
+	
+	<update id="updateProcessidInfo">
+		UPDATE ${hbSchema}.T_HA_ENVDEVICE
+		SET
+			PROCESSID = #processid#
+		WHERE
+			ENVDEVICEID = #envdeviceid#
+	</update>
+
+</sqlMap>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-09-16 10:33:33
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HC_CODE_ALARMTYPE 
+		 ABNORMAL_ID  VARCHAR   NOT NULL   primarykey, 
+		 ABNORMAL_NAME  VARCHAR, 
+		 ALARMTYPE_ID  VARCHAR   NOT NULL   primarykey, 
+		 ALARMTYPE_NAME  VARCHAR, 
+		 SORT  VARCHAR, 
+		 STATUS  VARCHAR
+	-->
+<sqlMap namespace="tduhc5105">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc5105">
+		SELECT
+				ABNORMAL_ID	as "abnormalId",  
+				ABNORMAL_NAME	as "abnormalName",  
+				ALARMTYPE_ID	as "alarmtypeId",  
+				ALARMTYPE_NAME	as "alarmtypeName",  
+				SORT	as "sort",  
+				STATUS	as "status" 
+		FROM ${hbSchema}.T_HC_CODE_ALARMTYPE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmtypeId">
+			ALARMTYPE_ID = #alarmtypeId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+ 			CAST(SORT AS INT) asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HC_CODE_ALARMTYPE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmtypeId">
+			ALARMTYPE_ID = #alarmtypeId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalName">
+			ABNORMAL_NAME = #abnormalName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmtypeId">
+			ALARMTYPE_ID = #alarmtypeId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="alarmtypeName">
+			ALARMTYPE_NAME = #alarmtypeName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HC_CODE_ALARMTYPE (ABNORMAL_ID,
+										ABNORMAL_NAME,
+										ALARMTYPE_ID,
+										ALARMTYPE_NAME,
+										SORT,
+										STATUS
+										)		 
+	    VALUES (#abnormalId:VARCHAR#, #abnormalName:VARCHAR#, #alarmtypeId:VARCHAR#, #alarmtypeName:VARCHAR#, #sort:VARCHAR#, #status:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HC_CODE_ALARMTYPE WHERE 
+			ABNORMAL_ID = #abnormalId# AND 
+			ALARMTYPE_ID = #alarmtypeId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HC_CODE_ALARMTYPE 
+		SET 
+					ABNORMAL_NAME	= #abnormalName#, 
+								ALARMTYPE_NAME	= #alarmtypeName#, 
+					SORT	= #sort#, 
+					STATUS	= #status#
+			WHERE 	
+			ABNORMAL_ID = #abnormalId# AND 
+			ALARMTYPE_ID = #alarmtypeId#
+	</update>
+	
+	
+	<select id="queryAllAlarmType" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc5105">
+		SELECT
+				ABNORMAL_ID	as "abnormalId",  
+				ABNORMAL_NAME	as "abnormalName",  
+				ALARMTYPE_ID	as "alarmtypeId",  
+				ALARMTYPE_NAME	as "alarmtypeName",  
+				SORT	as "sort",  
+				STATUS	as "status" 
+		FROM ${hbSchema}.T_HC_CODE_ALARMTYPE WHERE ALARMTYPE_ID IN ('1','10')
+		<isNotEmpty prepend=" AND " property="abnormalId">
+			ABNORMAL_ID = #abnormalId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+ 			CAST(SORT AS INT) asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+  
+</sqlMap>

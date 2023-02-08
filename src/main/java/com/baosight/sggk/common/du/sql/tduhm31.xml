@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+     table information
+     Generate time :2021-08-23 14:58:52
+     table comment :月环保综合指标实绩
+     tableName :TDUHM31
+     MUUID    NUMBER NOT NULL  primarykey   编号  ,
+     SHARE_PROJECT    VARCHAR  NULL   项目  ,
+     YEAR_ACTUALPERFORMANCE    VARCHAR  NULL   年份实绩  ,
+     YEAR_PLAN    VARCHAR  NULL   年份计划  ,
+     LASTMONTH_ACTUALPERFORMANCE    VARCHAR  NULL   上月实绩  ,
+     THISMONTH_ACTUALPERFORMANCE    VARCHAR  NULL   本月实绩  ,
+     GRANDTOTAL_ACTUALPERFORMANCE    VARCHAR  NULL   累计实绩  ,
+     SAMEPERIODLASTYEAR_GRANDTOTAL    VARCHAR  NULL   去年同期累计  ,
+     CONTEMPORARY_COMPARISON    VARCHAR  NULL   累计同期比较
+-->
+<sqlMap namespace="tduhm31">
+    <select id="query" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" , <!--  编号  -->
+        SHARE_PROJECT as "shareProject" , <!--  项目  -->
+        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , <!--  年份实绩  -->
+        YEAR_PLAN as "yearPlan" , <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE as "thismonthActualperformance" , <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON as "contemporaryComparison" , <!--  累计同期比较  -->
+        MUUID  as "muuid",
+        X_MUUID  as  "xMuuid",
+        MUUIDNAME as "muuidName"
+
+        FROM ${hbSchema}.TDUHM31 WHERE 1=1
+       <isNotEmpty prepend=" AND " property="pmuuid">
+           P_MUUID = #pmuuid#
+     </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="shareProject">
+            SHARE_PROJECT = #shareProject#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearActualperformance">
+            YEAR_ACTUALPERFORMANCE = #yearActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearPlan">
+            YEAR_PLAN = #yearPlan#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="lastmonthActualperformance">
+            LASTMONTH_ACTUALPERFORMANCE = #lastmonthActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="thismonthActualperformance">
+            THISMONTH_ACTUALPERFORMANCE = #thismonthActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="grandtotalActualperformance">
+            GRANDTOTAL_ACTUALPERFORMANCE = #grandtotalActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sameperiodlastyearGrandtotal">
+            SAMEPERIODLASTYEAR_GRANDTOTAL = #sameperiodlastyearGrandtotal#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="contemporaryComparison">
+            CONTEMPORARY_COMPARISON = #contemporaryComparison#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="MUUID">
+          MUUID = #MUUID#
+       </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="xMuuid">
+            X_MUUID = #xMuuid#
+        </isNotEmpty>
+
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                P_MUUID asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.TDUHM31 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="pmuuid">
+            P_MUUID = #pmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="shareProject">
+            SHARE_PROJECT = #shareProject#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearActualperformance">
+            YEAR_ACTUALPERFORMANCE = #yearActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearPlan">
+            YEAR_PLAN = #yearPlan#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="lastmonthActualperformance">
+            LASTMONTH_ACTUALPERFORMANCE = #lastmonthActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="thismonthActualperformance">
+            THISMONTH_ACTUALPERFORMANCE = #thismonthActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="grandtotalActualperformance">
+            GRANDTOTAL_ACTUALPERFORMANCE = #grandtotalActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sameperiodlastyearGrandtotal">
+            SAMEPERIODLASTYEAR_GRANDTOTAL = #sameperiodlastyearGrandtotal#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="contemporaryComparison">
+            CONTEMPORARY_COMPARISON = #contemporaryComparison#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="muuid">
+            MUUID = #muuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="xMuuid">
+            X_MUUID = #xMuuid#
+        </isNotEmpty>
+
+    </select>
+
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM31 (
+        P_MUUID ,
+        SHARE_PROJECT,<!--  编号  -->
+        YEAR_ACTUALPERFORMANCE ,   <!--  年份实绩  -->
+        YEAR_PLAN ,   <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE ,   <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE ,   <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE ,   <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL ,   <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON  ,  <!--  累计同期比较  -->
+        MUUID,
+        X_MUUID,<!--  年  -->
+        MUUIDNAME
+
+        )
+        VALUES (
+        #pmuuid: VARCHAR# ,
+        #shareProject:VARCHAR#,
+        #yearActualperformance: VARCHAR# ,
+        #yearPlan: VARCHAR# ,
+        #lastmonthActualperformance: VARCHAR# ,
+        #thismonthActualperformance: VARCHAR# ,
+        #grandtotalActualperformance: VARCHAR# ,
+        #sameperiodlastyearGrandtotal: VARCHAR# ,
+        #contemporaryComparison: VARCHAR#,
+        #muuid: VARCHAR#,
+        #xMuuid:VARCHAR#
+        #muuidName:VARCHAR#
+        )
+    </insert>
+
+    <insert id="insertZong">
+        INSERT INTO ${hbSchema}.TDUHM31 (
+        P_MUUID ,
+        SHARE_PROJECT,<!--  编号  -->
+        YEAR_ACTUALPERFORMANCE ,   <!--  年份实绩  -->
+        YEAR_PLAN ,   <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE ,   <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE ,   <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE ,   <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL ,   <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON  ,  <!--  累计同期比较  -->
+        MUUID,
+        X_MUUID,<!--  年  -->
+        MUUIDNAME
+
+        )
+        VALUES (
+        #pmuuid: VARCHAR# ,
+        #shareProject:VARCHAR#,
+        #yearActualperformance: VARCHAR# ,
+        #yearPlan: VARCHAR# ,
+        #lastmonthActualperformance: VARCHAR# ,
+        #thismonthActualperformance: VARCHAR# ,
+        #grandtotalActualperformance: VARCHAR# ,
+        #sameperiodlastyearGrandtotal: VARCHAR# ,
+        #contemporaryComparison: VARCHAR#,
+        #muuid: VARCHAR#,
+        #xMuuid:VARCHAR#,
+        #muuidName:VARCHAR#
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.TDUHM31 WHERE
+        P_MUUID = #pmuuid#
+
+
+    </delete>
+
+
+    <update id="update">
+        UPDATE ${hbSchema}.TDUHM31
+        SET
+        YEAR_ACTUALPERFORMANCE = #yearActualperformance# ,     <!--  年份实绩  -->
+        YEAR_PLAN = #yearPlan# ,     <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE = #lastmonthActualperformance# ,     <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE = #thismonthActualperformance# ,     <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE = #grandtotalActualperformance# ,     <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL = #sameperiodlastyearGrandtotal# ,     <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON = #contemporaryComparison# <!--  累计同期比较  -->
+        WHERE
+        P_MUUID = #pmuuid#
+
+    </update>
+    <select id="query1" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm310">
+        SELECT
+        MUUID as "muuid" , <!--  编号  -->
+
+        YEAR as "year" , <!--  年  -->
+        MONTH as "month" , <!--  月  -->
+        TYPE as "type",<!--  状态  -->
+        REMARK as "remark"
+        FROM ${hbSchema}.TDUHM310 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="muuid">
+            MUUID = #muuid#
+        </isNotEmpty>
+
+        <isNotEmpty prepend=" AND " property="year">
+            YEAR = #year#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="month">
+            MONTH = #month#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="type">
+            TYPE = #type#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="type">
+            REMARK = #remark#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                 MONTH asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+    <!-- select  *  from table1 where name like concat( '%' , # name #, '%' )-->
+    <select id="condition" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm310">
+        SELECT
+        MUUID as "muuid" , <!--  编号  -->
+
+        YEAR as "year" , <!--  年  -->
+        MONTH as "month" , <!--  月  -->
+        TYPE as "type" , <!--  状态  -->
+        REMARK as "remark"
+        FROM ${hbSchema}.TDUHM310 where 1=1
+        <isNotEmpty prepend=" AND " property="YEAR">
+            YEAR = #YEAR#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="MONTH">
+            MONTH = #MONTH#
+        </isNotEmpty>
+    <dynamic prepend="ORDER BY">
+        <isNotEmpty property="orderBy">
+            $orderBy$
+        </isNotEmpty>
+        <isEmpty property="orderBy">
+             MONTH asc
+        </isEmpty>
+    </dynamic>
+    </select>
+    <select id="condition1" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm310">
+        SELECT YEAR
+        FROM ${hbSchema}.TDUHM310 where 1=1
+        <isNotEmpty prepend=" AND " property="YEAR">
+            YEAR = #YEAR#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="MONTH">
+            MONTH = #MONTH#
+        </isNotEmpty>
+
+    </select>
+
+
+    <select id="days" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" , <!--  编号  -->
+        SHARE_PROJECT as "shareProject" , <!--  项目  -->
+        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , <!--  年份实绩  -->
+        YEAR_PLAN as "yearPlan" , <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE as "thismonthActualperformance" , <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON as "contemporaryComparison" , <!--  累计同期比较  -->
+        MUUID  as  "muuid"   <!--  年  -->
+
+        FROM ${hbSchema}.TDUHM31 WHERE 1=1 and MUUID=#muuid#
+
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                P_MUUID asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" <!-- id -->
+        FROM ${hbSchema}.TDUHM31 order by P_MUUID DESC limit 1
+    </select>
+
+
+
+    <select id="query4" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" , <!--  编号  -->
+        SHARE_PROJECT as "shareProject" , <!--  项目  -->
+        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , <!--  年份实绩  -->
+        YEAR_PLAN as "yearPlan" , <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , <!--  上月实绩  --><!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON as "contemporaryComparison" , <!--  累计同期比较  -->
+
+        MUUID  as "muuid",
+        X_MUUID as "x_Muuid"
+        FROM ${hbSchema}.TDUHM31 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="pmuuid">
+            P_MUUID = #pmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="shareProject">
+            SHARE_PROJECT = #shareProject#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearActualperformance">
+            YEAR_ACTUALPERFORMANCE = #yearActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearPlan">
+            YEAR_PLAN = #yearPlan#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="lastmonthActualperformance">
+            LASTMONTH_ACTUALPERFORMANCE = #lastmonthActualperformance#
+        </isNotEmpty>
+
+        <isNotEmpty prepend=" AND " property="grandtotalActualperformance">
+            GRANDTOTAL_ACTUALPERFORMANCE = #grandtotalActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sameperiodlastyearGrandtotal">
+            SAMEPERIODLASTYEAR_GRANDTOTAL = #sameperiodlastyearGrandtotal#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="contemporaryComparison">
+            CONTEMPORARY_COMPARISON = #contemporaryComparison#
+        </isNotEmpty>
+
+        <isNotEmpty prepend=" AND " property="muuid">
+            MUUID = #muuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="xMuuid">
+            X_MUUID = #xMuuid#
+        </isNotEmpty>
+
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                P_MUUID asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+    <select id="queryBY" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+    SELECT
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance"
+        FROM ${hbSchema}.TDUHM31 WHERE MUUID =#muuid#
+
+    </select>
+
+
+    <select id="queryStartEnd" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        SUM( THISMONTH_ACTUALPERFORMANCE ) AS thismonthactualperformance ,	X_MUUID as xmuuid
+        from
+        IPLAT.TDUHM31
+        WHERE
+        1 = 1
+        <isNotEmpty prepend=" AND " property="start">
+            MUUIDNAME <![CDATA[ >= ]]> #start#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="end">
+            MUUIDNAME <![CDATA[ <= ]]> #end#
+        </isNotEmpty>
+        group by X_MUUID
+
+    </select>
+
+    <select id="queryShang" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" , <!--  编号  -->
+        SHARE_PROJECT as "shareProject" , <!--  项目  -->
+        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , <!--  年份实绩  -->
+        YEAR_PLAN as "yearPlan" , <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE as "thismonthActualperformance" , <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON as "contemporaryComparison" , <!--  累计同期比较  -->
+        MUUID  as "muuid",
+        X_MUUID  as  "xMuuid",
+        MUUIDNAME as "muuidName"
+        from
+        IPLAT.TDUHM31
+        WHERE
+        1 = 1
+        <isNotEmpty prepend=" AND " property="shangYue">
+            MUUIDNAME = #shangYue#
+        </isNotEmpty>
+    </select>
+
+    <select id="queryBen" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" , <!--  编号  -->
+        SHARE_PROJECT as "shareProject" , <!--  项目  -->
+        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , <!--  年份实绩  -->
+        YEAR_PLAN as "yearPlan" , <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE as "thismonthActualperformance" , <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON as "contemporaryComparison" , <!--  累计同期比较  -->
+        MUUID  as "muuid",
+        X_MUUID  as  "xMuuid",
+        MUUIDNAME as "muuidName"
+        from
+        IPLAT.TDUHM31
+        WHERE
+        1 = 1
+        <isNotEmpty prepend=" AND " property="benYue">
+            MUUIDNAME = #benYue#
+        </isNotEmpty>
+    </select>
+
+
+    <select id="queryJin" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        SUM( THISMONTH_ACTUALPERFORMANCE ) AS thismonthactualperformance ,	X_MUUID as xmuuid
+        from
+        IPLAT.TDUHM31
+        WHERE
+        1 = 1
+        <isNotEmpty prepend=" AND " property="startJin">
+            MUUIDNAME <![CDATA[ >= ]]> #startJin#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="endJin">
+            MUUIDNAME <![CDATA[ <= ]]> #endJin#
+        </isNotEmpty>
+        group by X_MUUID
+
+    </select>
+
+    <select id="queryTongqi" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        SUM( THISMONTH_ACTUALPERFORMANCE ) AS thismonthactualperformance ,	X_MUUID as xmuuid
+        from
+        IPLAT.TDUHM31
+        WHERE
+        1 = 1
+        <isNotEmpty prepend=" AND " property="start">
+            MUUIDNAME <![CDATA[ >= ]]> #start#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="tongqi">
+            MUUIDNAME <![CDATA[ <= ]]> #tongqi#
+        </isNotEmpty>
+        group by X_MUUID
+
+    </select>
+
+    <select id="queryPid" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">
+        SELECT
+        P_MUUID as "pmuuid" , <!--  编号  -->
+        SHARE_PROJECT as "shareProject" , <!--  项目  -->
+        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , <!--  年份实绩  -->
+        YEAR_PLAN as "yearPlan" , <!--  年份计划  -->
+        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , <!--  上月实绩  -->
+        THISMONTH_ACTUALPERFORMANCE as "thismonthActualperformance" , <!--  本月实绩  -->
+        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , <!--  累计实绩  -->
+        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , <!--  去年同期累计  -->
+        CONTEMPORARY_COMPARISON as "contemporaryComparison" , <!--  累计同期比较  -->
+        MUUID  as "muuid",
+        X_MUUID  as  "xMuuid",
+        MUUIDNAME as "muuidName"
+        FROM ${hbSchema}.TDUHM31 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="pmuuid">
+            P_MUUID = #pmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="shareProject">
+            SHARE_PROJECT = #shareProject#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearActualperformance">
+            YEAR_ACTUALPERFORMANCE = #yearActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="yearPlan">
+            YEAR_PLAN = #yearPlan#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="lastmonthActualperformance">
+            LASTMONTH_ACTUALPERFORMANCE = #lastmonthActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="thismonthActualperformance">
+            THISMONTH_ACTUALPERFORMANCE = #thismonthActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="grandtotalActualperformance">
+            GRANDTOTAL_ACTUALPERFORMANCE = #grandtotalActualperformance#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="sameperiodlastyearGrandtotal">
+            SAMEPERIODLASTYEAR_GRANDTOTAL = #sameperiodlastyearGrandtotal#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="contemporaryComparison">
+            CONTEMPORARY_COMPARISON = #contemporaryComparison#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="MUUID">
+            MUUID = #MUUID#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="xMuuid">
+            X_MUUID = #xMuuid#
+        </isNotEmpty>
+
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                P_MUUID asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+
+<!--    <select id="queryPid" parameterClass="java.util.HashMap"-->
+<!--            resultClass="com.baosight.sggk.common.du.domain.Tduhm31">-->
+<!--        SELECT-->
+<!--        P_MUUID as "pmuuid" , &lt;!&ndash;  编号  &ndash;&gt;-->
+<!--        SHARE_PROJECT as "shareProject" , &lt;!&ndash;  项目  &ndash;&gt;-->
+<!--        YEAR_ACTUALPERFORMANCE as "yearActualperformance" , &lt;!&ndash;  年份实绩  &ndash;&gt;-->
+<!--        YEAR_PLAN as "yearPlan" , &lt;!&ndash;  年份计划  &ndash;&gt;-->
+<!--        LASTMONTH_ACTUALPERFORMANCE as "lastmonthActualperformance" , &lt;!&ndash;  上月实绩  &ndash;&gt;-->
+<!--        THISMONTH_ACTUALPERFORMANCE as "thismonthActualperformance" , &lt;!&ndash;  本月实绩  &ndash;&gt;-->
+<!--        GRANDTOTAL_ACTUALPERFORMANCE as "grandtotalActualperformance" , &lt;!&ndash;  累计实绩  &ndash;&gt;-->
+<!--        SAMEPERIODLASTYEAR_GRANDTOTAL as "sameperiodlastyearGrandtotal" , &lt;!&ndash;  去年同期累计  &ndash;&gt;-->
+<!--        CONTEMPORARY_COMPARISON as "contemporaryComparison" , &lt;!&ndash;  累计同期比较  &ndash;&gt;-->
+<!--        MUUID  as "muuid",-->
+<!--        X_MUUID  as  "xMuuid",-->
+<!--        MUUIDNAME as "muuidName"-->
+<!--        FROM ${hbSchema}.TDUHM31 WHERE 1=1-->
+<!--        <isNotEmpty prepend=" AND " property="pmuuid">-->
+<!--            P_MUUID = #pmuuid#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="shareProject">-->
+<!--            SHARE_PROJECT = #shareProject#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="yearActualperformance">-->
+<!--            YEAR_ACTUALPERFORMANCE = #yearActualperformance#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="yearPlan">-->
+<!--            YEAR_PLAN = #yearPlan#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="lastmonthActualperformance">-->
+<!--            LASTMONTH_ACTUALPERFORMANCE = #lastmonthActualperformance#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="thismonthActualperformance">-->
+<!--            THISMONTH_ACTUALPERFORMANCE = #thismonthActualperformance#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="grandtotalActualperformance">-->
+<!--            GRANDTOTAL_ACTUALPERFORMANCE = #grandtotalActualperformance#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="sameperiodlastyearGrandtotal">-->
+<!--            SAMEPERIODLASTYEAR_GRANDTOTAL = #sameperiodlastyearGrandtotal#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="contemporaryComparison">-->
+<!--            CONTEMPORARY_COMPARISON = #contemporaryComparison#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="MUUID">-->
+<!--            MUUID = #MUUID#-->
+<!--        </isNotEmpty>-->
+<!--        <isNotEmpty prepend=" AND " property="xMuuid">-->
+<!--            X_MUUID = #xMuuid#-->
+<!--        </isNotEmpty>-->
+
+<!--        <dynamic prepend="ORDER BY">-->
+<!--            <isNotEmpty property="orderBy">-->
+<!--                $orderBy$-->
+<!--            </isNotEmpty>-->
+<!--            <isEmpty property="orderBy">-->
+<!--                P_MUUID asc-->
+<!--            </isEmpty>-->
+<!--        </dynamic>-->
+<!--    </select>-->
+
+    <update id="updateList">
+        UPDATE ${hbSchema}.TDUHM31
+        SET
+        YEAR_PLAN = #yearPlan#      <!--  年份计划  -->
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="pmuuid">
+            P_MUUID != #pmuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="xMuuid">
+            X_MUUID = #xMuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="date">
+            MUUIDNAME like #date#
+        </isNotEmpty>
+    </update>
+
+</sqlMap>

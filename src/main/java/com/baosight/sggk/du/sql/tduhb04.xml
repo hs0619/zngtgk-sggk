@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-30 17:34:09
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_FACILITYINFO 
+		 FACILITYID  VARCHAR   NOT NULL   primarykey, 
+		 FACILITYCODE  VARCHAR, 
+		 FACILITYNAME  VARCHAR, 
+		 POLLUTANTNAME  VARCHAR, 
+		 FACILITYTYPE  VARCHAR, 
+		 ORIGIN  VARCHAR, 
+		 HANDMETHOD  VARCHAR, 
+		 NUMBERS  VARCHAR, 
+		 HANDABILITY  VARCHAR, 
+		 SHANDNUM  VARCHAR, 
+		 RUNTIME  VARCHAR, 
+		 HANDFACTORS  VARCHAR, 
+		 PORTID  VARCHAR, 
+		 PORTNAME  VARCHAR, 
+		 DEVICECODE  VARCHAR, 
+		 DEVICEMODEL  VARCHAR, 
+		 MOTORMODEL  VARCHAR, 
+		 CONTROLLERMODEL  VARCHAR, 
+		 SITUATION  VARCHAR, 
+		 OUTSTANDARD  VARCHAR, 
+		 FACILITYDEPART  VARCHAR, 
+		 ISEXECUTE  VARCHAR, 
+		 REMARK  VARCHAR, 
+		 TYPE  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR, 
+		 PROCEDUREID  VARCHAR
+	-->
+<sqlMap namespace="tduhb04">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb04">
+		SELECT
+				FACILITYID	as "facilityid",  
+				FACILITYCODE	as "facilitycode",  
+				FACILITYNAME	as "facilityname",  
+				POLLUTANTNAME	as "pollutantname",  
+				FACILITYTYPE	as "facilitytype",  
+				ORIGIN	as "origin",  
+				HANDMETHOD	as "handmethod",  
+				NUMBERS	as "numbers",  
+				HANDABILITY	as "handability",  
+				SHANDNUM	as "shandnum",  
+				RUNTIME	as "runtime",  
+				HANDFACTORS	as "handfactors",  
+				PORTID	as "portid",  
+				PORTNAME	as "portname",  
+				DEVICECODE	as "devicecode",  
+				DEVICEMODEL	as "devicemodel",  
+				MOTORMODEL	as "motormodel",  
+				CONTROLLERMODEL	as "controllermodel",  
+				SITUATION	as "situation",  
+				OUTSTANDARD	as "outstandard",  
+				FACILITYDEPART	as "facilitydepart",  
+				ISEXECUTE	as "isexecute",  
+				REMARK	as "remark",  
+				TYPE	as "type",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",  
+				DEPARTMENTID	as "departmentid",  
+				PROCEDUREID	as "procedureid" 
+		FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  FACILITYID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryBYDepart" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb04">
+		SELECT
+				FACILITYID	as "facilityid",  
+				FACILITYNAME	as "facilityname" 
+		FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+	</select>
+	
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="facilityid">
+			FACILITYID = #facilityid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitycode">
+			FACILITYCODE = #facilitycode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilityname">
+			FACILITYNAME = #facilityname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pollutantname">
+			POLLUTANTNAME = #pollutantname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitytype">
+			FACILITYTYPE = #facilitytype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="origin">
+			ORIGIN = #origin#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handmethod">
+			HANDMETHOD = #handmethod#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="numbers">
+			NUMBERS = #numbers#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handability">
+			HANDABILITY = #handability#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="shandnum">
+			SHANDNUM = #shandnum#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="runtime">
+			RUNTIME = #runtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="handfactors">
+			HANDFACTORS = #handfactors#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portname">
+			PORTNAME = #portname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicecode">
+			DEVICECODE = #devicecode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="devicemodel">
+			DEVICEMODEL = #devicemodel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="motormodel">
+			MOTORMODEL = #motormodel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="controllermodel">
+			CONTROLLERMODEL = #controllermodel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="situation">
+			SITUATION = #situation#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outstandard">
+			OUTSTANDARD = #outstandard#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="facilitydepart">
+			FACILITYDEPART = #facilitydepart#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isexecute">
+			ISEXECUTE = #isexecute#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remark">
+			REMARK = #remark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			PROCEDUREID = #procedureid#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_FACILITYINFO (FACILITYID,
+										FACILITYCODE,
+										FACILITYNAME,
+										POLLUTANTNAME,
+										FACILITYTYPE,
+										ORIGIN,
+										HANDMETHOD,
+										NUMBERS,
+										HANDABILITY,
+										SHANDNUM,
+										RUNTIME,
+										HANDFACTORS,
+										PORTID,
+										PORTNAME,
+										DEVICECODE,
+										DEVICEMODEL,
+										MOTORMODEL,
+										CONTROLLERMODEL,
+										SITUATION,
+										OUTSTANDARD,
+										FACILITYDEPART,
+										ISEXECUTE,
+										REMARK,
+										TYPE,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										DEPARTMENTID,
+										PROCEDUREID
+										)		 
+	    VALUES (#facilityid:VARCHAR#, #facilitycode:VARCHAR#, #facilityname:VARCHAR#, #pollutantname:VARCHAR#, #facilitytype:VARCHAR#, #origin:VARCHAR#, #handmethod:VARCHAR#, #numbers:VARCHAR#, #handability:VARCHAR#, #shandnum:VARCHAR#, #runtime:VARCHAR#, #handfactors:VARCHAR#, #portid:VARCHAR#, #portname:VARCHAR#, #devicecode:VARCHAR#, #devicemodel:VARCHAR#, #motormodel:VARCHAR#, #controllermodel:VARCHAR#, #situation:VARCHAR#, #outstandard:VARCHAR#, #facilitydepart:VARCHAR#, #isexecute:VARCHAR#, #remark:VARCHAR#, #type:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #departmentid:VARCHAR#, #procedureid:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_FACILITYINFO WHERE 
+			FACILITYID = #facilityid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_FACILITYINFO 
+		SET 
+					FACILITYCODE	= #facilitycode#, 
+					FACILITYNAME	= #facilityname#, 
+					POLLUTANTNAME	= #pollutantname#, 
+					FACILITYTYPE	= #facilitytype#, 
+					ORIGIN	= #origin#, 
+					HANDMETHOD	= #handmethod#, 
+					NUMBERS	= #numbers#, 
+					HANDABILITY	= #handability#, 
+					SHANDNUM	= #shandnum#, 
+					RUNTIME	= #runtime#, 
+					HANDFACTORS	= #handfactors#, 
+					PORTID	= #portid#, 
+					PORTNAME	= #portname#, 
+					DEVICECODE	= #devicecode#, 
+					DEVICEMODEL	= #devicemodel#, 
+					MOTORMODEL	= #motormodel#, 
+					CONTROLLERMODEL	= #controllermodel#, 
+					SITUATION	= #situation#, 
+					OUTSTANDARD	= #outstandard#, 
+					FACILITYDEPART	= #facilitydepart#, 
+					ISEXECUTE	= #isexecute#, 
+					REMARK	= #remark#, 
+					TYPE	= #type#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					DEPARTMENTID	= #departmentid#, 
+					PROCEDUREID	= #procedureid#
+			WHERE 	
+			FACILITYID = #facilityid#
+	</update>
+  
+</sqlMap>

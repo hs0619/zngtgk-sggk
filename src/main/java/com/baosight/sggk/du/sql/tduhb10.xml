@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2020-09-07 20:57:14
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.t_ha_factor 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 FACTORNAME  VARCHAR   NOT NULL, 
+		 UNIT  VARCHAR,
+		 DESCRIPTION  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb10">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+				FACTORID	as "factorid",  <!-- 因子编号 -->
+				FACTORNAME	as "factorname",  <!-- 因子名称 -->
+				UNIT	as "unit",  <!-- 单位 -->
+				DESCRIPTION	as "description",  <!-- 描述 -->
+				STATUS	as "status",  <!-- 状态 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime" <!-- 修改时间 -->
+		FROM ${hbSchema}.t_ha_factor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorname">
+			FACTORNAME like '%$factorname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryfactor" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+				t2.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname",  
+				t2.UNIT	as "unit",  
+				t2.DESCRIPTION	as "description", 
+				t2.STATUS	as "status", 
+				t2.CREATOR	as "creator",  
+				t2.CREATED_TIME	as "createdTime",  
+				t2.MODIFIER	as "modifier",  
+				t2.UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.t_ha_monitortofactor t1
+		left join ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID
+		where 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!-- 根据手工监测站点，查询对应的监测因子 -->
+	<select id="queryFactorBySiteid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+				distinct t1.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname",  
+				t2.UNIT	as "unit",  
+				t2.DESCRIPTION	as "description", 
+				t2.STATUS	as "status", 
+				t2.CREATOR	as "creator",  
+				t2.CREATED_TIME	as "createdTime",  
+				t2.MODIFIER	as "modifier",  
+				t2.UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_SITEFACTOR t1 left join ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID where 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			t1.TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+	
+	<select id="queryshowfactor" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+				t2.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname",  
+				t2.UNIT	as "unit",  
+				t2.DESCRIPTION	as "description", 
+				t2.STATUS	as "status", 
+				t2.CREATOR	as "creator",  
+				t2.CREATED_TIME	as "createdTime",  
+				t2.MODIFIER	as "modifier",  
+				t2.UPDATED_TIME	as "updatedTime" 
+		FROM ${hbSchema}.T_HA_OLSHOWFACTOR t1 left join ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID where 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="iscomprate">
+			t1.ISCOMPRATE = #iscomprate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="STATUS">
+			t1.STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_ha_factor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorname">
+			FACTORNAME = #factorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="unit">
+			UNIT = #unit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_ha_factor (FACTORID,  <!-- 因子编号 -->
+										FACTORNAME,  <!-- 因子名称 -->
+										UNIT,  <!-- 单位 -->
+										DESCRIPTION,  <!-- 描述 -->
+										STATUS,  <!-- 状态 -->
+										CREATOR,  <!-- 新增人 -->
+										CREATED_TIME
+										)		 
+	    VALUES (#factorid#, #factorname#, #unit#, #description#, #status#, #creator#, #createdTime#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_ha_factor WHERE 
+			FACTORID = #factorid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_ha_factor 
+		SET 
+					FACTORNAME	= #factorname#,   <!-- 因子名称 -->  
+					UNIT	= #unit#,   <!-- 单位 -->  
+					DESCRIPTION	= #description#,   <!-- 描述 -->  
+					STATUS	= #status#,   <!-- 状态 -->  
+					<!-- CREATOR	= #creator#,   新增人  
+					CREATED_TIME	= #createdTime#,   新增时间   -->
+					MODIFIER	= #modifier#,   <!-- 修改人 -->  
+					UPDATED_TIME	= #updatedTime#  <!-- 修改时间 -->  
+			WHERE 	
+			FACTORID = #factorid#
+	</update>
+  
+</sqlMap>

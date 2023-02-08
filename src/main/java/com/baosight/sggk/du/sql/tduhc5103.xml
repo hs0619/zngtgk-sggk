@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-06-18 19:49:05
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.VIEW_T_HA_XS_USER_EX 
+		 USER_ID  VARCHAR   NOT NULL, 
+		 LOGIN_NAME  VARCHAR   NOT NULL, 
+		 PASSWORD  VARCHAR   NOT NULL, 
+		 STATUS  VARCHAR   NOT NULL, 
+		 USER_NAME  VARCHAR   NOT NULL, 
+		 GENDER  VARCHAR   NOT NULL, 
+		 MOBILE  VARCHAR   NOT NULL, 
+		 EMAIL  VARCHAR   NOT NULL, 
+		 USER_TYPE  VARCHAR   NOT NULL, 
+		 ACCOUNT_EXPIRE_DATE  VARCHAR   NOT NULL, 
+		 PWD_EXPIRE_DATE  VARCHAR   NOT NULL, 
+		 IS_LOCKED  VARCHAR   NOT NULL, 
+		 SORT_INDEX  DECIMAL, 
+		 REC_CREATOR  VARCHAR   NOT NULL, 
+		 REC_CREATE_TIME  VARCHAR, 
+		 REC_REVISOR  VARCHAR, 
+		 REC_REVISE_TIME  VARCHAR, 
+		 PWD_REVISE_DATE  VARCHAR, 
+		 PWD_REVISOR  VARCHAR, 
+		 ARCHIVE_FLAG  VARCHAR, 
+		 USER_GROUP_ENAME  VARCHAR, 
+		 DEPARTMENT_ID  VARCHAR, 
+		 DEPARTMENT_NAME  VARCHAR, 
+		 PARENTID  VARCHAR, 
+		 DESCRIPTION  VARCHAR, 
+		 LEVEL  VARCHAR, 
+		 SORT  VARCHAR, 
+		 TYPE  VARCHAR
+	-->
+<sqlMap namespace="tduhc5103">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc5103">
+		SELECT
+				USER_ID	as "userId",  
+				LOGIN_NAME	as "loginName",  
+				PASSWORD	as "password",  
+				STATUS	as "status",  
+				USER_NAME	as "userName",  
+				GENDER	as "gender",  
+				MOBILE	as "mobile",  
+				EMAIL	as "email",  
+				USER_TYPE	as "userType",  
+				ACCOUNT_EXPIRE_DATE	as "accountExpireDate",  
+				PWD_EXPIRE_DATE	as "pwdExpireDate",  
+				IS_LOCKED	as "isLocked",  
+				SORT_INDEX	as "sortIndex",  
+				REC_CREATOR	as "recCreator",  
+				REC_CREATE_TIME	as "recCreateTime",  
+				REC_REVISOR	as "recRevisor",  
+				REC_REVISE_TIME	as "recReviseTime",  
+				PWD_REVISE_DATE	as "pwdReviseDate",  
+				PWD_REVISOR	as "pwdRevisor",  
+				ARCHIVE_FLAG	as "archiveFlag",  
+				USER_GROUP_ENAME	as "userGroupEname",  
+				DEPARTMENT_ID	as "departmentId",  
+				DEPARTMENT_NAME	as "departmentName",  
+				PARENTID	as "parentid",  
+				DESCRIPTION	as "description",  
+				LEVEL	as "level",  
+				SORT	as "sort",  
+				TYPE	as "type" 
+		FROM ${hbSchema}.VIEW_T_HA_XS_USER_EX WHERE 1=1
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="loginName">
+			login_Name = #loginName#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.VIEW_T_HA_XS_USER_EX WHERE 1=1
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="loginName">
+			LOGIN_NAME = #loginName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="password">
+			PASSWORD = #password#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userName">
+			USER_NAME = #userName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="gender">
+			GENDER = #gender#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mobile">
+			MOBILE = #mobile#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="email">
+			EMAIL = #email#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userType">
+			USER_TYPE = #userType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="accountExpireDate">
+			ACCOUNT_EXPIRE_DATE = #accountExpireDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pwdExpireDate">
+			PWD_EXPIRE_DATE = #pwdExpireDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isLocked">
+			IS_LOCKED = #isLocked#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sortIndex">
+			SORT_INDEX = #sortIndex#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreator">
+			REC_CREATOR = #recCreator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreateTime">
+			REC_CREATE_TIME = #recCreateTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recRevisor">
+			REC_REVISOR = #recRevisor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recReviseTime">
+			REC_REVISE_TIME = #recReviseTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pwdReviseDate">
+			PWD_REVISE_DATE = #pwdReviseDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pwdRevisor">
+			PWD_REVISOR = #pwdRevisor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="archiveFlag">
+			ARCHIVE_FLAG = #archiveFlag#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userGroupEname">
+			USER_GROUP_ENAME = #userGroupEname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID = #departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentName">
+			DEPARTMENT_NAME = #departmentName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="level">
+			LEVEL = #level#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.VIEW_T_HA_XS_USER_EX (USER_ID,
+										LOGIN_NAME,
+										PASSWORD,
+										STATUS,
+										USER_NAME,
+										GENDER,
+										MOBILE,
+										EMAIL,
+										USER_TYPE,
+										ACCOUNT_EXPIRE_DATE,
+										PWD_EXPIRE_DATE,
+										IS_LOCKED,
+										SORT_INDEX,
+										REC_CREATOR,
+										REC_CREATE_TIME,
+										REC_REVISOR,
+										REC_REVISE_TIME,
+										PWD_REVISE_DATE,
+										PWD_REVISOR,
+										ARCHIVE_FLAG,
+										USER_GROUP_ENAME,
+										DEPARTMENT_ID,
+										DEPARTMENT_NAME,
+										PARENTID,
+										DESCRIPTION,
+										LEVEL,
+										SORT,
+										TYPE
+										)		 
+	    VALUES (#userId:VARCHAR#, #loginName:VARCHAR#, #password:VARCHAR#, #status:VARCHAR#, #userName:VARCHAR#, #gender:VARCHAR#, #mobile:VARCHAR#, #email:VARCHAR#, #userType:VARCHAR#, #accountExpireDate:VARCHAR#, #pwdExpireDate:VARCHAR#, #isLocked:VARCHAR#, #sortIndex:NUMERIC#, #recCreator:VARCHAR#, #recCreateTime:VARCHAR#, #recRevisor:VARCHAR#, #recReviseTime:VARCHAR#, #pwdReviseDate:VARCHAR#, #pwdRevisor:VARCHAR#, #archiveFlag:VARCHAR#, #userGroupEname:VARCHAR#, #departmentId:VARCHAR#, #departmentName:VARCHAR#, #parentid:VARCHAR#, #description:VARCHAR#, #level:VARCHAR#, #sort:VARCHAR#, #type:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.VIEW_T_HA_XS_USER_EX WHERE 
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.VIEW_T_HA_XS_USER_EX 
+		SET 
+		USER_ID	= #userId#, 
+					LOGIN_NAME	= #loginName#, 
+					PASSWORD	= #password#, 
+					STATUS	= #status#, 
+					USER_NAME	= #userName#, 
+					GENDER	= #gender#, 
+					MOBILE	= #mobile#, 
+					EMAIL	= #email#, 
+					USER_TYPE	= #userType#, 
+					ACCOUNT_EXPIRE_DATE	= #accountExpireDate#, 
+					PWD_EXPIRE_DATE	= #pwdExpireDate#, 
+					IS_LOCKED	= #isLocked#, 
+					SORT_INDEX	= #sortIndex:NUMERIC#, 
+					REC_CREATOR	= #recCreator#, 
+					REC_CREATE_TIME	= #recCreateTime#, 
+					REC_REVISOR	= #recRevisor#, 
+					REC_REVISE_TIME	= #recReviseTime#, 
+					PWD_REVISE_DATE	= #pwdReviseDate#, 
+					PWD_REVISOR	= #pwdRevisor#, 
+					ARCHIVE_FLAG	= #archiveFlag#, 
+					USER_GROUP_ENAME	= #userGroupEname#, 
+					DEPARTMENT_ID	= #departmentId#, 
+					DEPARTMENT_NAME	= #departmentName#, 
+					PARENTID	= #parentid#, 
+					DESCRIPTION	= #description#, 
+					LEVEL	= #level#, 
+					SORT	= #sort#, 
+					TYPE	= #type#
+			WHERE 	
+	</update>
+  
+</sqlMap>

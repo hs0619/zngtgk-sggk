@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-25 10:11:17
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_XS_USER_EX 
+		 RID  VARCHAR   NOT NULL   primarykey, 
+		 USER_ID  VARCHAR   NOT NULL, 
+		 DEPARTMENT_ID  VARCHAR   NOT NULL
+	-->
+<sqlMap namespace="DUHB40">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hb.domain.DUHB40">
+		SELECT
+				t1.LOGIN_NAME	as "loginname",  
+				t1.USER_NAME	as "username",  
+				t2.DEPARTMENT_ID	as "departid", 
+				t3.DEPARTMENT_NAME	as "departname" 
+		FROM ${platSchema}.XS_USER t1
+		left join ${hbSchema}.T_HA_XS_USER_EX t2 on t1.LOGIN_NAME = t2.USER_ID
+		left join ${hbSchema}.T_HA_DEPARTMENT t3 on t2.DEPARTMENT_ID = t3.DEPARTMENT_ID WHERE 1=1
+		<isNotEmpty prepend=" AND " property="loginname">
+			t1.LOGIN_NAME like '%$loginname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="username">
+			t1.USER_NAME like '%$username$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departid">
+			t2.DEPARTMENT_ID like '%$departid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departname">
+			t3.DEPARTMENT_NAME like '%$departname$%'
+		</isNotEmpty>
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t2.DEPARTMENT_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.XS_USER t1 left join ${hbSchema}.T_HA_XS_USER_EX t2 on t1.LOGIN_NAME = t2.USER_ID WHERE 1=1
+		<isNotEmpty prepend=" AND " property="loginname">
+			LOGIN_NAME = #loginname#
+		</isNotEmpty>
+	</select>
+	
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_XS_USER_EX (RID,  <!-- 唯一ID -->
+										USER_ID,  <!-- 系统账户 -->
+										DEPARTMENT_ID  <!-- 部门编号 -->
+										)		 
+	    VALUES (#rid:VARCHAR#, #loginname:VARCHAR#, #departid:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_XS_USER_EX WHERE 
+			USER_ID = #loginname#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_XS_USER_EX 
+		SET 
+					RID = #rid#,   <!-- 系统账户 -->
+					DEPARTMENT_ID	= #departid#  <!-- 部门编号 -->
+			WHERE 
+			USER_ID	= #loginname#	
+			
+	</update>
+  
+</sqlMap>

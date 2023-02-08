@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhm4001">
+        <select id="query" resultClass="java.util.HashMap">
+            SELECT
+            TARGET_ID                as "targetId",
+            TARGET_NAME              as "targetName",
+            TARGET_CODE              as "targetCode",
+            TARGET_CODES              as "targetCodes",
+            UNIT                     as "unit",
+            TARGET_TYPE               as "targetType",
+            RANK                     as "rank",
+            STATE                     as "state",
+            REMARK                   as "remark"
+            FROM ${platSchema}.TDUHM4001
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="node">
+                    TARGET_TYPE = #node#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="state">
+                    STATE = #state#
+                </isNotEmpty>
+            </dynamic>
+            order by RANK asc
+        </select>
+
+        <select id="search" resultClass="java.util.HashMap">
+            SELECT
+            TARGET_ID                as "targetId",
+            TARGET_NAME              as "targetName",
+            TARGET_CODE              as "targetCode",
+            TARGET_CODES              as "targetCodes",
+            UNIT                     as "unit",
+            TARGET_TYPE               as "targetType",
+            RANK                     as "rank",
+            STATE                     as "state",
+            REMARK                   as "remark"
+            FROM ${platSchema}.TDUHM4001
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="P_ename">
+                    TARGET_TYPE like #P_ename#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="state">
+                    STATE like #state#
+                </isNotEmpty>
+            </dynamic>
+            order by TARGET_ID asc
+        </select>
+
+
+    <select id="queryListID" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm4001">
+        SELECT
+        TARGET_ID              as "targetId"
+        FROM ${platSchema}.TDUHM4001
+        where STATE='启用'
+        order by TARGET_ID asc
+    </select>
+
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm4001">
+        SELECT
+        TARGET_ID              as "targetId"
+        FROM ${platSchema}.TDUHM4001
+        order by TARGET_ID desc
+        limit 1
+    </select>
+
+
+
+    <insert id="insert">
+        INSERT INTO ${platSchema}.TDUHM4001 (
+        TARGET_ID  ,
+        TARGET_NAME  ,
+        TARGET_CODE  ,
+        TARGET_CODES  ,
+        TARGET_TYPE  ,
+        UNIT  ,
+        RANK  ,
+        STATE  ,
+        REMARK
+        )
+        VALUES (
+        #targetId: VARCHAR#   ,
+        #targetName: VARCHAR#   ,
+        #targetCode: VARCHAR#   ,
+        #targetName: VARCHAR#   ,
+        #targetType: VARCHAR#   ,
+        #unit: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #remark: VARCHAR# )
+    </insert>
+
+
+    <insert id="insert1">
+        INSERT INTO ${platSchema}.TDUHM4001 (
+        TARGET_ID  ,
+        TARGET_NAME  ,
+        TARGET_CODE  ,
+        TARGET_CODES  ,
+        UNIT  ,
+        TARGET_TYPE  ,
+        RANK  ,
+        STATE  ,
+        REMARK
+        )
+        VALUES (
+        #targetId: VARCHAR#   ,
+        #targetName: VARCHAR#   ,
+        #targetCode: VARCHAR#   ,
+        #targetName: VARCHAR#   ,
+        #unit: VARCHAR#   ,
+        #targetType: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #remark: VARCHAR# )
+    </insert>
+
+
+    <insert id="insert2">
+        INSERT INTO ${platSchema}.TDUHM4001 (
+        TARGET_ID  ,
+        TARGET_NAME  ,
+        TARGET_CODE  ,
+        TARGET_CODES  ,
+        UNIT  ,
+        TARGET_TYPE  ,
+        RANK  ,
+        STATE  ,
+        REMARK
+        )
+        VALUES (
+        #targetId: VARCHAR#   ,
+        #targetName: VARCHAR#   ,
+        #targetCode: VARCHAR#   ,
+        #targetCode: VARCHAR#   ,
+        #unit: VARCHAR#   ,
+        #targetType: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #remark: VARCHAR# )
+    </insert>
+
+
+
+    <delete id="delete">
+        DELETE FROM ${platSchema}.TDUHM4001  WHERE TARGET_ID = #targetId#
+    </delete>
+
+    <update id="update">
+        UPDATE  ${platSchema}.TDUHM4001
+        SET
+        TARGET_NAME =#targetName#,
+        TARGET_CODE =#targetCode#,
+        TARGET_CODES =#targetCode#,
+        UNIT        =#unit#,
+        TARGET_TYPE =#targetType#,
+        RANK        =#rank#,
+        STATE       =#state#,
+        REMARK      =#remark#
+        WHERE
+        TARGET_ID = #targetId#
+    </update>
+</sqlMap>

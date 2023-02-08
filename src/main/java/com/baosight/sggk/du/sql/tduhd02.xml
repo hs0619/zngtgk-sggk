@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-02-23 17:54:15 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_DEPART_INPUT_VALUE CLOCK VARCHAR NOT NULL primarykey, 
+	ITEMCODE VARCHAR NOT NULL primarykey, ITEMVALUE DECIMAL, USERID VARCHAR, 
+	INSERTTIME VARCHAR, ITEMSTATUS VARCHAR, REMARK VARCHAR -->
+<sqlMap namespace="tduhd02">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd02">
+		SELECT
+		'$clock$' as "clock",
+		a.ITEMVALUE as "itemvalue",
+		c.user_name as
+		"userid",
+		a.INSERTTIME as "inserttime",
+		a.ITEMSTATUS as "itemstatus",
+		a.REMARK as "remark",
+		a.HBRUNTIME as "hbruntime",
+		a.flag as "flag",
+
+		b.ITEMCODE as "itemcode",
+		b.departmentid as
+		"departmentid",
+		b.procedureid as
+		"procedureid",
+		b.gran as "gran",
+		b.itemname as "itemname",
+		b.unit as
+		"unit",
+		b.isruntime as "isruntime",
+		a.DATAVALUE        as "dataValue",
+        t3.totalDATAVALUE as "totalDataValue",
+        t3.totalITEMVALUE as "totalItemvalue"
+		FROM
+		${hbSchema}.T_HD_DEPART_INPUT_VALUE a
+		right join
+		${hbSchema}.T_HD_DEPART_INPUT_ITEM b
+		on (a.itemcode=b.itemcode and
+		a.clock=#clock#)
+		
+		LEFT JOIN
+		${platSchema}.XS_USER c
+		ON (a.USERID=c.login_name)
+        left join (
+            SELECT
+            t1.ITEMCODE,
+            t2.ITEMNAME,
+            sum(CASE WHEN (t1.DATAVALUE = null or t1.DATAVALUE = '') THEN '0' else t1.DATAVALUE END) as totalDATAVALUE,
+            SUM(t1.ITEMVALUE) as totalITEMVALUE
+            FROM
+            ${hbSchema}.T_HD_DEPART_INPUT_VALUE t1
+            RIGHT join ${hbSchema}.T_HD_DEPART_INPUT_ITEM t2 on t1.ITEMCODE=t2.ITEMCODE
+            WHERE 1=1 and t2.ISRUNTIME='0'
+            <isNotEmpty prepend=" AND " property="startdate">
+                t1.CLOCK &gt;= #startdate#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="clock">
+                t1.CLOCK &lt;= #clock#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="departmentid">
+                t2.departmentid =
+                #departmentid#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="procedureid">
+                t2.procedureid =
+                #procedureid#
+            </isNotEmpty>
+            GROUP BY
+            t1.ITEMCODE,t2.ITEMNAME
+        ) t3 on t3.ITEMCODE=a.ITEMCODE
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="itemcode">
+			b.ITEMCODE =
+			#itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			b.departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			b.procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="gran">
+			b.gran = #gran#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isruntime">
+			b.isruntime = #isruntime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="runtimetype">
+			b.runtimetype = #runtimetype#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				b.ITEMCODE asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT count(*)
+		FROM
+		${hbSchema}.T_HD_DEPART_INPUT_VALUE a
+		right join
+		${hbSchema}.T_HD_DEPART_INPUT_ITEM b
+		on (a.itemcode=b.itemcode and
+		a.clock=#clock#)
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="itemcode">
+			b.ITEMCODE =
+			#itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			b.departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			b.procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="gran">
+			b.gran = #gran#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isruntime">
+			b.isruntime = #isruntime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="runtimetype">
+			b.runtimetype = #runtimetype#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="clock"> CLOCK = #clock# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemcode"> ITEMCODE = #itemcode# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemvalue"> ITEMVALUE = #itemvalue# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="userid"> USERID = #userid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="inserttime"> INSERTTIME 
+		= #inserttime# </isNotEmpty> <isNotEmpty prepend=" AND " property="itemstatus"> 
+		ITEMSTATUS = #itemstatus# </isNotEmpty> <isNotEmpty prepend=" AND " property="remark"> 
+		REMARK = #remark# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_DEPART_INPUT_VALUE
+		(CLOCK,
+		ITEMCODE,
+		ITEMVALUE,
+		USERID,
+		INSERTTIME,
+		HBRUNTIME,
+		dataValue,
+		flag
+		)
+		VALUES (#clock:VARCHAR#,
+		#itemcode:VARCHAR#, #itemvalue:NUMERIC#,
+		#userid:VARCHAR#,
+		#inserttime:VARCHAR#,
+		#hbruntime:VARCHAR#,#dataValue:VARCHAR#,#flag:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_DEPART_INPUT_VALUE WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_DEPART_INPUT_VALUE
+		SET
+		ITEMVALUE = #itemvalue:NUMERIC#,
+		USERID = #userid#,
+		HBRUNTIME = #hbruntime#,
+		INSERTTIME = #inserttime#,
+		dataValue = #dataValue#,
+		flag = #flag#
+		WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode#
+	</update>
+	
+	<update id="updatedataValue">
+		UPDATE ${hbSchema}.T_HD_DEPART_INPUT_VALUE
+		SET
+		dataValue = #dataValue#
+		WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode#
+	</update>
+
+	<insert id="sumRuntime">
+		insert into
+		${hbSchema}.t_hd_depart_input_value(itemcode,clock,itemvalue,userid,inserttime)
+		select
+		'$itemcode$' as itemcode,
+		'$clock$' as clock,
+		sum(itemvalue) as
+		itemvalue,
+		'$userid$' as userid,
+		'$inserttime$' as inserttime
+		from
+		${hbSchema}.t_hd_depart_input_runtime
+		where itemcode = #itemcode#
+		and
+		clock like '$clock$%'
+	</insert>
+	<select id="queryValueBycode" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT
+		clock as "clock",
+		ITEMVALUE as "itemvalue",
+		HBRUNTIME as "hbruntime"
+		<!-- ,flag = #flag# -->
+		FROM ${hbSchema}.T_HD_DEPART_INPUT_VALUE a
+		WHERE ITEMCODE = #itemcode#
+		and clock = #clock#
+	</select>
+	
+	<select id="queryByflag" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd02">
+		SELECT
+		clock as "clock",
+		ITEMVALUE as "itemvalue",
+		HBRUNTIME as "hbruntime",
+		flag 	as "flag"
+		FROM ${hbSchema}.T_HD_DEPART_INPUT_VALUE 
+		WHERE ITEMCODE = #itemcode#
+		and clock = #clock# 
+	</select>
+
+</sqlMap>

@@ -1,0 +1,32 @@
+
+.control-label span{
+	font-weight: bold;
+}
+.divtop {
+	border: 0.5px solid #c5dfff;
+ 	border-bottom: none; 
+	text-align: center;
+	font-weight: bold;
+	line-height:28px;
+}
+.divhr {
+	border: 0.5px solid #c5dfff;
+ 	border-bottom: none;
+	height:28px;
+}
+.divbottom {
+ 	border: 0.5px solid #c5dfff;
+	text-align: center;
+	font-weight: bold;
+	line-height:28px;
+}
+.divtitle{
+	margin : 0 auto;
+	text-align:center;
+	height:26px;
+	line-height:26px;
+	background-color: CORNFLOWERBLUE;
+}
+.divcol {
+	border-left: 0.5px solid #c5dfff;
+}

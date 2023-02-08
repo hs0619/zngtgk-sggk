@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-12-23 14:29:39
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.XS_USER_GROUP 
+		 ID  VARCHAR   NOT NULL   primarykey, 
+		 GROUP_ENAME  VARCHAR   NOT NULL, 
+		 GROUP_CNAME  VARCHAR, 
+		 GROUP_TYPE  VARCHAR, 
+		 SORT_INDEX  DECIMAL, 
+		 REC_CREATOR  VARCHAR, 
+		 REC_CREATE_TIME  VARCHAR, 
+		 REC_REVISOR  VARCHAR, 
+		 REC_REVISE_TIME  VARCHAR, 
+		 ARCHIVE_FLAG  VARCHAR, 
+		 MANAGE_GROUP_ENAME  VARCHAR
+	-->
+<sqlMap namespace="tduha02">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduha02">
+		SELECT
+				ID	as "id",  <!-- 用户群组ID -->
+				GROUP_ENAME	as "groupEname",  
+				GROUP_CNAME	as "groupCname",  <!-- 群组中文名 -->
+				GROUP_TYPE	as "groupType",  <!-- 群组类型 -->
+				SORT_INDEX	as "sortIndex",  <!-- 排序 -->
+				REC_CREATOR	as "recCreator",  <!-- 创建人 -->
+				REC_CREATE_TIME	as "recCreateTime",  <!-- 创建时间 -->
+				REC_REVISOR	as "recRevisor",  <!-- 修改人 -->
+				REC_REVISE_TIME	as "recReviseTime",  <!-- 修改时间 -->
+				ARCHIVE_FLAG	as "archiveFlag",  <!-- 归档标记 -->
+				MANAGE_GROUP_ENAME	as "manageGroupEname" <!-- 管辖组 -->
+		FROM ${hbSchema}.XS_USER_GROUP WHERE 1=1
+		<isNotEmpty prepend=" AND " property="id">
+			ID = #id#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.XS_USER_GROUP WHERE 1=1
+		<isNotEmpty prepend=" AND " property="id">
+			ID = #id#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="id">
+			ID = #id#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="groupEname">
+			GROUP_ENAME = #groupEname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="groupCname">
+			GROUP_CNAME = #groupCname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="groupType">
+			GROUP_TYPE = #groupType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sortIndex">
+			SORT_INDEX = #sortIndex#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreator">
+			REC_CREATOR = #recCreator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreateTime">
+			REC_CREATE_TIME = #recCreateTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recRevisor">
+			REC_REVISOR = #recRevisor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recReviseTime">
+			REC_REVISE_TIME = #recReviseTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="archiveFlag">
+			ARCHIVE_FLAG = #archiveFlag#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="manageGroupEname">
+			MANAGE_GROUP_ENAME = #manageGroupEname#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.XS_USER_GROUP (ID,  <!-- 用户群组ID -->
+										GROUP_ENAME,
+										GROUP_CNAME,  <!-- 群组中文名 -->
+										GROUP_TYPE,  <!-- 群组类型 -->
+										SORT_INDEX,  <!-- 排序 -->
+										REC_CREATOR,  <!-- 创建人 -->
+										REC_CREATE_TIME,  <!-- 创建时间 -->
+										REC_REVISOR,  <!-- 修改人 -->
+										REC_REVISE_TIME,  <!-- 修改时间 -->
+										ARCHIVE_FLAG,  <!-- 归档标记 -->
+										MANAGE_GROUP_ENAME  <!-- 管辖组 -->
+										)		 
+	    VALUES (#id:VARCHAR#, #groupEname:VARCHAR#, #groupCname:VARCHAR#, #groupType:VARCHAR#, #sortIndex:NUMERIC#, #recCreator:VARCHAR#, #recCreateTime:VARCHAR#, #recRevisor:VARCHAR#, #recReviseTime:VARCHAR#, #archiveFlag:VARCHAR#, #manageGroupEname:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.XS_USER_GROUP WHERE 
+			ID = #id#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.XS_USER_GROUP 
+		SET 
+					GROUP_ENAME	= #groupEname#, 
+					GROUP_CNAME	= #groupCname#,   <!-- 群组中文名 -->
+					GROUP_TYPE	= #groupType#,   <!-- 群组类型 -->
+					SORT_INDEX	= #sortIndex:NUMERIC#,   <!-- 排序 -->
+					REC_CREATOR	= #recCreator#,   <!-- 创建人 -->
+					REC_CREATE_TIME	= #recCreateTime#,   <!-- 创建时间 -->
+					REC_REVISOR	= #recRevisor#,   <!-- 修改人 -->
+					REC_REVISE_TIME	= #recReviseTime#,   <!-- 修改时间 -->
+					ARCHIVE_FLAG	= #archiveFlag#,   <!-- 归档标记 -->
+					MANAGE_GROUP_ENAME	= #manageGroupEname#  <!-- 管辖组 -->
+			WHERE 	
+			ID = #id#
+	</update>
+  
+</sqlMap>

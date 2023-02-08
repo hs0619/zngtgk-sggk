@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-01-18 10:51:59 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS CLOCK VARCHAR NOT NULL, ITEMCODE 
+	VARCHAR NOT NULL, MONITORID VARCHAR NOT NULL, FACTORID VARCHAR NOT NULL, 
+	CATEGORY VARCHAR NOT NULL, PROPERTYCODE VARCHAR NOT NULL, VALUE VARCHAR NOT 
+	NULL, SEQ INTEGER NOT NULL, TOTALTYPE VARCHAR NOT NULL -->
+<sqlMap namespace="tduhd4002">
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd4002">
+		SELECT
+		CLOCK as "clock",
+		ITEMCODE as "itemcode",
+		MONITORID as
+		"monitorid",
+		FACTORID as "factorid",
+		CATEGORY as "category",
+		PROPERTYCODE as "propertycode",
+		VALUE as "formulavalue",
+		SEQ as "seq",
+		TOTALTYPE as "totaltype"
+		FROM ${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="category">
+			CATEGORY = #category#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="seq">
+			SEQ = #seq#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totaltype">
+			TOTALTYPE =
+			#totaltype#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				case CATEGORY when 'NONGDU' then 1 when
+				'RUNTIME' then 2 when 'FEIQI'
+				then 3 end asc, seq
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM
+		${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="category">
+			CATEGORY = #category#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="seq">
+			SEQ = #seq#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totaltype">
+			TOTALTYPE =
+			#totaltype#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="clock"> CLOCK = #clock# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemcode"> ITEMCODE = #itemcode# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="monitorid"> MONITORID = #monitorid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="factorid"> FACTORID = 
+		#factorid# </isNotEmpty> <isNotEmpty prepend=" AND " property="category"> 
+		CATEGORY = #category# </isNotEmpty> <isNotEmpty prepend=" AND " property="propertycode"> 
+		PROPERTYCODE = #propertycode# </isNotEmpty> <isNotEmpty prepend=" AND " property="value"> 
+		VALUE = #value# </isNotEmpty> <isNotEmpty prepend=" AND " property="seq"> 
+		SEQ = #seq# </isNotEmpty> <isNotEmpty prepend=" AND " property="totaltype"> 
+		TOTALTYPE = #totaltype# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS
+		(CLOCK,
+		ITEMCODE,
+		MONITORID,
+		FACTORID,
+		CATEGORY,
+		PROPERTYCODE,
+		VALUE,
+		SEQ,
+		TOTALTYPE
+		)
+		VALUES (#clock:VARCHAR#, #itemcode:VARCHAR#,
+		#monitorid:VARCHAR#,
+		#factorid:VARCHAR#, #category:VARCHAR#,
+		#propertycode:VARCHAR#,
+		#formulavalue:VARCHAR#, #seq#,
+		#totaltype:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="category">
+			CATEGORY = #category#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="seq">
+			SEQ = #seq#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totaltype">
+			TOTALTYPE = #totaltype#
+		</isNotEmpty>
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_TAXANDTOTAL_EXPRESS
+		SET
+		PROPERTYCODE = #propertycode#,
+		VALUE = #formulavalue#
+		WHERE
+		CLOCK =
+		#clock# AND
+		ITEMCODE = #itemcode# AND
+		MONITORID = #monitorid# AND
+		FACTORID = #factorid# AND
+		CATEGORY = #category# AND
+		SEQ = #seq# AND
+		TOTALTYPE = #totaltype#
+	</update>
+	<select id="queryFormulaValue" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select sitename as "sitename",
+		factorname as "factorname" from ${hbSchema}.view_t_ha_site_factor 
+		where siteid=#siteid# 
+		and factorid=#factorid#
+	</select>
+	<select id="queryDeptItemName" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select itemname as "itemname"
+		from ${hbSchema}.t_hd_depart_input_item 
+		where itemcode= #itemcode#
+	</select>
+
+</sqlMap>

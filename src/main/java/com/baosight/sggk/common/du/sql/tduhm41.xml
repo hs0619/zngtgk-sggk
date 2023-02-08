@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhm41">
+        <select id="query" resultClass="java.util.HashMap">
+            SELECT
+            SOLID_ID              as "solidId",
+            SOLID_CODE              as "solidCode",
+            SOLID_CODES              as "solidCodes",
+            SOLID_NAME              as "solidName",
+            SOLID_TYPE              as "solidType",
+            STATE                   as "state",
+            RANK                    as "rank",
+            SOLID_STATE               as "solidState",
+            REMARK                    as "remark"
+            FROM ${platSchema}.TDUHM41
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="node">
+                    SOLID_TYPE = #node#
+                </isNotEmpty>
+            </dynamic>
+            order by SOLID_ID asc
+        </select>
+
+        <select id="search" resultClass="java.util.HashMap">
+            SELECT
+            SOLID_ID              as "solidId",
+            SOLID_CODE              as "solidCode",
+            SOLID_CODES              as "solidCodes",
+            SOLID_NAME              as "solidName",
+            SOLID_TYPE              as "solidType",
+            STATE                   as "state",
+            RANK                    as "rank",
+            SOLID_STATE               as "solidState",
+            REMARK                    as "remark"
+            FROM ${platSchema}.TDUHM41
+            <dynamic prepend="WHERE">
+                <isNotEmpty prepend=" AND " property="P_ename">
+                    SOLID_TYPE like #P_ename#
+                </isNotEmpty>
+                <isNotEmpty prepend=" AND " property="solidState">
+                    SOLID_STATE like #solidState#
+                </isNotEmpty>
+            </dynamic>
+            order by SOLID_ID asc
+        </select>
+
+
+    <select id="searchA" resultClass="java.util.HashMap">
+        SELECT
+        SOLID_ID              as "solidId",
+        SOLID_CODE              as "solidCode",
+        SOLID_CODES              as "solidCodes",
+        SOLID_NAME              as "solidName",
+        SOLID_TYPE              as "solidType",
+        STATE                   as "state",
+        RANK                    as "rank",
+        SOLID_STATE               as "solidState",
+        REMARK                    as "remark"
+        FROM ${platSchema}.TDUHM41
+        <dynamic prepend="WHERE">
+            <isNotEmpty prepend=" and " property="solidState">
+                SOLID_STATE like #solidState#
+            </isNotEmpty>
+            <isNotEmpty prepend=" and " property="solidName">
+                SOLID_NAME like  #solidName#
+            </isNotEmpty>
+        </dynamic>
+        order by SOLID_ID asc
+    </select>
+
+
+    <select id="queryListID" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm41">
+        SELECT
+        SOLID_ID              as "solidId"
+        FROM ${platSchema}.TDUHM41
+        where SOLID_STATE = '启用'
+        order by SOLID_ID asc
+    </select>
+
+    <select id="queryId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhm41">
+        SELECT
+        SOLID_ID              as "solidId"
+        FROM ${platSchema}.TDUHM41
+        order by SOLID_ID desc
+        limit 1
+    </select>
+
+    <insert id="insert">
+        INSERT INTO ${platSchema}.TDUHM41 (
+        SOLID_ID,
+        SOLID_NAME  ,
+        SOLID_CODES  ,
+        STATE  ,
+        RANK  ,
+        SOLID_STATE  ,
+        REMARK
+        )
+        VALUES (
+        #solidId: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #solidState: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+
+
+    <insert id="insert1">
+        INSERT INTO ${platSchema}.TDUHM41 (
+        SOLID_ID,
+        SOLID_NAME  ,
+        SOLID_CODES  ,
+        SOLID_TYPE  ,
+        STATE  ,
+        RANK  ,
+        SOLID_STATE  ,
+        REMARK
+        )
+        VALUES (
+        #solidId: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidType: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #solidState: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+
+    <insert id="insert2">
+        INSERT INTO ${platSchema}.TDUHM41 (
+        SOLID_ID,
+        SOLID_NAME  ,
+        SOLID_CODE  ,
+        SOLID_CODES  ,
+        SOLID_TYPE  ,
+        STATE  ,
+        RANK  ,
+        SOLID_STATE  ,
+        REMARK
+        )
+        VALUES (
+        #solidId: VARCHAR#   ,
+        #solidName: VARCHAR#   ,
+        #solidCode: VARCHAR#   ,
+        #solidCode: VARCHAR#   ,
+        #solidType: VARCHAR#   ,
+        #state: VARCHAR#   ,
+        #rank: VARCHAR#   ,
+        #solidState: VARCHAR#   ,
+        #remark: VARCHAR#   		)
+    </insert>
+
+
+    <delete id="delete">
+        DELETE FROM ${platSchema}.TDUHM41  WHERE SOLID_ID = #solidId#
+
+    </delete>
+
+    <update id="update">
+        UPDATE  ${platSchema}.TDUHM41
+        SET
+        SOLID_NAME = #solidName#     ,
+        SOLID_CODE = #solidCode#     ,
+        SOLID_CODES = #solidCode#     ,
+        SOLID_TYPE = #solidType#     ,
+        STATE = #state#     ,
+        RANK = #rank#     ,
+        SOLID_STATE = #solidState#,
+        REMARK = #remark#
+        WHERE
+        SOLID_ID = #solidId#
+    </update>
+
+
+
+
+    </sqlMap>

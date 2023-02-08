@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-12-23 14:29:39
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.XS_USER_GROUP_MEMBER 
+		 MEMBER_ID  VARCHAR   NOT NULL   primarykey, 
+		 PARENT_ID  VARCHAR   NOT NULL   primarykey, 
+		 MEMBER_TYPE  VARCHAR, 
+		 SORT_INDEX  DECIMAL, 
+		 PATH  VARCHAR, 
+		 REC_CREATOR  VARCHAR, 
+		 REC_CREATE_TIME  VARCHAR, 
+		 REC_REVISOR  VARCHAR, 
+		 REC_REVISE_TIME  VARCHAR, 
+		 ARCHIVE_FLAG  VARCHAR
+	-->
+<sqlMap namespace="tduha03">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduha03">
+		SELECT
+				MEMBER_ID	as "memberId",  <!-- 成员ID -->
+				PARENT_ID	as "parentId",  <!-- 父节点ID -->
+				MEMBER_TYPE	as "memberType",  <!-- 授权类别:USER,GROUP -->
+				SORT_INDEX	as "sortIndex",  <!-- 排序 -->
+				PATH	as "path",  <!-- 来源 -->
+				REC_CREATOR	as "recCreator",  <!-- 创建人 -->
+				REC_CREATE_TIME	as "recCreateTime",  <!-- 创建时间 -->
+				REC_REVISOR	as "recRevisor",  <!-- 修改人 -->
+				REC_REVISE_TIME	as "recReviseTime",  <!-- 修改时间 -->
+				ARCHIVE_FLAG	as "archiveFlag" <!-- 归档标记 -->
+		FROM ${hbSchema}.XS_USER_GROUP_MEMBER WHERE 1=1
+		<isNotEmpty prepend=" AND " property="memberId">
+			MEMBER_ID = #memberId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentId">
+			PARENT_ID = #parentId#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  MEMBER_ID asc, 
+    		  PARENT_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.XS_USER_GROUP_MEMBER WHERE 1=1
+		<isNotEmpty prepend=" AND " property="memberId">
+			MEMBER_ID = #memberId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentId">
+			PARENT_ID = #parentId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="memberId">
+			MEMBER_ID = #memberId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentId">
+			PARENT_ID = #parentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="memberType">
+			MEMBER_TYPE = #memberType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sortIndex">
+			SORT_INDEX = #sortIndex#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="path">
+			PATH = #path#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreator">
+			REC_CREATOR = #recCreator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recCreateTime">
+			REC_CREATE_TIME = #recCreateTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recRevisor">
+			REC_REVISOR = #recRevisor#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recReviseTime">
+			REC_REVISE_TIME = #recReviseTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="archiveFlag">
+			ARCHIVE_FLAG = #archiveFlag#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.XS_USER_GROUP_MEMBER (MEMBER_ID,  <!-- 成员ID -->
+										PARENT_ID,  <!-- 父节点ID -->
+										MEMBER_TYPE,  <!-- 授权类别:USER,GROUP -->
+										SORT_INDEX,  <!-- 排序 -->
+										PATH,  <!-- 来源 -->
+										REC_CREATOR,  <!-- 创建人 -->
+										REC_CREATE_TIME,  <!-- 创建时间 -->
+										REC_REVISOR,  <!-- 修改人 -->
+										REC_REVISE_TIME,  <!-- 修改时间 -->
+										ARCHIVE_FLAG  <!-- 归档标记 -->
+										)		 
+	    VALUES (#memberId:VARCHAR#, #parentId:VARCHAR#, #memberType:VARCHAR#, #sortIndex:NUMERIC#, #path:VARCHAR#, #recCreator:VARCHAR#, #recCreateTime:VARCHAR#, #recRevisor:VARCHAR#, #recReviseTime:VARCHAR#, #archiveFlag:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.XS_USER_GROUP_MEMBER WHERE 
+			MEMBER_ID = #memberId# AND 
+			PARENT_ID = #parentId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.XS_USER_GROUP_MEMBER 
+		SET 
+								MEMBER_TYPE	= #memberType#,   <!-- 授权类别:USER,GROUP -->
+					SORT_INDEX	= #sortIndex:NUMERIC#,   <!-- 排序 -->
+					PATH	= #path#,   <!-- 来源 -->
+					REC_CREATOR	= #recCreator#,   <!-- 创建人 -->
+					REC_CREATE_TIME	= #recCreateTime#,   <!-- 创建时间 -->
+					REC_REVISOR	= #recRevisor#,   <!-- 修改人 -->
+					REC_REVISE_TIME	= #recReviseTime#,   <!-- 修改时间 -->
+					ARCHIVE_FLAG	= #archiveFlag#  <!-- 归档标记 -->
+			WHERE 	
+			MEMBER_ID = #memberId# AND 
+			PARENT_ID = #parentId#
+	</update>
+  
+</sqlMap>

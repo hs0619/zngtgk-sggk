@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-08-08 18:01:16
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_PORTFACTOR 
+		 MONITORID  VARCHAR, 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 PORTID  VARCHAR   NOT NULL   primarykey, 
+		 HIGHLIMIT  VARCHAR, 
+		 LOWLIMIT  VARCHAR, 
+		 NKHIGHLIMIT  VARCHAR, 
+		 NKLOWLIMIT  VARCHAR, 
+		 DESCRIPTION  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR, 
+		 DETECTION_LIMIT  VARCHAR
+	-->
+<sqlMap namespace="tduhb06">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb06">
+		SELECT
+		        MONITORID	as "monitorid",  
+				FACTORID	as "factorid",  <!-- 因子编号 -->
+				PORTID	as "portid",  <!-- 对应排口编号 -->
+				HIGHLIMIT	as "highlimit",  <!-- 高限 -->
+				LOWLIMIT	as "lowlimit",  <!-- 低限 -->
+				NKHIGHLIMIT	as "nkhighlimit",  <!-- 内控高限 -->
+				NKLOWLIMIT	as "nklowlimit",  <!-- 内控低限 -->
+				DESCRIPTION	as "description",  <!-- 描述 -->
+				STATUS	as "status",  <!-- 状态位 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime", <!-- 修改时间 -->
+				DETECTION_LIMIT	as "detectionLimit" <!-- 检出限 -->
+		FROM ${hbSchema}.t_ha_portfactor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  PORTID asc,FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryById" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb06">
+		SELECT
+		        MONITORID	as "monitorid",  
+				FACTORID	as "factorid",  <!-- 因子编号 -->
+				PORTID	as "portid",  <!-- 对应排口编号 -->
+				HIGHLIMIT	as "highlimit",  <!-- 高限 -->
+				LOWLIMIT	as "lowlimit",  <!-- 低限 -->
+				NKHIGHLIMIT	as "nkhighlimit",  <!-- 内控高限 -->
+				NKLOWLIMIT	as "nklowlimit",  <!-- 内控低限 -->
+				DESCRIPTION	as "description",  <!-- 描述 -->
+				STATUS	as "status",  <!-- 状态位 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime", <!-- 修改时间 -->
+				DETECTION_LIMIT	as "detectionLimit" <!-- 检出限 -->
+		FROM ${hbSchema}.t_ha_portfactor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  PORTID asc,FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryDetail" parameterClass="java.util.HashMap" 
+			resultClass="java.util.HashMap">
+		SELECT
+                t1.monitorid	as "monitorid",
+                t3.monitorname	as "monitorname",
+		        t1.FACTORID	as "factorid",
+                t2.FACTORNAME as "factorname",  
+				t1.PORTID	as "portid",  
+				t1.HIGHLIMIT	as "highlimit",  
+				t1.LOWLIMIT	as "lowlimit",  
+				t1.NKHIGHLIMIT	as "nkhighlimit",  
+				t1.NKLOWLIMIT	as "nklowlimit",  
+				t1.DESCRIPTION	as "description",  
+				t1.STATUS	as "status",
+				t1.DETECTION_LIMIT	as "detectionLimit"
+		FROM ${hbSchema}.t_ha_portfactor t1
+        left join ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID
+        left join ${hbSchema}.t_ha_monitor t3 on t1.monitorid = t3.monitorid
+        WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			t1.PORTID = #portid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  t1.PORTID asc,t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_ha_portfactor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="highlimit">
+			HIGHLIMIT = #highlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="lowlimit">
+			LOWLIMIT = #lowlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="nkhighlimit">
+			NKHIGHLIMIT = #nkhighlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="nklowlimit">
+			NKLOWLIMIT = #nklowlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="detectionLimit">
+			DETECTION_LIMIT = #detectionLimit#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_PORTFACTOR (MONITORID,
+										FACTORID,
+										PORTID,
+										HIGHLIMIT,
+										LOWLIMIT,
+										NKHIGHLIMIT,
+										NKLOWLIMIT,
+										DESCRIPTION,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										DETECTION_LIMIT
+										)		 
+	    VALUES (#monitorid:VARCHAR#, #factorid:VARCHAR#, #portid:VARCHAR#, #highlimit:VARCHAR#, #lowlimit:VARCHAR#, #nkhighlimit:VARCHAR#, #nklowlimit:VARCHAR#, #description:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #detectionLimit:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_PORTFACTOR WHERE 
+			FACTORID = #factorid# AND 
+			PORTID = #portid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_PORTFACTOR 
+		SET 
+		MONITORID	= #monitorid#, 
+											HIGHLIMIT	= #highlimit#, 
+					LOWLIMIT	= #lowlimit#, 
+					NKHIGHLIMIT	= #nkhighlimit#, 
+					NKLOWLIMIT	= #nklowlimit#, 
+					DESCRIPTION	= #description#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					DETECTION_LIMIT	= #detectionLimit#
+			WHERE 	
+			FACTORID = #factorid# AND 
+			PORTID = #portid#
+	</update>
+  
+</sqlMap>

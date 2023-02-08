@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information -->
+<sqlMap namespace="tduhc5201">
+	<update id="vfyfflag">
+		<![CDATA[
+      		update ${hbSchema}.$tablename$ 
+			set VFYFFLAG='D'
+			where mn=#mn#
+			and factorid=#factorid# and datatime=#datatime#
+		]]>
+	</update>
+</sqlMap>

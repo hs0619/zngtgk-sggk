@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-02-20 10:58:12 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_DEPART_INPUT_ITEM DEPARTMENTID VARCHAR, ITEMCODE 
+	VARCHAR NOT NULL primarykey, ITEMNAME VARCHAR, GRAN VARCHAR NOT NULL, UNIT 
+	VARCHAR, SEQ INTEGER NOT NULL, ISRUNTIME VARCHAR NOT NULL, PROCEDUREID VARCHAR -->
+<sqlMap namespace="tduhd01">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd01">
+		SELECT
+		DEPARTMENTID as "departmentid",
+		ITEMCODE as "itemcode",
+		ITEMNAME as "itemname",
+		GRAN as "gran",
+		UNIT as "unit",
+		ISRUNTIME as "isruntime",
+		PROCEDUREID as "procedureid",
+		ISTOTAL as "istotal",
+		deviceid as "deviceid",
+		RUNTIMETYPE as "runtimetype",
+		OLORHAND as "olorhand",
+		proc_unit	as	"procUnit",
+        itemid	as	"itemid"
+		FROM ${hbSchema}.T_HD_DEPART_INPUT_ITEM WHERE 1=1
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemname">
+			itemname like '%$itemname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="istotal">
+			istotal =
+			#istotal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isruntime">
+			isruntime =
+			#isruntime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="deviceid">
+			deviceid =
+			#deviceid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="runtimetype">
+			runtimetype =
+			#runtimetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="olorhand">
+			OLORHAND =
+			#olorhand#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procUnit">
+			proc_Unit =
+			#procUnit#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				ITEMCODE asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	<select id="queryByProcUnit" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd01">
+		SELECT
+		DEPARTMENTID as "departmentid",
+		ITEMCODE as "itemcode",
+		ITEMNAME as "itemname",
+		proc_unit	as	"procUnit"
+		FROM ${hbSchema}.T_HD_DEPART_INPUT_ITEM
+		WHERE ISRUNTIME='0'
+			and proc_Unit =#procUnit#
+	</select>
+
+    <select id="queryByItemId" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.common.du.domain.Tduhd01">
+		SELECT
+		DEPARTMENTID as "departmentid",
+		ITEMCODE as "itemcode",
+		ITEMNAME as "itemname",
+		itemid	as	"itemid"
+		FROM ${hbSchema}.T_HD_DEPART_INPUT_ITEM
+		WHERE ISRUNTIME='0'
+			and itemid =#itemid#
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HD_DEPART_INPUT_ITEM WHERE 1=1
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemname">
+			itemname like '%$itemname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="istotal">
+			istotal =
+			#istotal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isruntime">
+			isruntime =
+			#isruntime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="deviceid">
+			deviceid =
+			#deviceid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="runtimetype">
+			runtimetype =
+			#runtimetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="olorhand">
+			OLORHAND =
+			#olorhand#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="departmentid"> DEPARTMENTID = 
+		#departmentid# </isNotEmpty> <isNotEmpty prepend=" AND " property="itemcode"> 
+		ITEMCODE = #itemcode# </isNotEmpty> <isNotEmpty prepend=" AND " property="itemname"> 
+		ITEMNAME = #itemname# </isNotEmpty> <isNotEmpty prepend=" AND " property="gran"> 
+		GRAN = #gran# </isNotEmpty> <isNotEmpty prepend=" AND " property="unit"> 
+		UNIT = #unit# </isNotEmpty> <isNotEmpty prepend=" AND " property="seq"> SEQ 
+		= #seq# </isNotEmpty> <isNotEmpty prepend=" AND " property="isruntime"> ISRUNTIME 
+		= #isruntime# </isNotEmpty> <isNotEmpty prepend=" AND " property="procedureid"> 
+		PROCEDUREID = #procedureid# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_DEPART_INPUT_ITEM
+		(DEPARTMENTID,
+		ITEMCODE,
+		ITEMNAME,
+		GRAN,
+		UNIT,
+		ISRUNTIME,
+		PROCEDUREID,
+		istotal,
+		deviceid,
+		runtimetype,
+		olorhand,
+		proc_unit,
+		itemid
+		)
+		VALUES (#departmentid:VARCHAR#, #itemcode:VARCHAR#, #itemname:VARCHAR#,
+		#gran:VARCHAR#, #unit:VARCHAR#, #isruntime:VARCHAR#,
+		#procedureid:VARCHAR#,#istotal:VARCHAR#,#deviceid:VARCHAR#,#runtimetype:VARCHAR#,#olorhand:VARCHAR#,
+		#procUnit:VARCHAR#,#itemid:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_DEPART_INPUT_ITEM WHERE
+		ITEMCODE = #itemcode#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_DEPART_INPUT_ITEM
+		SET
+		DEPARTMENTID = #departmentid#,
+		ITEMNAME = #itemname#,
+		GRAN = #gran#,
+		UNIT = #unit#,
+		ISRUNTIME = #isruntime#,
+		ISTOTAL = #istotal#,
+		PROCEDUREID = #procedureid#,
+		DEVICEID = #deviceid#,
+		runtimetype = #runtimetype#,
+		OLORHAND = #olorhand#,
+		proc_unit = #procUnit#,
+		itemid = #itemid#
+		WHERE
+		ITEMCODE = #itemcode#
+	</update>
+
+	<select id="queryLastItemcode"
+		parameterClass="java.util.HashMap" resultClass="String">
+		select max(itemcode)
+		from ${hbSchema}.T_HD_DEPART_INPUT_ITEM
+		where itemcode like '$departmentid$%'
+	</select>
+
+</sqlMap>

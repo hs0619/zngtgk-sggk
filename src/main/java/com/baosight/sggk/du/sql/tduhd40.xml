@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2020-12-01 13:26:19 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_TAXANDTOTAL_ITEM CLOCK VARCHAR NOT NULL primarykey, 
+	ITEMCODE VARCHAR NOT NULL primarykey, ITEMNAME VARCHAR NOT NULL, MONITORID 
+	VARCHAR NOT NULL, DEPARTMENTID VARCHAR NOT NULL, PROCEDUREID VARCHAR, DISCHARGEID 
+	VARCHAR, LICENCEID VARCHAR, ISTOTAL VARCHAR NOT NULL, ISTAX VARCHAR NOT NULL, 
+	PKID VARCHAR, TAXSOURCECODE VARCHAR, YOUZUZHI VARCHAR -->
+<sqlMap namespace="tduhd40">
+	<select id="selectBySql" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap" remapResults="true">
+		<![CDATA[ $sql$ ]]>
+	</select>
+	<update id="updateBySql" parameterClass="java.util.HashMap">
+    	<![CDATA[ $sql$ ]]>
+	</update>
+	<insert id="insertBySql" parameterClass="java.util.HashMap">
+    	<![CDATA[ $sql$ ]]>
+	</insert>
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd40">
+		SELECT
+		'$clock$' as "clock",
+		ITEMCODE as "itemcode",
+		ITEMNAME as "itemname",
+		a.MONITORID as "monitorid",
+		a.DEPARTMENTID as "departmentid",
+		DEPARTMENT_NAME as "departmentname",
+		a.PROCEDUREID as "procedureid",
+		PROCEDURE_NAME as "procedurename",
+		DISCHARGEID as "dischargeid",
+		LICENCEID as "licenceid",
+		ISTOTAL as "istotal",
+		ISTAX as "istax",
+		PKID as "pkid",
+		TAXSOURCECODE as "taxsourcecode",
+		YOUZUZHI as "youzuzhi",
+		D.SITENAME as "portname"
+
+		FROM
+		${hbSchema}.T_HD_TAXANDTOTAL_ITEM a
+		left join
+		${hbSchema}.T_HA_PROCEDURE b ON a.PROCEDUREID=b.PROCEDURE_ID
+		left join
+		${hbSchema}.T_HA_DEPARTMENT C ON a.DEPARTMENTID=C.DEPARTMENT_ID
+		left join
+		${hbSchema}.T_HA_SITE D ON a.PKID=D.SITEID
+		WHERE
+		1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = SUBSTR(#clock#,1,4)
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			a.PROCEDUREID = #procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+        <isNotEmpty prepend=" AND " property="youzuzhi">
+            youzuzhi = #youzuzhi#
+        </isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				ITEMCODE asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HD_TAXANDTOTAL_ITEM WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="clock"> CLOCK = #clock# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemcode"> ITEMCODE = #itemcode# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemname"> ITEMNAME = #itemname# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="monitorid"> MONITORID = #monitorid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="departmentid"> DEPARTMENTID 
+		= #departmentid# </isNotEmpty> <isNotEmpty prepend=" AND " property="procedureid"> 
+		PROCEDUREID = #procedureid# </isNotEmpty> <isNotEmpty prepend=" AND " property="dischargeid"> 
+		DISCHARGEID = #dischargeid# </isNotEmpty> <isNotEmpty prepend=" AND " property="licenceid"> 
+		LICENCEID = #licenceid# </isNotEmpty> <isNotEmpty prepend=" AND " property="istotal"> 
+		ISTOTAL = #istotal# </isNotEmpty> <isNotEmpty prepend=" AND " property="istax"> 
+		ISTAX = #istax# </isNotEmpty> <isNotEmpty prepend=" AND " property="pkid"> 
+		PKID = #pkid# </isNotEmpty> <isNotEmpty prepend=" AND " property="taxsourcecode"> 
+		TAXSOURCECODE = #taxsourcecode# </isNotEmpty> <isNotEmpty prepend=" AND " 
+		property="youzuzhi"> YOUZUZHI = #youzuzhi# </isNotEmpty> -->
+
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_TAXANDTOTAL_ITEM
+		(CLOCK,
+		ITEMCODE,
+		ITEMNAME,
+		MONITORID,
+		DEPARTMENTID,
+		PROCEDUREID,
+		LICENCEID,
+		PKID,
+		TAXSOURCECODE,
+		YOUZUZHI
+		)
+		VALUES
+		(#clock:VARCHAR#,
+		#itemcode:VARCHAR#,
+		#itemname:VARCHAR#,
+		#monitorid:VARCHAR#,
+		#departmentid:VARCHAR#,
+		#procedureid:VARCHAR#,
+		#licenceid:VARCHAR#,
+		#pkid:VARCHAR#,
+		#taxsourcecode:VARCHAR#,
+		#youzuzhi:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_ITEM WHERE
+		clock=SUBSTR(#clock#,1,4) AND
+		ITEMCODE = #itemcode#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_TAXANDTOTAL_ITEM
+		SET
+		ITEMNAME =
+		#itemname#,
+		MONITORID = #monitorid#,
+		DEPARTMENTID = #departmentid#,
+		PROCEDUREID = #procedureid#,
+		LICENCEID =#licenceid#,
+		PKID = #pkid#,
+		<!--TAXSOURCECODE = #taxsourcecode#,-->
+		YOUZUZHI = #youzuzhi#,
+		DISCHARGEID = #dischargeid#
+		WHERE
+		CLOCK
+		=#clock# AND
+		ITEMCODE = #itemcode#
+	</update>
+
+	<select id="querydept" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhb01">
+		SELECT
+		DEPARTMENT_ID as "departmentId",  <!-- 部门编号 -->
+		DEPARTMENT_NAME as "departmentName",  <!-- 部门名称 -->
+		PARENTID as "parentid",  <!-- 父节点 -->
+		DESCRIPTION as "description",  <!-- 描述 -->
+		LEVEL as "level",  <!-- 部门等级 -->
+		SORT as "sort",  <!-- 排序 -->
+		STATUS as "status",  <!-- 状态 -->
+		CREATOR as "creator",  <!-- 新增人 -->
+		CREATED_TIME as "createdTime",  <!-- 新增时间 -->
+		MODIFIER as "modifier",  <!-- 修改人 -->
+		UPDATED_TIME as "updatedTime" <!-- 修改时间 -->
+		FROM ${hbSchema}.t_ha_department where 1=1
+		<isNotEmpty prepend=" AND " property="departmentId">
+			DEPARTMENT_ID =
+			#departmentId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="level">
+			level = #level#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentid">
+			PARENTID = #parentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totalplan">
+			totalplan = #totalplan#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				DEPARTMENT_ID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	<select id="queryLastItemcode"
+		parameterClass="java.util.HashMap" resultClass="String">
+		select max(itemcode)
+		from ${hbSchema}.t_hd_taxandtotal_item
+		where clock=#clock#
+		and
+		departmentid=#departmentid#
+		and itemcode like '$departmentid$%'
+	</select>
+	<select id="queryDeptInputItem"
+		parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd4002">
+		select itemname as "valueformat",
+		itemcode as "formulavalue",
+		'$sourceid$' as "propertycode"
+		from
+		${hbSchema}.t_hd_depart_input_item
+		where  istotal='1'
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="seek">
+			itemname like
+			'%$seek$%'
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				itemcode asc
+			</isEmpty>
+		</dynamic>
+	</select>
+	<select id="querySiteFactorItem"
+		parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd4002">
+		select distinct siteid||'_'||factorid as "formulavalue",
+		sitename||factorname as "valueformat",
+		'$sourceid$' as "propertycode"
+		from
+		${hbSchema}.view_t_ha_site_factor where 1=1
+		<isNotEmpty prepend=" AND " property="seek">
+			sitename||factorname
+			like
+			'%$seek$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			factorid =#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			isonline =#isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			isartificial =#isartificial#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				siteid||'_'||factorid asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	<select id="queryPort" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT
+		DISCHARGEPORTID as "dischargeportid",  <!-- 排口编号 -->
+		DISCHARGEPORTNAME as "dischargeportname",  <!-- 排口名称 -->
+		PROCID as "procid",  <!-- 所属工序 -->
+		MONITORID as "monitorid",  <!-- 排口类型 -->
+		b.DEPARTMENTID as "departmentid"
+		FROM ${hbSchema}.t_ha_dischargeport a
+		left join ${hbSchema}.t_ha_procedure b on(a.procid=b.procedure_id)
+		WHERE a.status='1' and a.ISFORMAL='1'
+		<isNotEmpty prepend=" AND " property="dischargeportid">
+			DISCHARGEPORTID =
+			#dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			b.DEPARTMENTID =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			a.PROCID =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			monitorid =
+			#monitorid#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				DISCHARGEPORTID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	<select id="querySite" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select
+		t1.siteid as "siteid",  
+		t1.sitename as "sitename",
+		t2.procid as "procid",  
+		t1.monitorid as "monitorid",  
+		t2.DEPARTID as "departmentid"
+		from ${hbSchema}.t_ha_site t1
+		left join ${hbSchema}.t_ha_dischargeport t2 on t1.portid = t2.dischargeportid
+		where t1.status ='1' 
+		<!-- and t2.isformal ='1'  -->
+		<isNotEmpty prepend=" AND " property="departmentid">
+			t2.DEPARTID =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			t2.procid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			(t1.monitorid = #monitorid# or t1.classifyid = #monitorid#)
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.siteid =
+			#siteid#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+			 t2.DEPARTID,t1.siteid
+			</isEmpty>
+		</dynamic>
+		
+
+	</select>
+	
+	<select id="queryTotalMonitor"
+		parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhb08">
+		SELECT
+		MONITORID as "monitorid",  <!-- 监测类型编号 -->
+		MONITORNAME as "monitorname"
+		FROM ${hbSchema}.t_ha_monitor
+		where
+		MONITORID in(select monitorid from
+		${hbSchema}.t_hd_total_factor)
+	</select>
+	<select id="queryTotalFactor"
+		parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+		FACTORID as "factorid",  <!-- 因子编号 -->
+		FACTORNAME as "factorname"  <!-- 因子名称 -->
+		FROM ${hbSchema}.t_ha_factor
+		WHERE factorid IN (
+		SELECT factorid
+		FROM ${hbSchema}.t_hd_total_factor
+		where 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			monitorid =
+			#monitorid#
+		</isNotEmpty>
+		)
+
+	</select>
+</sqlMap>

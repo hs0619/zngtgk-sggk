@@ -1,0 +1,72 @@
+/* 必须是Input class 添加 switch 才能实现以下效果 */
+input[type=checkbox].switch{
+	outline: none;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	position: relative;
+	width: 2.6rem;
+	height: 1.52rem;
+/* 				width: 3.9rem;
+				height: 2.35rem; */
+	border-radius: 50px;
+	border: 1px solid #ccc;
+	background-color: #ccc;
+}
+input[type=checkbox].switch::after{
+	content: '';
+	display: inline-block;
+/* 				width: 2.2rem;
+				height: 2.2rem; */
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 50%;
+	background-color: #fff;
+	box-shadow: 0 0 2px #999;
+	transition: left 0.1s linear;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+input[type=checkbox].switch:checked{
+	background-color: #32BA58;
+}
+
+/* 
+1.默认为不被选中的状态
+当input[type=checkbox] 被选中的时候，伪元素显示下面效果(位置发生变化)
+ */
+input[type=checkbox].switch:checked::after{
+	position: absolute;
+	top: 0;
+	/* left:1.2rem; */
+	left: 50%;
+}
+/* 状态 */
+input[type=checkbox].switch-info.switch:checked{
+	background-color: #409eff;
+}
+input[type=checkbox].switch-danger.switch:checked{
+	background-color: rgb(255, 73, 73);
+}
+input[type=checkbox].switch-warm.switch:checked{
+	background-color: hsl(51, 93%, 54%);
+}
+input[type=checkbox].switch-primary.switch:checked{
+	background-color: #409eff;
+}
+input[type=checkbox].switch-primary.switch{
+	background-color: rgb(255, 73, 73);
+}
+
+
+
+.mg-hb26-li{
+     background-color: #1D82FE
+}
+
+
+.icon-li{  
+    background-image: url("${ctx}/js/dep32.png")
+}

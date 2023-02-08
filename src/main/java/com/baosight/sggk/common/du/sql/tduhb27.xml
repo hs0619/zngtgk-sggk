@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-29 22:52:09
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_PORTMESSAGE 
+		 SITEID  VARCHAR   NOT NULL   primarykey, 
+		 ISSEND  VARCHAR
+	-->
+<sqlMap namespace="tduhb27">
+
+<!-- 
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb27">
+		SELECT
+				SITEID	as "siteid",  
+				ISSEND	as "issend" 
+		FROM ${hbSchema}.T_HA_PORTMESSAGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+ -->
+ 
+ 	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="java.util.HashMap">
+		SELECT
+			SITEID	as "siteid",  
+			SITENAME	as "sitename",  
+			PORTID	as "portid",  
+			ISONLINE	as "isonline",  
+			STATUS	as "status",  
+			MNID	as "mnid",  
+			DEPARTMENTID	as "departmentid",  
+			DEPARTMENTNAME	as "departmentname",
+			'0' as issend
+		FROM 
+			${hbSchema}.VIEW_T_HA_SITE
+		WHERE 
+			ISONLINE = '1'
+		AND 
+			STATUS = '1'
+		AND   
+		    MNID NOT LIKE ' '
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID  like   '%$mnid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID  =  #departmentid#
+		</isNotEmpty>
+		
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+ 
+ 
+ 	<!-- 查询所有打开短信发送的监测站点 -->
+ 	<select id="queryOpenSend" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb27">
+		SELECT
+				SITEID	as "siteid",  
+				ISSEND	as "issend" 
+		FROM 
+			${hbSchema}.T_HA_PORTMESSAGE 
+		WHERE 
+			ISSEND = '1'
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+ 
+ 
+ 
+ 
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_PORTMESSAGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="issend">
+			ISSEND = #issend#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_PORTMESSAGE (SITEID,
+										ISSEND
+										)		 
+	    VALUES (#siteid:VARCHAR#, #issend:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_PORTMESSAGE WHERE 
+			SITEID = #siteid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_PORTMESSAGE 
+		SET 
+					ISSEND	= #issend#
+			WHERE 	
+			SITEID = #siteid#
+	</update>
+  
+</sqlMap>

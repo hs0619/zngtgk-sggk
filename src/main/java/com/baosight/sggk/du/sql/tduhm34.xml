@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <!--      
+         table information  
+         Generate time :2021-09-13 16:46:46
+         table comment :基础项目录入
+         tableName :TDUHM3100
+         X_MUUID    VARCHAR  NULL   项目编号  ,
+         SHARE_PROJECT    VARCHAR  NULL   项目  ,
+         P_MUUID    VARCHAR  NULL   实绩编号 		 		
+    -->
+    <sqlMap namespace="tduhm34">
+    <select id="query" parameterClass="java.util.HashMap" 
+            resultClass="java.util.HashMap">
+		SELECT
+		X_MUUID  as  "xMuuid"  , <!--  项目编号  -->
+        YEAR_PLAN as "yearPlan" ,
+        MUUIDNAME as "muuidName"<!--  项目  -->
+
+		      
+        FROM ${hbSchema}.TDUHM34 WHERE 1=1
+        <isNotEmpty prepend=" AND " property="muuidName">
+            MUUIDNAME = #muuidName#
+        </isNotEmpty>
+    </select>
+
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.TDUHM34 (
+                           X_MUUID  ,   <!--  项目编号  -->
+        YEAR_PLAN,
+        MUUIDNAME<!--  项目  -->
+                              <!--  实绩编号  -->
+                               )
+        VALUES (
+          #xMuuid: VARCHAR#   ,
+          #yearPlan: VARCHAR#,
+        #muuidName: VARCHAR#
+           		)
+	</insert>
+
+
+    <update id="updateDate">
+        UPDATE  ${hbSchema}.TDUHM34
+        SET
+        <!--  月  -->
+        YEAR_PLAN = #yearPlan#          <!--  状态  -->
+        WHERE  1=1
+        <isNotEmpty prepend=" AND " property="xMuuid">
+            X_MUUID = #xMuuid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="muuidName">
+            MUUIDNAME = #muuidName#
+        </isNotEmpty>
+    </update>
+
+    </sqlMap>

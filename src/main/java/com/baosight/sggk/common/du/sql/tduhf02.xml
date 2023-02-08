@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-01 13:58:45
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_HBSYSTEL 
+		 DEPARTMENTID  VARCHAR, 
+		 DEPARTMENTNAME  VARCHAR   NOT NULL   primarykey, 
+		 NAME  VARCHAR   NOT NULL   primarykey, 
+		 TEL  VARCHAR, 
+		 PHONE  VARCHAR, 
+		 JOB  VARCHAR   NOT NULL, 
+		 ISALARM  VARCHAR, 
+		 ISMANAGER  VARCHAR, 
+		 STATUS  VARCHAR
+	-->
+<sqlMap namespace="tduhf02">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf02">
+		SELECT
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENTNAME	as "departmentname",  
+				NAME	as "name",  
+				TEL	as "tel",  
+				PHONE	as "phone",  
+				JOB	as "job",  
+				ISALARM	as "isalarm",  
+				ISMANAGER	as "ismanager",  
+				STATUS	as "status" 
+		FROM ${hbSchema}.T_HA_HBSYSTEL WHERE 1=1 
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME = #departmentname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="name">
+			NAME = #name#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  DEPARTMENTNAME asc, 
+    		  NAME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_HBSYSTEL WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME = #departmentname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="name">
+			NAME = #name#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME = #departmentname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="name">
+			NAME = #name#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="tel">
+			TEL = #tel#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="phone">
+			PHONE = #phone#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="job">
+			JOB = #job#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isalarm">
+			ISALARM = #isalarm#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismanager">
+			ISMANAGER = #ismanager#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_HBSYSTEL (DEPARTMENTID,
+										DEPARTMENTNAME,
+										NAME,
+										TEL,
+										PHONE,
+										JOB,
+										ISALARM,
+										ISMANAGER,
+										STATUS
+										)		 
+	    VALUES (#departmentid:VARCHAR#, #departmentname:VARCHAR#, #name:VARCHAR#, #tel:VARCHAR#, #phone:VARCHAR#, #job:VARCHAR#, #isalarm:VARCHAR#, #ismanager:VARCHAR#, #status:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_HBSYSTEL WHERE 
+			DEPARTMENTNAME = #departmentname# AND 
+			NAME = #name#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_HBSYSTEL 
+		SET 
+		DEPARTMENTID	= #departmentid#, 
+											TEL	= #tel#, 
+					PHONE	= #phone#, 
+					JOB	= #job#, 
+					ISALARM	= #isalarm#, 
+					ISMANAGER	= #ismanager#, 
+					STATUS	= #status#
+			WHERE 	
+			DEPARTMENTNAME = #departmentname# AND 
+			NAME = #name#
+	</update>
+  
+</sqlMap>

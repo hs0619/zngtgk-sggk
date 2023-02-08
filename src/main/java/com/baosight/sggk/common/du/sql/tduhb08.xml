@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-08-31 14:14:39
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_MONITOR 
+		 MONITORID  VARCHAR   NOT NULL   primarykey, 
+		 MONITORNAME  VARCHAR   NOT NULL, 
+		 DESCRIPTION  VARCHAR, 
+		 SORT  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR, 
+		 ISONLINE  VARCHAR, 
+		 ISTOTAL  VARCHAR
+	-->
+<sqlMap namespace="tduhb08">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb08">
+		SELECT
+				MONITORID	as "monitorid",  
+				MONITORNAME	as "monitorname",  
+				DESCRIPTION	as "description",  
+				SORT	as "sort",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",  
+				ISONLINE	as "isonline",  
+				ISTOTAL	as "istotal" 
+		FROM ${hbSchema}.T_HA_MONITOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME like '%$monitorname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="istotal">
+			istotal = #istotal#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  MONITORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryForCheck" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb08">
+		SELECT
+				MONITORID	as "monitorid",  <!-- 监测类型编号 -->
+				MONITORNAME	as "monitorname",  <!-- 监测类型名称 -->
+				DESCRIPTION	as "description",  <!-- 描述 -->
+				SORT	as "sort",  <!-- 排序 -->
+				STATUS	as "status",  <!-- 状态 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime", <!-- 修改时间 -->
+				ISONLINE	as "isonline",  
+				ISTOTAL	as "istotal" 
+		FROM ${hbSchema}.t_ha_monitor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME = #monitorname#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  MONITORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="queryForTotal41" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb08">
+		SELECT
+				MONITORID	as "monitorid",  <!-- 监测类型编号 -->
+				MONITORNAME	as "monitorname",  <!-- 监测类型名称 -->
+				DESCRIPTION	as "description",  <!-- 描述 -->
+				SORT	as "sort",  <!-- 排序 -->
+				STATUS	as "status",  <!-- 状态 -->
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime", 
+				ISONLINE	as "isonline",  
+				ISTOTAL	as "istotal" 
+		FROM ${hbSchema}.t_ha_monitor WHERE 1=1
+		<isNotEmpty prepend=" AND " property="istotal">
+			ISTOTAL = #istotal#
+		</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  MONITORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_MONITOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME = #monitorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			SORT = #sort#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="istotal">
+			ISTOTAL = #istotal#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_MONITOR (MONITORID,
+										MONITORNAME,
+										DESCRIPTION,
+										SORT,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										MODIFIER,
+										UPDATED_TIME,
+										ISONLINE,
+										ISTOTAL
+										)		 
+	    VALUES (#monitorid:VARCHAR#, #monitorname:VARCHAR#, #description:VARCHAR#, #sort:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #isonline:VARCHAR#, #istotal:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_MONITOR WHERE 
+			MONITORID = #monitorid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_MONITOR 
+		SET 
+					MONITORNAME	= #monitorname#, 
+					DESCRIPTION	= #description#, 
+					SORT	= #sort#, 
+					STATUS	= #status#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#, 
+					ISONLINE	= #isonline#, 
+					ISTOTAL	= #istotal#
+			WHERE 	
+			MONITORID = #monitorid#
+	</update>
+  
+</sqlMap>

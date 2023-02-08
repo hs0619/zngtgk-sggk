@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+
+<sqlMap namespace="tduhb0101">
+
+    <select id="queryChildNodes" resultClass="java.util.HashMap">
+        SELECT
+        t1.PARENTID as "parentid",
+        t1.DEPARTMENT_ID as "label",
+        CONCAT(CONCAT(CONCAT('[',t1.DEPARTMENT_ID),']'),t1.DEPARTMENT_NAME) as "text",   
+        case when (select count(*) from ${hbSchema}.T_HA_DEPARTMENT t2
+		where t2.PARENTID = t1.DEPARTMENT_ID) > 0 
+        then 0 else 1 end as "leaf"
+        FROM ${hbSchema}.T_HA_DEPARTMENT t1
+        <dynamic prepend=" WHERE ">
+            t1.PARENTID = #parentid# and t1.TYPE = 'D1'
+        </dynamic>
+        order by t1.SORT  asc
+    </select>
+
+</sqlMap>

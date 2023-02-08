@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	
+<!-- table information Generate time : 2021-06-10 14:56:33 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HF_ABNORMAL_DECLARE DECLARE_ID VARCHAR NOT NULL 
+	primarykey, COMPANY_ID VARCHAR, COMPANY_NAME VARCHAR, DECLARE_STATUS VARCHAR, 
+	AUDIT_STATUS VARCHAR, PORT_ID VARCHAR, PORT_NAME VARCHAR, CONTROL_LINE VARCHAR, 
+	FAULT_TYPE VARCHAR, DECLARE_REASON VARCHAR, ABNORMAL_START_TIME VARCHAR, 
+	ABNORMAL_END_TIME VARCHAR, FACTOR_NAMES VARCHAR, TREATMENT_MEASURES VARCHAR, 
+	DECLARANT VARCHAR, PHONE VARCHAR, REPORT_TIME VARCHAR, CREATOR VARCHAR, CREATED_TIME 
+	VARCHAR, MODIFIER VARCHAR, UPDATED_TIME VARCHAR, AUDIT_STATUS_NAME VARCHAR, 
+	FAULT_STATUS VARCHAR, REVIEWER VARCHAR, AUDIT_TIME VARCHAR, AUDIT_OPINION 
+	VARCHAR -->
+<sqlMap namespace="tduhf68">
+
+	<select id="query" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhf68">
+		SELECT
+		DECLARE_ID as "declareId",  <!-- 异常申报id -->
+		COMPANY_ID as "companyId",  <!-- 厂部id -->
+		COMPANY_NAME as "companyName",  <!-- 厂部名称 -->
+		DECLARE_STATUS as "declareStatus",  <!-- 申报状态 -->
+		AUDIT_STATUS as "auditStatus",  <!-- 审核状态值 -->
+		AUDIT_STATUS_NAME as "auditStatusName",  <!-- 审核状态名称 -->
+		PORT_ID as "portId",  			<!-- 排口id -->
+		PORT_NAME as "portName",   <!-- 排口名称 -->
+		CONTROL_LINE as "controlLine",  <!-- 国控/内控值 -->
+		FAULT_STATUS as "faultStatus", <!-- 故障类型状态值 -->
+		FAULT_TYPE as "faultType",  <!-- 故障类型名称 -->
+		DECLARE_REASON as "declareReason",  <!-- 申报原因 -->
+		ABNORMAL_START_TIME as "abnormalStartTime",  <!-- 异常开始时间 -->
+		ABNORMAL_END_TIME as "abnormalEndTime",  <!-- 异常结束时间 -->
+		FACTOR_IDS as "factorIds",  <!-- 申报因子 -->
+		FACTOR_NAMES as "factorNames",  <!-- 申报因子 -->
+		TREATMENT_MEASURES as "treatmentMeasures",  <!-- 处理措施 -->
+		DECLARANT as "declarant",  <!-- 申报人 -->
+		PHONE as "phone",  		<!-- 申报人电话 -->
+		REPORT_TIME as "reportTime",  <!-- 申报时间 -->
+		CREATOR as "creator",
+		CREATED_TIME as "createdTime",
+		MODIFIER as
+		"modifier",
+		UPDATED_TIME as "updatedTime",
+		REVIEWER as "reviewer",  <!-- 审核人 -->
+		AUDIT_ID as "auditId",  <!-- 审核人id-->
+		AUDIT_TIME as "auditTime",  <!-- 审核时间 -->
+		AUDIT_OPINION as "auditOpinion" <!-- 审核意见 -->
+		FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="declareId">
+			DECLARE_ID =
+			#declareId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalStartTime">
+			ABNORMAL_START_TIME  <![CDATA[ >= ]]>
+			#abnormalStartTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="abnormalEndTime">
+			ABNORMAL_END_TIME  <![CDATA[ <= ]]>
+			#abnormalEndTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="controlLine">
+			CONTROL_LINE =
+			#controlLine#
+		</isNotEmpty>
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				DECLARE_ID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="declareId">
+			DECLARE_ID =
+			#declareId#
+		</isNotEmpty>
+	</select>
+
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		(DECLARE_ID,
+		COMPANY_ID,
+		COMPANY_NAME,
+		DECLARE_STATUS,
+		AUDIT_STATUS,
+		PORT_ID,
+		PORT_NAME,
+		CONTROL_LINE,
+		FAULT_TYPE,
+		DECLARE_REASON,
+		ABNORMAL_START_TIME,
+		ABNORMAL_END_TIME,
+		FACTOR_NAMES,
+		TREATMENT_MEASURES,
+		DECLARANT,
+		PHONE,
+		REPORT_TIME,
+		CREATOR,
+		CREATED_TIME,
+		MODIFIER,
+		UPDATED_TIME,
+		AUDIT_STATUS_NAME,
+		FAULT_STATUS,
+		REVIEWER,
+		AUDIT_TIME,
+		AUDIT_OPINION,
+		FACTOR_IDS
+		)
+		VALUES (#declareId:VARCHAR#,
+		#companyId:VARCHAR#, #companyName:VARCHAR#,
+		#declareStatus:VARCHAR#,
+		#auditStatus:VARCHAR#, #portId:VARCHAR#,
+		#portName:VARCHAR#,
+		#controlLine:VARCHAR#, #faultType:VARCHAR#,
+		#declareReason:VARCHAR#,
+		#abnormalStartTime:VARCHAR#,
+		#abnormalEndTime:VARCHAR#,
+		#factorNames:VARCHAR#,
+		#treatmentMeasures:VARCHAR#,
+		#declarant:VARCHAR#, #phone:VARCHAR#,
+		#reportTime:VARCHAR#,
+		#creator:VARCHAR#, #createdTime:VARCHAR#,
+		#modifier:VARCHAR#,
+		#updatedTime:VARCHAR#, #auditStatusName:VARCHAR#,
+		#faultStatus:VARCHAR#, #reviewer:VARCHAR#, #auditTime:VARCHAR#,
+		#auditOpinion:VARCHAR#,#factorIds:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM
+		${hbSchema}.T_HF_ABNORMAL_DECLARE
+		WHERE
+		DECLARE_ID = #declareId# 
+	</delete>
+	<update id="updatealarmfillid">
+		UPDATE ${hbSchema}.T_HA_ALARM_OVERLIMIT
+		SET FILLID =''
+		WHERE
+		FILLID=#declareId#
+	</update>
+	
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		SET
+		COMPANY_ID = #companyId#,
+		COMPANY_NAME = #companyName#,
+		DECLARE_STATUS =
+		#declareStatus#,
+		AUDIT_STATUS = #auditStatus#,
+		PORT_ID = #portId#,
+		PORT_NAME = #portName#,
+		CONTROL_LINE = #controlLine#,
+		FAULT_TYPE =
+		#faultType#,
+		DECLARE_REASON = #declareReason#,
+		ABNORMAL_START_TIME =
+		#abnormalStartTime#,
+		ABNORMAL_END_TIME = #abnormalEndTime#,
+		FACTOR_NAMES = #factorNames#,
+		TREATMENT_MEASURES = #treatmentMeasures#,
+		DECLARANT = #declarant#,
+		PHONE = #phone#,
+		REPORT_TIME = #reportTime#,
+		CREATOR = #creator#,
+		CREATED_TIME = #createdTime#,
+		MODIFIER =
+		#modifier#,
+		UPDATED_TIME = #updatedTime#,
+		AUDIT_STATUS_NAME =
+		#auditStatusName#,
+		FAULT_STATUS = #faultStatus#,
+		REVIEWER = #reviewer#,
+		AUDIT_TIME = #auditTime#,
+		AUDIT_OPINION = #auditOpinion#
+		WHERE
+		DECLARE_ID = #declareId#
+	</update>
+
+
+	<!-- 自定义方法 -->
+
+	<select id="queryFor68" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhf68">
+		SELECT
+		DECLARE_ID as "declareId",  <!-- 异常申报id -->
+		COMPANY_ID as "companyId",  <!-- 厂部id -->
+		COMPANY_NAME as "companyName",  <!-- 厂部名称 -->
+		DECLARE_STATUS as "declareStatus",  <!-- 申报状态 -->
+		AUDIT_STATUS as "auditStatus",  <!-- 审核状态值 -->
+		AUDIT_STATUS_NAME as "auditStatusName",  <!-- 审核状态名称 -->
+		PORT_ID as "portId",  			<!-- 排口id -->
+		PORT_NAME as "portName",   <!-- 排口名称 -->
+		CONTROL_LINE as "controlLine",  <!-- 国控/内控值 -->
+		FAULT_STATUS as "faultStatus", <!-- 故障类型状态值 -->
+		FAULT_TYPE as "faultType",  <!-- 故障类型名称 -->
+		DECLARE_REASON as "declareReason",  <!-- 申报原因 -->
+		ABNORMAL_START_TIME as "abnormalStartTime",  <!-- 异常开始时间 -->
+		ABNORMAL_END_TIME as "abnormalEndTime",  <!-- 异常结束时间 -->
+		FACTOR_NAMES as "factorNames",  <!-- 申报因子 -->
+		TREATMENT_MEASURES as "treatmentMeasures",  <!-- 处理措施 -->
+		DECLARANT as "declarant",  <!-- 申报人 -->
+		PHONE as "phone",  		<!-- 申报人电话 -->
+		REPORT_TIME as "reportTime",  <!-- 申报时间 -->
+		CREATOR as "creator",
+		CREATED_TIME as "createdTime",
+		MODIFIER as "modifier",
+		UPDATED_TIME as "updatedTime",
+		REVIEWER as "reviewer",  <!-- 审核人 -->
+		AUDIT_ID as "auditId",  <!-- 审核人id-->
+		AUDIT_TIME as "auditTime",  <!-- 审核时间 -->
+		AUDIT_OPINION as "auditOpinion" <!-- 审核意见 -->
+		FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		WHERE  
+		COMPANY_ID like '$companyId$'
+		<isNotEmpty prepend=" AND " property="declareId">
+			DECLARE_ID =#declareId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="declarant">
+			DECLARANT like '%$declarant$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reportStartTime">
+			REPORT_TIME  <![CDATA[ >= ]]> #reportStartTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reportEndTime">
+			REPORT_TIME  <![CDATA[ <= ]]> #reportEndTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="controlLine">
+			CONTROL_LINE = #controlLine#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="auditStatus">
+			AUDIT_STATUS = #auditStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="faultStatus">
+			fault_Status = #faultStatus#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend=" AND " property="creator">
+			((creator &lt;&gt; #creator# AND AUDIT_STATUS in ('1','2','3'))or(creator = #creator# AND AUDIT_STATUS in ('0','1','2','3')))
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				REPORT_TIME desc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+	
+	<!--在线申报异常审核 展示待审核、审核通过两种状态的数据 -->
+	<select id="queryReview" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhf68">
+		SELECT
+		DECLARE_ID as "declareId",  <!-- 异常申报id -->
+		COMPANY_ID as "companyId",  <!-- 厂部id -->
+		COMPANY_NAME as "companyName",  <!-- 厂部名称 -->
+		DECLARE_STATUS as "declareStatus",  <!-- 申报状态 -->
+		AUDIT_STATUS as "auditStatus",  <!-- 审核状态值 -->
+		AUDIT_STATUS_NAME as "auditStatusName",  <!-- 审核状态名称 -->
+		PORT_ID as "portId",  			<!-- 排口id -->
+		PORT_NAME as "portName",   <!-- 排口名称 -->
+		CONTROL_LINE as "controlLine",  <!-- 国控/内控值 -->
+		FAULT_STATUS as "faultStatus", <!-- 故障类型状态值 -->
+		FAULT_TYPE as "faultType",  <!-- 故障类型名称 -->
+		DECLARE_REASON as "declareReason",  <!-- 申报原因 -->
+		ABNORMAL_START_TIME as "abnormalStartTime",  <!-- 异常开始时间 -->
+		ABNORMAL_END_TIME as "abnormalEndTime",  <!-- 异常结束时间 -->
+		FACTOR_NAMES as "factorNames",  <!-- 申报因子 -->
+		TREATMENT_MEASURES as "treatmentMeasures",  <!-- 处理措施 -->
+		DECLARANT as "declarant",  <!-- 申报人 -->
+		PHONE as "phone",  		<!-- 申报人电话 -->
+		REPORT_TIME as "reportTime",  <!-- 申报时间 -->
+		CREATOR as "creator",
+		CREATED_TIME as "createdTime",
+		MODIFIER as
+		"modifier",
+		UPDATED_TIME as "updatedTime",
+		REVIEWER as "reviewer",  <!-- 审核人 -->
+		AUDIT_ID as "auditId",  <!-- 审核人id-->
+		AUDIT_TIME as "auditTime",  <!-- 审核时间 -->
+		AUDIT_OPINION as "auditOpinion" <!-- 审核意见 -->
+		FROM ${hbSchema}.T_HF_ABNORMAL_DECLARE WHERE 1=1
+		AND AUDIT_STATUS IN
+		('5','2')
+
+		<isNotEmpty prepend=" AND " property="reportStartTime">
+			REPORT_TIME  <![CDATA[ >= ]]>
+			#reportStartTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reportEndTime">
+			REPORT_TIME  <![CDATA[ <= ]]>
+			#reportEndTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="auditStatus">
+			AUDIT_STATUS =
+			#auditStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companyId">
+			COMPANY_ID =
+			#companyId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="faultStatus">
+			FAULT_STATUS =
+			#faultStatus#
+		</isNotEmpty>
+
+
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				DECLARE_ID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+
+	<!-- 能环部 核准设备异常申报信息 -->
+	<update id="updateDeclareInfoById">
+		UPDATE ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		SET
+		AUDIT_STATUS = #auditStatus#,
+		AUDIT_STATUS_NAME = #auditStatusName#,
+		REVIEWER = #reviewer#,
+		AUDIT_ID = #auditeId#,
+		AUDIT_TIME = #auditTime#,
+		AUDIT_OPINION = #auditOpinion#
+		WHERE
+		DECLARE_ID = #declareId#
+	</update>
+
+	<!--能环部 退回设备异常申报信息 -->
+	<update id="backDeclareInfoById">
+		UPDATE ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		SET
+		AUDIT_STATUS = #auditStatus#,
+		AUDIT_STATUS_NAME = #auditStatusName#,
+		REVIEWER = #reviewer#,
+		AUDIT_ID = #auditeId#,
+		AUDIT_TIME = #auditTime#,
+		AUDIT_OPINION = #auditOpinion#
+
+		WHERE
+		DECLARE_ID = #declareId#
+	</update>
+
+
+
+	<!-- 修改 -->
+	<update id="backAndSave">
+		UPDATE ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		SET
+			REPORT_TIME = #reportTime#,
+			AUDIT_STATUS = #auditStatus#,
+			AUDIT_STATUS_NAME = #auditStatusName#,
+			FAULT_STATUS = #faultStatus#, <!-- 故障类型状态值 -->
+			FAULT_type = #faultType#, 
+			declare_Status = #declareStatus#,
+			DECLARE_REASON = #declareReason#,  <!-- 申报原因 -->
+			TREATMENT_MEASURES = #treatmentMeasures#,  <!-- 处理措施 -->
+			PHONE = #phone#,  		<!-- 申报人电话 -->
+			REVIEWER = #reviewer#,  <!-- 审核人 -->
+			AUDIT_TIME = #auditTime#,  <!-- 审核时间 -->
+			AUDIT_OPINION = #auditOpinion# <!-- 审核意见 -->
+		WHERE
+		  	DECLARE_ID = #declareId#
+	</update>
+
+	<!-- 撤回 -->
+	<update id="revocation">
+		UPDATE ${hbSchema}.T_HF_ABNORMAL_DECLARE
+		SET
+			declare_Status = #declareStatus#,
+			AUDIT_STATUS = #auditStatus#,
+			AUDIT_STATUS_NAME = #auditStatusName#
+		WHERE
+		  	DECLARE_ID = #declareId#
+	</update>
+</sqlMap>

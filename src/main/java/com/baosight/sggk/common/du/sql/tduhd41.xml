@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!-- table information Generate time : 2021-01-28 17:58:38 Version : 6.0.731.201809200158 
+	tableName :${hbSchema}.T_HD_TAXANDTOTAL_VALUE CLOCK VARCHAR NOT NULL primarykey, 
+	ITEMCODE VARCHAR NOT NULL primarykey, MONITORID VARCHAR NOT NULL primarykey, 
+	FACTORID VARCHAR NOT NULL primarykey, ZL_RUNTIME VARCHAR, ZL_AVGFEIQI VARCHAR, 
+	ZL_TOTALFEIQI VARCHAR, ZL_AVGNONGDU VARCHAR, ZL_FINALVALUE VARCHAR, ZL_HIGHDATATIME 
+	VARCHAR, ZL_HIGHNONGDU VARCHAR, ZL_HASOVERLIMIT VARCHAR, TAX_RUNTIME VARCHAR, 
+	TAX_AVGFEIQI VARCHAR, TAX_TOTALFEIQI VARCHAR, TAX_AVGNONGDU VARCHAR, TAX_FINALVALUE 
+	VARCHAR, TAX_HIGHDATATIME VARCHAR, TAX_HIGHNONGDU VARCHAR, TAX_HASOVERLIMIT 
+	VARCHAR, EQUIVALENT VARCHAR, TOTALEQUIVALENT VARCHAR, TAX VARCHAR, TOTALTAX 
+	VARCHAR, REDUCTIONTAX VARCHAR, LIMIT VARCHAR, THISMONTHDATA VARCHAR, ZL_COMPUTE_AVGNONGDU 
+	VARCHAR, ZL_DA_OR_XIAO VARCHAR, TAX_COMPUTE_AVGNONGDU VARCHAR, TAX_DA_OR_XIAO 
+	VARCHAR, ZL_COMPUTEMAN VARCHAR, ZL_COMPUTETIME VARCHAR, TAX_COMPUTEMAN VARCHAR, 
+	TAX_COMPUTETIME VARCHAR, NEEDTAXMARK VARCHAR, TAX_OLD_HIGHNONGDU VARCHAR, 
+	TAX_HIGHNONGDU_CHANGE VARCHAR -->
+<sqlMap namespace="tduhd41">
+
+
+	<select id="queryTotal" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd41">
+		SELECT
+		a.CLOCK as "clock",
+		a.ITEMCODE as "itemcode",
+		a.MONITORID as "monitorid",
+		a.FACTORID as "factorid",
+		a.computermode as "computermode",
+
+		a.itemname as "itemname",
+		a.departmentid as "departmentid",
+		a.procedureid as "procedureid",
+		a.licenceid as "licenceid",
+        a.pkid as "pkid",
+        a.YOUZUZHI as "youzuzhi",
+        a.EQUIVALENT as "equivalent",
+
+		c.ZL_RUNTIME as "runtime",
+		c.ZL_AVGFEIQI as "avgfeiqi",
+		c.ZL_TOTALFEIQI as "totalfeiqi",
+		c.ZL_AVGNONGDU as "avgnongdu",
+		c.ZL_FINALVALUE as "finalvalue",
+		c.ZL_HIGHDATATIME as "highdatatime",
+		c.ZL_HIGHNONGDU as 	"highnongdu",
+		c.ZL_HASOVERLIMIT as "hasoverlimit",
+		c.LIMIT as "limit",
+		c.ZL_DA_OR_XIAO as "daorxiao",
+		<!--c.ZL_COMPUTEMAN as "computeman",-->
+        d.USER_NAME as "computeman",
+		c.ZL_COMPUTETIME as "computetime",
+        <!--c.COMPUTEMAN as "computeman",
+        c.COMPUTEtime as "computetime",-->
+		'$totaltype$' as "totaltype"
+
+		from ${hbSchema}.v_hd_taxandtotal_detail a
+		left join ${hbSchema}.t_hd_taxandtotal_value c
+		on(a.itemcode=c.itemcode and a.clock=c.clock and a.monitorid=c.monitorid and a.factorid=c.factorid)
+        left join ${platSchema}.XS_USER d on c.ZL_COMPUTEMAN=d.LOGIN_NAME
+		where a.istotal='1'
+		<isNotEmpty prepend=" AND " property="clock">
+			a.CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			a.ITEMCODE =
+			#itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.FACTORID =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			a.procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="computermode">
+			a.computermode =
+			#computermode#
+		</isNotEmpty>
+        <isNotEmpty prepend=" AND " property="youzuzhi">
+            a.youzuzhi =
+            #youzuzhi#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="equivalent">
+            a.equivalent =
+            #equivalent#
+        </isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.departmentid asc,
+				a.procedureid asc,
+				a.itemcode asc,
+				a.FACTORID asc
+			</isEmpty>
+		</dynamic>
+	</select>
+
+	<select id="queryTax" parameterClass="java.util.HashMap"
+		resultClass="com.baosight.sggk.common.du.domain.Tduhd41">
+		SELECT
+		a.CLOCK as "clock",
+		a.ITEMCODE as "itemcode",
+		a.MONITORID as "monitorid",
+		a.FACTORID as "factorid",
+		a.computermode as "computermode",
+
+		a.itemname as "itemname",
+		a.departmentid as "departmentid",
+		a.procedureid as "procedureid",
+		a.licenceid as "licenceid",
+        a.pkid as "pkid",
+        a.YOUZUZHI as "youzuzhi",
+        a.EQUIVALENT as "equivalent",
+
+		c.TAX_RUNTIME as "runtime",
+		c.TAX_AVGFEIQI as "avgfeiqi",
+		c.TAX_TOTALFEIQI as "totalfeiqi",
+		c.TAX_AVGNONGDU as "avgnongdu",
+		c.TAX_FINALVALUE as "finalvalue",
+		c.TAX_HIGHDATATIME as "highdatatime",
+		c.TAX_HIGHNONGDU as "highnongdu",
+		c.TAX_HASOVERLIMIT as "hasoverlimit",
+		c.EQUIVALENT as "equivalent",
+		c.TOTALEQUIVALENT as "totalequivalent",
+		c.TAX as "tax",
+		c.TOTALTAX as "totaltax",
+		c.REDUCTIONTAX as "reductiontax",
+		c.realtax as "realtax",
+		c.LIMIT as "limit",
+		c.THISMONTHDATA as "thismonthdata",
+		c.TAX_DA_OR_XIAO as "daorxiao",
+
+		<!--c.TAX_COMPUTEMAN as "computeman",-->
+        d.USER_NAME as "computeman",
+		c.TAX_COMPUTETIME as "computetime",
+		c.NEEDTAXMARK as "needtaxmark",
+		c.TAX_HIGHNONGDU_CHANGE as "taxHighnongduChange",
+       <!-- c.COMPUTEMAN as "computeman",
+        c.COMPUTEtime as "computetime",-->
+		'$totaltype$' as "totaltype"
+
+		from ${hbSchema}.v_hd_taxandtotal_detail a
+		left join ${hbSchema}.t_hd_taxandtotal_value c
+		on(a.itemcode=c.itemcode and a.clock=c.clock and a.monitorid=c.monitorid and a.factorid=c.factorid)
+        left join ${platSchema}.XS_USER d on c.TAX_COMPUTEMAN=d.LOGIN_NAME
+		where a.istax='1'
+		<isNotEmpty prepend=" AND " property="clock">
+			a.CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			a.ITEMCODE =
+			#itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			a.MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			a.FACTORID =
+			#factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			a.departmentid =
+			#departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedureid">
+			a.procedureid =
+			#procedureid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="computermode">
+			a.computermode =
+			#computermode#
+		</isNotEmpty>
+        <isNotEmpty prepend=" AND " property="youzuzhi">
+            a.youzuzhi =
+            #youzuzhi#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="equivalent">
+            a.equivalent =
+            #equivalent#
+        </isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				a.departmentid asc,
+				a.procedureid asc,
+				a.itemcode asc,
+				a.FACTORID asc
+			</isEmpty>
+		</dynamic>
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HD_TAXANDTOTAL_VALUE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+
+	<!-- <isNotEmpty prepend=" AND " property="clock"> CLOCK = #clock# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="itemcode"> ITEMCODE = #itemcode# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="monitorid"> MONITORID = #monitorid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="factorid"> FACTORID = 
+		#factorid# </isNotEmpty> <isNotEmpty prepend=" AND " property="zlRuntime"> 
+		ZL_RUNTIME = #zlRuntime# </isNotEmpty> <isNotEmpty prepend=" AND " property="zlAvgfeiqi"> 
+		ZL_AVGFEIQI = #zlAvgfeiqi# </isNotEmpty> <isNotEmpty prepend=" AND " property="zlTotalfeiqi"> 
+		ZL_TOTALFEIQI = #zlTotalfeiqi# </isNotEmpty> <isNotEmpty prepend=" AND " 
+		property="zlAvgnongdu"> ZL_AVGNONGDU = #zlAvgnongdu# </isNotEmpty> <isNotEmpty 
+		prepend=" AND " property="zlFinalvalue"> ZL_FINALVALUE = #zlFinalvalue# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="zlHighdatatime"> ZL_HIGHDATATIME = 
+		#zlHighdatatime# </isNotEmpty> <isNotEmpty prepend=" AND " property="zlHighnongdu"> 
+		ZL_HIGHNONGDU = #zlHighnongdu# </isNotEmpty> <isNotEmpty prepend=" AND " 
+		property="zlHasoverlimit"> ZL_HASOVERLIMIT = #zlHasoverlimit# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="taxRuntime"> TAX_RUNTIME = #taxRuntime# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="taxAvgfeiqi"> TAX_AVGFEIQI 
+		= #taxAvgfeiqi# </isNotEmpty> <isNotEmpty prepend=" AND " property="taxTotalfeiqi"> 
+		TAX_TOTALFEIQI = #taxTotalfeiqi# </isNotEmpty> <isNotEmpty prepend=" AND 
+		" property="taxAvgnongdu"> TAX_AVGNONGDU = #taxAvgnongdu# </isNotEmpty> <isNotEmpty 
+		prepend=" AND " property="taxFinalvalue"> TAX_FINALVALUE = #taxFinalvalue# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="taxHighdatatime"> TAX_HIGHDATATIME 
+		= #taxHighdatatime# </isNotEmpty> <isNotEmpty prepend=" AND " property="taxHighnongdu"> 
+		TAX_HIGHNONGDU = #taxHighnongdu# </isNotEmpty> <isNotEmpty prepend=" AND 
+		" property="taxHasoverlimit"> TAX_HASOVERLIMIT = #taxHasoverlimit# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="equivalent"> EQUIVALENT = #equivalent# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="totalequivalent"> TOTALEQUIVALENT 
+		= #totalequivalent# </isNotEmpty> <isNotEmpty prepend=" AND " property="tax"> 
+		TAX = #tax# </isNotEmpty> <isNotEmpty prepend=" AND " property="totaltax"> 
+		TOTALTAX = #totaltax# </isNotEmpty> <isNotEmpty prepend=" AND " property="reductiontax"> 
+		REDUCTIONTAX = #reductiontax# </isNotEmpty> <isNotEmpty prepend=" AND " property="limit"> 
+		LIMIT = #limit# </isNotEmpty> <isNotEmpty prepend=" AND " property="thismonthdata"> 
+		THISMONTHDATA = #thismonthdata# </isNotEmpty> <isNotEmpty prepend=" AND " 
+		property="zlComputeAvgnongdu"> ZL_COMPUTE_AVGNONGDU = #zlComputeAvgnongdu# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="zlDaOrXiao"> ZL_DA_OR_XIAO 
+		= #zlDaOrXiao# </isNotEmpty> <isNotEmpty prepend=" AND " property="taxComputeAvgnongdu"> 
+		TAX_COMPUTE_AVGNONGDU = #taxComputeAvgnongdu# </isNotEmpty> <isNotEmpty prepend=" 
+		AND " property="taxDaOrXiao"> TAX_DA_OR_XIAO = #taxDaOrXiao# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="zlComputeman"> ZL_COMPUTEMAN = #zlComputeman# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="zlComputetime"> ZL_COMPUTETIME 
+		= #zlComputetime# </isNotEmpty> <isNotEmpty prepend=" AND " property="taxComputeman"> 
+		TAX_COMPUTEMAN = #taxComputeman# </isNotEmpty> <isNotEmpty prepend=" AND 
+		" property="taxComputetime"> TAX_COMPUTETIME = #taxComputetime# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="needtaxmark"> NEEDTAXMARK = #needtaxmark# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="taxOldHighnongdu"> TAX_OLD_HIGHNONGDU 
+		= #taxOldHighnongdu# </isNotEmpty> <isNotEmpty prepend=" AND " property="taxHighnongduChange"> 
+		TAX_HIGHNONGDU_CHANGE = #taxHighnongduChange# </isNotEmpty> -->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HD_TAXANDTOTAL_VALUE
+		(CLOCK,
+		ITEMCODE,
+		MONITORID,
+		FACTORID,
+		ZL_RUNTIME,
+		ZL_AVGFEIQI,
+		ZL_TOTALFEIQI,
+		ZL_AVGNONGDU,
+		ZL_FINALVALUE,
+		ZL_HIGHDATATIME,
+		ZL_HIGHNONGDU,
+		ZL_HASOVERLIMIT,
+		TAX_RUNTIME,
+		TAX_AVGFEIQI,
+		TAX_TOTALFEIQI,
+		TAX_AVGNONGDU,
+		TAX_FINALVALUE,
+		TAX_HIGHDATATIME,
+		TAX_HIGHNONGDU,
+		TAX_HASOVERLIMIT,
+		EQUIVALENT,
+		TOTALEQUIVALENT,
+		TAX,
+		TOTALTAX,
+		REDUCTIONTAX,
+		LIMIT,
+		THISMONTHDATA,
+		ZL_COMPUTE_AVGNONGDU,
+		ZL_DA_OR_XIAO,
+		TAX_COMPUTE_AVGNONGDU,
+		TAX_DA_OR_XIAO,
+		ZL_COMPUTEMAN,
+		ZL_COMPUTETIME,
+		TAX_COMPUTEMAN,
+		TAX_COMPUTETIME,
+		NEEDTAXMARK,
+		TAX_OLD_HIGHNONGDU,
+		TAX_HIGHNONGDU_CHANGE
+		)
+		VALUES (#clock:VARCHAR#,
+		#itemcode:VARCHAR#, #monitorid:VARCHAR#,
+		#factorid:VARCHAR#,
+		#zlRuntime:VARCHAR#, #zlAvgfeiqi:VARCHAR#,
+		#zlTotalfeiqi:VARCHAR#,
+		#zlAvgnongdu:VARCHAR#, #zlFinalvalue:VARCHAR#,
+		#zlHighdatatime:VARCHAR#, #zlHighnongdu:VARCHAR#,
+		#zlHasoverlimit:VARCHAR#, #taxRuntime:VARCHAR#, #taxAvgfeiqi:VARCHAR#,
+		#taxTotalfeiqi:VARCHAR#, #taxAvgnongdu:VARCHAR#,
+		#taxFinalvalue:VARCHAR#, #taxHighdatatime:VARCHAR#,
+		#taxHighnongdu:VARCHAR#, #taxHasoverlimit:VARCHAR#,
+		#equivalent:VARCHAR#, #totalequivalent:VARCHAR#, #tax:VARCHAR#,
+		#totaltax:VARCHAR#, #reductiontax:VARCHAR#, #limit:VARCHAR#,
+		#thismonthdata:VARCHAR#, #zlComputeAvgnongdu:VARCHAR#,
+		#zlDaOrXiao:VARCHAR#, #taxComputeAvgnongdu:VARCHAR#,
+		#taxDaOrXiao:VARCHAR#, #zlComputeman:VARCHAR#,
+		#zlComputetime:VARCHAR#, #taxComputeman:VARCHAR#,
+		#taxComputetime:VARCHAR#, #needtaxmark:VARCHAR#,
+		#taxOldHighnongdu:VARCHAR#, #taxHighnongduChange:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HD_TAXANDTOTAL_VALUE WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode# AND
+		MONITORID = #monitorid#
+		AND
+		FACTORID = #factorid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HD_TAXANDTOTAL_VALUE
+		SET
+		ZL_RUNTIME = #zlRuntime#,
+		ZL_AVGFEIQI = #zlAvgfeiqi#,
+		ZL_TOTALFEIQI =
+		#zlTotalfeiqi#,
+		ZL_AVGNONGDU = #zlAvgnongdu#,
+		ZL_FINALVALUE =
+		#zlFinalvalue#,
+		ZL_HIGHDATATIME = #zlHighdatatime#,
+		ZL_HIGHNONGDU =
+		#zlHighnongdu#,
+		ZL_HASOVERLIMIT = #zlHasoverlimit#,
+		TAX_RUNTIME =
+		#taxRuntime#,
+		TAX_AVGFEIQI = #taxAvgfeiqi#,
+		TAX_TOTALFEIQI =
+		#taxTotalfeiqi#,
+		TAX_AVGNONGDU = #taxAvgnongdu#,
+		TAX_FINALVALUE =
+		#taxFinalvalue#,
+		TAX_HIGHDATATIME = #taxHighdatatime#,
+		TAX_HIGHNONGDU =
+		#taxHighnongdu#,
+		TAX_HASOVERLIMIT = #taxHasoverlimit#,
+		EQUIVALENT =
+		#equivalent#,
+		TOTALEQUIVALENT = #totalequivalent#,
+		TAX = #tax#,
+		TOTALTAX
+		= #totaltax#,
+		REDUCTIONTAX = #reductiontax#,
+		LIMIT = #limit#,
+		THISMONTHDATA = #thismonthdata#,
+		ZL_COMPUTE_AVGNONGDU =
+		#zlComputeAvgnongdu#,
+		ZL_DA_OR_XIAO = #zlDaOrXiao#,
+		TAX_COMPUTE_AVGNONGDU = #taxComputeAvgnongdu#,
+		TAX_DA_OR_XIAO =
+		#taxDaOrXiao#,
+		ZL_COMPUTEMAN = #zlComputeman#,
+		ZL_COMPUTETIME =
+		#zlComputetime#,
+		TAX_COMPUTEMAN = #taxComputeman#,
+		TAX_COMPUTETIME =
+		#taxComputetime#,
+		NEEDTAXMARK = #needtaxmark#,
+		TAX_OLD_HIGHNONGDU =
+		#taxOldHighnongdu#,
+		TAX_HIGHNONGDU_CHANGE = #taxHighnongduChange#
+		WHERE
+		CLOCK = #clock# AND
+		ITEMCODE = #itemcode# AND
+		MONITORID = #monitorid#
+		AND
+		FACTORID = #factorid#
+	</update>
+	
+	<!-- 总量公式时间显示 -->
+	<select id="queryTotalDatatimeInfo" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		datavalue as "datavalue",
+		datatime as datatime
+		FROM
+		${hbSchema}.t_hd_taxandtotal_datatimeinfo where 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totaltype">
+			totaltype =
+			#totaltype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="category">
+			category = #category#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="site_factor_id">
+			site_factor_id =
+			#site_factor_id#
+		</isNotEmpty>
+	</select>
+	
+	<!-- 税公式时间显示 -->
+	<select id="queryTaxDatatimeInfo" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		datavalue as "datavalue",
+		datatime as datatime
+		FROM
+		${hbSchema}.t_hd_taxandtotal_datatimeinfo where 1=1
+		<isNotEmpty prepend=" AND " property="clock">
+			CLOCK = #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemcode">
+			ITEMCODE = #itemcode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID =
+			#monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="totaltype">
+			totaltype =
+			#totaltype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="category">
+			category = #category#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="site_factor_id">
+			site_factor_id =
+			#site_factor_id#
+		</isNotEmpty>
+
+	</select>
+	
+	<!--查询每个月的因子产量  -->
+	<select id="getTotal" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhd4103">
+		SELECT
+			t1.DATATIME AS "clock",
+			t6.TARGET_NAME AS "departmentname",
+			sum(CASE WHEN (t1.REALVAL = null or t1.REALVAL = '') THEN '0' else t1.REALVAL END) as "finalvalue"
+		FROM
+		${hbSchema}.FINEREPORT_INFO t1
+			  left join ${hbSchema}.FINEREPORT_ITEM t6 on t1.SERIES=t6.TARGET_ID
+		WHERE
+			 t1.TYPE='tar0003' and t1.STATUS='1'
+
+		<isNotEmpty prepend=" AND " property="clock">
+			t1.DATATIME  =   #clock#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="targetName">
+			t6.TARGET_NAME = #targetName#
+		</isNotEmpty>
+		GROUP BY
+			t1.DATATIME,
+			t6.TARGET_NAME
+	</select>
+
+	<!--今年累计各厂占比  -->
+	<select id="getLastMonth" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhd4103">
+		<!--SELECT-->
+	<!--&lt;!&ndash;	t1.CLASSIFICATION,-->
+				<!--t1.SERIES,-->
+					<!--t5.TARGET_NAME,&ndash;&gt;-->
+			<!--t2.TARGET_NAME as "departmentname",-->
+			<!--t1.DATATIME as "clock",-->
+			<!--t1.REALVAL as "finalvalue"-->
+		<!--FROM-->
+			<!--IPLATHB.FINEREPORT_INFO t1-->
+			<!--left join IPLATHB.FINEREPORT_ITEM t2 on t1.CLASSIFICATION=t2.TARGET_ID-->
+			<!--left join IPLATHB.FINEREPORT_ITEM t5 on t1.SERIES=t5.TARGET_ID-->
+		<!--WHERE-->
+		 <!--t1.TYPE='tar0003'-->
+		<!--<isNotEmpty prepend=" AND " property="clock">-->
+			<!--t1.DATATIME = #clock#-->
+		<!--</isNotEmpty>-->
+		<!--<isNotEmpty prepend=" AND " property="targetName">-->
+			<!--t5.TARGET_NAME = #targetName#-->
+		<!--</isNotEmpty>-->
+
+
+		SELECT
+		t2.TARGET_NAME as "departmentname",
+		t1.DATATIME as "clock",
+		t1.REALVAL as "finalvalue"
+		FROM
+		${hbSchema}.FINEREPORT_INFO t1
+		left join ${hbSchema}.FINEREPORT_ITEM t2 on t1.CLASSIFICATION=t2.TARGET_ID
+		left join (
+		select t3.CLASSIFICATION,max(t3.DATATIME) DATATIME from ${hbSchema}.FINEREPORT_INFO t3
+		where t3.TYPE='tar0003'
+		group by t3.CLASSIFICATION
+		)t4 on t1.CLASSIFICATION=t4.CLASSIFICATION
+
+		left join ${hbSchema}.FINEREPORT_ITEM t5 on t1.SERIES=t5.TARGET_ID
+		WHERE
+		t1.DATATIME=t4.DATATIME
+		AND t1.TYPE='tar0003'
+		<isNotEmpty prepend=" AND " property="targetName">
+			t5.TARGET_NAME = #targetName#
+		</isNotEmpty>
+
+	</select>
+
+
+	<select id="getThisYear" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhd4103">
+
+			SELECT
+		t2.TARGET_NAME as "departmentname",
+		SUM(CASE WHEN (t1.REALVAL = null or t1.REALVAL = '') THEN '0' else t1.REALVAL END) AS "finalvalue"
+		FROM
+		${hbSchema}.FINEREPORT_INFO t1
+		LEFT JOIN ${hbSchema}.FINEREPORT_ITEM t2 ON
+			t1.CLASSIFICATION = t2.TARGET_ID
+		LEFT JOIN ${hbSchema}.FINEREPORT_ITEM t5 ON
+			t1.SERIES = t5.TARGET_ID
+		WHERE
+			t1.TYPE = 'tar0003'
+		<isNotEmpty prepend=" AND " property="clock">
+			t1.DATATIME  like '%$clock$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="targetName">
+			t5.TARGET_NAME = #targetName#
+		</isNotEmpty>
+			GROUP BY 		t2.TARGET_NAME
+
+	</select>
+
+
+	<!-- <select id="query" parameterClass="java.util.HashMap" resultClass="com.baosight.sggk.common.du.domain.Tduhd41">
+		SELECT a.CLOCK as "clock", a.ITEMCODE as "itemcode", a.MONITORID as "monitorid", 
+		a.FACTORID as "factorid", a.computermode as "computermode", b.itemname as 
+		"itemname", b.departmentid as "departmentid", b.procedureid as "procedureid", 
+		b.licenceid as "licenceid", c.ZL_RUNTIME as "zlRuntime", c.ZL_AVGFEIQI as 
+		"zlAvgfeiqi", c.ZL_TOTALFEIQI as "zlTotalfeiqi", c.ZL_AVGNONGDU as "zlAvgnongdu", 
+		c.ZL_FINALVALUE as "zlFinalvalue", c.ZL_HIGHDATATIME as "zlHighdatatime", 
+		c.ZL_HIGHNONGDU as "zlHighnongdu", c.ZL_HASOVERLIMIT as "zlHasoverlimit", 
+		c.TAX_RUNTIME as "taxRuntime", c.TAX_AVGFEIQI as "taxAvgfeiqi", c.TAX_TOTALFEIQI 
+		as "taxTotalfeiqi", c.TAX_AVGNONGDU as "taxAvgnongdu", c.TAX_FINALVALUE as 
+		"taxFinalvalue", c.TAX_HIGHDATATIME as "taxHighdatatime", c.TAX_HIGHNONGDU 
+		as "taxHighnongdu", c.TAX_HASOVERLIMIT as "taxHasoverlimit", c.EQUIVALENT 
+		as "equivalent", c.TOTALEQUIVALENT as "totalequivalent", c.TAX as "tax", 
+		c.TOTALTAX as "totaltax", c.REDUCTIONTAX as "reductiontax", c.LIMIT as "limit", 
+		c.THISMONTHDATA as "thismonthdata", c.ZL_COMPUTE_AVGNONGDU as "zlComputeAvgnongdu", 
+		c.ZL_DA_OR_XIAO as "zlDaOrXiao", c.TAX_COMPUTE_AVGNONGDU as "taxComputeAvgnongdu", 
+		c.TAX_DA_OR_XIAO as "taxDaOrXiao", c.ZL_COMPUTEMAN as "zlComputeman", c.ZL_COMPUTETIME 
+		as "zlComputetime", c.TAX_COMPUTEMAN as "taxComputeman", c.TAX_COMPUTETIME 
+		as "taxComputetime", c.NEEDTAXMARK as "needtaxmark", c.TAX_OLD_HIGHNONGDU 
+		as "taxOldHighnongdu", c.TAX_HIGHNONGDU_CHANGE as "taxHighnongduChange", 
+		'$totaltype$' as "totaltype" from ${hbSchema}.t_hd_taxandtotal_detail a left 
+		join ${hbSchema}.t_hd_taxandtotal_item b on (SUBSTR(a.clock,1,4)=b.clock 
+		and a.itemcode=b.itemcode) left join ${hbSchema}.t_hd_taxandtotal_value c 
+		on(c.clock=a.clock and a.itemcode=c.itemcode) where 1=1 <isNotEmpty prepend=" 
+		AND " property="clock"> a.CLOCK = #clock# </isNotEmpty> <isNotEmpty prepend=" 
+		AND " property="itemcode"> a.ITEMCODE = #itemcode# </isNotEmpty> <isNotEmpty 
+		prepend=" AND " property="monitorid"> a.MONITORID = #monitorid# </isNotEmpty> 
+		<isNotEmpty prepend=" AND " property="factorid"> a.FACTORID = #factorid# 
+		</isNotEmpty> <isNotEmpty prepend=" AND " property="departmentid"> b.departmentid 
+		= #departmentid# </isNotEmpty> <isNotEmpty prepend=" AND " property="procedureid"> 
+		b.procedureid = #procedureid# </isNotEmpty> <dynamic prepend="ORDER BY"> 
+		<isNotEmpty property="orderBy"> $orderBy$ </isNotEmpty> <isEmpty property="orderBy"> 
+		b.departmentid asc, b.procedureid asc, a.itemcode asc, a.FACTORID asc </isEmpty> 
+		</dynamic> </select> -->
+
+    <select id="querysql"  parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+      $sqlMap$
+    </select>
+</sqlMap>

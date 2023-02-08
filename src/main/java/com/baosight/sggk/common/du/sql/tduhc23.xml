@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-31 13:49:17
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.VIEW_T_HA_SITE 
+		 SITEID  VARCHAR   NOT NULL, 
+		 SITENAME  VARCHAR, 
+		 PORTID  VARCHAR   NOT NULL, 
+		 ISARTIFICIAL  VARCHAR, 
+		 ISONLINE  VARCHAR, 
+		 CLASSIFYID  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 MNID  VARCHAR, 
+		 DISCHARGEPORTNAME  VARCHAR, 
+		 ISFORMAL  VARCHAR, 
+		 PROCID  VARCHAR, 
+		 LATITUDE  VARCHAR, 
+		 LONGITUDE  VARCHAR, 
+		 ISMAP  VARCHAR, 
+		 CITYPOINT  VARCHAR, 
+		 COMPANYPOINT  VARCHAR, 
+		 COUNTRYPOINT  VARCHAR, 
+		 MONITORNAME  VARCHAR, 
+		 PROCEDURENAME  VARCHAR, 
+		 DEPARTMENTID  VARCHAR, 
+		 DEPARTMENTNAME  VARCHAR
+	-->
+<sqlMap namespace="tduhc23">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc23">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				ISFORMAL	as "isformal",  
+				PROCID	as "procid",  
+				LATITUDE	as "latitude",  
+				LONGITUDE	as "longitude",  
+				ISMAP	as "ismap",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				COUNTRYPOINT	as "countrypoint",  
+				MONITORNAME	as "monitorname",  
+				PROCEDURENAME	as "procedurename",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENTNAME	as "departmentname" 
+		FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME = #sitename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			status = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME = #dischargeportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL = #isformal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="latitude">
+			LATITUDE = #latitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="longitude">
+			LONGITUDE = #longitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismap">
+			ISMAP = #ismap#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT = #companypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME = #monitorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedurename">
+			PROCEDURENAME = #procedurename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME = #departmentname#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  SITENAME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryMonitorBySiteid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc23">
+		SELECT
+				MONITORID	as "monitorid",
+				MONITORNAME	as "monitorname"
+		FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+	</select>
+	
+	<select id="querylike" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhc23">
+		SELECT
+				SITEID	as "siteid",  
+				SITENAME	as "sitename",  
+				PORTID	as "portid",  
+				ISARTIFICIAL	as "isartificial",  
+				ISONLINE	as "isonline",  
+				CLASSIFYID	as "classifyid",  
+				MONITORID	as "monitorid",  
+				MNID	as "mnid",  
+				DISCHARGEPORTNAME	as "dischargeportname",  
+				ISFORMAL	as "isformal",  
+				PROCID	as "procid",  
+				LATITUDE	as "latitude",  
+				LONGITUDE	as "longitude",  
+				ISMAP	as "ismap",  
+				CITYPOINT	as "citypoint",  
+				COMPANYPOINT	as "companypoint",  
+				COUNTRYPOINT	as "countrypoint",  
+				MONITORNAME	as "monitorname",  
+				PROCEDURENAME	as "procedurename",  
+				DEPARTMENTID	as "departmentid",  
+				DEPARTMENTNAME	as "departmentname" 
+		FROM ${hbSchema}.VIEW_T_HA_SITE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID LIKE '%$siteid$%' 
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME LIKE '%$sitename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID LIKE '%$portid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL LIKE '%$isartificial$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE LIKE '%$isonline$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID LIKE '%$classifyid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID LIKE '%$monitorid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID LIKE '%$mnid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME LIKE '%$dischargeportname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL LIKE '%$isformal$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID LIKE '%$procid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="latitude">
+			LATITUDE LIKE '%$latitude$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="longitude">
+			LONGITUDE LIKE '%$longitude$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismap">
+			ISMAP LIKE '%$ismap$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT LIKE '%$citypoint$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT LIKE '%$companypoint$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT LIKE '%$countrypoint$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME LIKE '%$monitorname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedurename">
+			PROCEDURENAME LIKE '%$procedurename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID LIKE '%$departmentid$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME LIKE '%$departmentname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  SITENAME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sitename">
+			SITENAME = #sitename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mnid">
+			MNID = #mnid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dischargeportname">
+			DISCHARGEPORTNAME = #dischargeportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isformal">
+			ISFORMAL = #isformal#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procid">
+			PROCID = #procid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="latitude">
+			LATITUDE = #latitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="longitude">
+			LONGITUDE = #longitude#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="ismap">
+			ISMAP = #ismap#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="citypoint">
+			CITYPOINT = #citypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="companypoint">
+			COMPANYPOINT = #companypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="countrypoint">
+			COUNTRYPOINT = #countrypoint#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorname">
+			MONITORNAME = #monitorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="procedurename">
+			PROCEDURENAME = #procedurename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentname">
+			DEPARTMENTNAME = #departmentname#
+		</isNotEmpty>
+	-->
+
+
+  
+</sqlMap>

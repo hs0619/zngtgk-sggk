@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-03-08 14:18:02
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_SITEFACTOR 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 SITEID  VARCHAR   NOT NULL   primarykey, 
+		 TYPE  VARCHAR   NOT NULL   primarykey, 
+		 DESCRIPTION  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 MODIFIER  VARCHAR, 
+		 UPDATED_TIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb0702">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb0702">
+		SELECT
+				FACTORID	as "factorid",  
+				SITEID	as "siteid",  
+				TYPE	as "type",  
+				DESCRIPTION	as "description",  
+				STATUS	as "status",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				MODIFIER	as "modifier",  
+				UPDATED_TIME	as "updatedTime",
+				usezs	as "usezs"
+		FROM ${hbSchema}.T_HA_SITEFACTOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  FACTORID asc, 
+    		  SITEID asc, 
+    		  TYPE asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	
+	<select id="queryDetail" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+                t3.FACTORID	as "factorid",  
+				t3.FACTORNAME	as "factorname", 
+				t3.UNIT	as "unit", 
+				t3.DESCRIPTION	as "description", 
+				t3.STATUS	as "status" from
+				(SELECT t1.* FROM ${hbSchema}.t_ha_portfactor t1 where t1.PORTID = #portid#) t2
+				LEFT JOIN ${hbSchema}.t_ha_factor t3 on t2.FACTORID = t3.FACTORID
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  t3.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_SITEFACTOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="description">
+			DESCRIPTION = #description#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="modifier">
+			MODIFIER = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedTime">
+			UPDATED_TIME = #updatedTime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_SITEFACTOR (FACTORID,
+										SITEID,
+										TYPE,
+										DESCRIPTION,
+										STATUS,
+										CREATOR,
+										CREATED_TIME,
+										USEZS
+										)		 
+	    VALUES (#factorid:VARCHAR#, #siteid:VARCHAR#, #type:VARCHAR#, #description:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#,#usezs:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_SITEFACTOR WHERE 
+			FACTORID = #factorid# AND 
+			SITEID = #siteid# AND 
+			TYPE = #type#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_SITEFACTOR 
+		SET 
+											DESCRIPTION	= #description#, 
+					STATUS	= #status#, 
+					MODIFIER	= #modifier#, 
+					UPDATED_TIME	= #updatedTime#,
+					USEZS	= #usezs#
+			WHERE 	
+			FACTORID = #factorid# AND 
+			SITEID = #siteid# AND 
+			TYPE = #type#
+	</update>
+  
+</sqlMap>

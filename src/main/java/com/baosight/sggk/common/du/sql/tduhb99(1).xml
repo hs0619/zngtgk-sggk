@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-10-20 18:57:00
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_PUSH_SYSTEM_MESSAGE 
+		 MESSAGE_ID  VARCHAR   NOT NULL   primarykey, 
+		 MESSAGE_TYPE  VARCHAR, 
+		 JUMP_PAGE  VARCHAR, 
+		 TITLE  VARCHAR, 
+		 CONTENT  VARCHAR, 
+		 PUSH_TIME  VARCHAR, 
+		 REMARKS  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 GROUP_NAME  VARCHAR, 
+		 USER_ID  VARCHAR, 
+		 CREATOR  VARCHAR, 
+		 CREATED_TIME  VARCHAR, 
+		 SOLVE_PERSON  VARCHAR, 
+		 SOLVED_TIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb99">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb99">
+		SELECT
+				MESSAGE_ID	as "messageId",  
+				MESSAGE_TYPE	as "messageType",  
+				JUMP_PAGE	as "jumpPage",  
+				TITLE	as "title",  
+				CONTENT	as "content",  
+				PUSH_TIME	as "pushTime",  
+				REMARKS	as "remarks",  
+				STATUS	as "status",  
+				GROUP_NAME	as "groupName",  
+				USER_ID	as "userId",  
+				CREATOR	as "creator",  
+				CREATED_TIME	as "createdTime",  
+				SOLVE_PERSON	as "solvePerson",  
+				SOLVED_TIME	as "solvedTime" 
+		FROM ${hbSchema}.T_PUSH_SYSTEM_MESSAGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="messageId">
+			MESSAGE_ID = #messageId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID like '%$userId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="messageType">
+			MESSAGE_TYPE = #messageType#
+		</isNotEmpty>
+
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  PUSH_TIME desc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="query1" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb99">
+		SELECT
+		MESSAGE_ID	as "messageId",
+		MESSAGE_TYPE	as "messageType",
+		JUMP_PAGE	as "jumpPage",
+		TITLE	as "title",
+		CONTENT	as "content",
+		PUSH_TIME	as "pushTime",
+		REMARKS	as "remarks",
+		STATUS	as "status",
+		GROUP_NAME	as "groupName",
+		USER_ID	as "userId",
+		CREATOR	as "creator",
+		CREATED_TIME	as "createdTime",
+		SOLVE_PERSON	as "solvePerson",
+		SOLVED_TIME	as "solvedTime"
+		FROM ${hbSchema}.T_PUSH_SYSTEM_MESSAGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="messageId">
+			MESSAGE_ID = #messageId#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status">
+			STATUS IN
+			<iterate open="(" close=")" conjunction="," property="status">
+				#status[]#
+			</iterate>
+		</isNotEmpty>
+		<!--<isNotEmpty prepend=" AND " property="status">-->
+			<!--STATUS = #status#-->
+		<!--</isNotEmpty>-->
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID like '%$userId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="messageType">
+			MESSAGE_TYPE = #messageType#
+		</isNotEmpty>
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				PUSH_TIME desc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_PUSH_SYSTEM_MESSAGE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="messageId">
+			MESSAGE_ID = #messageId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="messageId">
+			MESSAGE_ID = #messageId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="messageType">
+			MESSAGE_TYPE = #messageType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="jumpPage">
+			JUMP_PAGE = #jumpPage#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="title">
+			TITLE = #title#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="content">
+			CONTENT = #content#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="pushTime">
+			PUSH_TIME = #pushTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remarks">
+			REMARKS = #remarks#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="groupName">
+			GROUP_NAME = #groupName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="userId">
+			USER_ID = #userId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="creator">
+			CREATOR = #creator#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdTime">
+			CREATED_TIME = #createdTime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="solvePerson">
+			SOLVE_PERSON = #solvePerson#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="solvedTime">
+			SOLVED_TIME = #solvedTime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_PUSH_SYSTEM_MESSAGE (MESSAGE_ID,
+										MESSAGE_TYPE,
+										JUMP_PAGE,
+										TITLE,
+										CONTENT,
+										PUSH_TIME,
+										REMARKS,
+										STATUS,
+										GROUP_NAME,
+										USER_ID,
+										CREATOR,
+										CREATED_TIME,
+										SOLVE_PERSON,
+										SOLVED_TIME
+										)		 
+	    VALUES (#messageId:VARCHAR#, #messageType:VARCHAR#, #jumpPage:VARCHAR#, #title:VARCHAR#, #content:VARCHAR#, #pushTime:VARCHAR#, #remarks:VARCHAR#, #status:VARCHAR#, #groupName:VARCHAR#, #userId:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #solvePerson:VARCHAR#, #solvedTime:VARCHAR#)
+	</insert>
+
+	<insert id="insertmessage">
+		INSERT INTO ${hbSchema}.T_PUSH_SYSTEM_MESSAGE
+		 (MESSAGE_ID, MESSAGE_TYPE, JUMP_PAGE, TITLE, CONTENT, PUSH_TIME, REMARKS, STATUS,
+	GROUP_NAME, USER_ID, CREATOR, CREATED_TIME)
+		VALUES (#messageId:VARCHAR#, #messageType:VARCHAR#, #jumpPage:VARCHAR#, #title:VARCHAR#,
+		 #content:VARCHAR#,
+		#pushTime:VARCHAR#, #remarks:VARCHAR#, #status:VARCHAR#, #groupName:VARCHAR#,
+		#userId:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_PUSH_SYSTEM_MESSAGE WHERE 
+			MESSAGE_ID = #messageId#
+	</delete>
+
+	<delete id="Messagedelete">
+		DELETE FROM ${hbSchema}.T_PUSH_SYSTEM_MESSAGE WHERE
+			REMARKS = #remarks#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_PUSH_SYSTEM_MESSAGE 
+		SET 
+					MESSAGE_TYPE	= #messageType#, 
+					JUMP_PAGE	= #jumpPage#, 
+					TITLE	= #title#, 
+					CONTENT	= #content#, 
+					PUSH_TIME	= #pushTime#, 
+					REMARKS	= #remarks#, 
+					STATUS	= #status#, 
+					GROUP_NAME	= #groupName#, 
+					USER_ID	= #userId#, 
+					CREATOR	= #creator#, 
+					CREATED_TIME	= #createdTime#, 
+					SOLVE_PERSON	= #solvePerson#, 
+					SOLVED_TIME	= #solvedTime#
+			WHERE 	
+			MESSAGE_ID = #messageId#
+	</update>
+  
+  	<update id="updateMessage">
+		UPDATE ${hbSchema}.T_PUSH_SYSTEM_MESSAGE 
+		SET 
+			STATUS	= #status#, 
+			SOLVE_PERSON	= #solvePerson#, 
+			SOLVED_TIME	= #solvedTime#
+		WHERE 	
+			MESSAGE_ID = #messageId#
+	</update>
+	
+	
+	<update id="dealWithMessage">
+		UPDATE ${hbSchema}.T_PUSH_SYSTEM_MESSAGE 
+		SET 
+			STATUS	= #status#, 
+			SOLVE_PERSON	= #solvePerson#, 
+			SOLVED_TIME	= #solvedTime#
+		WHERE 	
+			MESSAGE_TYPE = #messageType#
+		AND
+			REMARKS	= #remarks#
+	</update>
+
+	<update id="dealWithMessage1">
+		UPDATE ${hbSchema}.T_PUSH_SYSTEM_MESSAGE
+		SET
+			STATUS	= #status#,
+			SOLVE_PERSON	= #solvePerson#,
+			 USER_ID =   #userId#,
+			 	 TITLE = #title#,
+			SOLVED_TIME	= #solvedTime#
+		WHERE
+			MESSAGE_TYPE = #messageType#
+		AND
+			REMARKS	= #remarks#
+	</update>
+
+	<update id="dealWithMessage2">
+		UPDATE ${hbSchema}.T_PUSH_SYSTEM_MESSAGE
+		SET
+			STATUS	= #status#,
+			SOLVE_PERSON	= #solvePerson#,
+			 USER_ID =   #userId#,
+			 TITLE = #title#,
+			SOLVED_TIME	= #solvedTime#
+		WHERE
+			MESSAGE_TYPE = #messageType#
+		AND
+			REMARKS	= #remarks#
+	</update>
+
+	<update id="updateStatus">
+		UPDATE ${hbSchema}.T_PUSH_SYSTEM_MESSAGE
+		SET
+			STATUS	= #status#
+		WHERE
+			REMARKS = #remarks#
+	</update>
+
+</sqlMap>

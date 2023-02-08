@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-01-26 17:29:22
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HF_STS_DOCTYPE 
+		 TYPEID  VARCHAR   NOT NULL   primarykey, 
+		 TYPENAME  VARCHAR   NOT NULL, 
+		 CREATEMAN  VARCHAR, 
+		 CREATETIME  VARCHAR, 
+		 UPDATEMAN  VARCHAR, 
+		 UPDATETIME  VARCHAR
+	-->
+<sqlMap namespace="tduhf01">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf01">
+		SELECT
+				t1.TYPEID	as "typeid",  
+				t1.TYPENAME	as "typename",  
+				t1.createman	as "createid",  
+				t2.USER_NAME	as "createman",  
+				t1.CREATETIME	as "createtime",  
+				t3.USER_NAME	as "updateman",  
+				t1.UPDATETIME	as "updatetime" ,
+				t1.flag	as "flag" 
+		FROM ${hbSchema}.T_HF_STS_DOCTYPE t1
+		left join ${hbSchema}.XS_USER t2 on t1.CREATEMAN=t2.LOGIN_NAME
+		left join ${hbSchema}.XS_USER t3 on t1.updateman=t3.LOGIN_NAME
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="typeid">
+			t1.TYPEID = #typeid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="typename">
+			t1.TYPENAME like '%$typename$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="flag">
+			t1.flag = #flag#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.TYPEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryID" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhf01">
+		SELECT
+				TYPEID	as "typeid" 
+				
+		FROM ${hbSchema}.T_HF_STS_DOCTYPE WHERE 1=1 order by typeid desc  fetch first  1 rows only
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_STS_DOCTYPE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="typeid">
+			TYPEID = #typeid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="typeid">
+			TYPEID = #typeid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="typename">
+			TYPENAME = #typename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createman">
+			CREATEMAN = #createman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createtime">
+			CREATETIME = #createtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updateman">
+			UPDATEMAN = #updateman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatetime">
+			UPDATETIME = #updatetime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_STS_DOCTYPE (TYPEID,
+										TYPENAME,
+										CREATEMAN,
+										CREATETIME,
+										flag
+										)		 
+	    VALUES (#typeid:VARCHAR#, #typename:VARCHAR#, #createman:VARCHAR#, #createtime:VARCHAR#, #flag:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HF_STS_DOCTYPE WHERE 
+			TYPEID = #typeid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_STS_DOCTYPE 
+		SET 
+					TYPENAME	= #typename#, 
+					UPDATEMAN	= #updateman#, 
+					UPDATETIME	= #updatetime#
+			WHERE 	
+			TYPEID = #typeid#
+	</update>
+  
+</sqlMap>
