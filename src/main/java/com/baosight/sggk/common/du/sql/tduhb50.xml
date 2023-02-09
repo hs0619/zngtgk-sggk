@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-02-09 15:54:43
+   		Version :  1.0
+		tableName :iplat4j.t_ha_raw_material 
+		 RM_ID  VARCHAR   NOT NULL   primarykey, 
+		 RM_TYPE  VARCHAR, 
+		 RM_NAME  VARCHAR, 
+		 RM_MAX_AMOUNT  VARCHAR, 
+		 RM_UNIT  VARCHAR, 
+		 RM_SULFUR_CONTENT  VARCHAR, 
+		 RM_VOLATILE  VARCHAR, 
+		 RM_OTHER_INFORMATION  VARCHAR
+	-->
+<sqlMap namespace="tduhb50">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb50">
+		SELECT
+				RM_ID	as "rmId",  <!-- 主键ID -->
+				RM_TYPE	as "rmType",  <!-- 原辅料类别 -->
+				RM_NAME	as "rmName",  <!-- 原辅料名称 -->
+				RM_MAX_AMOUNT	as "rmMaxAmount",  <!-- 年最大使用量 -->
+				RM_UNIT	as "rmUnit",  <!-- 单位 -->
+				RM_SULFUR_CONTENT	as "rmSulfurContent",  <!-- 硫分(%) -->
+				RM_VOLATILE	as "rmVolatile",  <!-- 挥发分(%) -->
+				RM_OTHER_INFORMATION	as "rmOtherInformation" <!-- 其他信息 -->
+		FROM iplat4j.t_ha_raw_material WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rmId">
+			RM_ID = #rmId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmName">
+			RM_ID like '#$rmName$#'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmType">
+			RM_ID = #rmType#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  RM_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM iplat4j.t_ha_raw_material WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rmId">
+			RM_ID = #rmId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="rmId">
+			RM_ID = #rmId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmType">
+			RM_TYPE = #rmType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmName">
+			RM_NAME = #rmName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmMaxAmount">
+			RM_MAX_AMOUNT = #rmMaxAmount#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmUnit">
+			RM_UNIT = #rmUnit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmSulfurContent">
+			RM_SULFUR_CONTENT = #rmSulfurContent#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmVolatile">
+			RM_VOLATILE = #rmVolatile#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rmOtherInformation">
+			RM_OTHER_INFORMATION = #rmOtherInformation#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO iplat4j.t_ha_raw_material (RM_ID,  <!-- 主键ID -->
+										RM_TYPE,  <!-- 原辅料类别 -->
+										RM_NAME,  <!-- 原辅料名称 -->
+										RM_MAX_AMOUNT,  <!-- 年最大使用量 -->
+										RM_UNIT,  <!-- 单位 -->
+										RM_SULFUR_CONTENT,  <!-- 硫分(%) -->
+										RM_VOLATILE,  <!-- 挥发分(%) -->
+										RM_OTHER_INFORMATION  <!-- 其他信息 -->
+										)		 
+	    VALUES (#rmId#, #rmType#, #rmName#, #rmMaxAmount#, #rmUnit#, #rmSulfurContent#, #rmVolatile#, #rmOtherInformation#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM iplat4j.t_ha_raw_material WHERE 
+			RM_ID = #rmId#
+	</delete>
+
+	<update id="update">
+		UPDATE iplat4j.t_ha_raw_material 
+		SET 
+					RM_TYPE	= #rmType#,   <!-- 原辅料类别 -->  
+					RM_NAME	= #rmName#,   <!-- 原辅料名称 -->  
+					RM_MAX_AMOUNT	= #rmMaxAmount#,   <!-- 年最大使用量 -->  
+					RM_UNIT	= #rmUnit#,   <!-- 单位 -->  
+					RM_SULFUR_CONTENT	= #rmSulfurContent#,   <!-- 硫分(%) -->  
+					RM_VOLATILE	= #rmVolatile#,   <!-- 挥发分(%) -->  
+					RM_OTHER_INFORMATION	= #rmOtherInformation#  <!-- 其他信息 -->  
+			WHERE 	
+			RM_ID = #rmId#
+	</update>
+  
+</sqlMap>
