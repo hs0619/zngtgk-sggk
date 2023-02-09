@@ -21,7 +21,7 @@ public class ServiceDUHB01 extends ServiceEPBase {
 	public EiInfo initLoad(EiInfo inInfo) {
 		EiInfo outInfo = new EiInfo();
 
-        System.out.println("abc");
+        System.out.println("abcasdasd");
 		EiBlock block = new EiBlock(EiConstant.resultBlock);
 		block.addBlockMeta(new Tduhb01().eiMetadata);
 		outInfo.setBlock(block);
