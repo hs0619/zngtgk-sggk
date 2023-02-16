@@ -31,10 +31,10 @@
 			RM_ID = #rmId#
 		</isNotEmpty>
 		<isNotEmpty prepend=" AND " property="rmName">
-			RM_ID like '#$rmName$#'
+			RM_NAME like '%$rmName$%'
 		</isNotEmpty>
 		<isNotEmpty prepend=" AND " property="rmType">
-			RM_ID = #rmType#
+			RM_TYPE = #rmType#
 		</isNotEmpty>
 		<dynamic prepend="ORDER BY">
          <isNotEmpty property="orderBy">
@@ -45,6 +45,29 @@
 		</isEmpty>
   		</dynamic>
 			
+	</select>
+
+
+	<select id="selectByRmId" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb50">
+		SELECT
+		RM_ID	as "rmId",  <!-- 主键ID -->
+		RM_TYPE	as "rmType",  <!-- 原辅料类别 -->
+		RM_NAME	as "rmName",  <!-- 原辅料名称 -->
+		RM_MAX_AMOUNT	as "rmMaxAmount",  <!-- 年最大使用量 -->
+		RM_UNIT	as "rmUnit",  <!-- 单位 -->
+		RM_SULFUR_CONTENT	as "rmSulfurContent",  <!-- 硫分(%) -->
+		RM_VOLATILE	as "rmVolatile",  <!-- 挥发分(%) -->
+		RM_OTHER_INFORMATION	as "rmOtherInformation" <!-- 其他信息 -->
+		FROM iplat4j.t_ha_raw_material WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rmId">
+			RM_ID = #rmId#
+		</isNotEmpty>
+	</select>
+
+<!--	获取表中最大的ID数据-->
+	<select id="selectMaxRsId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(RM_ID) from iplat4j.t_ha_raw_material where 1=1
 	</select>
 
 	<select id="count" resultClass="int">

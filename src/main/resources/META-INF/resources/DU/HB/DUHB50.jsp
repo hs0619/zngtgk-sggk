@@ -29,6 +29,7 @@
         <EF:EFGrid blockId="result" autoDraw="false" sort="setted"
                    rowNo="true" queryMethod="query" deleteMethod="delete"
                    isFloat="true">
+            <EF:EFColumn ename="rmId" cname="主键ID" sort="true" readonly="true" hidden="true"/>
             <EF:EFColumn ename="rmType" cname="类别" sort="true" readonly="true"/>
             <EF:EFColumn ename="rmName" cname="名称" sort="true" readonly="true"/>
             <EF:EFColumn ename="rmMaxAmount" cname="年最大使用量" sort="true" readonly="true"/>
@@ -38,4 +39,6 @@
             <EF:EFColumn ename="rmOtherInformation" cname="其他信息" sort="true" readonly="true"/>
         </EF:EFGrid>
     </EF:EFRegion>
+    <EF:EFWindow id="showDP" width="90%" height="90%" refresh="true">
+    </EF:EFWindow>
 </EF:EFPage>
