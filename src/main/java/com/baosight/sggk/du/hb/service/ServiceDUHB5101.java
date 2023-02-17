@@ -10,17 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ServiceDUHB5001 extends ServiceBase {
+public class ServiceDUHB5101 extends ServiceBase {
 
     public EiInfo initLoad(EiInfo inInfo) {
         EiInfo outInfo = new EiInfo();
 
         String oprationType = StringUtils.isBlank((String) inInfo.get("oprationType")) ? "" : (String) inInfo.get("oprationType");
-        String rmId = StringUtils.isBlank((String) inInfo.get("rmId")) ? "" : (String) inInfo.get("rmId");
+        String rfId = StringUtils.isBlank((String) inInfo.get("rfId")) ? "" : (String) inInfo.get("rfId");
 
 
         if (oprationType.equals("update")) {
-            EiBlock inqu = query(rmId);
+            EiBlock inqu = query(rfId);
             outInfo.setBlock(inqu);
         }
 
@@ -28,34 +28,34 @@ public class ServiceDUHB5001 extends ServiceBase {
         return outInfo;
     }
 
-    public EiBlock query(String rmId) {
+    public EiBlock query(String rfId) {
         EiBlock eiBlock = new EiBlock("inqu_status");
         Map map = new HashMap();
-        map.put("rmId", rmId);
-        List list = this.dao.query("tduhb50.selectByRmId", map);
+        map.put("rfId", rfId);
+        List list = this.dao.query("tduhb51.selectByRfId", map);
         eiBlock.setRows(list);
         return eiBlock;
     }
 
     public EiInfo insert(EiInfo inInfo) {
-        String newRmId = getInsertRmId();
-        inInfo.set("inqu_status-0-rmId", newRmId);
-        EiInfo outInfo = super.insert(inInfo, "tduhb50.insert", new Tduhb50(), false, "inqu_status");
+        String newRfId = getInsertRfId();
+        inInfo.set("inqu_status-0-rfId", newRfId);
+        EiInfo outInfo = super.insert(inInfo, "tduhb51.insert", new Tduhb50(), false, "inqu_status");
         return outInfo;
     }
 
     public EiInfo update(EiInfo inInfo) {
-        EiInfo outInfo = super.update(inInfo, "tduhb50.update", new Tduhb50(), false, "inqu_status");
+        EiInfo outInfo = super.update(inInfo, "tduhb51.update", new Tduhb50(), false, "inqu_status");
         return outInfo;
     }
 
     //获取新的主键
-    private String getInsertRmId() {
-        String rmId = "";
-        List list = this.dao.query("tduhb50.selectMaxRmId", new HashMap<>());
-        rmId = (String) list.get(0);
-        int teamRmId = Integer.parseInt(rmId.substring(2));
-        rmId = "RM" + String.format("%05d", teamRmId + 1);
-        return rmId;
+    private String getInsertRfId() {
+        String rfId = "";
+        List list = this.dao.query("tduhb51.selectMaxRfId", new HashMap<>());
+        rfId = (String) list.get(0);
+        int teamRmId = Integer.parseInt(rfId.substring(2));
+        rfId = "RM" + String.format("%05d", teamRmId + 1);
+        return rfId;
     }
 }

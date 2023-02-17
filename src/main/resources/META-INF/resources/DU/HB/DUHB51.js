@@ -3,7 +3,7 @@ $(function() {
     $("#QUERY").on("click", function(e) {
         var eiInfo = new EiInfo();
         eiInfo.setByNode("inqu");
-        EiCommunicator.send("DUHB50", "query", eiInfo, {
+        EiCommunicator.send("DUHB51", "query", eiInfo, {
             onSuccess : function(ei) {
                 resultGrid.setEiInfo(ei);
                 NotificationUtil(ei.getMsg());
@@ -33,16 +33,16 @@ $(function() {
                     title: "编辑",
                     encoded:false,
                     template: function(dateItem) {
-                        return '<div style="text-align: center"><input value="编辑" class="k-button k-button-details" type="button" align="center" onclick="showDetail(\''+dateItem.rmId+'\')"/></div>';
+                        return '<div style="text-align: center"><input value="编辑" class="k-button k-button-details" type="button" align="center" onclick="showDetail(\''+dateItem.rfId+'\')"/></div>';
                     }
                 }
             ],
             beforeAdd: function (e) {
                 e.preventDefault();
-                var rmId = $("#rmId").val();
+                var rfId = $("#rfId").val();
                 var oprationType = "insert";
                 var popWindow = $("#showDP");
-                var url = IPLATUI.CONTEXT_PATH + "/web/DUHB5001?oprationType=" + oprationType + "&rmId=" + rmId;
+                var url = IPLATUI.CONTEXT_PATH + "/web/DUHB5101?oprationType=" + oprationType + "&rfId=" + rfId;
                 popWindow.data("kendoWindow").setOptions({
                     open: function () {
                         popWindow.data("kendoWindow").refresh({
@@ -68,11 +68,11 @@ $(function() {
         }
     };
 
-    showDetail = function(rmId){
+    showDetail = function(rfId){
 
         var popWindow = $("#showDP");
         var oprationType = "update";
-        var url = IPLATUI.CONTEXT_PATH + "/web/DUHB5001?oprationType=" + oprationType + "&rmId=" + rmId;
+        var url = IPLATUI.CONTEXT_PATH + "/web/DUHB5101?oprationType=" + oprationType + "&rfId=" + rfId;
         popWindow.data("kendoWindow").setOptions({
             open: function () {
                 popWindow.data("kendoWindow").refresh({

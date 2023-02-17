@@ -66,7 +66,7 @@
 	</select>
 
 <!--	获取表中最大的ID数据-->
-	<select id="selectMaxRsId" parameterClass="java.util.HashMap" resultClass="String">
+	<select id="selectMaxRmId" parameterClass="java.util.HashMap" resultClass="String">
 		select max(RM_ID) from iplat4j.t_ha_raw_material where 1=1
 	</select>
 

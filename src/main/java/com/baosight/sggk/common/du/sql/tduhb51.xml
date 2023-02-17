@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-02-17 19:46:30
+   		Version :  1.0
+		tableName :iplat4j.t_ha_fuel 
+		 RF_ID  VARCHAR   NOT NULL   primarykey, 
+		 RF_NAME  VARCHAR, 
+		 RF_ASH  VARCHAR, 
+		 RF_SULFUR_CONTENT  VARCHAR, 
+		 RF_VOLATILE  VARCHAR, 
+		 RF_HEAT_VALUE  VARCHAR, 
+		 RF_MAX_AMOUNT  VARCHAR, 
+		 RF_OTHER_INFORMATION  VARCHAR
+	-->
+<sqlMap namespace="tduhb51">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb51">
+		SELECT
+				RF_ID	as "rfId",  <!-- 主键ID -->
+				RF_NAME	as "rfName",  <!-- 燃料名称 -->
+				RF_ASH	as "rfAsh",  <!-- 灰分(%) -->
+				RF_SULFUR_CONTENT	as "rfSulfurContent",  <!-- 硫分(%) -->
+				RF_VOLATILE	as "rfVolatile",  <!-- 挥发分(%) -->
+				RF_HEAT_VALUE	as "rfHeatValue",  <!-- 热值(MJ/kg、MJ/m³) -->
+				RF_MAX_AMOUNT	as "rfMaxAmount",  <!-- 年最大使用量（万t/a、万m3/a） -->
+				RF_OTHER_INFORMATION	as "rfOtherInformation" <!-- 其他信息 -->
+		FROM iplat4j.t_ha_fuel WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rfId">
+			RF_ID = #rfId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfName">
+			RF_NAME like '%$rfName$%'
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  RF_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="selectByRfId" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb51">
+		SELECT
+		RF_ID	as "rfId",  <!-- 主键ID -->
+		RF_NAME	as "rfName",  <!-- 燃料名称 -->
+		RF_ASH	as "rfAsh",  <!-- 灰分(%) -->
+		RF_SULFUR_CONTENT	as "rfSulfurContent",  <!-- 硫分(%) -->
+		RF_VOLATILE	as "rfVolatile",  <!-- 挥发分(%) -->
+		RF_HEAT_VALUE	as "rfHeatValue",  <!-- 热值(MJ/kg、MJ/m³) -->
+		RF_MAX_AMOUNT	as "rfMaxAmount",  <!-- 年最大使用量（万t/a、万m3/a） -->
+		RF_OTHER_INFORMATION	as "rfOtherInformation" <!-- 其他信息 -->
+		FROM iplat4j.t_ha_fuel WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rfId">
+			RF_ID = #rfId#
+		</isNotEmpty>
+	</select>
+
+	<!--	获取表中最大的ID数据-->
+	<select id="selectMaxRfId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(RF_ID) from iplat4j.t_ha_fuel where 1=1
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM iplat4j.t_ha_fuel WHERE 1=1
+		<isNotEmpty prepend=" AND " property="rfId">
+			RF_ID = #rfId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="rfId">
+			RF_ID = #rfId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfName">
+			RF_NAME = #rfName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfAsh">
+			RF_ASH = #rfAsh#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfSulfurContent">
+			RF_SULFUR_CONTENT = #rfSulfurContent#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfVolatile">
+			RF_VOLATILE = #rfVolatile#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfHeatValue">
+			RF_HEAT_VALUE = #rfHeatValue#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfMaxAmount">
+			RF_MAX_AMOUNT = #rfMaxAmount#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="rfOtherInformation">
+			RF_OTHER_INFORMATION = #rfOtherInformation#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO iplat4j.t_ha_fuel (RF_ID,  <!-- 主键ID -->
+										RF_NAME,  <!-- 燃料名称 -->
+										RF_ASH,  <!-- 灰分(%) -->
+										RF_SULFUR_CONTENT,  <!-- 硫分(%) -->
+										RF_VOLATILE,  <!-- 挥发分(%) -->
+										RF_HEAT_VALUE,  <!-- 热值(MJ/kg、MJ/m³) -->
+										RF_MAX_AMOUNT,  <!-- 年最大使用量（万t/a、万m3/a） -->
+										RF_OTHER_INFORMATION  <!-- 其他信息 -->
+										)		 
+	    VALUES (#rfId#, #rfName#, #rfAsh#, #rfSulfurContent#, #rfVolatile#, #rfHeatValue#, #rfMaxAmount#, #rfOtherInformation#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM iplat4j.t_ha_fuel WHERE 
+			RF_ID = #rfId#
+	</delete>
+
+	<update id="update">
+		UPDATE iplat4j.t_ha_fuel 
+		SET 
+					RF_NAME	= #rfName#,   <!-- 燃料名称 -->  
+					RF_ASH	= #rfAsh#,   <!-- 灰分(%) -->  
+					RF_SULFUR_CONTENT	= #rfSulfurContent#,   <!-- 硫分(%) -->  
+					RF_VOLATILE	= #rfVolatile#,   <!-- 挥发分(%) -->  
+					RF_HEAT_VALUE	= #rfHeatValue#,   <!-- 热值(MJ/kg、MJ/m³) -->  
+					RF_MAX_AMOUNT	= #rfMaxAmount#,   <!-- 年最大使用量（万t/a、万m3/a） -->  
+					RF_OTHER_INFORMATION	= #rfOtherInformation#  <!-- 其他信息 -->  
+			WHERE 	
+			RF_ID = #rfId#
+	</update>
+  
+</sqlMap>
