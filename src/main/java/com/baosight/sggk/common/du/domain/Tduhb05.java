@@ -51,13 +51,25 @@ public class Tduhb05 extends DaoEPBase {
     private String exhaustheight = " ";		
     private String exhaustinside = " ";		
     private String portTemperature = " ";		
-    private String dischargeClassify = " ";		
+    private String dischargeClassify = " ";
+    private String controlPoint = " ";
+    private String dischargeStatus = " ";
 
     /**
      * initialize the metadata
      */
     public void initMetaData() {
         EiColumn eiColumn;
+
+        eiColumn = new EiColumn("controlPoint");
+        eiColumn.setFieldLength(255);
+        eiColumn.setDescName(" ");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("dischargeStatus");
+        eiColumn.setFieldLength(255);
+        eiColumn.setDescName(" ");
+        eiMetadata.addMeta(eiColumn);
 
         eiColumn = new EiColumn("dischargeportid");
         eiColumn.setPrimaryKey(true);
@@ -250,6 +262,19 @@ public class Tduhb05 extends DaoEPBase {
         this.dischargeportid = dischargeportid;
     }
 
+    public String getControlPoint() {
+        return this.controlPoint;
+    }
+    public void setControlPoint(String controlPoint) {
+        this.controlPoint = controlPoint;
+    }
+
+    public String getDischargeStatus() {
+        return this.dischargeStatus;
+    }
+    public void setDischargeStatus(String dischargeStatus) {
+        this.dischargeStatus = dischargeStatus;
+    }
     /**
      * get the dischargeportname 
      * @return the dischargeportname
@@ -768,6 +793,8 @@ public class Tduhb05 extends DaoEPBase {
         setExhaustinside(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("exhaustinside")), exhaustinside));
         setPortTemperature(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("portTemperature")), portTemperature));
         setDischargeClassify(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("dischargeClassify")), dischargeClassify));
+        setControlPoint(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("controlPoint")),controlPoint));
+        setDischargeStatus(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("dischargeStatus")),dischargeStatus));
     }
 
     /**
@@ -808,6 +835,8 @@ public class Tduhb05 extends DaoEPBase {
         map.put("exhaustinside", StringUtils.toString(exhaustinside, eiMetadata.getMeta("exhaustinside")));
         map.put("portTemperature", StringUtils.toString(portTemperature, eiMetadata.getMeta("portTemperature")));
         map.put("dischargeClassify", StringUtils.toString(dischargeClassify, eiMetadata.getMeta("dischargeClassify")));
+        map.put("controlPoint", StringUtils.toString(controlPoint, eiMetadata.getMeta("controlPoint")));
+        map.put("dischargeStatus", StringUtils.toString(dischargeStatus, eiMetadata.getMeta("dischargeStatus")));
         return map;
     }
 }

@@ -163,6 +163,11 @@
 				UPDATED_TIME	as "updatedTime" 
 		FROM ${hbSchema}.T_HA_SITE order by SITEID desc fetch first 1 rows only
 	</select>
+
+	<!--	获取表中最大的ID数据-->
+	<select id="selectMaxId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(SITEID) from ${hbSchema}.T_HA_SITE where 1=1
+	</select>
 	
 	<select id="queryInfo" parameterClass="java.util.HashMap" 
 			resultClass="com.baosight.sggk.common.du.domain.Tduhb07">

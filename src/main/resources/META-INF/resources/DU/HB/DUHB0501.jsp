@@ -26,18 +26,18 @@
 				</EF:EFSelect>
 			</div>
 		</div>
-		<div class="row divtop">
-			<div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-isformal" cname="是否正式"
-					colWidth="12" required="true">
-				</EF:EFSelect>
-			</div>
-			<div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-status" cname="使用" colWidth="12"
-					required="true">
-				</EF:EFSelect>
-			</div>
-		</div>
+<%--		<div class="row divtop">--%>
+<%--			<div class="col-xs-4 divcol">--%>
+<%--				<EF:EFSelect ename="inqu_status-0-isformal" cname="是否正式"--%>
+<%--					colWidth="12" required="true">--%>
+<%--				</EF:EFSelect>--%>
+<%--			</div>--%>
+<%--			<div class="col-xs-4 divcol">--%>
+<%--				<EF:EFSelect ename="inqu_status-0-status" cname="使用" colWidth="12"--%>
+<%--					required="true">--%>
+<%--				</EF:EFSelect>--%>
+<%--			</div>--%>
+<%--		</div>--%>
 		<div class="row divtop">
 			<div class="col-xs-4 divcol">
 				<EF:EFSelect ename="inqu_status-0-monitorid" cname="监测类型"	
@@ -61,7 +61,7 @@
         </div>
 		<div class="row divtop">
 			<div class="col-xs-4  divcol">
-				<EF:EFInput ename="inqu_status-0-position" cname="位置" colWidth="12" />
+				<EF:EFInput ename="inqu_status-0-position" cname="作业区" colWidth="12" />
 			</div>
 			<div class="col-xs-4 divcol">
 				<EF:EFInput ename="inqu_status-0-longitude" cname="经度" colWidth="12" />
@@ -101,45 +101,65 @@
 					colWidth="12" />
 			</div>
 			<div class="col-xs-4 divcol">
-				<EF:EFInput ename="inqu_status-0-portTemperature" cname="排气筒温度(℃)"  colWidth="12" />
+				<EF:EFSelect ename="inqu_status-0-setright" cname="符合要求 "
+							 colWidth="12">
+				</EF:EFSelect>
 			</div>
+<%--			<div class="col-xs-4 divcol">--%>
+<%--				<EF:EFInput ename="inqu_status-0-portTemperature" cname="排气筒温度(℃)"  colWidth="12" />--%>
+<%--			</div>--%>
 		</div>
 		<div class="row divtop">
 			<%-- <div class="col-xs-4 divcol">
 				<EF:EFInput ename="inqu_status-0-importantport" cname="级别"
 					colWidth="12" />
 			</div> --%>
-			<div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-setright" cname="符合要求 "
-					colWidth="12">
-				</EF:EFSelect>
-			</div>
-			<div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-ismap" cname="地图展示" colWidth="12">
-				</EF:EFSelect>
-			</div>
+
+<%--			<div class="col-xs-4 divcol">--%>
+<%--				<EF:EFSelect ename="inqu_status-0-ismap" cname="地图展示" colWidth="12">--%>
+<%--				</EF:EFSelect>--%>
+<%--			</div>--%>
 			<div class="col-xs-4 divcol">
 				<EF:EFSelect ename="inqu_status-0-signform" cname="是否有标志牌"
 					type="textarea" colWidth="12" />
 			</div>
+				<div class="col-xs-4 divcol">
+					<EF:EFSelect ename="inqu_status-0-controlPoint" cname="点位 "
+								 colWidth="12">
+						<EF:EFOption label="其他" value=""/>
+						<EF:EFOption label="国控点" value="1"/>
+						<EF:EFOption label="内控点" value="2"/>
+						<EF:EFOption label="市控点" value="3"/>
+					</EF:EFSelect>
+				</div>
+				<div class="col-xs-4 divcol">
+
+					<EF:EFSelect ename="inqu_status-0-dischargeStatus" cname="排放口状态"
+								 colWidth="12">
+						<EF:EFOption label="其他" value=""/>
+						<EF:EFOption label="正常排放" value="1"/>
+						<EF:EFOption label="临时排放" value="2"/>
+						<EF:EFOption label="停用" value="3"/>
+					</EF:EFSelect>
+				</div>
 		</div>
-		<div class="row divtop">
-			<div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-countrypoint" cname="国控点 "
-					colWidth="12">
-				</EF:EFSelect>
-			</div>
-			<%-- <div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-citypoint" cname="市控点"
-					colWidth="12">
-				</EF:EFSelect>
-			</div> --%>
-			<div class="col-xs-4 divcol">
-				<EF:EFSelect ename="inqu_status-0-companypoint" cname="内控点"
-					colWidth="12">
-				</EF:EFSelect>
-			</div>
-		</div>
+<%--		<div class="row divtop">--%>
+<%--			<div class="col-xs-4 divcol">--%>
+<%--&lt;%&ndash;				<EF:EFSelect ename="inqu_status-0-countrypoint" cname="国控点 "&ndash;%&gt;--%>
+<%--&lt;%&ndash;					colWidth="12">&ndash;%&gt;--%>
+<%--&lt;%&ndash;				</EF:EFSelect>&ndash;%&gt;--%>
+<%--			</div>--%>
+<%--			&lt;%&ndash; <div class="col-xs-4 divcol">--%>
+<%--				<EF:EFSelect ename="inqu_status-0-citypoint" cname="市控点"--%>
+<%--					colWidth="12">--%>
+<%--				</EF:EFSelect>--%>
+<%--			</div> &ndash;%&gt;--%>
+<%--			<div class="col-xs-4 divcol">--%>
+<%--&lt;%&ndash;				<EF:EFSelect ename="inqu_status-0-companypoint" cname="内控点"&ndash;%&gt;--%>
+<%--&lt;%&ndash;					colWidth="12">&ndash;%&gt;--%>
+<%--&lt;%&ndash;				</EF:EFSelect>&ndash;%&gt;--%>
+<%--			</div>--%>
+<%--		</div>--%>
 <!-- 		<div class="row divhr"></div> -->
 		<div class="row divbottom">
 			

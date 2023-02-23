@@ -74,11 +74,19 @@
 				MODIFIER	as "modifier",  
 				UPDATED_TIME	as "updatedTime",
 				PORT_TEMPERATURE	as "portTemperature",  
-				DISCHARGE_CLASSIFY	as "dischargeClassify" 
+				DISCHARGE_CLASSIFY	as "dischargeClassify",
+				CONTROL_POINT  as "controlPoint",
+				DISCHARGE_STATUS	as "dischargeStatus"
 		FROM ${hbSchema}.T_HA_DISCHARGEPORT WHERE 1=1
 		
 		<isNotEmpty prepend=" AND " property="dischargeportid">
 			DISCHARGEPORTID = #dischargeportid#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="controlPoint">
+			CONTROL_POINT = #controlPoint#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dischargeStatus">
+			DISCHARGE_STATUS = #dischargeStatus#
 		</isNotEmpty>
 		<isNotEmpty prepend=" AND " property="monitorid">
 			MONITORID = #monitorid#
@@ -86,6 +94,7 @@
 		<isNotEmpty prepend=" AND " property="departid">
 			DEPARTID = #departid#
 		</isNotEmpty>
+
 		<isNotEmpty prepend=" AND " property="procid">
 			PROCID = #procid#
 		</isNotEmpty>
@@ -161,6 +170,12 @@
 				DISCHARGE_CLASSIFY	as "dischargeClassify" 
 		FROM ${hbSchema}.T_HA_DISCHARGEPORT order by DISCHARGEPORTID desc fetch first 1 rows only
 	</select>
+
+	<!--	获取表中最大的ID数据-->
+	<select id="selectMaxId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(DISCHARGEPORTID) from ${hbSchema}.T_HA_DISCHARGEPORT where 1=1
+	</select>
+
 
 	<select id="count" resultClass="int">
 		SELECT COUNT(*) FROM ${hbSchema}.T_HA_DISCHARGEPORT WHERE 1=1
@@ -327,7 +342,7 @@
 	<insert id="insert">
 		INSERT INTO ${hbSchema}.T_HA_DISCHARGEPORT (DISCHARGEPORTID,
 										DISCHARGEPORTNAME,
-										ISFORMAL,
+										<!--ISFORMAL, -->
 										PROCID,
 										MONITORID,
 										SIGNFORM,
@@ -357,9 +372,12 @@
 										EXHAUSTHEIGHT,
 										EXHAUSTINSIDE,
 										PORT_TEMPERATURE,
-										DISCHARGE_CLASSIFY
+										DISCHARGE_CLASSIFY,
+										CONTROL_POINT,
+										DISCHARGE_STATUS
 										)		 
-	    VALUES (#dischargeportid:VARCHAR#, #dischargeportname:VARCHAR#, #isformal:VARCHAR#, #procid:VARCHAR#, #monitorid:VARCHAR#, #signform:VARCHAR#, #dischargemode:VARCHAR#, #longitude:VARCHAR#, #latitude:VARCHAR#, #position:VARCHAR#, #executionstandard:VARCHAR#, #setright:VARCHAR#, #importantport:VARCHAR#, #ismap:VARCHAR#, #description:VARCHAR#, #outto:VARCHAR#, #outtype:VARCHAR#, #outrule:VARCHAR#, #countrypoint:VARCHAR#, #citypoint:VARCHAR#, #companypoint:VARCHAR#, #cleanpoint:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #dischargeportcode:VARCHAR#, #departid:VARCHAR#, #exhaustheight:VARCHAR#, #exhaustinside:VARCHAR#, #portTemperature:VARCHAR#, #dischargeClassify:VARCHAR#)
+	    VALUES (#dischargeportid:VARCHAR#, #dischargeportname:VARCHAR#,<!-- #isformal:VARCHAR#, --> #procid:VARCHAR#, #monitorid:VARCHAR#, #signform:VARCHAR#, #dischargemode:VARCHAR#, #longitude:VARCHAR#, #latitude:VARCHAR#, #position:VARCHAR#, #executionstandard:VARCHAR#, #setright:VARCHAR#, #importantport:VARCHAR#, #ismap:VARCHAR#, #description:VARCHAR#, #outto:VARCHAR#, #outtype:VARCHAR#, #outrule:VARCHAR#, #countrypoint:VARCHAR#, #citypoint:VARCHAR#, #companypoint:VARCHAR#, #cleanpoint:VARCHAR#, #status:VARCHAR#, #creator:VARCHAR#, #createdTime:VARCHAR#, #modifier:VARCHAR#, #updatedTime:VARCHAR#, #dischargeportcode:VARCHAR#, #departid:VARCHAR#, #exhaustheight:VARCHAR#, #exhaustinside:VARCHAR#, #portTemperature:VARCHAR#, #dischargeClassify:VARCHAR#,#controlPoint:VARCHAR#,#dischargeStatus:VARCHAR#)
+
 	</insert>
   
 	<delete id="delete">
@@ -371,7 +389,7 @@
 		UPDATE ${hbSchema}.T_HA_DISCHARGEPORT 
 		SET 
 					DISCHARGEPORTNAME	= #dischargeportname#, 
-					ISFORMAL	= #isformal#, 
+					ISFORMAL	= #isformal#,
 					PROCID	= #procid#, 
 					MONITORID	= #monitorid#, 
 					SIGNFORM	= #signform#, 
@@ -382,16 +400,16 @@
 					EXECUTIONSTANDARD	= #executionstandard#, 
 					SETRIGHT	= #setright#, 
 					IMPORTANTPORT	= #importantport#, 
-					ISMAP	= #ismap#, 
+					ISMAP	= #ismap#,
 					DESCRIPTION	= #description#, 
 					OUTTO	= #outto#, 
 					OUTTYPE	= #outtype#, 
 					OUTRULE	= #outrule#, 
-					COUNTRYPOINT	= #countrypoint#, 
+					COUNTRYPOINT	= #countrypoint#,
 					CITYPOINT	= #citypoint#, 
-					COMPANYPOINT	= #companypoint#, 
+					COMPANYPOINT	= #companypoint#,
 					CLEANPOINT	= #cleanpoint#, 
-					STATUS	= #status#, 
+					STATUS	= #status#,
 					CREATOR	= #creator#, 
 					CREATED_TIME	= #createdTime#, 
 					MODIFIER	= #modifier#, 
@@ -400,8 +418,10 @@
 					DEPARTID	= #departid#, 
 					EXHAUSTHEIGHT	= #exhaustheight#, 
 					EXHAUSTINSIDE	= #exhaustinside#, 
-					PORT_TEMPERATURE	= #portTemperature#, 
-					DISCHARGE_CLASSIFY	= #dischargeClassify#
+					PORT_TEMPERATURE	= #portTemperature#,
+					DISCHARGE_CLASSIFY	= #dischargeClassify#,
+					CONTROL_POINT  = #controlPoint#,
+					DISCHARGE_STATUS	= #dischargeStatus#
 			WHERE 	
 			DISCHARGEPORTID = #dischargeportid#
 	</update>
@@ -410,7 +430,7 @@
 		UPDATE ${hbSchema}.T_HA_DISCHARGEPORT 
 		SET 
 					DISCHARGEPORTNAME	= #dischargeportname#, 
-					ISFORMAL	= #isformal#, 
+					<!--ISFORMAL	= #isformal#, -->
 					PROCID	= #procid#, 
 					MONITORID	= #monitorid#, 
 					SIGNFORM	= #signform#, 
@@ -438,7 +458,9 @@
 					EXHAUSTHEIGHT	= #exhaustheight#, 
 					EXHAUSTINSIDE	= #exhaustinside#, 
 					PORT_TEMPERATURE	= #portTemperature#, 
-					DISCHARGE_CLASSIFY	= #dischargeClassify#
+					DISCHARGE_CLASSIFY	= #dischargeClassify#,
+					CONTROL_POINT  = #controlPoint#,
+					DISCHARGE_STATUS	= #dischargeStatus#
 			WHERE 	
 			DISCHARGEPORTID = #dischargeportid#
 	</update>

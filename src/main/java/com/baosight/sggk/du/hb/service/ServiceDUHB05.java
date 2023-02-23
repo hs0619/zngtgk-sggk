@@ -120,6 +120,55 @@ public class ServiceDUHB05 extends ServiceEPBase {
 		flagblock.setRows(list1);
 		outInfo.setBlock(flagblock);
 
+		//添加点位
+		eiMetadata = new EiBlockMeta();
+		eiColumn = new EiColumn("pointname");
+		eiMetadata.addMeta(eiColumn);
+		eiColumn = new EiColumn("pointid");
+		eiMetadata.addMeta(eiColumn);
+		EiBlock pointblock = new EiBlock("blockPoint");
+		pointblock.setBlockMeta(eiMetadata);
+		List<Map> list2 = new ArrayList<>();
+		Map<String,String> map4 = new HashMap<>();
+		map4.put("pointid","1");
+		map4.put("pointname","国控点");
+		list2.add(map4);
+		Map<String,String> map5 = new HashMap<>();
+		map5.put("pointid","2");
+		map5.put("pointname","内控点");
+		list2.add(map5);
+		Map<String,String> map6 = new HashMap<>();
+		map6.put("pointid","3");
+		map6.put("pointname","市控点");
+		list2.add(map6);
+		pointblock.setRows(list2);
+		outInfo.setBlock(pointblock);
+
+		//添加排放口状态
+		eiMetadata = new EiBlockMeta();
+		eiColumn = new EiColumn("statusname");
+		eiMetadata.addMeta(eiColumn);
+		eiColumn = new EiColumn("statusid");
+		eiMetadata.addMeta(eiColumn);
+		EiBlock blockStatus = new EiBlock("blockStatus");
+		pointblock.setBlockMeta(eiMetadata);
+		List<Map> list3 = new ArrayList<>();
+		Map<String,String> map7 = new HashMap<>();
+		map7.put("statusid","1");
+		map7.put("statusname","正常排放");
+		list3.add(map7);
+		Map<String,String> map8 = new HashMap<>();
+		map8.put("statusid","2");
+		map8.put("statusname","临时排放");
+		list3.add(map8);
+		Map<String,String> map9 = new HashMap<>();
+		map9.put("statusid","3");
+		map9.put("statusname","停用");
+		list3.add(map9);
+		blockStatus.setRows(list3);
+		outInfo.setBlock(blockStatus);
+
+
 		Map params1 = new HashMap();
 		String monitorid = (String)inInfo.get("monitorid");
 		if("01".equals(monitorid)){
@@ -168,12 +217,16 @@ public class ServiceDUHB05 extends ServiceEPBase {
 		String[]  dischargeClassify = 	inInfo.getCellStr("inqu_status",0,"dischargeClassify").split(",");
 		String  status = inInfo.getCellStr("inqu_status",0,"status");
 		String  isformal = inInfo.getCellStr("inqu_status",0,"isformal");
+		String controlPoint = inInfo.getCellStr("inqu_status",0,"controlPoint");
+		String dischargeStatus = inInfo.getCellStr("inqu_status",0,"dischargeStatus");
 		Map<String,Object> map = new HashMap<>();
 		map.put("monitorid",monitorid);
 		map.put("departid",departid);
 		map.put("procid",procid);
 		map.put("dischargeportcode",dischargeportcode);
 		map.put("dischargeportname",dischargeportname);
+		map.put("controlPoint",controlPoint);
+		map.put("dischargeStatus",dischargeStatus);
 		if(!dischargeClassify[0].equals("")  ){
             map.put("dischargeClassify",dischargeClassify);
         }

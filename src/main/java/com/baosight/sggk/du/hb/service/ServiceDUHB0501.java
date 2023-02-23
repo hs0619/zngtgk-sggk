@@ -231,6 +231,10 @@ public EiInfo initSelectData(EiInfo inInfo) {
 	    metadata.addMeta(eiColumn);
 	    eiColumn = new EiColumn("oprationType");
 	    metadata.addMeta(eiColumn);
+		eiColumn = new EiColumn("controlPoint");
+		metadata.addMeta(eiColumn);
+		eiColumn = new EiColumn("dischargeStatus");
+		metadata.addMeta(eiColumn);
 	    queryblock.setBlockMeta(metadata);  
         
 	    Map<String,String> row = new HashMap<String,String>();
@@ -264,6 +268,8 @@ public EiInfo initSelectData(EiInfo inInfo) {
 		    row.put("companypoint", "");
 		    row.put("cleanpoint", "");
 		    row.put("status", "");
+			row.put("controlPoint","");
+			row.put("dischargeStatus","");
         }else if("update".equals(oprationType)) {
         	row.put("oprationType", "update");
     		String dischargeportid = StringUtils.isBlank((String)inInfo.get("dischargeportid")) ? "空" : (String)inInfo.get("dischargeportid");
@@ -301,6 +307,8 @@ public EiInfo initSelectData(EiInfo inInfo) {
     		    row.put("companypoint", tduhb05.getCompanypoint());
     		    row.put("cleanpoint", tduhb05.getCleanpoint());
     		    row.put("status", tduhb05.getStatus());
+				row.put("controlPoint",tduhb05.getControlPoint());
+				row.put("dischargeStatus",tduhb05.getDischargeStatus());
     		}
         }
         queryblock.addRow(row);
@@ -411,6 +419,9 @@ public EiInfo initSelectData(EiInfo inInfo) {
 			String companypoint = (String)inInfo.get("inqu_status-0-companypoint");
 			String cleanpoint = (String)inInfo.get("inqu_status-0-cleanpoint");
 
+			String controlPoint = (String)inInfo.get("inqu_status-0-controlPoint");
+			String dischargeStatus = (String)inInfo.get("inqu_status-0-dischargeStatus");
+
 			String status = (String)inInfo.get("inqu_status-0-status");
 			Map<String, String> map = new HashMap<String, String>();
 									
@@ -442,6 +453,8 @@ public EiInfo initSelectData(EiInfo inInfo) {
 			map.put("companypoint", companypoint);
 			map.put("cleanpoint", "");
 		    map.put("status", status);
+		    map.put("controlPoint", controlPoint);
+		    map.put("dischargeStatus", dischargeStatus);
 			if("insert".equals(oprationType)) {
 				String temdischargeportid = getDischargePortId();
 
@@ -461,7 +474,7 @@ public EiInfo initSelectData(EiInfo inInfo) {
 			    map.put("monitorid", monitorid);
 			    map.put("mnid", "");
 			    map.put("description", "");
-			    map.put("sort", getMaxSiteSort());
+//			    map.put("sort", getMaxSiteSort());
 			    map.put("status", "1");
 				map.put("siteid", getSiteId());
 				map.put("creator", currentUser);
@@ -522,24 +535,37 @@ public EiInfo initSelectData(EiInfo inInfo) {
 	
     private String getDischargePortId () throws Exception
 	{
-    	String  dischargeportid ="DCP";
-        List list = this.dao.query("tduhb05.queryId", new HashMap<String, String>());
-        int count = 1;
-        if(list != null && list.size() > 0) {
-        	count = Integer.parseInt(((Tduhb05)list.get(0)).getDischargeportid().substring(3)) + 1;
-        }
-		return dischargeportid + String.format("%07d", count);
+//    	String  dischargeportid ="DCP";
+//        List list = this.dao.query("tduhb05.queryId", new HashMap<String, String>());
+//        int count = 1;
+//        if(list != null && list.size() > 0) {
+//        	count = Integer.parseInt(((Tduhb05)list.get(0)).getDischargeportid().substring(3)) + 1;
+//        }
+//		return dischargeportid + String.format("%07d", count);
+		String dischargeportid = "";
+		List list = this.dao.query("tduhb05.selectMaxId", new HashMap<>());
+		dischargeportid = (String)list.get(0);
+		int teamId = Integer.parseInt(dischargeportid.substring(3));
+		dischargeportid = "DCP"+String.format("%07d",teamId+1);
+		return dischargeportid;
 	}
     
     private String getSiteId () throws Exception
 	{
-    	String  dischargeportid ="SI";
-        List list = this.dao.query("tduhb07.queryId", new HashMap<String, String>());
-        int count = 1;
-        if(list != null && list.size() > 0) {
-        	count = Integer.parseInt(((Tduhb07)list.get(0)).getSiteid().substring(2)) + 1;
-        }
-		return dischargeportid + String.format("%08d", count);
+//    	String  dischargeportid ="SI";
+//        List list = this.dao.query("tduhb07.queryId", new HashMap<String, String>());
+//        int count = 1;
+//        if(list != null && list.size() > 0) {
+//        	count = Integer.parseInt(((Tduhb07)list.get(0)).getSiteid().substring(2)) + 1;
+//        }
+//		return dischargeportid + String.format("%08d", count);
+		String dischargeportid = "";
+		List list = this.dao.query("tduhb07.selectMaxId", new HashMap<>());
+		dischargeportid = (String)list.get(0);
+		int teamId = Integer.parseInt(dischargeportid.substring(2));
+		dischargeportid = "SI"+String.format("%08d",teamId+1);
+		return dischargeportid;
+
 	}
     
     /**
