@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-07-06 18:01:45
+   		Version :  6.0.731.201809200158
+		tablworkerid :${hbSchema}.t_hf_radio_worker 
+		 logicid  VARCHAR   NOT NULL   primarykey, 
+		 STATUS  VARCHAR   NOT NULL, 
+		 workername  VARCHAR   NOT NULL, 
+		 GENDER  VARCHAR, 
+		 BIRTHDATE  VARCHAR, 
+		 CERTIFICATETYPE  VARCHAR, 
+		 CERTIFICATENUMBER  VARCHAR, 
+		 departmentid  VARCHAR, 
+		 OPERATINGPOST  VARCHAR, 
+		 GRASCHOOL  VARCHAR, 
+		 EDUCATION  VARCHAR, 
+		 EVENTTYPE  VARCHAR, 
+		 DEADLINEDATE  VARCHAR, 
+		 CERTIFICATENO  VARCHAR, 
+		 REMARK  VARCHAR, 
+		 CREATEDMAN  VARCHAR, 
+		 CREATEDTIME  VARCHAR, 
+		 UPDATEDMAN  VARCHAR, 
+		 UPDATEDTIME  VARCHAR, 
+		 PROCESSID  VARCHAR, 
+		 TASKID  VARCHAR, 
+		 REPLYID  VARCHAR
+	-->
+<sqlMap namespace="DUHF75">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hf.domain.DUHF75">
+		SELECT
+				logicid	as "logicid",  <!-- 辐射工作人员ID -->
+				STATUS	as "status",  <!-- 状态 -->
+				workerid	as "workerid",  <!-- 工号 -->
+				workername	as "workername",  <!-- 姓名 -->
+				GENDER	as "gender",  <!-- 性别 -->
+				BIRTHDATE	as "birthdate",  <!-- 出生日期 -->
+				CERTIFICATETYPE	as "certificatetype",  <!-- 证件类型 -->
+				CERTIFICATENUMBER	as "certificatenumber",  <!-- 证件号码 -->
+				departmentid	as "departmentid",  <!-- 单位 -->
+				iswork	as "iswork", 
+				OPERATINGPOST	as "operatingpost",  <!-- 工作岗位 -->
+				GRASCHOOL	as "graschool",  <!-- 毕业院校 -->
+				EDUCATION	as "education",  <!-- 学历 -->
+				EVENTTYPE	as "eventtype",  <!-- 专业 -->
+				DEADLINEDATE	as "deadlinedate",  <!-- 有效期 -->
+        certificatename	as "certificatename",
+				CERTIFICATENO	as "certificateno",  <!-- 培训/考试编号 -->
+				REMARK	as "remark",  <!-- 备注 -->
+				CREATEDid	as "createdid",  <!-- 创建人id -->
+				CREATEDMAN	as "createdman",  <!-- 创建人 -->
+				CREATEDTIME	as "createdtime",  <!-- 创建时间 -->
+				UPDATEDMAN	as "updatedman",  <!-- 更新人 -->
+				UPDATEDTIME	as "updatedtime"  <!-- 更新时间 -->
+		FROM ${hbSchema}.t_hf_radio_worker WHERE 1=1
+		<isNotEmpty prepend=" AND " property="logicid">
+			logicid = #logicid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  CREATEDTIME desc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="queryUnit" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hf.domain.DUHF75">
+		SELECT
+				logicid	as "logicid",  <!-- 辐射工作人员ID -->
+				STATUS	as "status",  <!-- 状态 -->
+				workerid	as "workerid", <!-- 工号 -->
+				workername	as "workername",  <!-- 姓名 -->
+				GENDER	as "gender",  <!-- 性别 -->
+				BIRTHDATE	as "birthdate",  <!-- 出生日期 -->
+				CERTIFICATETYPE	as "certificatetype",  <!-- 证件类型 -->
+				CERTIFICATENUMBER	as "certificatenumber",  <!-- 证件号码 -->
+				departmentid	as "departmentid",  <!-- 单位 -->
+				OPERATINGPOST	as "operatingpost",  <!-- 工作岗位 -->
+				GRASCHOOL	as "graschool",  <!-- 毕业院校 -->
+				iswork	as "iswork", 
+				EDUCATION	as "education",  <!-- 学历 -->
+				EVENTTYPE	as "eventtype",  <!-- 专业 -->
+				DEADLINEDATE	as "deadlinedate",  <!-- 有效期 -->
+        certificatename	as "certificatename",
+        CERTIFICATENO	as "certificateno",  <!-- 培训/考试编号 -->
+				REMARK	as "remark",  <!-- 备注 -->
+				CREATEDid	as "createdid",  <!-- 创建人id -->
+				CREATEDMAN	as "createdman",  <!-- 创建人 -->
+				CREATEDTIME	as "createdtime",  <!-- 创建时间 -->
+				UPDATEDMAN	as "updatedman",  <!-- 更新人 -->
+				UPDATEDTIME	as "updatedtime" <!-- 更新时间 -->
+		FROM ${hbSchema}.t_hf_radio_worker WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="workername">
+			workername like	'%$workername$%' 
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdid">
+			((createdid &lt;&gt; #createdid# AND status in ('1'))or(createdid = #createdid# AND status in ('0','1')))
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		   CREATEDTIME desc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_hf_radio_worker WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="workername">
+			workername like	'%$workername$%' 
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdid">
+			((createdid &lt;&gt; #createdid# AND status in ('1'))or(createdid = #createdid# AND status in ('0','1')))
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="logicid">
+			logicid = #logicid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="workername">
+			workername = #workername#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="gender">
+			GENDER = #gender#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="birthdate">
+			BIRTHDATE = #birthdate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="certificatetype">
+			CERTIFICATETYPE = #certificatetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="certificatenumber">
+			CERTIFICATENUMBER = #certificatenumber#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="operatingpost">
+			OPERATINGPOST = #operatingpost#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="graschool">
+			GRASCHOOL = #graschool#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="education">
+			EDUCATION = #education#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="eventtype">
+			EVENTTYPE = #eventtype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="deadlinedate">
+			DEADLINEDATE = #deadlinedate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="certificateno">
+			CERTIFICATENO = #certificateno#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remark">
+			REMARK = #remark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdman">
+			CREATEDMAN = #createdman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdtime">
+			CREATEDTIME = #createdtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedman">
+			UPDATEDMAN = #updatedman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedtime">
+			UPDATEDTIME = #updatedtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="processid">
+			PROCESSID = #processid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="taskid">
+			TASKID = #taskid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="replyid">
+			REPLYID = #replyid#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_hf_radio_worker (logicid,  <!-- 主键id -->
+										STATUS,  <!-- 状态 -->
+										workername,  <!-- 姓名 -->
+										GENDER,  <!-- 性别 -->
+										BIRTHDATE,  <!-- 出生日期 -->
+										CERTIFICATETYPE,  <!-- 证件类型 -->
+										CERTIFICATENUMBER,  <!-- 证件号码 -->
+										departmentid,  <!-- 单位 -->
+										OPERATINGPOST,  <!-- 工作岗位 -->
+										GRASCHOOL,  <!-- 毕业院校 -->
+										EDUCATION,  <!-- 学历 -->
+										EVENTTYPE,  <!-- 专业 -->
+										DEADLINEDATE,  <!-- 有效期 -->
+
+										CERTIFICATENO,  <!-- 培训/考试编号 -->
+										REMARK,  <!-- 备注 -->
+										CREATEDMAN,  <!-- 创建人 -->
+										CREATEDTIME,  <!-- 创建时间 -->
+										UPDATEDMAN,  <!-- 更新人 -->
+										UPDATEDTIME , <!-- 更新时间 -->
+										createdid	,
+										iswork,
+										workerid,
+                                        certificatename
+										)		 
+	    VALUES (#logicid:VARCHAR#, #status:VARCHAR#, #workername:VARCHAR#, #gender:VARCHAR#, #birthdate:VARCHAR#, 
+	    	#certificatetype:VARCHAR#, #certificatenumber:VARCHAR#, #departmentid:VARCHAR#, #operatingpost:VARCHAR#, 
+	   	 	#graschool:VARCHAR#, #education:VARCHAR#, #eventtype:VARCHAR#, #deadlinedate:VARCHAR#, #certificateno:VARCHAR#, 
+	   		 #remark:VARCHAR#, #createdman:VARCHAR#, #createdtime:VARCHAR#, #updatedman:VARCHAR#, #updatedtime:VARCHAR#, 
+	   		 #createdid:VARCHAR#,#iswork:VARCHAR#,#workerid:VARCHAR#,#certificatename:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_hf_radio_worker WHERE 
+			logicid = #logicid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_hf_radio_worker 
+		SET 
+					STATUS	= #status#,   <!-- 状态 -->
+					workername	= #workername#,   <!-- 姓名 -->
+					workerid	= #workerid#,   <!-- 姓名 -->
+					GENDER	= #gender#,   <!-- 性别 -->
+					BIRTHDATE	= #birthdate#,   <!-- 出生日期 -->
+					CERTIFICATETYPE	= #certificatetype#,   <!-- 证件类型 -->
+					CERTIFICATENUMBER	= #certificatenumber#,   <!-- 证件号码 -->
+					departmentid	= #departmentid#,   <!-- 单位 -->
+					OPERATINGPOST	= #operatingpost#,   <!-- 工作岗位 -->
+					iswork	= #iswork#,   <!-- 工作岗位 -->
+					GRASCHOOL	= #graschool#,   <!-- 毕业院校 -->
+					EDUCATION	= #education#,   <!-- 学历 -->
+					EVENTTYPE	= #eventtype#,   <!-- 专业 -->
+					DEADLINEDATE	= #deadlinedate#,   <!-- 有效期 -->
+                    certificatename	= #certificatename#, <!-- 培训机构 -->
+					CERTIFICATENO	= #certificateno#,   <!-- 培训/考试编号 -->
+					REMARK	= #remark#,   <!-- 备注 -->
+					UPDATEDMAN	= #updatedman#,  <!--  更新人 -->
+					UPDATEDTIME	= #updatedtime#  <!--  更新时间 -->
+			WHERE 	
+			logicid = #logicid#
+	</update>
+	
+  
+</sqlMap>

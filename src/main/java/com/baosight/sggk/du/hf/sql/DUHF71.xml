@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-07-06 9:45:59
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HF_RADIO_INFO 
+		 RADIATEID  VARCHAR   NOT NULL   primarykey, 
+		 STATUS  VARCHAR, 
+		 departmentid  VARCHAR, 
+		 departmentid  VARCHAR, 
+		 NUCLIDE  VARCHAR, 
+		 COMEDATE  VARCHAR, 
+		 COMEACTIVITY  VARCHAR, 
+		 RADIATECODE  VARCHAR, 
+		 RADIATETYPE  VARCHAR, 
+		 PURPOSE  VARCHAR, 
+		 ADDRESS  VARCHAR, 
+		 SOURCE  VARCHAR, 
+		 GOADD  VARCHAR, 
+		 RECORDDATE  VARCHAR, 
+		 RECORDNAME  VARCHAR, 
+		 REMARK  VARCHAR, 
+		 CREATEDMAN  VARCHAR, 
+		 CREATEDTIME  VARCHAR, 
+		 UPDATEDMAN  VARCHAR, 
+		 UPDATEDTIME  VARCHAR, 
+		 PROCESSID  VARCHAR, 
+		 TASKID  VARCHAR, 
+		 REPLYID  VARCHAR
+	-->
+<sqlMap namespace="DUHF71">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hf.domain.DUHF71">
+		SELECT
+				RADIATEID	as "radiateid",  <!-- 放射源ID -->
+				departmentid	as "departmentid",  <!-- 二级单位 -->
+				NUCLIDE	as "nuclide",  <!-- 核素 -->
+				COMEDATE	as "comedate",  <!-- 出厂日期 -->
+				COMEACTIVITY	as "comeactivity",  <!-- 出厂活度 -->
+				RADIATECODE	as "radiatecode",  <!-- 编码 -->
+				RADIATETYPE	as "radiatetype",  <!-- 类型 -->
+				PURPOSE	as "purpose",  <!-- 用途 -->
+				ADDRESS	as "address",  <!-- 使用位置 -->
+        supplier	as "supplier",  <!-- 供应商 -->
+        prounit	as "prounit",  <!-- 生产单位 -->
+				RECORDDATE	as "recorddate",  <!-- 登记日期 -->
+				recordid	as "recordid",  <!-- 登记人 -->
+				RECORDNAME	as "recordname",  <!-- 登记人 -->
+				REMARK	as "remark",  <!-- 备注 -->
+				status	as "status",
+				UPDATEDMAN	as "updatedman",  <!-- 更新人 -->
+				UPDATEDTIME	as "updatedtime" , <!-- 更新时间 -->
+        radiatename	as "radiatename",
+        number	as "number",
+				iswork		as	"iswork"
+		FROM ${hbSchema}.T_HF_RADIO_INFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="radiateid">
+			RADIATEID = #radiateid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  recorddate asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryInqu" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hf.domain.DUHF71">
+		SELECT
+        RADIATEID	as "radiateid",  <!-- 放射源ID -->
+        departmentid	as "departmentid",  <!-- 二级单位 -->
+        NUCLIDE	as "nuclide",  <!-- 核素 -->
+        COMEDATE	as "comedate",  <!-- 出厂日期 -->
+        COMEACTIVITY	as "comeactivity",  <!-- 出厂活度 -->
+        RADIATECODE	as "radiatecode",  <!-- 编码 -->
+        RADIATETYPE	as "radiatetype",  <!-- 类型 -->
+        PURPOSE	as "purpose",  <!-- 用途 -->
+        ADDRESS	as "address",  <!-- 使用位置 -->
+        supplier	as "supplier",  <!-- 供应商 -->
+        prounit	as "prounit",  <!-- 生产单位 -->
+        RECORDDATE	as "recorddate",  <!-- 登记日期 -->
+        recordid	as "recordid",  <!-- 登记人 -->
+        RECORDNAME	as "recordname",  <!-- 登记人 -->
+        REMARK	as "remark",  <!-- 备注 -->
+        status	as "status",
+        UPDATEDMAN	as "updatedman",  <!-- 更新人 -->
+        UPDATEDTIME	as "updatedtime" , <!-- 更新时间 -->
+        radiatename	as "radiatename",
+        number	as "number",
+        iswork		as	"iswork"
+		FROM ${hbSchema}.T_HF_RADIO_INFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="radiatetype">
+			RADIATETYPE = #radiatetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recordname">
+			RECORDNAME like '%$recordname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recordid">
+			((recordid &lt;&gt; #recordid# AND status in ('1'))or(recordid = #recordid# AND status in ('0','1')))
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="beginDate">
+		    <![CDATA[ RECORDDATE >= #beginDate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endDate">
+		    <![CDATA[ RECORDDATE <= #endDate# ]]>
+		</isNotEmpty>
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  recorddate asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_RADIO_INFO WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="radiatetype">
+			RADIATETYPE = #radiatetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recordname">
+			RECORDNAME like '%$recordname$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recordid">
+			((recordid &lt;&gt; #recordid# AND status in ('1'))or(recordid = #recordid# AND status in ('0','1')))
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="beginDate">
+		    <![CDATA[ RECORDDATE >= #beginDate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endDate">
+		    <![CDATA[ RECORDDATE <= #endDate# ]]>
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="radiateid">
+			RADIATEID = #radiateid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="nuclide">
+			NUCLIDE = #nuclide#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="comedate">
+			COMEDATE = #comedate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="comeactivity">
+			COMEACTIVITY = #comeactivity#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="radiatecode">
+			RADIATECODE = #radiatecode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="radiatetype">
+			RADIATETYPE = #radiatetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="purpose">
+			PURPOSE = #purpose#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="address">
+			ADDRESS = #address#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="source">
+			SOURCE = #source#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="goadd">
+			GOADD = #goadd#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recorddate">
+			RECORDDATE = #recorddate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="recordname">
+			RECORDNAME = #recordname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="remark">
+			REMARK = #remark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdman">
+			CREATEDMAN = #createdman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="createdtime">
+			CREATEDTIME = #createdtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedman">
+			UPDATEDMAN = #updatedman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="updatedtime">
+			UPDATEDTIME = #updatedtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="processid">
+			PROCESSID = #processid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="taskid">
+			TASKID = #taskid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="replyid">
+			REPLYID = #replyid#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_RADIO_INFO (
+                                        RADIATEID,  <!-- 放射源ID -->
+                                        RADIATENAME,
+										departmentid,  <!-- 二级单位 -->
+										NUCLIDE,  <!-- 核素 -->
+										COMEDATE,  <!-- 出厂日期 -->
+										COMEACTIVITY,  <!-- 出厂活度 -->
+										RADIATECODE,  <!-- 编码 -->
+										RADIATETYPE,  <!-- 类型 -->
+										PURPOSE,  <!-- 用途 -->
+										ADDRESS,  <!-- 使用位置 -->
+                                        supplier,  <!-- 供应商 -->
+                                        prounit,  <!-- 生产单位 -->
+                                        number,
+										RECORDDATE,  <!-- 登记日期 -->
+										recordid	,  <!-- 登记人id -->
+										RECORDNAME,  <!-- 登记人 -->
+										REMARK,  <!-- 备注 -->
+										status,
+										iswork
+										)		 
+	    VALUES (#radiateid:VARCHAR#,#radiatename:VARCHAR#,   #departmentid:VARCHAR#, #nuclide:VARCHAR#, #comedate:VARCHAR#,
+	    	#comeactivity:VARCHAR#, #radiatecode:VARCHAR#, #radiatetype:VARCHAR#, #purpose:VARCHAR#, 
+	    	#address:VARCHAR#, #supplier:VARCHAR#, #prounit:VARCHAR#,#number:VARCHAR#, #recorddate:VARCHAR#, #recordid:VARCHAR#,
+	    	#recordname:VARCHAR#,  #remark:VARCHAR#,#status:VARCHAR#,#iswork:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HF_RADIO_INFO WHERE 
+			RADIATEID = #radiateid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_RADIO_INFO 
+		SET
+                    radiatename	= #radiatename#,
+					NUCLIDE	= #nuclide#,   <!-- 核素 -->
+					COMEDATE	= #comedate#,   <!-- 出厂日期 -->
+					COMEACTIVITY	= #comeactivity#,   <!-- 出厂活度 -->
+					RADIATECODE	= #radiatecode#,   <!-- 编码 -->
+					RADIATETYPE	= #radiatetype#,   <!-- 类型 -->
+					PURPOSE	= #purpose#,   <!-- 用途 -->
+					ADDRESS	= #address#,   <!-- 场所 -->
+                    supplier	= #supplier#,   <!-- 来源 -->
+                    prounit	= #prounit#,   <!-- 去向 -->
+                    number	= #number#,
+					RECORDDATE	= #recorddate#,   <!-- 登记日期 -->
+					REMARK	= #remark#,   <!-- 备注 -->
+					status	= #status#,
+					iswork	= #iswork#,
+					UPDATEDMAN	= #updatedman#,  <!--  更新人 -->
+					UPDATEDTIME	= #updatedtime#   <!-- 更新时间 -->
+			WHERE 	
+			RADIATEID = #radiateid#
+	</update>
+	
+  
+  	<!-- 修改工作流 -->
+	<update id="updatesql">
+		$sqlMap$
+	</update>
+  
+</sqlMap>

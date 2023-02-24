@@ -2,6 +2,8 @@ package com.baosight.sggk.util;
 
 
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -316,5 +318,64 @@ public class DateUtil {
             time=year+"-10-01&"+year+"-12-31";
         }
         return time;
+    }
+
+    /**
+     * 判断两个时间段是否有交集并返回
+     * @return
+     */
+    public static String [] getTimePeriod(Date oneBeginTime,Date oneEndTime,Date twoBeginTime,Date twoEndTime){
+        String [] timePeriod=new String[2];
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            if(oneBeginTime.getTime()<=twoBeginTime.getTime()){
+                timePeriod[0]=sdf.format(twoBeginTime);
+                if(oneEndTime.getTime()<=twoEndTime.getTime()){
+                    timePeriod[1]=sdf.format(oneEndTime);
+                }else{
+                    timePeriod[1]=sdf.format(twoEndTime);
+                }
+            }else {
+                timePeriod[0]=sdf.format(oneBeginTime);
+                if(oneEndTime.getTime()<=twoEndTime.getTime()){
+                    timePeriod[1]=sdf.format(oneEndTime);
+                }else{
+                    timePeriod[1]=sdf.format(twoEndTime);
+                }
+            }
+        }catch (Exception ex){
+            throw  ex;
+        }
+        return timePeriod;
+    }
+
+    /**
+     * 根据开始时间、结束时间、时间段集合，返回时间交集集合
+     * @return
+     */
+    public static List<Map<String,String>> getTimePeriodByTimeAndTimelist(String oneBeginTime,String oneEndTime,List timeList) throws ParseException {
+        List<Map<String,String>> timePeriodList=new ArrayList<>();
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date twoBeginTime=null;
+            Date twoEndTime=null;
+            String [] timePeriodChildren=null;
+            Map<String,String> timePeriodmap=null;
+            for (int i=0;i<timeList.size();i++){
+                Map map= (Map) timeList.get(i);
+                twoBeginTime=sdf.parse(StrUtil.trimToString(map.get("TWOBEGINTIME")));
+                twoEndTime=sdf.parse(StrUtil.trimToString(map.get("TWOENDTIME")));
+                timePeriodChildren=getTimePeriod(sdf.parse(oneBeginTime),sdf.parse(oneEndTime),twoBeginTime,twoEndTime);
+                if(StringUtils.isNotBlank(timePeriodChildren[0])&&StringUtils.isNotBlank(timePeriodChildren[1])){
+                    timePeriodmap=new HashMap<>();
+                    timePeriodmap.put("begintime",timePeriodChildren[0]);
+                    timePeriodmap.put("endtime",timePeriodChildren[1]);
+                    timePeriodList.add(timePeriodmap);
+                }
+            }
+        }catch (Exception ex){
+            throw  ex;
+        }
+        return timePeriodList;
     }
 }

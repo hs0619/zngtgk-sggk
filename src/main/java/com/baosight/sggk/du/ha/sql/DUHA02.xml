@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-02-23 16:11:00
+   		Version :  1.0
+		tableName :${hbSchema}.t_ha_common_config 
+		 logicid  VARCHAR   NOT NULL   primarykey, 
+		 typeid  VARCHAR   NOT NULL, 
+		 typename  VARCHAR, 
+		 valuefield  VARCHAR, 
+		 textfield  VARCHAR, 
+		 status  VARCHAR, 
+		 sort  VARCHAR
+	-->
+<sqlMap namespace="DUHA02">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.ha.domain.DUHA02">
+		SELECT
+				logicid	as "logicid",  <!-- 主键id -->
+				typeid	as "typeid",  <!-- 类型 -->
+				typename	as "typename",  <!-- 类型名称 -->
+				valuefield	as "valuefield",  <!-- 实际值 -->
+				textfield	as "textfield",  <!-- 显示值 -->
+				status	as "status",  <!-- 状态 -->
+				sort	as "sort" <!-- 排序 -->
+		FROM ${hbSchema}.t_ha_common_config WHERE 1=1
+		<isNotEmpty prepend=" AND " property="logicid">
+			logicid = #logicid#
+		</isNotEmpty>
+        <isNotEmpty prepend=" AND " property="typeid">
+            typeid = #typeid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="status">
+            status = #status#
+        </isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+            typeid asc,
+            sort asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+    <select id="queryType" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        DISTINCT
+        typeid	as "typeid",  <!-- 类型 -->
+        typename	as "typename"  <!-- 类型名称 -->
+        FROM ${hbSchema}.t_ha_common_config WHERE 1=1
+        <isNotEmpty prepend=" AND " property="logicid">
+            logicid = #logicid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="typeid">
+            typeid = #typeid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="status">
+            status = #status#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                typeid asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
+    <select id="queryTextAndValue" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        valuefield	as "valuefield",  <!-- 实际值 -->
+        textfield	as "textfield"  <!-- 显示值 -->
+        FROM ${hbSchema}.t_ha_common_config WHERE 1=1
+        <isNotEmpty prepend=" AND " property="logicid">
+            logicid = #logicid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="typeid">
+            typeid = #typeid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="status">
+            status = #status#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                sort asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_ha_common_config WHERE 1=1
+		<isNotEmpty prepend=" AND " property="logicid">
+			logicid = #logicid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="logicid">
+			logicid = #logicid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="typeid">
+			typeid = #typeid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="typename">
+			typename = #typename#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="valuefield">
+			valuefield = #valuefield#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="textfield">
+			textfield = #textfield#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			status = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sort">
+			sort = #sort#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_ha_common_config (logicid,  <!-- 主键id -->
+										typeid,  <!-- 类型 -->
+										typename,  <!-- 类型名称 -->
+										valuefield,  <!-- 实际值 -->
+										textfield,  <!-- 显示值 -->
+										status,  <!-- 状态 -->
+										sort  <!-- 排序 -->
+										)		 
+	    VALUES (#logicid#, #typeid#, #typename#, #valuefield#, #textfield#, #status#, #sort#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_ha_common_config WHERE 
+			logicid = #logicid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_ha_common_config 
+		SET 
+					typeid	= #typeid#,   <!-- 类型 -->  
+					typename	= #typename#,   <!-- 类型名称 -->  
+					valuefield	= #valuefield#,   <!-- 实际值 -->  
+					textfield	= #textfield#,   <!-- 显示值 -->  
+					status	= #status#,   <!-- 状态 -->  
+					sort	= #sort#  <!-- 排序 -->  
+			WHERE 	
+			logicid = #logicid#
+	</update>
+  
+</sqlMap>

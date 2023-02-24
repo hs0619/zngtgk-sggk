@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-07-14 16:17:01
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HF_RADIO_TYPE 
+		 TYPEID  VARCHAR   NOT NULL   primarykey, 
+		 TYPENAME  VARCHAR   NOT NULL
+	-->
+<sqlMap namespace="DUHF7102">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hf.domain.DUHF7102">
+		SELECT
+				TYPEID	as "typeid",  <!-- 类型id -->
+				TYPENAME	as "typename" ,<!-- 类型名称 -->
+        sort	as "sort"
+        FROM ${hbSchema}.T_HF_RADIO_TYPE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="typeid">
+			TYPEID = #typeid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="typename">
+			TYPENAME like '%$typename$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  sort asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_RADIO_TYPE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="typeid">
+			TYPEID = #typeid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="typeid">
+			TYPEID = #typeid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="typename">
+			TYPENAME = #typename#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HF_RADIO_TYPE (TYPEID,  <!-- 类型id -->
+										TYPENAME,  <!-- 类型名称 -->
+        sort
+										)		 
+	    VALUES (#typeid:VARCHAR#, #typename:VARCHAR#, #sort:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HF_RADIO_TYPE WHERE 
+			TYPEID = #typeid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HF_RADIO_TYPE 
+		SET 
+					TYPENAME	= #typename# , <!-- 类型名称 -->
+        sort	= #sort#
+        WHERE
+			TYPEID = #typeid#
+	</update>
+  
+</sqlMap>

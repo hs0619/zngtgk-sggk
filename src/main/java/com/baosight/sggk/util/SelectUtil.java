@@ -225,4 +225,22 @@ public class SelectUtil {
  		}
 		return block;
 	}
+
+    /**
+     * 获取下拉框key-value
+     * @param
+     * @return
+     */
+    public static EiBlock getTextAndValue(Dao dao,String typeid, String status) {
+        EiBlock block = new EiBlock(typeid);
+        try{
+            Map map=new HashMap();
+            map.put("typeid",typeid);
+            map.put("status",status);
+            block.addRows(dao.query("DUHA02.queryTextAndValue",map));
+        }catch (Exception ex){
+            throw  ex;
+        }
+        return block;
+    }
 }
