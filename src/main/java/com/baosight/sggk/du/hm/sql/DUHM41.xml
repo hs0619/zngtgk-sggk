@@ -238,22 +238,14 @@
 
     <select id="queryType" resultClass="java.util.HashMap">
         SELECT
-        SOLID_ID              as "solidId",
-        SOLID_CODE              as "solidCode",
-        SOLID_CODES              as "solidCodes",
-        SOLID_NAME              as "solidName",
-        SOLID_TYPE              as "solidType",
-        STATE                   as "state",
-        RANK                    as "rank",
-        SOLID_STATE               as "solidState",
-        REMARK                    as "remark"
+        DISTINCT
+        SOLID_TYPE              as "solidType"
         FROM ${hbSchema}.T_HM_solidwaste_config
-        <dynamic prepend="WHERE">
-            <isNotEmpty prepend=" AND " property="type">
-                SOLID_TYPE = #type#
-            </isNotEmpty>
-        </dynamic>
-        order by "ABS"(RANK)
+        where solid_Type!='固废名称'
+        <isNotEmpty prepend=" AND " property="solidType">
+            SOLID_TYPE = #solidType#
+        </isNotEmpty>
+
     </select>
 
 
