@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-02-27 14:44:50
+   		Version :  1.0
+		tableName :${hbSchema}.t_hm_solidwaste_info 
+		 datatime  VARCHAR   NOT NULL   primarykey, 
+		 SOLID_ID  VARCHAR   NOT NULL   primarykey, 
+		 OUTPUT  VARCHAR, 
+		 UTILIZATION  VARCHAR, 
+		 BACK_OUTPUT  VARCHAR, 
+		 OUTER_VALUE  VARCHAR, 
+		 DISPOSE_VALUE  VARCHAR
+	-->
+<sqlMap namespace="DUHM42">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hm.domain.DUHM42">
+		SELECT
+				datatime	as "datatime",  <!-- 日期 -->
+				SOLID_ID	as "solidId",  <!-- 固废id -->
+				OUTPUT	as "output",  <!-- 产生量 -->
+				UTILIZATION	as "utilization",  <!-- 利用量 -->
+				BACK_OUTPUT	as "backOutput",  <!-- 反生产利用量 -->
+				OUTER_VALUE	as "outerValue",  <!-- 外销量 -->
+				DISPOSE_VALUE	as "disposeValue" <!-- 处置量 -->
+		FROM ${hbSchema}.t_hm_solidwaste_info WHERE 1=1
+		<isNotEmpty prepend=" AND " property="datatime">
+			datatime = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="solidId">
+			SOLID_ID = #solidId#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  datatime asc, 
+    		  SOLID_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+    <select id="queryInfo" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hm.domain.DUHM42">
+        SELECT
+            t1.SOLID_ID as "solidId",<!-- 固废id -->
+            '$datatime$' as "datatime" ,<!-- 日期 -->
+            t1.RANK as "rank", <!-- 序号 -->
+            t1.SOLID_TYPE as "solidType",<!-- 固废类型 -->
+            t1.SOLID_NAME as "solidName",<!-- 固废名称 -->
+            t1.SOLID_CODE as "solidCode",  <!-- 固废代码 -->
+            t2.OUTPUT	as "output",  <!-- 产生量 -->
+            t2.UTILIZATION	as "utilization",  <!-- 利用量 -->
+            t2.BACK_OUTPUT	as "backOutput",  <!-- 反生产利用量 -->
+            t2.OUTER_VALUE	as "outerValue",  <!-- 外销量 -->
+            t2.DISPOSE_VALUE	as "disposeValue", <!-- 处置量 -->
+            t2.isupdate	as "isupdate" <!-- 是否修改 -->
+        FROM ${hbSchema}.t_hm_solidwaste_config t1
+        left join (
+            SELECT
+            t3.datatime,
+            t3.SOLID_ID,
+            t3.OUTPUT,
+            t3.UTILIZATION,
+            t3.BACK_OUTPUT,
+            t3.OUTER_VALUE,
+            t3.DISPOSE_VALUE,
+            t3.isupdate
+            FROM
+            ${hbSchema}.t_hm_solidwaste_info t3
+            where 1=1
+            <isNotEmpty prepend=" AND " property="datatime">
+                t3.datatime = #datatime#
+            </isNotEmpty>
+        ) t2 on t1.SOLID_ID=t2.SOLID_ID
+        WHERE 1=1 and t1.SOLID_CODE!='' and t1.INDUSTRIAL_DISPOSAL='是'
+        <isNotEmpty prepend=" AND " property="solidType">
+            t1.SOLID_TYPE = #solidType#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="solidName">
+            t1.SOLID_NAME like '%$solidName$%'
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                t1.SOLID_ID asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_hm_solidwaste_info WHERE 1=1
+		<isNotEmpty prepend=" AND " property="datatime">
+			datatime = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="solidId">
+			SOLID_ID = #solidId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="datatime">
+			datatime = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="solidId">
+			SOLID_ID = #solidId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="output">
+			OUTPUT = #output#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="utilization">
+			UTILIZATION = #utilization#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="backOutput">
+			BACK_OUTPUT = #backOutput#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="outerValue">
+			OUTER_VALUE = #outerValue#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="disposeValue">
+			DISPOSE_VALUE = #disposeValue#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_hm_solidwaste_info (datatime,  <!-- 日期 -->
+										SOLID_ID,  <!-- 固废id -->
+										OUTPUT,  <!-- 产生量 -->
+										UTILIZATION,  <!-- 利用量 -->
+										BACK_OUTPUT,  <!-- 反生产利用量 -->
+										OUTER_VALUE,  <!-- 外销量 -->
+										DISPOSE_VALUE,  <!-- 处置量 -->
+                                        isupdate
+										)		 
+	    VALUES (#datatime#, #solidId#, #output#, #utilization#, #backOutput#,
+            #outerValue#, #disposeValue#, #isupdate#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_hm_solidwaste_info WHERE 
+			datatime = #datatime# AND 
+			SOLID_ID = #solidId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_hm_solidwaste_info 
+		SET 
+					OUTPUT	= #output#,   <!-- 产生量 -->
+					UTILIZATION	= #utilization#,   <!-- 利用量 -->  
+					BACK_OUTPUT	= #backOutput#,   <!-- 反生产利用量 -->  
+					OUTER_VALUE	= #outerValue#,   <!-- 外销量 -->  
+					DISPOSE_VALUE	= #disposeValue#  <!-- 处置量 -->  
+			WHERE 	
+			datatime = #datatime# AND 
+			SOLID_ID = #solidId#
+	</update>
+  
+</sqlMap>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-02-27 14:44:50
+   		Version :  1.0
+		tableName :${hbSchema}.t_hm_dangerwaste_info 
+		 datatime  VARCHAR   NOT NULL   primarykey, 
+		 departmentid  VARCHAR   NOT NULL   primarykey, 
+		 dangertype  VARCHAR   NOT NULL   primarykey, 
+		 dangercode  VARCHAR   NOT NULL   primarykey, 
+		 dangername  VARCHAR   NOT NULL, 
+		 prodresource  VARCHAR   NOT NULL, 
+		 dangerform  VARCHAR   NOT NULL, 
+		 promethod  VARCHAR, 
+		 OUTPUT  VARCHAR, 
+		 DISPOSE_VALUE  VARCHAR, 
+		 DISPOSE_method  VARCHAR, 
+		 DISPOSE_unit  VARCHAR, 
+		 storge_VALUE  VARCHAR
+	-->
+<sqlMap namespace="DUHM43">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hm.domain.DUHM43">
+		SELECT
+				datatime	as "datatime",  <!-- 日期 -->
+				departmentid	as "departmentid",  <!-- 厂部id -->
+				dangertype	as "dangertype",  <!-- 危废类别 -->
+				dangercode	as "dangercode",  <!-- 危废代码 -->
+				dangername	as "dangername",  <!-- 危废名称 -->
+				prodresource	as "prodresource",  <!-- 产生源 -->
+				dangerform	as "dangerform",  <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->
+				promethod	as "promethod",  <!-- 产生方式（1生产、2清理） -->
+				OUTPUT	as "output",  <!-- 产生量 -->
+				DISPOSE_VALUE	as "disposeValue",  <!-- 处置量 -->
+				DISPOSE_method	as "disposeMethod",  <!-- 处置方式 -->
+				DISPOSE_unit	as "disposeUnit",  <!-- 处置单位 -->
+				storge_VALUE	as "storgeValue" <!-- 贮存量 -->
+		FROM ${hbSchema}.t_hm_dangerwaste_info WHERE 1=1
+		<isNotEmpty prepend=" AND " property="datatime">
+			datatime = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangertype">
+			dangertype = #dangertype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangercode">
+			dangercode = #dangercode#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  datatime asc, 
+    		  departmentid asc, 
+    		  dangertype asc, 
+    		  dangercode asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_hm_dangerwaste_info WHERE 1=1
+		<isNotEmpty prepend=" AND " property="datatime">
+			datatime = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangertype">
+			dangertype = #dangertype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangercode">
+			dangercode = #dangercode#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="datatime">
+			datatime = #datatime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangertype">
+			dangertype = #dangertype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangercode">
+			dangercode = #dangercode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangername">
+			dangername = #dangername#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="prodresource">
+			prodresource = #prodresource#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangerform">
+			dangerform = #dangerform#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="promethod">
+			promethod = #promethod#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="output">
+			OUTPUT = #output#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="disposeValue">
+			DISPOSE_VALUE = #disposeValue#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="disposeMethod">
+			DISPOSE_method = #disposeMethod#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="disposeUnit">
+			DISPOSE_unit = #disposeUnit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="storgeValue">
+			storge_VALUE = #storgeValue#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_hm_dangerwaste_info (datatime,  <!-- 日期 -->
+										departmentid,  <!-- 厂部id -->
+										dangertype,  <!-- 危废类别 -->
+										dangercode,  <!-- 危废代码 -->
+										dangername,  <!-- 危废名称 -->
+										prodresource,  <!-- 产生源 -->
+										dangerform,  <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->
+										promethod,  <!-- 产生方式（1生产、2清理） -->
+										OUTPUT,  <!-- 产生量 -->
+										DISPOSE_VALUE,  <!-- 处置量 -->
+										DISPOSE_method,  <!-- 处置方式 -->
+										DISPOSE_unit,  <!-- 处置单位 -->
+										storge_VALUE  <!-- 贮存量 -->
+										)		 
+	    VALUES (#datatime#, #departmentid#, #dangertype#, #dangercode#, #dangername#, #prodresource#, #dangerform#, #promethod#, #output#, #disposeValue#, #disposeMethod#, #disposeUnit#, #storgeValue#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_hm_dangerwaste_info WHERE 
+			datatime = #datatime# AND 
+			departmentid = #departmentid# AND 
+			dangertype = #dangertype# AND 
+			dangercode = #dangercode#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_hm_dangerwaste_info 
+		SET 
+														dangername	= #dangername#,   <!-- 危废名称 -->  
+					prodresource	= #prodresource#,   <!-- 产生源 -->  
+					dangerform	= #dangerform#,   <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->  
+					promethod	= #promethod#,   <!-- 产生方式（1生产、2清理） -->  
+					OUTPUT	= #output#,   <!-- 产生量 -->  
+					DISPOSE_VALUE	= #disposeValue#,   <!-- 处置量 -->  
+					DISPOSE_method	= #disposeMethod#,   <!-- 处置方式 -->  
+					DISPOSE_unit	= #disposeUnit#,   <!-- 处置单位 -->  
+					storge_VALUE	= #storgeValue#  <!-- 贮存量 -->  
+			WHERE 	
+			datatime = #datatime# AND 
+			departmentid = #departmentid# AND 
+			dangertype = #dangertype# AND 
+			dangercode = #dangercode#
+	</update>
+  
+</sqlMap>
