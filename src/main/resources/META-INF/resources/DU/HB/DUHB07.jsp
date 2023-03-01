@@ -81,7 +81,7 @@
 						valueField="monitorid" />
 					<EF:EFColumn ename="mnid" cname="MN编号" sort="true" />
 					<EF:EFColumn ename="description" cname="描述" />
-					<EF:EFColumn ename="sort" cname="排序" />
+<%--					<EF:EFColumn ename="sort" cname="排序" />--%>
 					<EF:EFComboColumn ename="status" cname="是否使用" blockName="flagList"
 						labelProperty="flagname" valueProperty="flagid"
 						textField="flagname" valueField="flagid" />
