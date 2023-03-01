@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--      table information
+    Generate time : 2023-02-28 11:14:45
+       Version :  1.0
+    tableName :iplat4j.t_hd_facilityinfo
+     FACILITYID  VARCHAR   NOT NULL   primarykey,
+     DJ_RATEDPOWER  VARCHAR,
+     RATEDPOWER  VARCHAR,
+     FREQUENCY  VARCHAR,
+     CAPACITY  VARCHAR,
+     TECHNIQUE  VARCHAR,
+     SPEC  VARCHAR,
+     HEIGHT  VARCHAR,
+     HOLE  VARCHAR,
+     VOLUME  VARCHAR,
+     WEIGHT  VARCHAR,
+     VARIETY  VARCHAR,
+     ISTL  VARCHAR,
+     ISTX  VARCHAR
+-->
+<sqlMap namespace="DUHD10">
+
+    <select id="query" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hd.domain.DUHD10">
+        SELECT
+        a.FACILITYID as "facilityid",
+        a.FACILITYCODE as "facilitycode",
+        a.FACILITYNAME as "facilityname",
+        a.TYPE as "facilitytype",
+        a.DEPARTMENTID as "departmentid",
+        a.PROCEDUREID as "procedureid",
+        b.DJ_RATEDPOWER as "djratedpower",
+        b.RATEDPOWER as "ratedpower",
+        b.FREQUENCY as "frequency",
+        b.CAPACITY as "capacity",
+        b.TECHNIQUE as "technique",
+        b.ISTL as "istl",
+        b.ISTX as "istx"
+        FROM ${hbSchema}.T_HA_FACILITYINFO a
+        LEFT JOIN ${hbSchema}.T_HD_FACILITYINFO b ON a.FACILITYID=b.FACILITYID
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="departmentid">
+            a.DEPARTMENTID = #departmentid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="procedureid">
+            a.PROCEDUREID = #procedureid#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                a.FACILITYID asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
+
+    <select id="query2" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        <!--        SELECT-->
+        <!--        a.ENVDEVICEID as "facilityid",-->
+        <!--        a.DEVICEID as "facilitycode",-->
+        <!--        a.DEVICENAME as "facilityname",-->
+        <!--        a.DEVICETYPE as "facilitytype",-->
+        <!--        a.DEPARTMENTID as "departmentid",-->
+        <!--        a.PROCEDUREID as "procedureid",-->
+        <!--        b.SPEC as "spec",-->
+        <!--        b.HEIGHT as "height",-->
+        <!--        b.HOLE as "hole",-->
+        <!--        b.VOLUME as "volume",-->
+        <!--        b.WEIGHT as "weight",-->
+        <!--        b.VARIETY as "variety",-->
+        <!--        b.ISTL as "istl",-->
+        <!--        b.ISTX as "istx"-->
+        <!--        FROM ${hbSchema}.T_HA_ENVDEVICE a-->
+        <!--        LEFT JOIN ${hbSchema}.T_HD_FACILITYINFO b ON a.ENVDEVICEID=b.FACILITYID-->
+        SELECT
+        a.SPEC as "spec",
+        a.HEIGHT as "height",
+        a.HOLE as "hole",
+        a.VOLUME as "volume",
+        a.WEIGHT as "weight",
+        a.VARIETY as "variety",
+        a.ISTL as "istl",
+        a.ISTX as "istx",
+        b.ENVDEVICEID as "facilityid",
+        b.DEVICEID as "facilitycode",
+        b.DEVICENAME as "facilityname",
+        b.DEVICETYPE as "facilitytype",
+        c.DEPARTMENTID as "departmentid",
+        c.PROCEDUREID as "procedureid"
+        FROM ${hbSchema}.t_hd_facilityinfo a LEFT JOIN ${hbSchema}.t_ha_envdevice b on a.FACILITYID = b.ENVDEVICEID LEFT
+        JOIN ${hbSchema}.t_ha_facilityinfo c on b.ENVDEVICEID = c.DEVICECODE
+        where 1=1 AND NOT ISNULL(b.DEVICENAME)
+        <isNotEmpty prepend=" AND " property="departmentid">
+            c.DEPARTMENTID = #departmentid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="procedureid">
+            c.PROCEDUREID = #procedureid#
+        </isNotEmpty>
+        <!--        <dynamic prepend="ORDER BY">-->
+        <!--            <isNotEmpty property="orderBy">-->
+        <!--                $orderBy$-->
+        <!--            </isNotEmpty>-->
+        <!--            <isEmpty property="orderBy">-->
+        <!--                b.ENVDEVICEID asc-->
+        <!--            </isEmpty>-->
+        <!--        </dynamic>-->
+    </select>
+
+    <select id="queryData" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        FACILITYID as "facilityid"
+        FROM ${hbSchema}.T_HD_FACILITYINFO
+        WHERE
+        1=1
+        <isNotEmpty prepend=" AND " property="facilityid">
+            FACILITYID = #facilityid#
+        </isNotEmpty>
+    </select>
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM iplat4j.t_hd_facilityinfo WHERE 1=1
+        <isNotEmpty prepend=" AND " property="facilityid">
+            FACILITYID = #facilityid#
+        </isNotEmpty>
+    </select>
+
+    <!--
+        <isNotEmpty prepend=" AND " property="facilityid">
+            FACILITYID = #facilityid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="djRatedpower">
+            DJ_RATEDPOWER = #djRatedpower#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="ratedpower">
+            RATEDPOWER = #ratedpower#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="frequency">
+            FREQUENCY = #frequency#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="capacity">
+            CAPACITY = #capacity#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="technique">
+            TECHNIQUE = #technique#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="spec">
+            SPEC = #spec#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="height">
+            HEIGHT = #height#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="hole">
+            HOLE = #hole#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="volume">
+            VOLUME = #volume#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="weight">
+            WEIGHT = #weight#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="variety">
+            VARIETY = #variety#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="istl">
+            ISTL = #istl#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="istx">
+            ISTX = #istx#
+        </isNotEmpty>
+    -->
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.t_hd_facilityinfo (FACILITYID,  <!-- 主键ID -->
+        DJ_RATEDPOWER,  <!-- 电机额定功率（kw） -->
+        RATEDPOWER,  <!-- 额度功率（kw） -->
+        FREQUENCY,  <!-- 变频(hz) -->
+        CAPACITY,  <!-- 脱除能力(吨/年)、处理能力(万立或万吨)、处理量(万立/时) -->
+        TECHNIQUE,  <!-- 治理方式 -->
+        SPEC,  <!-- 烧结机规格（m²） -->
+        HEIGHT,  <!-- 焦炉炭化室高度 -->
+        HOLE,  <!-- 焦炉孔数 -->
+        VOLUME,  <!-- 高炉有效容积(m³) -->
+        WEIGHT,  <!-- 转炉公称容量(吨) -->
+        VARIETY,  <!-- 轧机品种及规格 -->
+        ISTL,  <!-- 是否脱硫   01：是   02：否 -->
+        ISTX  <!-- 是否脱销    01：是   02：否 -->
+        )
+        VALUES (#facilityid#, #djRatedpower#, #ratedpower#, #frequency#, #capacity#, #technique#, #spec#, #height#,
+        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#)
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.t_hd_facilityinfo WHERE
+        FACILITYID = #facilityid#
+    </delete>
+
+    <update id="update">
+        UPDATE ${hbSchema}.t_hd_facilityinfo
+        SET
+        DJ_RATEDPOWER = #djRatedpower#,   <!-- 电机额定功率（kw） -->
+        RATEDPOWER = #ratedpower#,   <!-- 额度功率（kw） -->
+        FREQUENCY = #frequency#,   <!-- 变频(hz) -->
+        CAPACITY = #capacity#,   <!-- 脱除能力(吨/年)、处理能力(万立或万吨)、处理量(万立/时) -->
+        TECHNIQUE = #technique#,   <!-- 治理方式 -->
+        SPEC = #spec#,   <!-- 烧结机规格（m²） -->
+        HEIGHT = #height#,   <!-- 焦炉炭化室高度 -->
+        HOLE = #hole#,   <!-- 焦炉孔数 -->
+        VOLUME = #volume#,   <!-- 高炉有效容积(m³) -->
+        WEIGHT = #weight#,   <!-- 转炉公称容量(吨) -->
+        VARIETY = #variety#,   <!-- 轧机品种及规格 -->
+        ISTL = #istl#,   <!-- 是否脱硫   01：是   02：否 -->
+        ISTX = #istx#  <!-- 是否脱销    01：是   02：否 -->
+        WHERE
+        FACILITYID = #facilityid#
+    </update>
+
+</sqlMap>
