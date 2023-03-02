@@ -51,61 +51,96 @@ public class ServiceDUHD10 extends ServiceBase {
 
 
     public EiInfo update(EiInfo inInfo) {
-//        StringBuffer buffer = new StringBuffer();
-//        int insertCount = 0;
-//        int updateCount = 0;
-        EiBlock eiBlock = inInfo.getBlock("result");
-        EiInfo outInfo = null;
+        EiInfo outInfo =new EiInfo();
+        StringBuffer buffer = new StringBuffer();
+        int insertCount = 0;
+        int updateCount = 0;
         try {
-            if(eiBlock!=null){
-                List<Map> result = inInfo.getBlock("result").getRows();
-                if(result.size()>0){
-                    for (int i = 0; i < result.size(); i++) {
-                        Map map = result.get(i);
-                        List data = this.dao.query("DUHD10.queryData", map);
-                        if(data.size()>0){
-                            outInfo = super.update(inInfo, "DUHD10.update");
-                        }else {
-                            outInfo = super.insert(inInfo, "DUHD10.insert");
-                        }
-                    }
+            for (int i = 0; i < inInfo.getBlock("result").getRows().size(); i++) {
+                String isupdate=inInfo.getBlock("result").getCellStr(i,"isupdate");
+                if ("yes".equals(isupdate)) {
+                    dao.update("DUHD10.update", inInfo.getBlock("result").getRow(i));
+                    updateCount++;
+                } else {
+                    inInfo.getBlock("result").setCell(i, "isupdate", "yes");
+                    dao.insert("DUHD10.insert", inInfo.getBlock("result").getRow(i));
+                    insertCount++;
                 }
+
             }
             outInfo.set("status", 1);
-        }catch (Exception e){
+        } catch (Exception e) {
             outInfo.set("status", -1);
             outInfo.setMsg("保存失败！");
         }
-//        outInfo.addBlock(query(inInfo).getBlock("result"));
-//        if (insertCount > 0) {
-//            buffer.insert(0, "新增成功" + insertCount + "条记录！\n");
-//        }
-//        if (updateCount > 0) {
-//            buffer.insert(0, "修改成功" + updateCount + "条记录！\n");
-//        }
-//        outInfo.setMsg(buffer.toString());
-
+        outInfo.addBlock(query(inInfo).getBlock("result"));
+        if (insertCount > 0) {
+            buffer.insert(0, "新增成功" + insertCount + "条记录！\n");
+        }
+        if (updateCount > 0) {
+            buffer.insert(0, "修改成功" + updateCount + "条记录！\n");
+        }
+        outInfo.setMsg(buffer.toString());
+        //outInfo.getBlock("result").set("limit", 100);
         return outInfo;
     }
 
     public EiInfo update2(EiInfo inInfo) {
-        EiBlock eiBlock = inInfo.getBlock("result2");
-        EiInfo outInfo = null;
-        if(eiBlock!=null){
-            inInfo.addBlock("result").setRows(inInfo.getBlock("result2").getRows());
-            List<Map> result = inInfo.getBlock("result").getRows();
-            if(result.size()>0){
+//        EiBlock eiBlock = inInfo.getBlock("result2");
+//        EiInfo outInfo = null;
+//        if(eiBlock!=null){
+//            inInfo.addBlock("result").setRows(inInfo.getBlock("result2").getRows());
+//            List<Map> result = inInfo.getBlock("result").getRows();
+//            if(result.size()>0){
+//                for (int i = 0; i < result.size(); i++) {
+//                    Map map = result.get(i);
+//                    List data = this.dao.query("DUHD10.queryData", map);
+//                    if(data.size()>0){
+//                        outInfo = super.update(inInfo, "DUHD10.update");
+//                    }else {
+//                        outInfo = super.insert(inInfo, "DUHD10.insert");
+//                    }
+//                }
+//            }
+//        }
+//        return outInfo;
+        EiInfo outInfo =new EiInfo();
+        StringBuffer buffer = new StringBuffer();
+        int insertCount = 0;
+        int updateCount = 0;
+        try {
+            EiBlock eiBlock = inInfo.getBlock("result2");
+            if (eiBlock != null){
+                inInfo.addBlock("result").setRows(inInfo.getBlock("result2").getRows());
+                List result = inInfo.getBlock("result").getRows();
                 for (int i = 0; i < result.size(); i++) {
-                    Map map = result.get(i);
-                    List data = this.dao.query("DUHD10.queryData", map);
-                    if(data.size()>0){
-                        outInfo = super.update(inInfo, "DUHD10.update");
-                    }else {
-                        outInfo = super.insert(inInfo, "DUHD10.insert");
+                    String isupdate=inInfo.getBlock("result2").getCellStr(i,"isupdate");
+                    if ("yes".equals(isupdate)) {
+                        dao.update("DUHD10.update", inInfo.getBlock("result2").getRow(i));
+                        updateCount++;
+                    } else {
+                        inInfo.getBlock("result2").setCell(i, "isupdate", "yes");
+                        dao.insert("DUHD10.insert", inInfo.getBlock("result2").getRow(i));
+                        insertCount++;
                     }
+
                 }
             }
+
+            outInfo.set("status", 1);
+        } catch (Exception e) {
+            outInfo.set("status", -1);
+            outInfo.setMsg("保存失败！");
         }
+        outInfo.addBlock(query(inInfo).getBlock("result2"));
+        if (insertCount > 0) {
+            buffer.insert(0, "新增成功" + insertCount + "条记录！\n");
+        }
+        if (updateCount > 0) {
+            buffer.insert(0, "修改成功" + updateCount + "条记录！\n");
+        }
+        outInfo.setMsg(buffer.toString());
+        //outInfo.getBlock("result").set("limit", 100);
         return outInfo;
     }
 

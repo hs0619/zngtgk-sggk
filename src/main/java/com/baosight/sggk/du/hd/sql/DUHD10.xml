@@ -36,7 +36,8 @@
         b.CAPACITY as "capacity",
         b.TECHNIQUE as "technique",
         b.ISTL as "istl",
-        b.ISTX as "istx"
+        b.ISTX as "istx",
+        b.isupdate as "isupdate"
         FROM ${hbSchema}.T_HA_FACILITYINFO a
         LEFT JOIN ${hbSchema}.T_HD_FACILITYINFO b ON a.FACILITYID=b.FACILITYID
         WHERE 1=1
@@ -78,28 +79,34 @@
         <!--        FROM ${hbSchema}.T_HA_ENVDEVICE a-->
         <!--        LEFT JOIN ${hbSchema}.T_HD_FACILITYINFO b ON a.ENVDEVICEID=b.FACILITYID-->
         SELECT
-        a.SPEC as "spec",
-        a.HEIGHT as "height",
-        a.HOLE as "hole",
-        a.VOLUME as "volume",
-        a.WEIGHT as "weight",
-        a.VARIETY as "variety",
-        a.ISTL as "istl",
-        a.ISTX as "istx",
-        b.ENVDEVICEID as "facilityid",
-        b.DEVICEID as "facilitycode",
-        b.DEVICENAME as "facilityname",
-        b.DEVICETYPE as "facilitytype",
-        c.DEPARTMENTID as "departmentid",
-        c.PROCEDUREID as "procedureid"
-        FROM ${hbSchema}.t_hd_facilityinfo a LEFT JOIN ${hbSchema}.t_ha_envdevice b on a.FACILITYID = b.ENVDEVICEID LEFT
-        JOIN ${hbSchema}.t_ha_facilityinfo c on b.ENVDEVICEID = c.DEVICECODE
-        where 1=1 AND NOT ISNULL(b.DEVICENAME)
+        a.ENVDEVICEID as "facilityid",
+        a.DEVICEID as "facilitycode",
+        a.DEVICENAME as "facilityname",
+        a.DEVICETYPE as "facilitytype",
+        b.DEPARTMENTID as "departmentid",
+        b.PROCEDUREID as "procedureid",
+        c.SPEC as "spec",
+        c.HEIGHT as "height",
+        c.HOLE as "hole",
+        c.VOLUME as "volume",
+        c.WEIGHT as "weight",
+        c.VARIETY as "variety",
+        c.ISTL as "istl",
+        c.ISTX as "istx",
+        c.isupdate as "isupdate"
+        FROM
+        t_ha_envdevice a
+        LEFT JOIN t_ha_facilityinfo b ON a.ENVDEVICEID = b.DEVICECODE
+        LEFT JOIN t_hd_facilityinfo c ON b.DEVICECODE = c.FACILITYID
+        WHERE
+        1 = 1
+        AND NOT ISNULL(
+        a.DEVICENAME)
         <isNotEmpty prepend=" AND " property="departmentid">
-            c.DEPARTMENTID = #departmentid#
+            b.DEPARTMENTID = #departmentid#
         </isNotEmpty>
         <isNotEmpty prepend=" AND " property="procedureid">
-            c.PROCEDUREID = #procedureid#
+            b.PROCEDUREID = #procedureid#
         </isNotEmpty>
         <!--        <dynamic prepend="ORDER BY">-->
         <!--            <isNotEmpty property="orderBy">-->
@@ -189,10 +196,11 @@
         WEIGHT,  <!-- 转炉公称容量(吨) -->
         VARIETY,  <!-- 轧机品种及规格 -->
         ISTL,  <!-- 是否脱硫   01：是   02：否 -->
-        ISTX  <!-- 是否脱销    01：是   02：否 -->
+        ISTX,  <!-- 是否脱销    01：是   02：否 -->
+        isupdate
         )
         VALUES (#facilityid#, #djRatedpower#, #ratedpower#, #frequency#, #capacity#, #technique#, #spec#, #height#,
-        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#)
+        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#,#isupdate#)
     </insert>
 
     <delete id="delete">
