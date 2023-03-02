@@ -2,9 +2,9 @@
 <!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
 		Generate time : 2021-07-08 10:02:13
    		Version :  6.0.731.201809200158
-		tableName :${hbSchema}.T_HF_RADIATION_REPORT 
+		tableName :${hbSchema}.T_HF_RADIO_file 
 		 FILEID  VARCHAR   NOT NULL   primarykey, 
-		 RADIATION_REPORT_TYPE  VARCHAR, 
+		 filetype  VARCHAR, 
 		 FILENAME  VARCHAR, 
 		 FILEPATH  VARCHAR, 
 		 UPLOADMAN  VARCHAR, 
@@ -16,18 +16,21 @@
 			resultClass="com.baosight.sggk.du.hf.domain.DUHF77">
 		SELECT
 				FILEID	as "fileid",  <!-- 辐射报告ID -->
-				RADIATION_REPORT_TYPE	as "radiationReportType",  <!-- 辐射报告类型ID -->
+				filetype	as "filetype",  <!-- 辐射报告类型ID -->
 				FILENAME	as "filename",  <!-- 附件名称 -->
 				FILEPATH	as "filepath",  <!-- 附件路径 -->
 				UPLOADMAN	as "uploadman",  <!-- 上传人 -->
 				UPLOADTIME	as "uploadtime" <!-- 上传时间 -->
-		FROM ${hbSchema}.T_HF_RADIATION_REPORT WHERE 1=1
+		FROM ${hbSchema}.T_HF_RADIO_file WHERE 1=1
 		<isNotEmpty prepend=" AND " property="fileid">
 			FILEID = #fileid#
 		</isNotEmpty>
-		<isNotEmpty prepend=" AND " property="radiationReportType">
-			RADIATION_REPORT_TYPE = #radiationReportType#
+		<isNotEmpty prepend=" AND " property="filetype">
+			filetype = #filetype#
 		</isNotEmpty>
+        <isNotEmpty prepend=" AND " property="filename">
+            filename = #filename#
+        </isNotEmpty>
 			<dynamic prepend="ORDER BY">
          <isNotEmpty property="orderBy">
     		  $orderBy$
@@ -40,7 +43,7 @@
 	</select>
 
 	<select id="count" resultClass="int">
-		SELECT COUNT(*) FROM ${hbSchema}.T_HF_RADIATION_REPORT WHERE 1=1
+		SELECT COUNT(*) FROM ${hbSchema}.T_HF_RADIO_file WHERE 1=1
 		<isNotEmpty prepend=" AND " property="fileid">
 			FILEID = #fileid#
 		</isNotEmpty>
@@ -53,8 +56,8 @@
 		<isNotEmpty prepend=" AND " property="fileid">
 			FILEID = #fileid#
 		</isNotEmpty>
-		<isNotEmpty prepend=" AND " property="radiationReportType">
-			RADIATION_REPORT_TYPE = #radiationReportType#
+		<isNotEmpty prepend=" AND " property="filetype">
+			filetype = #filetype#
 		</isNotEmpty>
 		<isNotEmpty prepend=" AND " property="filename">
 			FILENAME = #filename#
@@ -71,25 +74,25 @@
 	-->
 
 	<insert id="insert">
-		INSERT INTO ${hbSchema}.T_HF_RADIATION_REPORT (FILEID,  <!-- 辐射报告ID -->
-										RADIATION_REPORT_TYPE,  <!-- 辐射报告类型ID -->
+		INSERT INTO ${hbSchema}.T_HF_RADIO_file (FILEID,  <!-- 辐射报告ID -->
+										filetype,  <!-- 辐射报告类型ID -->
 										FILENAME,  <!-- 附件名称 -->
 										FILEPATH,  <!-- 附件路径 -->
 										UPLOADMAN,  <!-- 上传人 -->
 										UPLOADTIME  <!-- 上传时间 -->
 										)		 
-	    VALUES (#fileid:VARCHAR#, #radiationReportType:VARCHAR#, #filename:VARCHAR#, #filepath:VARCHAR#, #uploadman:VARCHAR#, #uploadtime:VARCHAR#)
+	    VALUES (#fileid:VARCHAR#, #filetype:VARCHAR#, #filename:VARCHAR#, #filepath:VARCHAR#, #uploadman:VARCHAR#, #uploadtime:VARCHAR#)
 	</insert>
   
 	<delete id="delete">
-		DELETE FROM ${hbSchema}.T_HF_RADIATION_REPORT WHERE 
+		DELETE FROM ${hbSchema}.T_HF_RADIO_file WHERE 
 			FILEID = #fileid#
 	</delete>
 
 	<update id="update">
-		UPDATE ${hbSchema}.T_HF_RADIATION_REPORT 
+		UPDATE ${hbSchema}.T_HF_RADIO_file 
 		SET 
-					RADIATION_REPORT_TYPE	= #radiationReportType#,   <!-- 辐射报告类型ID -->
+					filetype	= #filetype#,   <!-- 辐射报告类型ID -->
 					FILENAME	= #filename#,   <!-- 附件名称 -->
 					FILEPATH	= #filepath#,   <!-- 附件路径 -->
 					UPLOADMAN	= #uploadman#,   <!-- 上传人 -->

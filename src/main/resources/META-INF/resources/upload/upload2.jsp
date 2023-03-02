@@ -55,9 +55,9 @@ if(filePath != null && !"".equals(filePath)){
 									msg = "文件是未允许上传的类型";//上传文件扩展名是不允许的扩展名
 								}else{
 									try{
-										SimpleDateFormat sdf =new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
+										/*SimpleDateFormat sdf =new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
 										String nowtime=sdf.format(new Date());
-										fileName=nowtime+fileName;
+										fileName=nowtime+fileName;*/
 										File uploadedFile = new File(filePath, fileName);
 										item.write(uploadedFile);
 										obj.remove("name");
@@ -66,8 +66,8 @@ if(filePath != null && !"".equals(filePath)){
 										obj.put("size",fileSize);
 										obj.remove("path");
 										obj.put("path",filePath);
-										obj.remove("nowtime");
-										obj.put("nowtime",nowtime);
+										/*obj.remove("nowtime");
+										obj.put("nowtime",nowtime);*/
 										status = "9";
 										msg = "上传文件成功";//上传文件成功
 									}catch(Exception e){

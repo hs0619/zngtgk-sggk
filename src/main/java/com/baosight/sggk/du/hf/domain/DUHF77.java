@@ -20,7 +20,7 @@ public class DUHF77 extends DaoEPBase {
     private static final long serialVersionUID = 1L;
 
     private String fileid = " ";		/* 辐射报告ID*/
-    private String radiationReportType = " ";		/* 辐射报告类型ID*/
+    private String filetype = " ";		/* 辐射报告类型ID*/
     private String filename = " ";		/* 附件名称*/
     private String filepath = " ";		/* 附件路径*/
     private String uploadman = " ";		/* 上传人*/
@@ -38,9 +38,9 @@ public class DUHF77 extends DaoEPBase {
         eiColumn.setDescName("辐射报告ID");
         eiMetadata.addMeta(eiColumn);
 
-        eiColumn = new EiColumn("radiationReportType");
+        eiColumn = new EiColumn("filetype");
         eiColumn.setFieldLength(10);
-        eiColumn.setDescName("辐射报告类型ID");
+        eiColumn.setDescName("辐射报告类型");
         eiMetadata.addMeta(eiColumn);
 
         eiColumn = new EiColumn("filename");
@@ -88,20 +88,6 @@ public class DUHF77 extends DaoEPBase {
         this.fileid = fileid;
     }
 
-    /**
-     * get the radiationReportType - 辐射报告类型ID
-     * @return the radiationReportType
-     */
-    public String getRadiationReportType() {
-        return this.radiationReportType;
-    }
-
-    /**
-     * set the radiationReportType - 辐射报告类型ID
-     */
-    public void setRadiationReportType(String radiationReportType) {
-        this.radiationReportType = radiationReportType;
-    }
 
     /**
      * get the filename - 附件名称
@@ -163,13 +149,21 @@ public class DUHF77 extends DaoEPBase {
         this.uploadtime = uploadtime;
     }
 
+    public String getFiletype() {
+        return filetype;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
+    }
+
     /**
      * get the value from Map
      */
     public void fromMap(Map map) {
 
         setFileid(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("fileid")), fileid));
-        setRadiationReportType(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("radiationReportType")), radiationReportType));
+        setFiletype(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("filetype")), filetype));
         setFilename(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("filename")), filename));
         setFilepath(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("filepath")), filepath));
         setUploadman(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("uploadman")), uploadman));
@@ -182,7 +176,7 @@ public class DUHF77 extends DaoEPBase {
     public Map toMap() {
         Map map = new HashMap();
         map.put("fileid", StringUtils.toString(fileid, eiMetadata.getMeta("fileid")));
-        map.put("radiationReportType", StringUtils.toString(radiationReportType, eiMetadata.getMeta("radiationReportType")));
+        map.put("filetype", StringUtils.toString(filetype, eiMetadata.getMeta("filetype")));
         map.put("filename", StringUtils.toString(filename, eiMetadata.getMeta("filename")));
         map.put("filepath", StringUtils.toString(filepath, eiMetadata.getMeta("filepath")));
         map.put("uploadman", StringUtils.toString(uploadman, eiMetadata.getMeta("uploadman")));
