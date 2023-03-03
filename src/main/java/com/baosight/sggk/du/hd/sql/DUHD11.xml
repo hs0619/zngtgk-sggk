@@ -20,6 +20,9 @@
 		<isNotEmpty prepend=" AND " property="formulaid">
 			FORMULAID = #formulaid#
 		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="formulaname">
+			FORMULANAME like '%$formulaname$%'
+		</isNotEmpty>
 		<dynamic prepend="ORDER BY">
          <isNotEmpty property="orderBy">
     		  $orderBy$
@@ -29,6 +32,11 @@
 		</isEmpty>
   		</dynamic>
 			
+	</select>
+
+	<!--	获取表中最大的ID数据-->
+	<select id="selectMaxId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(FORMULAID) from ${hbSchema}.t_hd_facility_costs_formula where 1=1
 	</select>
 
 	<select id="count" resultClass="int">

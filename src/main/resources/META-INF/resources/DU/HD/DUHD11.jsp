@@ -6,17 +6,16 @@
 <EF:EFPage>
     <EF:EFRegion id="inqu" title="查询" type="query" efRegionShowClear="true"
                  efRegionSave="true">
-        <div class="row">
             <EF:EFInput ename="inqu_status-0-formulaname" cname="费用名称"/>
-        </div>
+
     </EF:EFRegion>
     <EF:EFRegion id="result" title="记录集" >
         <EF:EFGrid blockId="result" autoDraw="false" sort="setted"
-                   rowNo="true" queryMethod="query" deleteMethod="delete"
+                   rowNo="true" queryMethod="query" deleteMethod="delete" insertMethod="insert"
                    isFloat="true">
-            <EF:EFColumn ename="formulaid" cname="主键ID" hidden="true" colWidth="6"/>
-            <EF:EFColumn ename="formulaname" cname="费用名称" readonly="true"/>
-            <EF:EFColumn ename="formula" cname="计算公式" readonly="true"/>
+            <EF:EFColumn ename="formulaid" cname="主键ID"  colWidth="6" hidden="true"/>
+            <EF:EFColumn ename="formulaname" cname="费用名称"  readonly="true"/>
+            <EF:EFColumn ename="formula" cname="计算公式"  enable="true"/>
         </EF:EFGrid>
     </EF:EFRegion>
 </EF:EFPage>
