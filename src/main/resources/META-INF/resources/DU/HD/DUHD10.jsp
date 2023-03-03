@@ -61,12 +61,13 @@
                         <EF:EFOption label="是" value="01"/>
                         <EF:EFOption label="否" value="02"/>
                     </EF:EFComboColumn>
+                    <EF:EFColumn ename="isupdate" cname="是否修改"  hidden="true" />
                 </EF:EFGrid>
             </EF:EFRegion>
         </div>
         <div title="生产设施信息">
             <EF:EFRegion id="result2">
-                <EF:EFGrid blockId="result2" autoDraw="false" autoFit="true"  sort="setted" checkMode="multiple, row"  serviceName="DUHD10"
+                <EF:EFGrid blockId="result2" autoDraw="false" autoFit="true"  sort="setted" serviceName="DUHD10"
                            rowNo="true" queryMethod="query2"  updateMethod="update2" deleteMethod="delete2"
                            isFloat="true">
                     <EF:EFColumn ename="facilityid" cname="facilityid" hidden="true" defaultValue="" width="100"
@@ -108,6 +109,7 @@
                         <EF:EFOption label="是" value="01"/>
                         <EF:EFOption label="否" value="02"/>
                     </EF:EFComboColumn>
+                    <EF:EFColumn ename="isupdate" cname="是否修改"  hidden="true" />
                 </EF:EFGrid>
             </EF:EFRegion>
         </div>

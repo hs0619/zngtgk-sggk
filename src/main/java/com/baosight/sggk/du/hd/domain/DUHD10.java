@@ -39,6 +39,8 @@ public class DUHD10 extends DaoEPBase {
     private String departmentid = " ";
     private String procedureid = " ";
 
+    private String isupdate = " ";
+
     /**
      * initialize the metadata
      */
@@ -120,6 +122,10 @@ public class DUHD10 extends DaoEPBase {
 
         eiColumn = new EiColumn("procedureid");
         eiColumn.setDescName("工序");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("isupdate");
+        eiColumn.setDescName("是否修改");
         eiMetadata.addMeta(eiColumn);
     }
 
@@ -380,6 +386,14 @@ public class DUHD10 extends DaoEPBase {
         this.procedureid = procedureid;
     }
 
+    public String getIsupdate() {
+        return isupdate;
+    }
+
+    public void setIsupdate(String isupdate) {
+        this.isupdate = isupdate;
+    }
+
     /**
      * get the value from Map
      */
@@ -405,6 +419,8 @@ public class DUHD10 extends DaoEPBase {
         setFacilitytype(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("facilitytype")), facilitytype));
         setDepartmentid(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("departmentid")), departmentid));
         setProcedureid(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("procedureid")), procedureid));
+
+        setIsupdate(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("isupdate")), isupdate));
 
     }
 
@@ -434,6 +450,8 @@ public class DUHD10 extends DaoEPBase {
         map.put("facilitytype", StringUtils.toString(facilitytype, eiMetadata.getMeta("facilitytype")));
         map.put("departmentid", StringUtils.toString(departmentid, eiMetadata.getMeta("departmentid")));
         map.put("procedureid", StringUtils.toString(procedureid, eiMetadata.getMeta("procedureid")));
+
+        map.put("isupdate", StringUtils.toString(isupdate, eiMetadata.getMeta("isupdate")));
 
 
 

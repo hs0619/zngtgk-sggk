@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-03-02 17:06:50
+   		Version :  1.0
+		tableName :iplat4j.t_hd_facility_costs_formula 
+		 FORMULAID  VARCHAR   NOT NULL   primarykey, 
+		 FORMULANAME  VARCHAR, 
+		 FORMULA  VARCHAR
+	-->
+<sqlMap namespace="DUHD11">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hd.domain.DUHD11">
+		SELECT
+				FORMULAID	as "formulaid",  <!-- 主键ID -->
+				FORMULANAME	as "formulaname",  <!-- 费用名称 -->
+				FORMULA	as "formula" <!-- 计算公式 -->
+		FROM iplat4j.t_hd_facility_costs_formula WHERE 1=1
+		<isNotEmpty prepend=" AND " property="formulaid">
+			FORMULAID = #formulaid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="formulaname">
+			FORMULANAME like '%$formulaname$%'
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  FORMULAID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<!--	获取表中最大的ID数据-->
+	<select id="selectMaxId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(FORMULAID) from ${hbSchema}.t_hd_facility_costs_formula where 1=1
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM iplat4j.t_hd_facility_costs_formula WHERE 1=1
+		<isNotEmpty prepend=" AND " property="formulaid">
+			FORMULAID = #formulaid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="formulaid">
+			FORMULAID = #formulaid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="formulaname">
+			FORMULANAME = #formulaname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="formula">
+			FORMULA = #formula#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO iplat4j.t_hd_facility_costs_formula (FORMULAID,  <!-- 主键ID -->
+										FORMULANAME,  <!-- 费用名称 -->
+										FORMULA  <!-- 计算公式 -->
+										)		 
+	    VALUES (#formulaid#, #formulaname#, #formula#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM iplat4j.t_hd_facility_costs_formula WHERE 
+			FORMULAID = #formulaid#
+	</delete>
+
+	<update id="update">
+		UPDATE iplat4j.t_hd_facility_costs_formula 
+		SET 
+					FORMULANAME	= #formulaname#,   <!-- 费用名称 -->  
+					FORMULA	= #formula#  <!-- 计算公式 -->  
+			WHERE 	
+			FORMULAID = #formulaid#
+	</update>
+  
+</sqlMap>
