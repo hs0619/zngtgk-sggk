@@ -63,6 +63,67 @@
 			
 	</select>
 
+    <select id="queryInfo" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hm.domain.DUHM43">
+        SELECT
+            t1.departmentid	 as "departmentid",  <!-- 厂部id -->
+            '$datatime$'	as "datatime",  <!-- 日期 -->
+            t1.dangertype	as "dangertype",  <!-- 危废类别 -->
+            t1.dangercode	as "dangercode",  <!-- 危废代码 -->
+            t1.dangername	as "dangername",  <!-- 危废名称 -->
+            t1.prodresource	as "prodresource",  <!-- 产生源 -->
+            t1.dangerform	as "dangerform",  <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->
+            t1.promethod	as "promethod",  <!-- 产生方式（1生产、2清理） -->
+            t1.DISPOSE_method	as "disposeMethod",  <!-- 处置方式 -->
+            t1.DISPOSE_unit	as "disposeUnit",  <!-- 处置单位 -->
+            t2.OUTPUT	as "output",  <!-- 产生量 -->
+            t2.DISPOSE_VALUE	as "disposeValue",  <!-- 处置量 -->
+            t2.storge_VALUE	as "storgeValue", <!-- 贮存量 -->
+            t2.isupdate	as "isupdate"
+        FROM ${hbSchema}.t_hm_dangerwaste_config t1
+        left join (
+            SELECT
+                t3.datatime,
+                t3.departmentid,
+                t3.dangertype,
+                t3.dangercode,
+                t3.OUTPUT,
+                t3.DISPOSE_VALUE,
+                t3.storge_VALUE,
+                t3.isupdate
+            FROM
+            ${hbSchema}.t_hm_dangerwaste_info t3
+            where 1=1
+            <isNotEmpty prepend=" AND " property="datatime">
+                t3.datatime = #datatime#
+            </isNotEmpty>
+        ) t2 on t1.departmentid=t2.departmentid and t1.dangertype=t2.dangertype and t1.dangercode=t2.dangercode
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="departmentid">
+            t1.departmentid = #departmentid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="dangertype">
+            t1.dangertype = #dangertype#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="dangercode">
+            t1.dangercode = #dangercode#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="dangername">
+            t1.dangername = #dangername#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                t1.dangertype asc,
+                t1.departmentid asc,
+                t1.dangercode asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
 	<select id="count" resultClass="int">
 		SELECT COUNT(*) FROM ${hbSchema}.t_hm_dangerwaste_info WHERE 1=1
 		<isNotEmpty prepend=" AND " property="datatime">

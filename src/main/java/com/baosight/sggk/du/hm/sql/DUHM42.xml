@@ -47,7 +47,7 @@
             resultClass="com.baosight.sggk.du.hm.domain.DUHM42">
         SELECT
             t1.SOLID_ID as "solidId",<!-- 固废id -->
-            '$datatime$' as "datatime" ,<!-- 日期 -->
+            '$datatime$' as "datatime",<!-- 日期 -->
             t1.RANK as "rank", <!-- 序号 -->
             t1.SOLID_TYPE as "solidType",<!-- 固废类型 -->
             t1.SOLID_NAME as "solidName",<!-- 固废名称 -->

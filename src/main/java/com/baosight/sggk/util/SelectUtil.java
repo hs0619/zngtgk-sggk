@@ -49,9 +49,9 @@ public class SelectUtil {
 			}else {
 				//sql+=" and istotal='1'";
 			}
-			sql+=" order by CAST(SORT as INT)  asc";
+			sql+=" order by SORT  asc";
 			map.put("sqlMap", sql);
-			List list=dao.query("DUHC20.query",map);
+			List list=dao.query("DUHA01.query",map);
 			monitorblock.addRows(list);
 		} catch (Exception e) {
 			throw e;
@@ -96,9 +96,9 @@ public class SelectUtil {
 			}else {
 				//sql+=" and departmentid='1'";
 			}
-			sql+=" order by CAST(SORT as INT)  asc";
+			sql+=" order by SORT  asc";
 			map.put("sqlMap", sql);
-			List list=dao.query("DUHC20.query",map);
+			List list=dao.query("DUHA01.query",map);
 			departblock.addRows(list);
 		} catch (Exception e) {
 			throw e;
@@ -156,7 +156,7 @@ public class SelectUtil {
 			}
 			sql+=" order by siteid  asc";//CAST(SORT as INT)
 			map.put("sqlMap", sql);
-			List list=dao.query("DUHC20.query",map);
+			List list=dao.query("DUHA01.query",map);
 			siteblock.addRows(list);
 		} catch (Exception e) {
 			throw e;

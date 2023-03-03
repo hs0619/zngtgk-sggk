@@ -148,7 +148,7 @@ public class ServiceDUHC21 extends ServiceEPBase {
         	 " LEFT JOIN " + DbSchema + ".t_ha_factor t2 on t1.FACTORID = t2.FACTORID where t1.MONITORID = '" + monitorid + "' and t1.STATUS = '1' ";
              Map sqlmap = new HashMap();
              sqlmap.put("sqlMap", factorSql);
-             List list = this.dao.query("DUHC20.query", sqlmap);
+             List list = this.dao.query("DUHA01.query", sqlmap);
              if (list != null && list.size() > 0)
              {
              	for (int i = 0; i < list.size(); i++) {									
@@ -255,7 +255,7 @@ public class ServiceDUHC21 extends ServiceEPBase {
                     Map sqlmap = new HashMap();
                     sqlmap.put("sqlMap", factorSql);
 
-                    List list = this.dao.query("DUHC20.query", sqlmap);
+                    List list = this.dao.query("DUHA01.query", sqlmap);
                     
                     if (list != null && list.size() > 0)
                     {
@@ -346,7 +346,7 @@ public class ServiceDUHC21 extends ServiceEPBase {
 			Map sqlmap = new HashMap();
 			sqlmap.put("sqlMap", factorSql);
 			
-			List list = this.dao.query("DUHC20.query", sqlmap);
+			List list = this.dao.query("DUHA01.query", sqlmap);
 			if (list != null && list.size() > 0) {
 				 String temhighlimit = StrUtil.trimToString(((HashMap)list.get(0)).get("HIGHLIMIT"));
 				 String temlowlimit = StrUtil.trimToString(((HashMap)list.get(0)).get("LOWLIMIT"));
@@ -442,14 +442,14 @@ public class ServiceDUHC21 extends ServiceEPBase {
     	
     	Map sqlmap = new HashMap();
         sqlmap.put("sqlMap", tableSql);
-        List list = this.dao.query("DUHC20.query", sqlmap);
+        List list = this.dao.query("DUHA01.query", sqlmap);
         if (list != null && list.size() > 0)
         {
         	for (int i = 0; i < list.size(); i++) {									
         		String temtablename = StrUtil.trimToString(((HashMap)list.get(i)).get("NAME"));
         		String dateSql = "select  DATATIME from " + DbSchema + "." + temtablename + " where MN='" + mnid + "'  ORDER BY datatime desc";
         		sqlmap.put("sqlMap", dateSql);
-                List datelist = this.dao.query("DUHC20.query", sqlmap);
+                List datelist = this.dao.query("DUHA01.query", sqlmap);
                 if(datelist != null && datelist.size() > 0) {
                 	String datetime = StrUtil.trimToString(((HashMap)datelist.get(0)).get("DATATIME"));
                 	map.put("tablename", temtablename);

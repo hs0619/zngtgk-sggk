@@ -3,7 +3,8 @@ package com.baosight.sggk.du.hm.service;
 import com.baosight.iplat4j.core.ei.EiBlock;
 import com.baosight.iplat4j.core.ei.EiInfo;
 import com.baosight.iplat4j.core.service.impl.ServiceEPBase;
-import com.baosight.sggk.du.hm.domain.DUHM42;
+import com.baosight.sggk.du.hm.domain.DUHM43;
+import com.baosight.sggk.util.SelectUtil;
 import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
@@ -11,17 +12,21 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class ServiceDUHM42 extends ServiceEPBase {
+public class ServiceDUHM43 extends ServiceEPBase {
 
-	private static final Logger logger = Logger.getLogger(ServiceDUHM42.class);
+	private static final Logger logger = Logger.getLogger(ServiceDUHM43.class);
 
 	public EiInfo initLoad(EiInfo inInfo) {
 		EiInfo outInfo = new EiInfo();
 
-		// 类型
-		EiBlock qtypeBlock = outInfo.addBlock("solidType");
-        List typelist=dao.query("DUHM41.queryType", new HashMap<>());
-		qtypeBlock.addRows(typelist);
+        //厂部
+        inInfo.set("type","D1");
+        inInfo.set("level","1");
+        inInfo.set("totalplan","1");
+        outInfo.addBlock(SelectUtil.getDepartment(dao,inInfo));
+
+		// 形态
+		outInfo.addBlock(SelectUtil.getTextAndValue(dao,"form","1"));
 
 		// 日期
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM");
@@ -45,7 +50,7 @@ public class ServiceDUHM42 extends ServiceEPBase {
 	 */
 	public EiInfo query(EiInfo inInfo) {
 	    EiInfo outinfo=new EiInfo();
-        outinfo = super.query(inInfo,"DUHM42.queryInfo", new DUHM42());
+        outinfo = super.query(inInfo,"DUHM43.queryInfo", new DUHM43());
         return outinfo;
 	}
 
@@ -59,11 +64,11 @@ public class ServiceDUHM42 extends ServiceEPBase {
             for (int i = 0; i < inInfo.getBlock("result").getRows().size(); i++) {
                 String isupdate=inInfo.getBlock("result").getCellStr(i,"isupdate");
                 if ("yes".equals(isupdate)) {
-                    dao.update("DUHM42.update", inInfo.getBlock("result").getRow(i));
+                    dao.update("DUHM43.update", inInfo.getBlock("result").getRow(i));
                     updateCount++;
                 } else {
                     inInfo.getBlock("result").setCell(i, "isupdate", "yes");
-                    dao.insert("DUHM42.insert", inInfo.getBlock("result").getRow(i));
+                    dao.insert("DUHM43.insert", inInfo.getBlock("result").getRow(i));
                     insertCount++;
                 }
 
@@ -117,7 +122,7 @@ public class ServiceDUHM42 extends ServiceEPBase {
 			buffer.insert(0, "删除成功" + count + "条记录!");
 		}
 		inInfo.setMsg(buffer.toString());*/
-		inInfo=super.delete(inInfo,"DUHM42.delete");
+		inInfo=super.delete(inInfo,"DUHM43.delete");
 		return inInfo;
 
 	}

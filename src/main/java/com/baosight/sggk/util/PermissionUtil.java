@@ -75,7 +75,7 @@ public class PermissionUtil {
 				String sql = "select LOGIN_NAME,DEPARTMENT_ID,DEPARTMENT_NAME from " + DbSchema + ".VIEW_T_HA_XS_USER_EX where LOGIN_NAME = '" + loginName + "' ";
                 Map sqlmap = new HashMap();
                 sqlmap.put("sqlMap", sql);
-                List list = dao.query("DUHC20.query", sqlmap);
+                List list = dao.query("DUHA01.query", sqlmap);
                 if(list.size() > 0) {
                 	String departid = ((HashMap<String, String>)list.get(0)).get("DEPARTMENT_ID");
                 	return departid;
@@ -418,7 +418,7 @@ public class PermissionUtil {
 			String sql = "select USER_ID,DEPARTMENT_ID from " + DbSchema + ".T_HA_XS_USER_EX where USER_ID = '" + loginName + "' ";
             Map sqlmap = new HashMap();
             sqlmap.put("sqlMap", sql);
-            List list = dao.query("DUHC20.query", sqlmap);
+            List list = dao.query("DUHA01.query", sqlmap);
             if(list.size() > 0) {
             	departmentId = ((HashMap<String, String>)list.get(0)).get("DEPARTMENT_ID");
             }

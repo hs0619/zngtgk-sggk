@@ -210,7 +210,7 @@ $(function() {
 			},
 			onRowDblClick: function(e) {
 				var siteid = e.model.siteid;
-				IPLAT.openForm("DUHC2002", "siteid=" + siteid);
+				IPLAT.openForm("DUHA0102", "siteid=" + siteid);
 
 			},
 			pageable: {

@@ -32,6 +32,8 @@ public class DUHM43 extends DaoEPBase {
     private String disposeUnit = " ";        /* 处置单位*/
     private String storgeValue = " ";        /* 贮存量*/
 
+    private String isupdate = " ";
+
     /**
      * initialize the metadata
      */
@@ -94,7 +96,9 @@ public class DUHM43 extends DaoEPBase {
         eiColumn.setDescName("贮存量");
         eiMetadata.addMeta(eiColumn);
 
-
+        eiColumn = new EiColumn("isupdate");
+        eiColumn.setDescName("是否修改");
+        eiMetadata.addMeta(eiColumn);
     }
 
     /**
@@ -299,6 +303,14 @@ public class DUHM43 extends DaoEPBase {
         this.storgeValue = storgeValue;
     }
 
+    public String getIsupdate() {
+        return isupdate;
+    }
+
+    public void setIsupdate(String isupdate) {
+        this.isupdate = isupdate;
+    }
+
     /**
      * get the value from Map
      */
@@ -317,6 +329,7 @@ public class DUHM43 extends DaoEPBase {
         setDisposeMethod(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("disposeMethod")), disposeMethod));
         setDisposeUnit(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("disposeUnit")), disposeUnit));
         setStorgeValue(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("storgeValue")), storgeValue));
+        setIsupdate(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("isupdate")), isupdate));
     }
 
     /**
@@ -338,7 +351,7 @@ public class DUHM43 extends DaoEPBase {
         map.put("disposeMethod", StringUtils.toString(disposeMethod, eiMetadata.getMeta("disposeMethod")));
         map.put("disposeUnit", StringUtils.toString(disposeUnit, eiMetadata.getMeta("disposeUnit")));
         map.put("storgeValue", StringUtils.toString(storgeValue, eiMetadata.getMeta("storgeValue")));
-
+        map.put("isupdate", StringUtils.toString(isupdate, eiMetadata.getMeta("isupdate")));
         return map;
 
     }

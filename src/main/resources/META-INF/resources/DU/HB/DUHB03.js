@@ -79,7 +79,7 @@ $(function() {
 			"departmentTree" : {
 				ROOT : {
 					label : "root",
-					text : "长江钢铁",
+					text : "中南钢铁",
 					leaf : true,
 					parent : "root"
 				},

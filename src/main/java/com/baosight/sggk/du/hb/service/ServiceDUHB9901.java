@@ -86,7 +86,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
 	        	}
 	        	Map sqlmap = new HashMap();
 	            sqlmap.put("sqlMap", sql);
-	            List departlist = this.dao.query("DUHC20.query", sqlmap);
+	            List departlist = this.dao.query("DUHA01.query", sqlmap);
 	            if(departlist.size() > 0) {
 			    	for (int i = 0; i < departlist.size(); i++) {		
 			    		Map<String,String> map = (HashMap<String,String>)departlist.get(i);
@@ -131,7 +131,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
 	        	}
 	        	Map sqlmap = new HashMap();
 	            sqlmap.put("sqlMap", sql);
-	            List departlist = this.dao.query("DUHC20.query", sqlmap);
+	            List departlist = this.dao.query("DUHA01.query", sqlmap);
 	            if(departlist.size() > 0) {
 			    	for (int i = 0; i < departlist.size(); i++) {		
 			    		Map<String,String> map = (HashMap<String,String>)departlist.get(i);
@@ -186,7 +186,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
 			String sql = "select * from "+DbSchema+".VIEW_T_HA_SITE_EX1 where ISONLINE = '1' and STATUS = '1' and COUNTRYPOINT = '1' and DEPARTMENTID = '"+departid+"' ";
 			Map sqlmap = new HashMap();
             sqlmap.put("sqlMap", sql);
-            List sitelist = this.dao.query("DUHC20.query", sqlmap);
+            List sitelist = this.dao.query("DUHA01.query", sqlmap);
             if(sitelist.size() > 0) {
 		    	for (int i = 0; i < sitelist.size(); i++) {		
 		    		Map tabledatemap = (HashMap)sitelist.get(i);
@@ -250,7 +250,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
 		String sql = "select * from "+DbSchema+".VIEW_T_HA_SITE_EX1 where ISONLINE = '1' and STATUS = '1' and COUNTRYPOINT = '1' and DEPARTMENTID = '"+depart.get("DEPARTMENTID")+"' ";
 		Map sqlmap = new HashMap();
         sqlmap.put("sqlMap", sql);
-        List sitelist = this.dao.query("DUHC20.query", sqlmap);
+        List sitelist = this.dao.query("DUHA01.query", sqlmap);
         if(sitelist.size() > 0) {
         	Integer sum = 0;
 	    	for (int i = 0; i < sitelist.size(); i++) {		
@@ -326,7 +326,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
         Map sqlmap = new HashMap();
         sqlmap.put("sqlMap", sql);
        
-        List datalist = this.dao.query("DUHC20.query", sqlmap,0,-999999);
+        List datalist = this.dao.query("DUHA01.query", sqlmap,0,-999999);
         
         
         if (datalist != null && datalist.size() > 0)
@@ -357,7 +357,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
     	String sql = "select t1.FACTORID,t1.SITEID,t1.USEZS,t3.HIGHLIMIT,t3.LOWLIMIT from " + DbSchema + ".T_HA_SITEFACTOR t1 left join " + DbSchema + ".T_HA_SITE t2 on t1.SITEID = t2.SITEID left join " + DbSchema + ".T_HA_PORTFACTOR t3 on t2.PORTID = t3.PORTID and t1.FACTORID = t3.FACTORID where t2.ISONLINE = '1' and t2.STATUS = '1' ";
         Map sqlmap = new HashMap();
         sqlmap.put("sqlMap", sql);
-        List datalist = this.dao.query("DUHC20.query", sqlmap,0,-999999);
+        List datalist = this.dao.query("DUHA01.query", sqlmap,0,-999999);
         
         if (datalist != null && datalist.size() > 0)
         {
@@ -398,7 +398,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
     	 " LEFT JOIN " + DbSchema + ".t_ha_factor t2 on t1.FACTORID = t2.FACTORID where t1.MONITORID = '" + monitorid + "' and t1.STATUS = '1' ";
          Map sqlmap = new HashMap();
          sqlmap.put("sqlMap", factorSql);
-         List list = this.dao.query("DUHC20.query", sqlmap);
+         List list = this.dao.query("DUHA01.query", sqlmap);
          if (list != null && list.size() > 0)
          {
          	for (int i = 0; i < list.size(); i++) {									
@@ -577,7 +577,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
     	String sql = "select t1.FACTORID,t1.SITEID,t2.SITENAME,t2.MNID,t1.USEZS,t3.HIGHLIMIT,t3.LOWLIMIT,t4.FACTORNAME,t4.UNIT from " + DbSchema + ".T_HA_SITEFACTOR t1 left join " + DbSchema + ".T_HA_SITE t2 on t1.SITEID = t2.SITEID left join " + DbSchema + ".T_HA_PORTFACTOR t3 on t2.PORTID = t3.PORTID and t1.FACTORID = t3.FACTORID left join "+DbSchema+".T_HA_FACTOR t4 on t1.FACTORID = t4.FACTORID where t1.SITEID = '"+siteid+"' ";
         Map sqlmap = new HashMap();
         sqlmap.put("sqlMap", sql);
-        List datalist = this.dao.query("DUHC20.query", sqlmap,0,-999999);
+        List datalist = this.dao.query("DUHA01.query", sqlmap,0,-999999);
         
         if (datalist != null && datalist.size() > 0)
         {
@@ -699,7 +699,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
         Map sqlmap = new HashMap();
         sqlmap.put("sqlMap", sql);
        
-        List datalist = this.dao.query("DUHC20.query", sqlmap,0,-999999);
+        List datalist = this.dao.query("DUHA01.query", sqlmap,0,-999999);
         
         
         if (datalist != null && datalist.size() > 0)
@@ -829,7 +829,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
   			String sql = "select * from "+DbSchema+".VIEW_T_HA_SITE_EX1 where ISONLINE = '1' and STATUS = '1' and DEPARTMENTID = '"+departid+"' ";
   			Map sqlmap = new HashMap();
               sqlmap.put("sqlMap", sql);
-              List sitelist = this.dao.query("DUHC20.query", sqlmap);
+              List sitelist = this.dao.query("DUHA01.query", sqlmap);
               if(sitelist.size() > 0) {
   		    	for (int i = 0; i < sitelist.size(); i++) {		
   		    		Map tabledatemap = (HashMap)sitelist.get(i);
@@ -889,7 +889,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
   					" where t1.OBJTIME >= '"+startDate+"' and t1.OBJTIME <= '"+endDate+"'and t2.ISAI = '1' order by t1.OBJTIME desc";
   			Map sqlmap = new HashMap();
             sqlmap.put("sqlMap", sql);
-            List cameralist = this.dao.query("DUHC20.query", sqlmap);
+            List cameralist = this.dao.query("DUHA01.query", sqlmap);
             if(cameralist.size() > 0) {
 				for (int i = 0; i < cameralist.size(); i++) {		
 					Map tabledatemap = (HashMap)cameralist.get(i);
@@ -1034,7 +1034,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
   	        Map sqlmap = new HashMap();
   	        sqlmap.put("sqlMap", sql);
   	       
-  	        List datalist = this.dao.query("DUHC20.query", sqlmap,0,-999999);
+  	        List datalist = this.dao.query("DUHA01.query", sqlmap,0,-999999);
   	        
   	        
   	        if (datalist != null && datalist.size() > 0)
@@ -1171,7 +1171,7 @@ public class ServiceDUHB9901 extends ServiceEPBase {
   	    	String sql = "select t1.FACTORID,t1.SITEID,t2.SITENAME,t2.MNID,t1.USEZS,t3.HIGHLIMIT,t3.LOWLIMIT,t4.FACTORNAME,t4.UNIT from " + DbSchema + ".T_HA_SITEFACTOR t1 left join " + DbSchema + ".T_HA_SITE t2 on t1.SITEID = t2.SITEID left join " + DbSchema + ".T_HA_PORTFACTOR t3 on t2.PORTID = t3.PORTID and t1.FACTORID = t3.FACTORID left join "+DbSchema+".T_HA_FACTOR t4 on t1.FACTORID = t4.FACTORID where t1.SITEID = '"+siteid+"' ";
   	        Map sqlmap = new HashMap();
   	        sqlmap.put("sqlMap", sql);
-  	        List datalist = this.dao.query("DUHC20.query", sqlmap,0,-999999);
+  	        List datalist = this.dao.query("DUHA01.query", sqlmap,0,-999999);
   	        
   	        if (datalist != null && datalist.size() > 0)
   	        {
