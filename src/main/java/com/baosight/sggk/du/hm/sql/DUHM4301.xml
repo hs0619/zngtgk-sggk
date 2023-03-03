@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-03-02 15:25:44
+   		Version :  1.0
+		tableName :iplat4j.t_hm_dangerwaste_config 
+		 departmentid  VARCHAR   NOT NULL   primarykey, 
+		 dangertype  VARCHAR   NOT NULL   primarykey, 
+		 dangercode  VARCHAR   NOT NULL   primarykey, 
+		 dangername  VARCHAR   NOT NULL, 
+		 prodresource  VARCHAR   NOT NULL, 
+		 dangerform  VARCHAR   NOT NULL, 
+		 promethod  VARCHAR, 
+		 DISPOSE_method  VARCHAR, 
+		 DISPOSE_unit  VARCHAR
+	-->
+<sqlMap namespace="DUHM4301">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hm.domain.DUHM4301">
+		SELECT
+				departmentid	as "departmentid",  <!-- 厂部id -->
+				dangertype	as "dangertype",  <!-- 危废类别 -->
+				dangercode	as "dangercode",  <!-- 危废代码 -->
+				dangername	as "dangername",  <!-- 危废名称 -->
+				prodresource	as "prodresource",  <!-- 产生源 -->
+				dangerform	as "dangerform",  <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->
+				promethod	as "promethod",  <!-- 产生方式（1生产、2清理） -->
+				DISPOSE_method	as "disposeMethod",  <!-- 处置方式 -->
+				DISPOSE_unit	as "disposeUnit" <!-- 处置单位 -->
+		FROM iplat4j.t_hm_dangerwaste_config WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangertype">
+			dangertype = #dangertype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangercode">
+			dangercode = #dangercode#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+            dangertype asc,
+            departmentid asc,
+    		  dangercode asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+    <select id="queryDepat" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hm.domain.DUHM4301">
+        SELECT
+        departmentid	as "departmentid",  <!-- 厂部id -->
+        department_name	as "departmentname" <!-- 厂部id -->
+
+        FROM iplat4j.t_hm_dangerwaste_config t1
+        left join iplat4j.t_ha_department t2 on t1.departmentid=t2.department_id
+        WHERE 1=1 and t2.type='D1'
+        <isNotEmpty prepend=" AND " property="parentid">
+            t2.parentid = #parentid#
+        </isNotEmpty>
+    </select>
+
+    <select id="queryBykey" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hm.domain.DUHM4301">
+        SELECT
+        departmentid	as "departmentid",  <!-- 厂部id -->
+        dangertype	as "dangertype",  <!-- 危废类别 -->
+        dangercode	as "dangercode",  <!-- 危废代码 -->
+        dangername	as "dangername",  <!-- 危废名称 -->
+        prodresource	as "prodresource",  <!-- 产生源 -->
+        dangerform	as "dangerform",  <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->
+        promethod	as "promethod",  <!-- 产生方式（1生产、2清理） -->
+        DISPOSE_method	as "disposeMethod",  <!-- 处置方式 -->
+        DISPOSE_unit	as "disposeUnit" <!-- 处置单位 -->
+        FROM iplat4j.t_hm_dangerwaste_config
+        WHERE 1=1
+            and departmentid = #departmentid#
+            and dangertype = #dangertype#
+            and dangercode = #dangercode#
+
+    </select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM iplat4j.t_hm_dangerwaste_config WHERE 1=1
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangertype">
+			dangertype = #dangertype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangercode">
+			dangercode = #dangercode#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="departmentid">
+			departmentid = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangertype">
+			dangertype = #dangertype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangercode">
+			dangercode = #dangercode#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangername">
+			dangername = #dangername#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="prodresource">
+			prodresource = #prodresource#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="dangerform">
+			dangerform = #dangerform#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="promethod">
+			promethod = #promethod#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="disposeMethod">
+			DISPOSE_method = #disposeMethod#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="disposeUnit">
+			DISPOSE_unit = #disposeUnit#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO iplat4j.t_hm_dangerwaste_config (departmentid,  <!-- 厂部id -->
+										dangertype,  <!-- 危废类别 -->
+										dangercode,  <!-- 危废代码 -->
+										dangername,  <!-- 危废名称 -->
+										prodresource,  <!-- 产生源 -->
+										dangerform,  <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->
+										promethod,  <!-- 产生方式（1生产、2清理） -->
+										DISPOSE_method,  <!-- 处置方式 -->
+										DISPOSE_unit  <!-- 处置单位 -->
+										)		 
+	    VALUES (#departmentid#, #dangertype#, #dangercode#, #dangername#, #prodresource#, #dangerform#, #promethod#, #disposeMethod#, #disposeUnit#) 
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM iplat4j.t_hm_dangerwaste_config WHERE 
+			departmentid = #departmentid# AND 
+			dangertype = #dangertype# AND 
+			dangercode = #dangercode#
+	</delete>
+
+	<update id="update">
+		UPDATE iplat4j.t_hm_dangerwaste_config 
+		SET 
+											dangername	= #dangername#,   <!-- 危废名称 -->  
+					prodresource	= #prodresource#,   <!-- 产生源 -->  
+					dangerform	= #dangerform#,   <!-- 危废形态（solid固体、semisolid半固体、liquid液体） -->  
+					promethod	= #promethod#,   <!-- 产生方式（1生产、2清理） -->  
+					DISPOSE_method	= #disposeMethod#,   <!-- 处置方式 -->  
+					DISPOSE_unit	= #disposeUnit#  <!-- 处置单位 -->  
+			WHERE 	
+			departmentid = #departmentid# AND 
+			dangertype = #dangertype# AND 
+			dangercode = #dangercode#
+	</update>
+  
+</sqlMap>
