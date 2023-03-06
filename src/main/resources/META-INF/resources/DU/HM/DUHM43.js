@@ -11,6 +11,8 @@ $(function () {
         qeruy();
     });
 
+
+
     qeruy=function () {
         resultGrid.dataSource.page(1);
     }
@@ -77,7 +79,7 @@ $(function () {
             },
 
             onSuccess: function (e) {
-                if(e.type == "create" || e.type == "update"){
+                if(e.type == "create" || e.type == "update"|| e.type == "destroy"){
                     var resultblock = e.eiInfo.blocks["result"];
                     if (resultblock != null) {
                         resultGrid.setEiBlock(resultblock);

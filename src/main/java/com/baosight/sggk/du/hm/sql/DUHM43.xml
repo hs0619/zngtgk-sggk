@@ -103,13 +103,13 @@
             t1.departmentid = #departmentid#
         </isNotEmpty>
         <isNotEmpty prepend=" AND " property="dangertype">
-            t1.dangertype = #dangertype#
+            t1.dangertype like '%$dangertype$%'
         </isNotEmpty>
         <isNotEmpty prepend=" AND " property="dangercode">
-            t1.dangercode = #dangercode#
+            t1.dangercode like '%$dangercode$%'
         </isNotEmpty>
         <isNotEmpty prepend=" AND " property="dangername">
-            t1.dangername = #dangername#
+            t1.dangername like '%$dangername$%'
         </isNotEmpty>
         <dynamic prepend="ORDER BY">
             <isNotEmpty property="orderBy">
@@ -195,9 +195,12 @@
 										DISPOSE_VALUE,  <!-- 处置量 -->
 										DISPOSE_method,  <!-- 处置方式 -->
 										DISPOSE_unit,  <!-- 处置单位 -->
-										storge_VALUE  <!-- 贮存量 -->
+										storge_VALUE , <!-- 贮存量 -->
+                                        isupdate
 										)		 
-	    VALUES (#datatime#, #departmentid#, #dangertype#, #dangercode#, #dangername#, #prodresource#, #dangerform#, #promethod#, #output#, #disposeValue#, #disposeMethod#, #disposeUnit#, #storgeValue#) 
+	    VALUES (#datatime#, #departmentid#, #dangertype#, #dangercode#, #dangername#, #prodresource#,
+        #dangerform#, #promethod#, #output#, #disposeValue#, #disposeMethod#,
+        #disposeUnit#, #storgeValue#,#isupdate#)
 	</insert>
   
 	<delete id="delete">
