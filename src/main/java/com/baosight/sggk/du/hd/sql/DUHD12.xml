@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-03-06 15:15:05
+   		Version :  1.0
+		tableName :iplat4j.t_hd_index_table 
+		 INDEX_ID  VARCHAR   NOT NULL   primarykey, 
+		 INDEX_NAME  VARCHAR
+	-->
+<sqlMap namespace="DUHD12">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hd.domain.DUHD12">
+		SELECT
+				INDEX_ID	as "indexId",  <!-- 主键ID -->
+				INDEX_NAME	as "indexName", <!-- 指标名称 -->
+				STATUS      as "status"
+		FROM ${hbSchema}.t_hd_index_table WHERE 1=1
+		<isNotEmpty prepend=" AND " property="indexId">
+			INDEX_ID = #indexId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="indexName">
+			INDEX_NAME like '%$indexName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  INDEX_ID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+
+	<!--	获取表中最大的ID数据-->
+	<select id="selectMaxId" parameterClass="java.util.HashMap" resultClass="String">
+		select max(INDEX_ID) from ${hbSchema}.t_hd_index_table where 1=1
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_hd_index_table WHERE 1=1
+		<isNotEmpty prepend=" AND " property="indexId">
+			INDEX_ID = #indexId#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="indexId">
+			INDEX_ID = #indexId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="indexName">
+			INDEX_NAME = #indexName#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_hd_index_table (INDEX_ID,  <!-- 主键ID -->
+										INDEX_NAME,STATUS  <!-- 指标名称 -->
+										)		 
+	    VALUES (#indexId#, #indexName#,#status#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_hd_index_table WHERE
+			INDEX_ID = #indexId#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_hd_index_table
+		SET 
+					INDEX_NAME	= #indexName#,  <!-- 指标名称 -->
+					STATUS = #status#
+			WHERE 	
+			INDEX_ID = #indexId#
+	</update>
+  
+</sqlMap>

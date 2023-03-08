@@ -5,8 +5,10 @@ import com.baosight.iplat4j.core.ei.EiInfo;
 import com.baosight.iplat4j.core.service.impl.ServiceBase;
 import com.baosight.sggk.common.du.domain.Tduhb01;
 import com.baosight.sggk.du.hd.domain.DUHD10;
+import com.baosight.sggk.du.hd.domain.DUHD12;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ public class ServiceDUHD10 extends ServiceBase {
         EiInfo outInfo = new EiInfo();
         outInfo.addBlock(getDeptBlock("deptblock"));
         outInfo.addBlock(getProcedureBlock("procedureblock"));
+        outInfo.addBlock(getIndexBlock("indexblock"));
         return outInfo;
     }
 
@@ -173,6 +176,16 @@ public class ServiceDUHD10 extends ServiceBase {
         map.put("type","D1");
         List list = this.dao.query("tduhb01.query", map);
         eiBlock.setBlockMeta(new Tduhb01().eiMetadata);
+        eiBlock.setRows(list);
+        return eiBlock;
+    }
+
+    private EiBlock getIndexBlock(String blockName){
+        EiBlock eiBlock = new EiBlock(blockName);
+        Map map = new HashMap();
+        map.put("status","1");
+        List list = this.dao.query("DUHD12.query", map);
+        eiBlock.setBlockMeta(new DUHD12().eiMetadata);
         eiBlock.setRows(list);
         return eiBlock;
     }

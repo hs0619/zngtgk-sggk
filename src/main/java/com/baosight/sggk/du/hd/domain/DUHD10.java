@@ -32,6 +32,9 @@ public class DUHD10 extends DaoEPBase {
     private String variety = " ";        /* 轧机品种及规格*/
     private String istl = " ";        /* 是否脱硫   01：是   02：否*/
     private String istx = " ";        /* 是否脱销    01：是   02：否*/
+    private String indexName = " ";   /* 指标名称  */
+    private String consumption = " "; /* 使用量 */
+    private String cost = " ";         /* 费用 */
 
     private String facilitycode = " ";
     private String facilityname = " ";
@@ -127,6 +130,19 @@ public class DUHD10 extends DaoEPBase {
         eiColumn = new EiColumn("isupdate");
         eiColumn.setDescName("是否修改");
         eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("indexName");
+        eiColumn.setDescName("指标");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("consumption");
+        eiColumn.setDescName("使用量");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("cost");
+        eiColumn.setDescName("费用");
+        eiMetadata.addMeta(eiColumn);
+
     }
 
     /**
@@ -394,6 +410,31 @@ public class DUHD10 extends DaoEPBase {
         this.isupdate = isupdate;
     }
 
+    public String getIndexName() {
+        return indexName;
+    }
+
+    public void setIndexName(String indexName) {
+        this.indexName = indexName;
+    }
+
+
+    public String getConsumption() {
+        return consumption;
+    }
+
+    public void setConsumption(String consumption) {
+        this.consumption = consumption;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
     /**
      * get the value from Map
      */
@@ -421,6 +462,10 @@ public class DUHD10 extends DaoEPBase {
         setProcedureid(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("procedureid")), procedureid));
 
         setIsupdate(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("isupdate")), isupdate));
+
+        setIndexName(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("indexName")), indexName));
+        setConsumption(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("consumption")), consumption));
+        setCost(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("cost")), cost));
 
     }
 
@@ -452,6 +497,13 @@ public class DUHD10 extends DaoEPBase {
         map.put("procedureid", StringUtils.toString(procedureid, eiMetadata.getMeta("procedureid")));
 
         map.put("isupdate", StringUtils.toString(isupdate, eiMetadata.getMeta("isupdate")));
+
+
+        map.put("indexName", StringUtils.toString(indexName, eiMetadata.getMeta("indexName")));
+        map.put("consumption", StringUtils.toString(consumption, eiMetadata.getMeta("consumption")));
+        map.put("cost", StringUtils.toString(cost, eiMetadata.getMeta("cost")));
+
+
 
 
 
