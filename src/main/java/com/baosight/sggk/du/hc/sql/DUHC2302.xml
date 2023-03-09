@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-04-23 15:49:58
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HC_MANUALPLAN 
+		 PLANID  VARCHAR   NOT NULL   primarykey, 
+		 PLANNAME  VARCHAR   NOT NULL, 
+		 MONITORID  VARCHAR   NOT NULL, 
+		 DEPARTMENTID  VARCHAR, 
+		 SITEID  VARCHAR   NOT NULL, 
+		 CLOCKYEAR  VARCHAR   NOT NULL,
+		 PLANTYPE  VARCHAR   NOT NULL, 
+		 LICENSERATE  VARCHAR   NOT NULL, 
+		 ISCOMPARE  VARCHAR, 
+		 MARK  VARCHAR, 
+		 STATUS  VARCHAR, 
+		 LICENSECOUNT  VARCHAR   NOT NULL, 
+		 CHECKRATE  VARCHAR,
+		 CHECKCOUNT  VARCHAR
+	-->
+<sqlMap namespace="DUHC2302">
+
+	<select id="query1" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC2302">
+		SELECT
+				t1.PLANID	as "planid",  
+				t1.PLANNAME	as "planname",  
+				t1.MONITORID	as "monitorid",  
+				t2.monitorname		as "monitorname",
+				t1.DEPARTMENTID	as "departmentid",  
+				t3.department_name		as "departmentname",
+				t1.SITEID	as "siteid",  
+				t4.sitename	as "sitename",
+				t1.CLOCKYEAR	as "clockyear",
+				t1.PLANTYPE	as "plantype",  
+				t1.LICENSERATE	as "licenserate",  
+				t1.ISCOMPARE	as "iscompare",  
+				t1.MARK	as "mark",  
+				t1.STATUS	as "status",  
+				t1.LICENSECOUNT	as "licensecount",  
+				t1.CHECKRATE	as "checkrate",
+				t1.CHECKCOUNT	as "checkcount" ,
+				t4.portid	as "portid"
+		FROM ${hbSchema}.T_HC_MANUALPLAN t1
+		left join ${hbSchema}.T_HA_MONITOR t2 on t1.MONITORID=t2.MONITORID
+		left join ${hbSchema}.T_HA_DEPARTMENT t3 on t1.DEPARTMENTID=t3.DEPARTMENT_ID
+		left join ${hbSchema}.T_HA_SITE t4 on t1.SITEID=t4.SITEID
+		WHERE 1=1 and t4.ISARTIFICIAL='1'
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			t1.DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="clockyear">
+			t1.CLOCKYEAR = #clockyear#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="iscompare">
+			t1.ISCOMPARE = #iscompare#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t1.PLANTYPE = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  
+    		  t1.clockyear desc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryByPlanid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC2302">
+		SELECT
+				PLANID	as "planid",  
+				MONITORID	as "monitorid",  
+				SITEID	as "siteid"
+		FROM ${hbSchema}.T_HC_MANUALPLAN 
+		where 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			planid = #planid#
+		</isNotEmpty>	
+	</select>
+	
+	<select id="getPlanid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC2302">
+		SELECT
+				PLANID	as "planid",  
+				MONITORID	as "monitorid",  
+				SITEID	as "siteid"
+		FROM ${hbSchema}.T_HC_MANUALPLAN 
+		where 1=1
+		<isNotEmpty prepend=" AND " property="planname">
+			planname = #planname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="planid">
+			planid = #planid#
+		</isNotEmpty>	
+	</select>
+
+	<select id="count1" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HC_MANUALPLAN t1
+		left join ${hbSchema}.T_HA_MONITOR t2 on t1.MONITORID=t2.MONITORID
+		left join ${hbSchema}.T_HA_DEPARTMENT t3 on t1.DEPARTMENTID=t3.DEPARTMENT_ID
+		left join ${hbSchema}.T_HA_SITE t4 on t1.SITEID=t4.SITEID
+		WHERE 1=1 and t4.ISARTIFICIAL='1'
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			t1.DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="clockyear">
+			t1.CLOCKYEAR = #clockyear#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="iscompare">
+			t1.ISCOMPARE = #iscompare#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t1.PLANTYPE = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="planid">
+			PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="planname">
+			PLANNAME = #planname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			DEPARTMENTID = #departmentid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="clockyear">
+			CLOCKYEAR = #clockyear#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			PLANTYPE = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="licenserate">
+			LICENSERATE = #licenserate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="iscompare">
+			ISCOMPARE = #iscompare#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="mark">
+			MARK = #mark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="licensecount">
+			LICENSECOUNT = #licensecount#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="checkrate">
+			CHECKRATE = #checkrate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="checkcount">
+			CHECKCOUNT = #checkcount#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert1">
+		INSERT INTO ${hbSchema}.T_HC_MANUALPLAN (PLANID,
+										PLANNAME,
+										MONITORID,
+										DEPARTMENTID,
+										SITEID,
+										CLOCKYEAR,
+										PLANTYPE,
+										LICENSERATE,
+										ISCOMPARE,
+										MARK,
+										STATUS,
+										LICENSECOUNT,
+										CHECKRATE,
+										CHECKCOUNT,
+										createid,
+										createname,
+										createtime
+										)		 
+	    VALUES (#planid:VARCHAR#, #planname:VARCHAR#, #monitorid:VARCHAR#, #departmentid:VARCHAR#, #siteid:VARCHAR#, 
+	     #clockyear:VARCHAR#, #plantype:VARCHAR#, #licenserate:VARCHAR#, #iscompare:VARCHAR#,
+	    #mark:VARCHAR#, #status:VARCHAR#, #licensecount:VARCHAR#,  #checkrate:VARCHAR#,
+	    #checkcount:VARCHAR#,#createid:VARCHAR#, #createname:VARCHAR#, #createtime:VARCHAR#)
+	</insert>
+  
+	<delete id="delete1">
+		DELETE FROM ${hbSchema}.T_HC_MANUALPLAN WHERE 
+			PLANID = #planid#
+	</delete>
+
+	<update id="update1">
+		UPDATE ${hbSchema}.T_HC_MANUALPLAN 
+		SET 
+					ISCOMPARE	= #iscompare#,
+					MARK	= #mark#, 
+					STATUS	= #status#, 
+					LICENSECOUNT	= #licensecount#, 
+					CHECKRATE	= #checkrate#,
+					CHECKCOUNT	= #checkcount#,
+					updateid	= #updateid#, 
+					updatename	= #updatename#, 
+					updatetime	= #updatetime#
+			WHERE 	
+			PLANID = #planid#
+	</update>
+  	<select id="query"  parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+      	$sqlMap$
+    </select>
+    <delete id="delete">
+		$sqlMap$
+	</delete>
+    <insert id="insert">
+		$sqlMap$
+	</insert>
+   	<update id="update">
+		$sqlMap$
+	</update>
+</sqlMap>
