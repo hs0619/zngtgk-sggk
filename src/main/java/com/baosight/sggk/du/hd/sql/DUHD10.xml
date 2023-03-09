@@ -40,6 +40,8 @@
         b.INDEX_NAME as "indexName",
         b.CONSUMPTION as "consumption",
         b.COST as "cost",
+        b.START_TIME as "startTime",
+        b.END_TIME as "endTime",
         b.isupdate as "isupdate"
         FROM ${hbSchema}.T_HA_FACILITYINFO a
         LEFT JOIN ${hbSchema}.T_HD_FACILITYINFO b ON a.FACILITYID=b.FACILITYID
@@ -102,6 +104,8 @@
         c.INDEX_NAME as "indexName",
         c.CONSUMPTION as "consumption",
         c.COST as "cost",
+        c.START_TIME as "startTime",
+        c.END_TIME as "endTime",
         c.isupdate as "isupdate"
         FROM
         ${hbSchema}.t_ha_envdevice a
@@ -212,10 +216,12 @@
         INDEX_NAME,
         CONSUMPTION,
         COST,
+        START_TIME,
+        END_TIME,
         isupdate
         )
         VALUES (#facilityid#, #djRatedpower#, #ratedpower#, #frequency#, #capacity#, #technique#, #spec#, #height#,
-        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#,#indexName#,#consumption#,#cost#,#isupdate#)
+        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#,#indexName#,#consumption#,#cost#,#startTime#,#endTime#,#isupdate#)
     </insert>
 
     <delete id="delete">
@@ -241,7 +247,9 @@
         ISTX = #istx#,  <!-- 是否脱销    01：是   02：否 -->
         INDEX_NAME = #indexName#,
         CONSUMPTION = #consumption#,
-        COST = #cost#
+        COST = #cost#,
+        START_TIME = #startTime#,
+        END_TIME = #endTime#
         WHERE
         FACILITYID = #facilityid#
     </update>

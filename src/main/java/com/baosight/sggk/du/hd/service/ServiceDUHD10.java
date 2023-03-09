@@ -8,6 +8,7 @@ import com.baosight.sggk.du.hd.domain.DUHD10;
 import com.baosight.sggk.du.hd.domain.DUHD12;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 public class ServiceDUHD10 extends ServiceBase {
 
-    public EiInfo initLoad(EiInfo inInfo){
+    public EiInfo initLoad(EiInfo inInfo) {
         EiInfo outInfo = new EiInfo();
         outInfo.addBlock(getDeptBlock("deptblock"));
         outInfo.addBlock(getProcedureBlock("procedureblock"));
@@ -23,8 +24,22 @@ public class ServiceDUHD10 extends ServiceBase {
         return outInfo;
     }
 
-    public EiInfo query(EiInfo inInfo){
-        EiInfo outInfo = super.query(inInfo, "DUHD10.query",new DUHD10());
+    public EiInfo query(EiInfo inInfo) {
+        EiInfo outInfo = super.query(inInfo, "DUHD10.query", new DUHD10());
+        String startTime = null;
+        String endTime = null;
+        for (int i = 0; i < outInfo.getBlock("result").getRows().size(); i++) {
+            startTime = outInfo.getBlock("result").getCellStr(i, "startTime");
+            endTime = outInfo.getBlock("result").getCellStr(i, "endTime");
+            if (startTime == null) {
+                outInfo.getBlock("result").setCell(i, "startTime", " ");
+            }
+            if (endTime == null) {
+                outInfo.getBlock("result").setCell(i, "endTime", " ");
+            }
+        }
+
+
         return outInfo;
     }
 
@@ -32,13 +47,27 @@ public class ServiceDUHD10 extends ServiceBase {
         EiInfo outInfo = new EiInfo();
         outInfo.addBlock("result2");
         Map<String, Object> map = new HashMap<>();
-        if(inInfo.getBlock("inqu_status") !=null){
-            map =inInfo.getBlock("inqu_status").getRow(0);
+        if (inInfo.getBlock("inqu_status") != null) {
+            map = inInfo.getBlock("inqu_status").getRow(0);
         }
         int offset = (Integer) inInfo.getBlock("result2").get("offset") != null ? (Integer) inInfo.getBlock("result2").get("offset") : 0;
-        int limit =  (Integer) inInfo.getBlock("result2").get("limit");
-        List result = this.dao.query("DUHD10.query2",map,offset,limit);
+        int limit = (Integer) inInfo.getBlock("result2").get("limit");
+        List result = this.dao.query("DUHD10.query2", map, offset, limit);
         outInfo.getBlock("result2").setRows(result);
+
+        String startTime = null;
+        String endTime = null;
+        for (int i = 0; i < outInfo.getBlock("result2").getRows().size(); i++) {
+            startTime = outInfo.getBlock("result2").getCellStr(i, "startTime");
+            endTime = outInfo.getBlock("result2").getCellStr(i, "endTime");
+            if (startTime == null) {
+                outInfo.getBlock("result2").setCell(i, "startTime", " ");
+            }
+            if (endTime == null) {
+                outInfo.getBlock("result2").setCell(i, "endTime", " ");
+            }
+        }
+
         return outInfo;
     }
 
@@ -54,13 +83,13 @@ public class ServiceDUHD10 extends ServiceBase {
 
 
     public EiInfo update(EiInfo inInfo) {
-        EiInfo outInfo =new EiInfo();
+        EiInfo outInfo = new EiInfo();
         StringBuffer buffer = new StringBuffer();
         int insertCount = 0;
         int updateCount = 0;
         try {
             for (int i = 0; i < inInfo.getBlock("result").getRows().size(); i++) {
-                String isupdate=inInfo.getBlock("result").getCellStr(i,"isupdate");
+                String isupdate = inInfo.getBlock("result").getCellStr(i, "isupdate");
                 if ("yes".equals(isupdate)) {
                     dao.update("DUHD10.update", inInfo.getBlock("result").getRow(i));
                     updateCount++;
@@ -107,17 +136,17 @@ public class ServiceDUHD10 extends ServiceBase {
 //            }
 //        }
 //        return outInfo;
-        EiInfo outInfo =new EiInfo();
+        EiInfo outInfo = new EiInfo();
         StringBuffer buffer = new StringBuffer();
         int insertCount = 0;
         int updateCount = 0;
         try {
             EiBlock eiBlock = inInfo.getBlock("result2");
-            if (eiBlock != null){
+            if (eiBlock != null) {
                 inInfo.addBlock("result").setRows(inInfo.getBlock("result2").getRows());
                 List result = inInfo.getBlock("result").getRows();
                 for (int i = 0; i < result.size(); i++) {
-                    String isupdate=inInfo.getBlock("result2").getCellStr(i,"isupdate");
+                    String isupdate = inInfo.getBlock("result2").getCellStr(i, "isupdate");
                     if ("yes".equals(isupdate)) {
                         dao.update("DUHD10.update", inInfo.getBlock("result2").getRow(i));
                         updateCount++;
@@ -147,13 +176,13 @@ public class ServiceDUHD10 extends ServiceBase {
         return outInfo;
     }
 
-    public EiInfo delete(EiInfo inInfo){
+    public EiInfo delete(EiInfo inInfo) {
         EiInfo outInfo = super.delete(inInfo, "DUHD10.delete");
         return outInfo;
     }
 
 
-    public EiInfo delete2(EiInfo inInfo){
+    public EiInfo delete2(EiInfo inInfo) {
         EiBlock eiBlock = inInfo.getBlock("result2");
         inInfo.addBlock(eiBlock).setRows(eiBlock.getRows());
         EiInfo outInfo = super.delete(inInfo, "DUHD10.delete");
@@ -163,7 +192,7 @@ public class ServiceDUHD10 extends ServiceBase {
     private EiBlock getProcedureBlock(String blockName) {
         EiBlock eiBlock = new EiBlock(blockName);
         Map map = new HashMap();
-        map.put("type","P1");
+        map.put("type", "P1");
         List list = this.dao.query("tduhb01.query", map);
         eiBlock.setBlockMeta(new Tduhb01().eiMetadata);
         eiBlock.setRows(list);
@@ -173,17 +202,17 @@ public class ServiceDUHD10 extends ServiceBase {
     private EiBlock getDeptBlock(String blockName) {
         EiBlock eiBlock = new EiBlock(blockName);
         Map map = new HashMap();
-        map.put("type","D1");
+        map.put("type", "D1");
         List list = this.dao.query("tduhb01.query", map);
         eiBlock.setBlockMeta(new Tduhb01().eiMetadata);
         eiBlock.setRows(list);
         return eiBlock;
     }
 
-    private EiBlock getIndexBlock(String blockName){
+    private EiBlock getIndexBlock(String blockName) {
         EiBlock eiBlock = new EiBlock(blockName);
         Map map = new HashMap();
-        map.put("status","1");
+        map.put("status", "1");
         List list = this.dao.query("DUHD12.query", map);
         eiBlock.setBlockMeta(new DUHD12().eiMetadata);
         eiBlock.setRows(list);
