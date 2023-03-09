@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-07-15 14:55:23
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HC_MANFACTOR_LICENSE 
+		 PLANID  VARCHAR   NOT NULL   primarykey, 
+		 SITEID  VARCHAR, 
+		 MONITORID  VARCHAR, 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 LICENSERATE  VARCHAR, 
+		 LICENSECOUNT  VARCHAR
+	-->
+<sqlMap namespace="DUHC230202">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230202">
+		SELECT
+				t1.PLANID	as "planid",  
+				t2.PLANname	as "planname",  
+				t3.factorname as "factorname",
+				t1.FACTORID	as "factorid",  
+				t1.licenserate	as "licenserate",  
+				t1.licensecount	as "licensecount",  
+				t1.highlimit	as "highlimit",  
+				t1.lowlimit	as "lowlimit" ,
+				t1.status	as "status",
+				t1.usezs	as "usezs",
+				t1.iscompare	as "iscompare",
+                t1.unit	as "unit"
+		FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE t1
+        left join ${hbSchema}.T_HC_MANUALPLAN t2 on t1.planid=t2.planid
+		left join ${hbSchema}.T_HA_factor t3 on t1.FACTORID=t3.FACTORID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+
+		<isNotEmpty prepend=" AND " property="year">
+			t1.PLANID like '%$year$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.PLANID asc, 
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryBySiteid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+                t1.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname"  				
+			FROM ${hbSchema}.T_HA_SITEFACTOR t1
+			left join ${hbSchema}.T_HA_FACTOR t2 on t1.FACTORID=t2.FACTORID
+			WHERE 1=1
+			<isNotEmpty prepend=" AND " property="siteid">
+				t1.SITEID = #siteid#
+			</isNotEmpty>
+	</select>
+	
+	<select id="queryDetail" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb10">
+		SELECT
+                t3.FACTORID	as "factorid",  
+				t3.FACTORNAME	as "factorname"
+				from (SELECT t1.* FROM ${hbSchema}.t_ha_portfactor t1 where t1.PORTID = #portid#) t2
+				LEFT JOIN ${hbSchema}.t_ha_factor t3 on t2.FACTORID = t3.FACTORID
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  t3.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryByPlanid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230202">
+		SELECT
+				t1.PLANID	as "planid",  
+				t2.PLANname	as "planname",  
+				t2.SITEID	as "siteid",
+				t2.MONITORID	as "monitorid",
+				t1.unit			as "unit",
+				t1.unit			as "itemunit",
+				t3.factorname as "factorname",  
+				t1.FACTORID	as "factorid",  
+				t1.LICENSERATE	as "licenserate",  
+				t1.LICENSECOUNT	as "licensecount" ,
+				t1.highlimit 	as "highlimit",
+				t1.lowlimit 	as "lowlimit",
+				t1.iscompare	as "iscompare"
+		FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE t1
+		left join ${hbSchema}.T_HC_MANUALPLAN t2 on t1.planid=t2.planid
+		left join ${hbSchema}.T_Ha_factor t3 on t1.FACTORID=t3.FACTORID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+
+	</select>
+	
+	<select id="queryByPlanid2" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230202">
+		SELECT
+				t1.PLANID	as "planid",  
+				t1.SITEID	as "siteid",  
+				t1.MONITORID	as "monitorid",
+				t3.unit			as "unit",
+				t3.factorname as "factorname",  
+				t1.FACTORID	as "factorid",  
+				t1.LICENSERATE	as "licenserate",  
+				t1.LICENSECOUNT	as "licensecount" ,
+				t1.highlimit 	as "highlimit",
+				t1.lowlimit 	as "lowlimit",
+				t1.iscompare	as "iscompare"
+		FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE t1
+		left join(select t2.* from T_HC_MANUALVALUE t2 where 1=1
+					<isNotEmpty prepend=" AND " property="itemtime">
+						t2.ITEMTIME = #itemtime#
+					</isNotEmpty>
+				) t4 on  t1.planid=t4.planid and t1.factorid = t4.factorid
+		left join ${hbSchema}.T_HA_factor t3 on t1.FACTORID=t3.FACTORID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+	</select>
+	
+	<select id="queryByPlanidAndFactorid" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230202">
+		SELECT
+				PLANID	as "planid",  
+				factorid	as "factorid"
+		FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE 
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="planid">
+			PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="licenserate">
+			LICENSERATE = #licenserate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="licensecount">
+			LICENSECOUNT = #licensecount#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HC_MANFACTOR_LICENSE (PLANID,
+										FACTORID,
+										unit,
+										LICENSERATE,
+										LICENSECOUNT,
+										highlimit,
+										lowlimit,
+										status,
+										usezs,
+										iscompare	
+										)		 
+	    VALUES (#planid:VARCHAR#,  #factorid:VARCHAR#,#unit:VARCHAR#, #licenserate:VARCHAR#,
+	    #licensecount:VARCHAR#, #highlimit:VARCHAR#, #lowlimit:VARCHAR#, #status:VARCHAR#, #usezs:VARCHAR#, #iscompare:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE WHERE 
+			PLANID = #planid# AND 
+			FACTORID = #factorid#
+	</delete>
+	
+	<delete id="deleteByPlanid">
+		DELETE FROM ${hbSchema}.T_HC_MANFACTOR_LICENSE WHERE 
+			PLANID = #planid# 
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HC_MANFACTOR_LICENSE 
+		SET 
+					SITEID	= #siteid#, 
+					LICENSERATE	= #licenserate#, 
+					LICENSECOUNT	= #licensecount#,
+					highlimit	= #highlimit#, 
+					lowlimit	= #lowlimit#,
+					status	= #status#,
+					USEZS	= #usezs#,
+					iscompare	= #iscompare#
+			WHERE 	
+			PLANID = #planid# AND 
+			FACTORID = #factorid#
+	</update>
+	
+	<select id="export" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230202">
+		select 
+				t1.planid	as "planid",
+				t2.siteid	as "siteid",
+				t1.factorid	as "factorid",
+				t2.planname as "planname",
+				t1.unit as	"unit",
+				t1.highlimit as "highlimit",
+				t1.lowlimit  as "lowlimit",
+                t2.monitorid	as "monitorid",
+                t3.sitename as "sitename",
+                t3.factorname as "factorname",
+                t4.monitorname as "monitorname"
+			from ${hbSchema}.T_HC_MANFACTOR_LICENSE t1
+            left join ${hbSchema}.T_HC_MANUALPLAN t2 on t1.planid=t2.planid
+            LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t3 on t2.SITEID = t3.SITEID AND t1.FACTORID = t3.FACTORID
+            left join ${hbSchema}.T_HA_monitor t4 on t2.monitorid=t4.monitorid
+        where  1=1
+			<isNotEmpty prepend=" AND " property="departmentid">
+				t2.departmentid= #departmentid#
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="plantype">
+				t1.planid like '%$plantype$'
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="year">
+				t1.planid like '%$year$%'
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="monitorid">
+				t2.MONITORID = #monitorid#
+			</isNotEmpty>
+
+			order by t2.siteid DESC,t1.factorid DESC
+	</select>
+  
+</sqlMap>

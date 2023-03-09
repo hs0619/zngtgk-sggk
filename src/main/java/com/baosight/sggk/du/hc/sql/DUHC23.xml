@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-02-27 15:31:52
+   		Version :  6.0.731.201809200158
+		tableName :.T_HC_MANUALVALUE 
+		 SITEID  VARCHAR   NOT NULL   primarykey, 
+		 MONITORID  VARCHAR, 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 ITEMTIME  VARCHAR   NOT NULL   primarykey, 
+		 ITEMVALUE  VARCHAR, 
+		 ITEMVALUEZS  VARCHAR, 
+		 ITEMUNIT  VARCHAR, 
+		 ITEMLIMIT  VARCHAR, 
+		 ACTTIME  VARCHAR, 
+		 ITEMMARK  VARCHAR, 
+		 PLANID  VARCHAR, 
+		 ISRETEST  VARCHAR, 
+		 RETESTTIME  VARCHAR, 
+		 CHECKPERSON  VARCHAR, 
+		 CHECKINFO  VARCHAR, 
+		 CHECKFLAG  VARCHAR,
+		 COMPARE  VARCHAR,
+		 RETESTMAN  VARCHAR,
+		 RETESTINFO  VARCHAR,
+		 ITEMMAN  VARCHAR,
+		 ITEMFILLTIME  VARCHAR
+	-->
+<sqlMap namespace="DUHC23">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",  
+				t1.MONITORID	as "monitorid",  
+				t1.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname",  
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ITEMMARK	as "itemmark",
+				t1.PLANID	as "planid",  
+		        t1.overlimitinfo	as "overlimitinfo",
+		   		t3.departmentid	as "departmentid"
+		FROM ${hbSchema}.T_HC_MANUALVALUE t1
+		left join ${hbSchema}.t_ha_factor t2 on t1.FACTORID=t2.FACTORID
+		left join ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID=t3.PLANID
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryDetail2" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",  
+				t1.MONITORID	as "monitorid",  
+				t1.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname",  
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ACTTIME	as "acttime",  
+				t1.ITEMMARK	as "itemmark",  
+				t1.PLANID	as "planid",  
+				t1.ISRETEST	as "isretest",  
+				t1.RETESTTIME	as "retesttime",  
+				t1.CHECKPERSON	as "checkperson",  
+				t1.CHECKINFO	as "checkinfo",  
+				t1.CHECKFLAG	as "checkflag",
+				t1.COMPARE  as "compare",
+		        t1.RETESTMAN  as "retestman",
+		        t1.RETESTINFO  as "retestinfo",
+		   		t1.ITEMMAN  as "itemman",
+		 		t1.ITEMFILLTIME  as "itemfilltime",
+		 		t3.departmentid	as "departmentid",
+		 		t3.planname	as "planname",
+		 		t4.monitorname	as "monitorname",
+		 		t5.sitename	as "sitename"
+		FROM ${hbSchema}.T_HC_MANUALVALUE t1
+		left join ${hbSchema}.t_hc_manfactor t2 on t1.FACTORID=t2.FACTORID
+		left join ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID=t3.PLANID
+		left join ${hbSchema}.t_ha_monitor	t4 on t1.monitorid=t4.monitorid
+		left join ${hbSchema}.t_ha_site	t5 on t1.siteid=t5.siteid
+		WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="planid">
+			t1.PLANID = #planid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+	</select>
+	
+	<!--导入判断  -->
+	<select id="queryImport" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				
+				planid	as "planid" 
+			FROM ${hbSchema}.T_HC_MANUALVALUE WHERE 1=1 and
+			planid = #planid# and
+			itemtime = #itemtime# and
+			factorid = #factorid#
+	</select>
+	
+	<select id="querytime" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				
+				ITEMTIME	as "itemtime" 
+			FROM ${hbSchema}.T_HC_MANUALVALUE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="planid">
+			planid = #planid#
+		</isNotEmpty>
+		order by ITEMTIME desc
+		
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM .T_HC_MANUALVALUE WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			ITEMTIME = #itemtime#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemvalue">
+			ITEMVALUE = #itemvalue#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemvaluezs">
+			ITEMVALUEZS = #itemvaluezs#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemunit">
+			ITEMUNIT = #itemunit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemlimit">
+			ITEMLIMIT = #itemlimit#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="acttime">
+			ACTTIME = #acttime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemmark">
+			ITEMMARK = #itemmark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="planid">
+			PLANID = #planid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isretest">
+			ISRETEST = #isretest#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="retesttime">
+			RETESTTIME = #retesttime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="checkperson">
+			CHECKPERSON = #checkperson#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="checkinfo">
+			CHECKINFO = #checkinfo#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="checkflag">
+			CHECKFLAG = #checkflag#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HC_MANUALVALUE (SITEID,
+										MONITORID,
+										FACTORID,
+										ITEMTIME,
+										ITEMVALUE,
+										ITEMVALUEZS,
+										ITEMUNIT,
+										ITEMLIMIT,
+										ITEMMARK,
+										PLANID,
+		 								createid,
+										createname,
+										createtime,
+										overlimitinfo
+										)		 
+	    VALUES (#siteid:VARCHAR#, #monitorid:VARCHAR#, #factorid:VARCHAR#, #itemtime:VARCHAR#, #itemvalue:VARCHAR#, 
+	    #itemvaluezs:VARCHAR#, #itemunit:VARCHAR#, #itemlimit:VARCHAR#,  #itemmark:VARCHAR#,
+	    #planid:VARCHAR#,  #createid:VARCHAR#, #createname:VARCHAR#, #createtime:VARCHAR#, #overlimitinfo:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HC_MANUALVALUE WHERE 
+			FACTORID = #factorid# AND
+			ITEMTIME = #itemtime# AND 
+			PLANID = #planid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HC_MANUALVALUE 
+		SET 		
+					ITEMLIMIT   = #itemlimit#,
+					ITEMVALUE	= #itemvalue#, 
+					ITEMVALUEZS	= #itemvaluezs#, 
+					ITEMUNIT	= #itemunit#, 
+					ITEMMARK	= #itemmark# ,
+					updateid	= #updateid#, 
+					updatename	= #updatename#, 
+					updatetime	= #updatetime#,
+					overlimitinfo	= #overlimitinfo#
+			WHERE 	
+			FACTORID = #factorid# AND
+			ITEMTIME = #itemtime# AND 
+			PLANID = #planid#
+	</update>
+	
+	<select id="queryDetail" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+                t3.departmentid	as "departmentid",
+				t1.SITEID	as "siteid",
+				t1.MONITORID	as "monitorid",
+				t1.FACTORID	as "factorid",   
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ITEMMARK	as "itemmark",
+				t1.PLANID	as "planid",  
+				t1.overlimitinfo	as "overlimitinfo",
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t3.PLANNAME as "planname",
+                t3.plantype as "plantype"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID
+        WHERE 1=1 AND t2.DATASOURCE='1'
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+        <isNotEmpty prepend=" AND " property="departmentid">
+            t3.departmentid = #departmentid#
+        </isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!-- 最大值实测 -->
+	<select id="queryDetailmaxsc" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",                 
+				t1.MONITORID	as "monitorid",
+				t1.FACTORID	as "factorid",   
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ACTTIME	as "acttime",  
+				t1.ITEMMARK	as "itemmark",  
+				t1.PLANID	as "planid",  
+				t1.ISRETEST	as "isretest",  
+				t1.RETESTTIME	as "retesttime",   
+				t1.CHECKPERSON	as "checkperson",  
+				t1.CHECKINFO	as "checkinfo",  
+				t1.CHECKFLAG	as "checkflag",  
+				t1.COMPARE	as "compare", 
+				t1.RETESTMAN	as "retestman", 
+				t1.RETESTINFO	as "retestinfo", 
+				t1.ITEMMAN	as "itemman", 
+				t1.ITEMFILLTIME	as "itemfilltime",
+				t1.overlimitinfo	as "overlimitinfo",
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t2.MONITORNAME as "monitorname",
+                t2.DEPARTMENTID as "departmentid",
+                t3.PLANNAME as "planname",
+                t3.plantype as "plantype"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID 
+		LEFT JOIN(
+	        SELECT
+	            t4.FACTORID       AS "FACTORID",
+	            max(t4.ITEMVALUE+0) AS "ITEMVALUE"
+	        FROM
+              ${hbSchema}.t_hc_manualvalue t4
+	        WHERE 1=1 and t4.ITEMVALUE &lt;&gt;'' and t4.ITEMVALUE is not null
+	            <isNotEmpty prepend=" AND " property="siteid">
+					t4.SITEID = #siteid#
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="startdate">
+					<![CDATA[ t4.ITEMTIME >= #startdate# ]]>
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="enddate">
+					<![CDATA[ t4.ITEMTIME <= #enddate# ]]>
+				</isNotEmpty>
+	        GROUP BY  (t4.FACTORID)) as t5 ON t1.FACTORID=t5.FACTORID 
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE=t5.ITEMVALUE and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>			 
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	<!-- 最大值折算 -->
+	<select id="queryDetailmaxzs" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",                 
+				t1.MONITORID	as "monitorid",
+				t1.FACTORID	as "factorid",   
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ACTTIME	as "acttime",  
+				t1.ITEMMARK	as "itemmark",  
+				t1.PLANID	as "planid",  
+				t1.ISRETEST	as "isretest",  
+				t1.RETESTTIME	as "retesttime",   
+				t1.CHECKPERSON	as "checkperson",  
+				t1.CHECKINFO	as "checkinfo",  
+				t1.CHECKFLAG	as "checkflag",  
+				t1.COMPARE	as "compare", 
+				t1.RETESTMAN	as "retestman", 
+				t1.RETESTINFO	as "retestinfo", 
+				t1.ITEMMAN	as "itemman", 
+				t1.ITEMFILLTIME	as "itemfilltime",
+				t1.overlimitinfo	as "overlimitinfo",
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t2.MONITORNAME as "monitorname",
+                t2.DEPARTMENTID as "departmentid",
+                t3.PLANNAME as "planname",
+                t3.plantype as "plantype"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID 
+		LEFT JOIN(
+	        SELECT
+	            t4.FACTORID       AS "FACTORID",
+	            max(t4.ITEMVALUEZS+0) AS "ITEMVALUEZS"
+	        FROM
+		${hbSchema}.t_hc_manualvalue t4
+	        WHERE 1=1 and t4.ITEMVALUEZS &lt;&gt;'' and t4.ITEMVALUEZS is not null
+	            <isNotEmpty prepend=" AND " property="siteid">
+					t4.SITEID = #siteid#
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="startdate">
+					<![CDATA[ t4.ITEMTIME >= #startdate# ]]>
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="enddate">
+					<![CDATA[ t4.ITEMTIME <= #enddate# ]]>
+				</isNotEmpty>
+	        GROUP BY  (t4.FACTORID)) as t5 ON t1.FACTORID=t5.FACTORID 
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUEZS=t5.ITEMVALUEZS and t1.ITEMVALUEZS &lt;&gt;'' and t1.ITEMVALUEZS is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>			 
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	<!--最小值实测  -->
+	<select id="queryDetailminsc" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",                 
+				t1.MONITORID	as "monitorid",
+				t1.FACTORID	as "factorid",   
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ACTTIME	as "acttime",  
+				t1.ITEMMARK	as "itemmark",  
+				t1.PLANID	as "planid",  
+				t1.ISRETEST	as "isretest",  
+				t1.RETESTTIME	as "retesttime",   
+				t1.CHECKPERSON	as "checkperson",  
+				t1.CHECKINFO	as "checkinfo",  
+				t1.CHECKFLAG	as "checkflag",  
+				t1.COMPARE	as "compare", 
+				t1.RETESTMAN	as "retestman", 
+				t1.RETESTINFO	as "retestinfo", 
+				t1.ITEMMAN	as "itemman", 
+				t1.ITEMFILLTIME	as "itemfilltime",
+				t1.overlimitinfo	as "overlimitinfo",
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t2.MONITORNAME as "monitorname",
+                t2.DEPARTMENTID as "departmentid",
+                t3.PLANNAME as "planname",
+                t3.plantype as "plantype"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID 
+		LEFT JOIN(
+	        SELECT
+	            t4.FACTORID       AS "FACTORID",
+	            MIN(t4.ITEMVALUE+0) AS "ITEMVALUE"
+	        FROM
+		${hbSchema}.t_hc_manualvalue t4
+	        WHERE 1=1 and t4.ITEMVALUE &lt;&gt;'' and t4.ITEMVALUE is not null
+	            <isNotEmpty prepend=" AND " property="siteid">
+					t4.SITEID = #siteid#
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="startdate">
+					<![CDATA[ t4.ITEMTIME >= #startdate# ]]>
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="enddate">
+					<![CDATA[ t4.ITEMTIME <= #enddate# ]]>
+				</isNotEmpty>
+	        GROUP BY  (t4.FACTORID)) as t5 ON t1.FACTORID=t5.FACTORID 
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE=t5.ITEMVALUE and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>			 
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	<!-- 最小值折算 -->
+	<select id="queryDetailminzs" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",                 
+				t1.MONITORID	as "monitorid",
+				t1.FACTORID	as "factorid",   
+				t1.ITEMTIME	as "itemtime",  
+				t1.ITEMVALUE	as "itemvalue",  
+				t1.ITEMVALUEZS	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t1.ACTTIME	as "acttime",  
+				t1.ITEMMARK	as "itemmark",  
+				t1.PLANID	as "planid",  
+				t1.ISRETEST	as "isretest",  
+				t1.RETESTTIME	as "retesttime",   
+				t1.CHECKPERSON	as "checkperson",  
+				t1.CHECKINFO	as "checkinfo",  
+				t1.CHECKFLAG	as "checkflag",  
+				t1.COMPARE	as "compare", 
+				t1.RETESTMAN	as "retestman", 
+				t1.RETESTINFO	as "retestinfo", 
+				t1.ITEMMAN	as "itemman", 
+				t1.ITEMFILLTIME	as "itemfilltime",
+				t1.overlimitinfo	as "overlimitinfo",
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t2.MONITORNAME as "monitorname",
+                t2.DEPARTMENTID as "departmentid",
+                t3.PLANNAME as "planname",
+                t3.plantype as "plantype"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID 
+		LEFT JOIN(
+	        SELECT
+	            t4.FACTORID       AS "FACTORID",
+	            MIN(t4.ITEMVALUEZS+0) AS "ITEMVALUEZS"
+	        FROM
+		${hbSchema}.t_hc_manualvalue t4
+	        WHERE 1=1 and t4.ITEMVALUEZS &lt;&gt;'' and t4.ITEMVALUEZS is not null
+	            <isNotEmpty prepend=" AND " property="siteid">
+					t4.SITEID = #siteid#
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="startdate">
+					<![CDATA[ t4.ITEMTIME >= #startdate# ]]>
+				</isNotEmpty>
+				<isNotEmpty prepend=" AND " property="enddate">
+					<![CDATA[ t4.ITEMTIME <= #enddate# ]]>
+				</isNotEmpty>
+	        GROUP BY  (t4.FACTORID)) as t5 ON t1.FACTORID=t5.FACTORID 
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUEZS=t5.ITEMVALUEZS and t1.ITEMVALUEZS &lt;&gt;'' and t1.ITEMVALUEZS is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>			 
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc, 
+    		  t1.ITEMTIME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	<!-- 平均数实测 -->
+	<select id="queryDetailavgsc" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",                 
+				t1.FACTORID	as "factorid",   
+				avg(t1.ITEMVALUE)	as "itemvalue",  
+				<!-- avg(t1.ITEMVALUEZS)	as "itemvaluezs",   -->
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t3.PLANNAME as "planname"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID 
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>			 
+		</isNotEmpty>
+			group by (t1.SITEID,t1.FACTORID,t1.ITEMUNIT,t1.ITEMLIMIT,t2.SITENAME,t2.FACTORNAME, t3.PLANNAME)
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<!-- 平均数实测 -->
+	<select id="queryDetailavgzs" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+				t1.SITEID	as "siteid",                 
+				t1.FACTORID	as "factorid",   
+				<!-- avg(t1.ITEMVALUE)	as "itemvalue",   -->
+				avg(t1.ITEMVALUEZS)	as "itemvaluezs",  
+				t1.ITEMUNIT	as "itemunit",  
+				t1.ITEMLIMIT	as "itemlimit",  
+				t2.SITENAME	as "sitename", 
+                t2.FACTORNAME	as "factorname", 
+                t3.PLANNAME as "planname"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID 
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID 
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUEZS &lt;&gt;'' and t1.ITEMVALUEZS is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>			 
+		</isNotEmpty>
+			group by (t1.SITEID,t1.FACTORID,t1.ITEMUNIT,t1.ITEMLIMIT,t2.SITENAME,t2.FACTORNAME, t3.PLANNAME)
+		
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  t1.SITEID asc, 
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryOLorHMSite" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb05">
+		SELECT
+				SITEID	as "siteid",  <!-- 监测点编号 -->
+				SITENAME	as "sitename",  <!-- 监测点名称 -->
+				PORTID	as "portid",  <!-- 对应排口编号 -->
+				ISARTIFICIAL	as "isartificial",  <!-- 是否人工 -->
+				ISONLINE	as "isonline",  <!-- 是否在线 -->
+				CLASSIFYID	as "classifyid",  <!-- 人工监测类型编号 -->
+				MONITORID	as "monitorid",  <!-- 在线监测类型编号 -->
+				MNID	as "mnid",  <!-- MN编号 -->
+				DESCRIPTION	as "description",  <!-- 描述 -->
+				SORT	as "sort",  <!-- 排序 -->
+				STATUS	as "status",  <!-- 状态 -->
+				CREATOR	as "creator",  <!-- 新增人 -->
+				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+				MODIFIER	as "modifier",  <!-- 修改人 -->
+				UPDATED_TIME	as "updatedTime" <!-- 修改时间 -->
+		FROM ${hbSchema}.t_ha_site WHERE 1=1
+		<isNotEmpty prepend=" AND " property="siteid">
+			SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isartificial">
+			ISARTIFICIAL = #isartificial#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isonline">
+			ISONLINE = #isonline#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			STATUS = #status#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="classifyid">
+			CLASSIFYID = #classifyid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  SITEID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	
+	<select id="querySiteFactor" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb06">
+		SELECT
+				t2.FACTORID	as "factorid",  
+				t2.FACTORNAME	as "factorname",  
+				t2.UNIT	as "unit",  
+				t2.DESCRIPTION	as "description"
+		FROM ${hbSchema}.t_ha_sitefactor t1
+        LEFT JOIN ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="type">
+			t1.TYPE = #type#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">
+			t1.STATUS = #status#
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		 <isEmpty property="orderBy">
+    		  t1.FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+  
+  	<select id="query1"  parameterClass="java.util.HashMap" remapResults="true" resultClass="java.util.HashMap">
+      $sqlMap$
+    </select>
+
+	<select id="queryItemvalue" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		*
+		FROM
+		${hbSchema}.t_hc_manualvalue t4
+		WHERE 1=1 and t4.ITEMVALUE &lt;&gt;'' and t4.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t4.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t4.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t4.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+
+	</select>
+
+	<select id="queryItemvaluezs" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		*
+		FROM
+		${hbSchema}.t_hc_manualvalue t4
+		WHERE 1=1 and t4.ITEMVALUEZS &lt;&gt;'' and t4.ITEMVALUEZS is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t4.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t4.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t4.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+
+	</select>
+
+	<select id="queryAllDate" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		t1.SITEID	as "siteid",
+		t1.MONITORID	as "monitorid",
+		t1.FACTORID	as "factorid",
+		t1.ITEMTIME	as "itemtime",
+		t1.ITEMVALUE	as "itemvalue",
+		t1.ITEMVALUEZS	as "itemvaluezs",
+		t1.ITEMUNIT	as "itemunit",
+		t1.ITEMLIMIT	as "itemlimit",
+		t1.ACTTIME	as "acttime",
+		t1.ITEMMARK	as "itemmark",
+		t1.PLANID	as "planid",
+		t1.ISRETEST	as "isretest",
+		t1.RETESTTIME	as "retesttime",
+		t1.CHECKPERSON	as "checkperson",
+		t1.CHECKINFO	as "checkinfo",
+		t1.CHECKFLAG	as "checkflag",
+		t1.COMPARE	as "compare",
+		t1.RETESTMAN	as "retestman",
+		t1.RETESTINFO	as "retestinfo",
+		t1.ITEMMAN	as "itemman",
+		t1.ITEMFILLTIME	as "itemfilltime",
+		t1.overlimitinfo	as "overlimitinfo",
+		t2.SITENAME	as "sitename",
+		t2.FACTORNAME	as "factorname",
+		t2.MONITORNAME as "monitorname",
+		t2.DEPARTMENTID as "departmentid",
+		t3.PLANNAME as "planname",
+		t3.plantype as "plantype"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="itemtime">
+			t1.ITEMTIME = #itemtime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				t1.SITEID asc,
+				t1.FACTORID asc,
+				t1.ITEMTIME asc
+			</isEmpty>
+		</dynamic>
+	</select>
+
+
+    <select id="queryAvg" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		t1.SITEID	as "siteid",
+		t1.FACTORID	as "factorid",
+		t1.ITEMUNIT	as "itemunit",
+		t2.SITENAME	as "sitename",
+		t2.FACTORNAME	as "factorname",
+		t3.PLANNAME as "planname"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>
+		</isNotEmpty>
+		group by (t1.SITEID,t1.FACTORID,t1.ITEMUNIT,t2.SITENAME,t2.FACTORNAME, t3.PLANNAME)
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				t1.SITEID asc,
+				t1.FACTORID asc
+			</isEmpty>
+		</dynamic>
+
+    </select>
+
+	<select id="queryAvgsc" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		t1.SITEID	as "siteid",
+		t1.FACTORID	as "factorid",
+        t1.ITEMVALUE AS "itemvalue",
+		t1.ITEMUNIT	as "itemunit",
+		t2.SITENAME	as "sitename",
+		t2.FACTORNAME	as "factorname",
+		t3.PLANNAME as "planname"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>
+		</isNotEmpty>
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				t1.SITEID asc,
+				t1.FACTORID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+
+	<select id="queryAvgzs" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		t1.SITEID	as "siteid",
+		t1.FACTORID	as "factorid",
+		t1.ITEMVALUEZS AS "itemvaluezs",
+		t1.ITEMUNIT	as "itemunit",
+		t2.SITENAME	as "sitename",
+		t2.FACTORNAME	as "factorname",
+		t3.PLANNAME as "planname"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>
+		</isNotEmpty>
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				t1.SITEID asc,
+				t1.FACTORID asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+
+	<select id="queryGroup" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC23">
+		SELECT
+		t1.FACTORID AS "factorid"
+		FROM ${hbSchema}.t_hc_manualvalue  t1
+		LEFT JOIN ${hbSchema}.VIEW_T_HA_SITE_FACTOR t2 on t1.SITEID = t2.SITEID AND t1.FACTORID = t2.FACTORID
+		LEFT JOIN ${hbSchema}.T_HC_MANUALPLAN t3 on t1.PLANID = t3.PLANID
+		WHERE 1=1 AND t2.DATASOURCE='1'  and t1.ITEMVALUE &lt;&gt;'' and t1.ITEMVALUE is not null
+		<isNotEmpty prepend=" AND " property="siteid">
+			t1.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="plantype">
+			t3.plantype = #plantype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="startdate">
+			<![CDATA[ t1.ITEMTIME >= #startdate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="enddate">
+			<![CDATA[ t1.ITEMTIME <= #enddate# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="monitorid">
+			t1.MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="departmentid">
+			<![CDATA[ t2.DEPARTMENTID = #departmentid# ]]>
+		</isNotEmpty>
+		GROUP BY
+		t1.FACTORID
+
+
+
+	</select>
+</sqlMap>

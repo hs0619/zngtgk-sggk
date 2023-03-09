@@ -23,33 +23,37 @@
 	<select id="query" parameterClass="java.util.HashMap" 
 			resultClass="com.baosight.sggk.common.du.domain.Tduhb06">
 		SELECT
-		        MONITORID	as "monitorid",  
-				FACTORID	as "factorid",  <!-- 因子编号 -->
-				PORTID	as "portid",  <!-- 对应排口编号 -->
-				HIGHLIMIT	as "highlimit",  <!-- 高限 -->
-				LOWLIMIT	as "lowlimit",  <!-- 低限 -->
-				NKHIGHLIMIT	as "nkhighlimit",  <!-- 内控高限 -->
-				NKLOWLIMIT	as "nklowlimit",  <!-- 内控低限 -->
-				DESCRIPTION	as "description",  <!-- 描述 -->
-				STATUS	as "status",  <!-- 状态位 -->
-				CREATOR	as "creator",  <!-- 新增人 -->
-				CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
-				MODIFIER	as "modifier",  <!-- 修改人 -->
-				UPDATED_TIME	as "updatedTime", <!-- 修改时间 -->
-				DETECTION_LIMIT	as "detectionLimit" <!-- 检出限 -->
-		FROM ${hbSchema}.t_ha_portfactor WHERE 1=1
+		        t1.MONITORID	as "monitorid",
+        t1.FACTORID	as "factorid",  <!-- 因子编号 -->
+        t1.PORTID	as "portid",  <!-- 对应排口编号 -->
+        t1.HIGHLIMIT	as "highlimit",  <!-- 高限 -->
+        t1.LOWLIMIT	as "lowlimit",  <!-- 低限 -->
+        t1.NKHIGHLIMIT	as "nkhighlimit",  <!-- 内控高限 -->
+        t1.NKLOWLIMIT	as "nklowlimit",  <!-- 内控低限 -->
+        t1.DESCRIPTION	as "description",  <!-- 描述 -->
+        t1.STATUS	as "status",  <!-- 状态位 -->
+        t1.CREATOR	as "creator",  <!-- 新增人 -->
+        t1.CREATED_TIME	as "createdTime",  <!-- 新增时间 -->
+        t1.MODIFIER	as "modifier",  <!-- 修改人 -->
+        t1.UPDATED_TIME	as "updatedTime", <!-- 修改时间 -->
+        t1.DETECTION_LIMIT	as "detectionLimit", <!-- 检出限 -->
+                t2.unit	as "unit"
+		FROM ${hbSchema}.t_ha_portfactor t1
+        left join ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID
+        WHERE 1=1
 		<isNotEmpty prepend=" AND " property="factorid">
-			FACTORID = #factorid#
+            t1.FACTORID = #factorid#
 		</isNotEmpty>
 		<isNotEmpty prepend=" AND " property="portid">
-			PORTID = #portid#
+            t1.PORTID = #portid#
 		</isNotEmpty>
 			<dynamic prepend="ORDER BY">
          <isNotEmpty property="orderBy">
     		  $orderBy$
    		 </isNotEmpty>
    		 <isEmpty property="orderBy">
-    		  PORTID asc,FACTORID asc
+             t1.PORTID asc,
+             t1.FACTORID asc
 		</isEmpty>
   		</dynamic>
 			

@@ -32,7 +32,9 @@ public class Tduhb06 extends DaoEPBase {
     private String createdTime = " ";		
     private String modifier = " ";		
     private String updatedTime = " ";		
-    private String detectionLimit = " ";		
+    private String detectionLimit = " ";
+    private String unit = " ";
+
 
     /**
      * initialize the metadata
@@ -112,7 +114,10 @@ public class Tduhb06 extends DaoEPBase {
         eiColumn.setDescName(" ");
         eiMetadata.addMeta(eiColumn);
 
-
+        eiColumn = new EiColumn("unit");
+        eiColumn.setFieldLength(20);
+        eiColumn.setDescName(" ");
+        eiMetadata.addMeta(eiColumn);
     }
 
     /**
@@ -332,6 +337,14 @@ public class Tduhb06 extends DaoEPBase {
         this.detectionLimit = detectionLimit;
     }
 
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     /**
      * get the value from Map
      */
@@ -351,6 +364,7 @@ public class Tduhb06 extends DaoEPBase {
         setModifier(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("modifier")), modifier));
         setUpdatedTime(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("updatedTime")), updatedTime));
         setDetectionLimit(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("detectionLimit")), detectionLimit));
+        setUnit(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("unit")), unit));
     }
 
     /**
@@ -372,6 +386,7 @@ public class Tduhb06 extends DaoEPBase {
         map.put("modifier", StringUtils.toString(modifier, eiMetadata.getMeta("modifier")));
         map.put("updatedTime", StringUtils.toString(updatedTime, eiMetadata.getMeta("updatedTime")));
         map.put("detectionLimit", StringUtils.toString(detectionLimit, eiMetadata.getMeta("detectionLimit")));
+        map.put("unit", StringUtils.toString(unit, eiMetadata.getMeta("unit")));
         return map;
     }
 }

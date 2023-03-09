@@ -537,7 +537,7 @@
                                                     <a>暂无友情链接！</a>
                                                 </div>
                                             </li>
-                                                <%--<li>
+                                                <li>
                                                     <div class="link-list">
                                                         <span class="index-icon index-related-clip"></span>
                                                         <a target="_blank" href="${ctx}/web/EDFA10">收藏页</a>
@@ -554,7 +554,7 @@
                                                         <span class="index-icon index-related-clip"></span>
                                                         <a target="_blank" href="${ctx}/web/EDFA61">用户自选风格管理表</a>
                                                     </div>
-                                                </li>--%>
+                                                </li>
                                         </ul>
                                     </div>
                                 </div>

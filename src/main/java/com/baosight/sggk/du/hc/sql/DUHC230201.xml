@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">	<!--      table information
+		Generate time : 2021-07-15 11:07:05
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HC_MANFACTOR 
+		 MONITORID  VARCHAR   NOT NULL   primarykey, 
+		 FACTORID  VARCHAR   NOT NULL   primarykey, 
+		 FACTORNAME  VARCHAR, 
+		 ISPLANINNER  VARCHAR, 
+		 ISPLANOUT  VARCHAR, 
+		 ISRATE  VARCHAR, 
+		 UNIT  VARCHAR
+	-->
+<sqlMap namespace="DUHC230201">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230201">
+		SELECT
+				MONITORID	as "monitorid",  
+				FACTORID	as "factorid",  
+				FACTORNAME	as "factorname",  
+				ISPLANINNER	as "isplaninner",  
+				ISPLANOUT	as "isplanout",  
+				ISRATE	as "israte",  
+				UNIT	as "unit" ,
+				ISCOMPARE as "iscompare"
+		FROM ${hbSchema}.T_HC_MANFACTOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="iscompare">
+			iscompare = #iscompare#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorname">
+			factorname like	 '%$factorname$%'
+		</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  MONITORID asc, 
+    		  FACTORID asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+	
+	<select id="queryBykey" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hc.domain.DUHC230201">
+		SELECT
+				MONITORID	as "monitorid",  
+				FACTORID	as "factorid",  
+				FACTORNAME	as "factorname",  
+				ISPLANINNER	as "isplaninner",  
+				ISPLANOUT	as "isplanout",  
+				ISRATE	as "israte",  
+				ISCOMPARE as "iscompare",
+				UNIT	as "unit" 
+		FROM ${hbSchema}.T_HC_MANFACTOR WHERE 1=1
+			and MONITORID = #monitorid#
+			and FACTORID = #factorid#
+	</select>
+	
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HC_MANFACTOR WHERE 1=1
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="monitorid">
+			MONITORID = #monitorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorname">
+			FACTORNAME = #factorname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isplaninner">
+			ISPLANINNER = #isplaninner#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="isplanout">
+			ISPLANOUT = #isplanout#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="israte">
+			ISRATE = #israte#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="unit">
+			UNIT = #unit#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HC_MANFACTOR (MONITORID,
+										FACTORID,
+										FACTORNAME,
+										ISPLANINNER,
+										ISPLANOUT,
+										ISRATE,
+										UNIT,
+										iscompare
+										)		 
+	    VALUES (#monitorid:VARCHAR#, #factorid:VARCHAR#, #factorname:VARCHAR#, #isplaninner:VARCHAR#, 
+	    	#isplanout:VARCHAR#, #israte:VARCHAR#, #unit:VARCHAR#, #iscompare:VARCHAR#)
+	</insert>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HC_MANFACTOR WHERE 
+			MONITORID = #monitorid# AND 
+			FACTORID = #factorid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HC_MANFACTOR 
+		SET 
+					FACTORNAME	= #factorname#, 
+					ISPLANINNER	= #isplaninner#, 
+					ISPLANOUT	= #isplanout#, 
+					ISRATE	= #israte#, 
+					UNIT	= #unit#,
+					iscompare	= #iscompare#
+			WHERE 	
+			MONITORID = #monitorid# AND 
+			FACTORID = #factorid#
+	</update>
+  
+</sqlMap>
