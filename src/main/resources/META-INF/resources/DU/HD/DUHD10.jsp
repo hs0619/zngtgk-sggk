@@ -57,14 +57,16 @@
                                  editType="text" displayType="default" maxLength="50"/>
                     <EF:EFColumn ename="technique" cname="治理方式" defaultValue="" width="100" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFColumn ename="consumption" cname="使用量" defaultValue="" width="100" editType="text"
+                    <EF:EFColumn ename="startTime" cname="开始时间" editType="date"  dateFormat="yyyy-MM-dd" width="70"/>
+                    <EF:EFColumn ename="endTime" cname="结束时间" editType="date"  dateFormat="yyyy-MM-dd" width="70"/>
+                    <EF:EFColumn ename="consumption" cname="使用量" defaultValue="" width="70" editType="text"
                                  displayType="default" maxLength="50"/>
                     <EF:EFComboColumn ename="indexName" cname="指标" width="50"
                                       blockName="indexblock"  textField="indexName"
                                       valueField="indexId" sort="true" >
                         <EF:EFOption label=" "  value="  "/>
                     </EF:EFComboColumn>
-                    <EF:EFColumn ename="cost" cname="费用(元)" defaultValue="" width="100" editType="text"
+                    <EF:EFColumn ename="cost" cname="费用(元)" defaultValue="" width="70" editType="text"
                                  displayType="default" maxLength="50"/>
 <%--                    <EF:EFComboColumn ename="istl" cname="是否脱硫" defaultValue=""  width="50"--%>
 <%--                                      enable="true" editType="select" displayType="default">--%>
@@ -104,24 +106,26 @@
                                       valueField="departmentId" sort="true" readonly="true"/>
                     <EF:EFColumn ename="spec" cname="烧结机规格（m²）" defaultValue="" width="100" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFColumn ename="height" cname="焦炉炭化室高度" defaultValue="" width="100" editType="text"
+                    <EF:EFColumn ename="height" cname="焦炉炭化室高度" defaultValue="" width="90" editType="text"
                                  displayType="default" maxLength="50"/>
                     <EF:EFColumn ename="hole" cname="焦炉孔数" defaultValue="" width="50" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFColumn ename="volume" cname="高炉有效容积(m³)" defaultValue="" width="100"
+                    <EF:EFColumn ename="volume" cname="高炉有效容积(m³)" defaultValue="" width="90"
                                  editType="text" displayType="default" maxLength="50"/>
                     <EF:EFColumn ename="weight" cname="转炉公称容量(吨)" defaultValue="" width="100" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFColumn ename="variety" cname="轧机品种及规格" defaultValue="" width="100" editType="text"
+                    <EF:EFColumn ename="variety" cname="轧机品种及规格" defaultValue="" width="90" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFColumn ename="consumption" cname="使用量" defaultValue="" width="100" editType="text"
+                    <EF:EFColumn ename="startTime" cname="开始时间" editType="date"  dateFormat="yyyy-MM-dd" width="100"/>
+                    <EF:EFColumn ename="endTime" cname="结束时间" editType="date"  dateFormat="yyyy-MM-dd" width="100"/>
+                    <EF:EFColumn ename="consumption" cname="使用量" defaultValue="" width="70" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFComboColumn ename="indexName" cname="指标" width="50"
+                    <EF:EFComboColumn ename="indexName" cname="指标" width="80"
                                       blockName="indexblock"  textField="indexName"
                                       valueField="indexId" sort="true" >
                         <EF:EFOption label=" "  value="  "/>
                     </EF:EFComboColumn>
-                    <EF:EFColumn ename="cost" cname="费用(元)" defaultValue="" width="100" editType="text"
+                    <EF:EFColumn ename="cost" cname="费用(元)" defaultValue="" width="70" editType="text"
                                  displayType="default" maxLength="50"/>
 <%--                    <EF:EFComboColumn ename="istl" cname="是否脱硫" defaultValue=""  width="50"--%>
 <%--                                      enable="true" editType="select" displayType="default">--%>

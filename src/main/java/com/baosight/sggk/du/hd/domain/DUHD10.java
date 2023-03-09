@@ -33,6 +33,8 @@ public class DUHD10 extends DaoEPBase {
     private String istl = " ";        /* 是否脱硫   01：是   02：否*/
     private String istx = " ";        /* 是否脱销    01：是   02：否*/
     private String indexName = " ";   /* 指标名称  */
+    private String startTime = " ";  /* 开始时间 */
+    private String endTime = " ";     /* 结束时间 */
     private String consumption = " "; /* 使用量 */
     private String cost = " ";         /* 费用 */
 
@@ -141,6 +143,14 @@ public class DUHD10 extends DaoEPBase {
 
         eiColumn = new EiColumn("cost");
         eiColumn.setDescName("费用");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("startTime");
+        eiColumn.setDescName("开始时间");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("endTime");
+        eiColumn.setDescName("结束时间");
         eiMetadata.addMeta(eiColumn);
 
     }
@@ -435,6 +445,22 @@ public class DUHD10 extends DaoEPBase {
         this.cost = cost;
     }
 
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     /**
      * get the value from Map
      */
@@ -466,6 +492,9 @@ public class DUHD10 extends DaoEPBase {
         setIndexName(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("indexName")), indexName));
         setConsumption(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("consumption")), consumption));
         setCost(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("cost")), cost));
+
+        setStartTime(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("startTime")), startTime));
+        setEndTime(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("endTime")), endTime));
 
     }
 
@@ -502,6 +531,9 @@ public class DUHD10 extends DaoEPBase {
         map.put("indexName", StringUtils.toString(indexName, eiMetadata.getMeta("indexName")));
         map.put("consumption", StringUtils.toString(consumption, eiMetadata.getMeta("consumption")));
         map.put("cost", StringUtils.toString(cost, eiMetadata.getMeta("cost")));
+
+        map.put("startTime", StringUtils.toString(startTime, eiMetadata.getMeta("startTime")));
+        map.put("endTime", StringUtils.toString(endTime, eiMetadata.getMeta("endTime")));
 
 
 
