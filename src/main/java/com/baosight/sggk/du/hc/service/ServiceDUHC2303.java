@@ -52,7 +52,6 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 	 */
 	public EiInfo query(EiInfo inInfo) {
 		EiInfo outInfo = new EiInfo();
-		// Map qsitemap = new HashMap();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		String departmentid = inInfo.getString("inqu_status-0-departmentid");
 		String siteid = inInfo.getString("inqu_status-0-siteid");
@@ -91,37 +90,37 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 					oloffset = inInfo.getBlock("ardata").getInt("offset");
 				}
 			}
-			EiBlock arinfoBlock = getFactorsBySite(siteid,classifyid, isplaninner, isplanout);
-			outInfo.setBlock(arinfoBlock);
-			EiBlock ardataheaderBlock = getDataHeaderByFactors(arinfoBlock);
-			outInfo.setBlock(ardataheaderBlock);
-//			qsitemap.put("siteid", siteid);
-//			qsitemap.put("departid", departmentid);
-//			qsitemap.put("isartificial", "1");
-//			qsitemap.put("classifyid", classifyid);
-//			qsitemap.put("status", "1");
-//			List<Tduhb07> sitelist = this.dao.query("DUHC2304.queryOLorHMSite", qsitemap, oloffset, ollimit);
-			String factorSql = "select DISTINCT t1.SITEID ,t2.SITENAME,t1.ITEMTIME,t3.PLANNAME from " + DbSchema + ".T_HC_MANUALVALUE t1 "
-					+ " right join " + DbSchema + ".T_HA_SITE t2 on t1.siteid=t2.siteid "
-					+ " LEFT JOIN " + DbSchema +".T_HC_MANUALPLAN t3 ON t1.PLANID=t3.PLANID where 1=1";
-			if (StringUtils.isNotBlank((departmentid)) && !"%".equals(departmentid)) {
-				factorSql += " and t2.departid='" + departmentid + "'";
-			}
-			if (StringUtils.isNotBlank((siteid))&& !"%".equals(siteid)) {
-				factorSql += " and t1.siteid = '" + siteid + "'";
-			}
-			factorSql += " and t1.monitorid='" + classifyid + "' and t1.planid like '%" + planid
-					+ "' and t1.ITEMTIME >= '" + starttime + "' and t1.ITEMTIME <= '" + endtime+"'";
-			Map sqlmap = new HashMap();
-			sqlmap.put("sqlMap", factorSql);
-			List sitelist = this.dao.query("DUHC2304.query", sqlmap, oloffset, ollimit);
-			outInfo = getDataByFactors(outInfo, arinfoBlock, sitelist, starttime, endtime, planid);
-			EiBlock block = outInfo.getBlock("ardata");
-			block.set("offset", oloffset);
-			block.set("limit", ollimit);
-			block.set("count", sitelist.size());
+			EiBlock arinfoBlock = getFactorsBySite(departmentid,siteid,classifyid, isplaninner, isplanout,starttime,endtime);
+			if(arinfoBlock.getRowCount()>0){
+                outInfo.setBlock(arinfoBlock);
+                EiBlock ardataheaderBlock = getDataHeaderByFactors(arinfoBlock);
+                outInfo.setBlock(ardataheaderBlock);
+                String factorSql = "select DISTINCT t1.SITEID ,t2.SITENAME,t1.ITEMTIME,t3.PLANNAME from " + DbSchema + ".T_HC_MANUALVALUE t1 "
+                        + " right join " + DbSchema + ".T_HA_SITE t2 on t1.siteid=t2.siteid "
+                        + " LEFT JOIN " + DbSchema +".T_HC_MANUALPLAN t3 ON t1.PLANID=t3.PLANID where 1=1";
+                if (StringUtils.isNotBlank((departmentid)) && !"%".equals(departmentid)) {
+                    factorSql += " and t2.departid='" + departmentid + "'";
+                }
+                if (StringUtils.isNotBlank((siteid))&& !"%".equals(siteid)) {
+                    factorSql += " and t1.siteid = '" + siteid + "'";
+                }
+                factorSql += " and t1.monitorid='" + classifyid + "' and t1.planid like '%" + planid
+                        + "' and t1.ITEMTIME >= '" + starttime + "' and t1.ITEMTIME <= '" + endtime+"'";
+                Map sqlmap = new HashMap();
+                sqlmap.put("sqlMap", factorSql);
+                List sitelist = this.dao.query("DUHA01.query", sqlmap, oloffset, ollimit);
+                outInfo = getDataByFactors(outInfo, arinfoBlock, sitelist, starttime, endtime, planid);
+                EiBlock block = outInfo.getBlock("ardata");
+                block.set("offset", oloffset);
+                block.set("limit", ollimit);
+                block.set("count", sitelist.size());
+                outInfo.setStatus(1);
+                outInfo.setMsg("数据加载完成！");
+            }else{
+			    outInfo.setStatus(2);
+                outInfo.setMsg("未查到数据！");
+            }
 
-			outInfo.setMsg("数据加载完成");
 		} catch (Exception ex) {
 			outInfo.setStatus(-1);
 			outInfo.setMsg(ex.toString());
@@ -130,7 +129,8 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 	}
 
 	// 根据类型查询监测因子
-	private EiBlock getFactorsBySite(String siteid,String classifyid, String isplaninner, String isplanout) {
+	private EiBlock getFactorsBySite(String departmentid,String siteid,String classifyid, String isplaninner, String isplanout,
+            String starttime,String endtime) {
 		EiBlock block = new EiBlock("artificial");
 		EiBlockMeta metadata = new EiBlockMeta();
 		EiColumn eiColumn = new EiColumn("factorid");
@@ -142,42 +142,29 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 		eiColumn = new EiColumn("unit");
 		metadata.addMeta(eiColumn);
 		block.setBlockMeta(metadata);
-		List<Map> listdata = new ArrayList<>();
 		try {
-			/*String factorSql = "select t1.FACTORID,t1.FACTORNAME,t1.UNIT from " + DbSchema + ".T_HC_MANFACTOR t1 "
-					+ " where t1.MONITORID = '" + classifyid;
-			if ("1".equals(isplaninner)) {
-				factorSql += "' and t1.isplaninner='1'";
-			} else if ("1".equals(isplanout)) {
-				factorSql += "' and t1.isplanout='1'";
-			}*/
-            String factorSql ="select t1.FACTORID,t2.FACTORNAME,t1.ITEMUNIT from iplat4j.t_hc_manualvalue t1" +
+            String factorSql ="select DISTINCT t1.monitorid as 'monitorid', t1.FACTORID as 'factorid'," +
+                    " t2.FACTORNAME as 'factorname',t1.ITEMUNIT as 'unit' from iplat4j.t_hc_manualvalue t1" +
                     " left join iplat4j.t_ha_factor t2 on t1.FACTORID=t2.FACTORID " +
-                    " where monitorid='"+classifyid+"'";
-            if(!"%".equalsIgnoreCase(siteid)){
-                factorSql += "' and t1.siteid='"+siteid+"'";
+                    " left join iplat4j.t_ha_site t3 on t1.siteid=t3.SITEID " +
+                    " where t1.monitorid='"+classifyid+"'"+" and itemtime>='"+starttime+"'" +
+                    " and itemtime<='"+endtime+"'";
+            if(StringUtils.isNotBlank(departmentid)&&!"%".equals(departmentid)){
+                factorSql += " and t3.departid='"+departmentid+"'";
+            }
+            if(StringUtils.isNotBlank(siteid)&&!"%".equals(siteid)){
+                factorSql += " and t1.siteid='"+siteid+"'";
             }
             if ("1".equals(isplaninner)) {
-                factorSql += "' and t1.isplaninner like '%"+isplaninner+"'";
+                factorSql += " and t1.planid like '%"+isplaninner+"'";
             } else if ("1".equals(isplanout)) {
-                factorSql += "' and t1.isplanout like '%"+isplanout+"'";
+                factorSql += " and t1.planid like '%"+isplanout+"'";
             }
 
 			Map sqlmap = new HashMap();
 			sqlmap.put("sqlMap", factorSql);
-			List list = this.dao.query("DUHC2304.query", sqlmap);
-			if (list != null && list.size() > 0) {
-				for (int i = 0; i < list.size(); i++) {
-					Map mapdata = (HashMap) list.get(i);
-					Map map = new HashMap();
-					map.put("factorid", StrUtil.trimToString(mapdata.get("FACTORID")));
-					map.put("monitorid", classifyid);
-					map.put("factorname", StrUtil.trimToString(mapdata.get("FACTORNAME")));
-					map.put("unit", StrUtil.trimToString(mapdata.get("ITEMUNIT")));
-					listdata.add(map);
-				}
-			}
-			block.setRows(listdata);
+			List list = this.dao.query("DUHA01.query", sqlmap);
+			block.addRows(list);
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -299,7 +286,7 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 							Map sqlmap = new HashMap();
 							sqlmap.put("sqlMap", factorSql);
 
-							List list = this.dao.query("DUHC2304.query", sqlmap);
+							List list = this.dao.query("DUHA01.query", sqlmap);
 							if (list != null && list.size() > 0) {
 								for (int i = 0; i < list.size(); i++) {
 									Map mapdata = (HashMap) list.get(i);
@@ -307,7 +294,7 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 									map.put("siteid", temsiteid);
 									map.put("sitename", temsitename);
 									map.put("planname", templanname);
-									String temitemtime = StrUtil.trimToString(mapdata.get("ITEMTIME"));
+									String temitemtime = StrUtil.trimToString(mapdata.get("itemtime"));
 									map.put("itemtime", temitemtime);
 									for (int j = 0; j < factorsBlock.getRowCount(); j++) {
 										String temfactorid = StrUtil
@@ -366,7 +353,7 @@ public class ServiceDUHC2303 extends ServiceEPBase {
 			Map sqlmap = new HashMap();
 			sqlmap.put("sqlMap", factorSql);
 
-			List list = this.dao.query("DUHC2304.query", sqlmap);
+			List list = this.dao.query("DUHA01.query", sqlmap);
 			if (list != null && list.size() > 0) {
 				String temhighlimit = StrUtil.trimToString(((HashMap) list.get(0)).get("HIGHLIMIT"));
 				String temlowlimit = StrUtil.trimToString(((HashMap) list.get(0)).get("LOWLIMIT"));
