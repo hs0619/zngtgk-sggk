@@ -37,6 +37,9 @@
         b.TECHNIQUE as "technique",
         b.ISTL as "istl",
         b.ISTX as "istx",
+        b.INDEX_NAME as "indexName",
+        b.CONSUMPTION as "consumption",
+        b.COST as "cost",
         b.isupdate as "isupdate"
         FROM ${hbSchema}.T_HA_FACILITYINFO a
         LEFT JOIN ${hbSchema}.T_HD_FACILITYINFO b ON a.FACILITYID=b.FACILITYID
@@ -46,6 +49,9 @@
         </isNotEmpty>
         <isNotEmpty prepend=" AND " property="procedureid">
             a.PROCEDUREID = #procedureid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="facilitytype">
+            a.TYPE = #facilitytype#
         </isNotEmpty>
         <dynamic prepend="ORDER BY">
             <isNotEmpty property="orderBy">
@@ -93,11 +99,14 @@
         c.VARIETY as "variety",
         c.ISTL as "istl",
         c.ISTX as "istx",
+        c.INDEX_NAME as "indexName",
+        c.CONSUMPTION as "consumption",
+        c.COST as "cost",
         c.isupdate as "isupdate"
         FROM
-        t_ha_envdevice a
-        LEFT JOIN t_ha_facilityinfo b ON a.ENVDEVICEID = b.DEVICECODE
-        LEFT JOIN t_hd_facilityinfo c ON b.DEVICECODE = c.FACILITYID
+        ${hbSchema}.t_ha_envdevice a
+        LEFT JOIN ${hbSchema}.t_ha_facilityinfo b ON a.ENVDEVICEID = b.DEVICECODE
+        LEFT JOIN ${hbSchema}.t_hd_facilityinfo c ON b.DEVICECODE = c.FACILITYID
         WHERE
         1 = 1
         AND NOT ISNULL(
@@ -107,6 +116,9 @@
         </isNotEmpty>
         <isNotEmpty prepend=" AND " property="procedureid">
             b.PROCEDUREID = #procedureid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="facilitytype">
+            a.DEVICETYPE = #facilitytype#
         </isNotEmpty>
         <!--        <dynamic prepend="ORDER BY">-->
         <!--            <isNotEmpty property="orderBy">-->
@@ -131,7 +143,7 @@
     </select>
 
     <select id="count" resultClass="int">
-        SELECT COUNT(*) FROM iplat4j.t_hd_facilityinfo WHERE 1=1
+        SELECT COUNT(*) FROM ${hbSchema}.t_hd_facilityinfo WHERE 1=1
         <isNotEmpty prepend=" AND " property="facilityid">
             FACILITYID = #facilityid#
         </isNotEmpty>
@@ -197,10 +209,13 @@
         VARIETY,  <!-- 轧机品种及规格 -->
         ISTL,  <!-- 是否脱硫   01：是   02：否 -->
         ISTX,  <!-- 是否脱销    01：是   02：否 -->
+        INDEX_NAME,
+        CONSUMPTION,
+        COST,
         isupdate
         )
         VALUES (#facilityid#, #djRatedpower#, #ratedpower#, #frequency#, #capacity#, #technique#, #spec#, #height#,
-        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#,#isupdate#)
+        #hole#, #volume#, #weight#, #variety#, #istl#, #istx#,#indexName#,#consumption#,#cost#,#isupdate#)
     </insert>
 
     <delete id="delete">
@@ -223,7 +238,10 @@
         WEIGHT = #weight#,   <!-- 转炉公称容量(吨) -->
         VARIETY = #variety#,   <!-- 轧机品种及规格 -->
         ISTL = #istl#,   <!-- 是否脱硫   01：是   02：否 -->
-        ISTX = #istx#  <!-- 是否脱销    01：是   02：否 -->
+        ISTX = #istx#,  <!-- 是否脱销    01：是   02：否 -->
+        INDEX_NAME = #indexName#,
+        CONSUMPTION = #consumption#,
+        COST = #cost#
         WHERE
         FACILITYID = #facilityid#
     </update>

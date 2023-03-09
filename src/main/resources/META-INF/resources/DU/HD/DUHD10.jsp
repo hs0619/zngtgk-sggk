@@ -19,6 +19,12 @@
                 <EF:EFOptions blockId="procedureblock" textField="departmentName"
                               valueField="departmentId"/>
             </EF:EFSelect>
+            <EF:EFSelect ename="inqu_status-0-facilitytype" cname="设施类型"
+                         colWidth="4">
+                <EF:EFOption label="全部" value=""/>
+                <EF:EFOption label="废气治理设施" value="01"/>
+                <EF:EFOption label="废水治理设施" value="02"/>
+            </EF:EFSelect>
         </div>
     </EF:EFRegion>
     <EF:EFTab id="info">
@@ -33,11 +39,11 @@
                         <EF:EFOption label="废气治理设施" value="01"/>
                         <EF:EFOption label="废水治理设施" value="02"/>
                     </EF:EFComboColumn>
-                    <EF:EFComboColumn ename="departmentid" cname="厂部" width="50"
+                    <EF:EFComboColumn ename="departmentid" cname="厂部" width="40"
                                       blockName="deptblock" labelProperty="departmentName"
                                       valueProperty="departmentId" textField="departmentName"
                                       valueField="departmentId" sort="true" readonly="true"/>
-                    <EF:EFComboColumn ename="procedureid" cname="工序" width="50"
+                    <EF:EFComboColumn ename="procedureid" cname="工序" width="40"
                                       blockName="procedureblock" labelProperty="departmentName"
                                       valueProperty="departmentId" textField="departmentName"
                                       valueField="departmentId" sort="true" readonly="true"/>
@@ -51,16 +57,25 @@
                                  editType="text" displayType="default" maxLength="50"/>
                     <EF:EFColumn ename="technique" cname="治理方式" defaultValue="" width="100" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFComboColumn ename="istl" cname="是否脱硫" defaultValue=""  width="50"
-                                      enable="true" editType="select" displayType="default">
-                        <EF:EFOption label="是" value="01"/>
-                        <EF:EFOption label="否" value="02"/>
+                    <EF:EFColumn ename="consumption" cname="使用量" defaultValue="" width="100" editType="text"
+                                 displayType="default" maxLength="50"/>
+                    <EF:EFComboColumn ename="indexName" cname="指标" width="50"
+                                      blockName="indexblock"  textField="indexName"
+                                      valueField="indexId" sort="true" >
+                        <EF:EFOption label=" "  value="  "/>
                     </EF:EFComboColumn>
-                    <EF:EFComboColumn ename="istx" cname="是否脱硝" defaultValue="" width="50"
-                                      enable="true" editType="select" displayType="default">
-                        <EF:EFOption label="是" value="01"/>
-                        <EF:EFOption label="否" value="02"/>
-                    </EF:EFComboColumn>
+                    <EF:EFColumn ename="cost" cname="费用(元)" defaultValue="" width="100" editType="text"
+                                 displayType="default" maxLength="50"/>
+<%--                    <EF:EFComboColumn ename="istl" cname="是否脱硫" defaultValue=""  width="50"--%>
+<%--                                      enable="true" editType="select" displayType="default">--%>
+<%--                        <EF:EFOption label="是" value="01"/>--%>
+<%--                        <EF:EFOption label="否" value="02"/>--%>
+<%--                    </EF:EFComboColumn>--%>
+<%--                    <EF:EFComboColumn ename="istx" cname="是否脱硝" defaultValue="" width="50"--%>
+<%--                                      enable="true" editType="select" displayType="default">--%>
+<%--                        <EF:EFOption label="是" value="01"/>--%>
+<%--                        <EF:EFOption label="否" value="02"/>--%>
+<%--                    </EF:EFComboColumn>--%>
                     <EF:EFColumn ename="isupdate" cname="是否修改"  hidden="true" />
                 </EF:EFGrid>
             </EF:EFRegion>
@@ -79,11 +94,11 @@
                         <EF:EFOption label="废气产污设施" value="01"/>
                         <EF:EFOption label="废水产污设施" value="02"/>
                     </EF:EFComboColumn>
-                    <EF:EFComboColumn ename="departmentid" cname="厂部" width="50"
+                    <EF:EFComboColumn ename="departmentid" cname="厂部" width="40"
                                       blockName="deptblock" labelProperty="departmentName"
                                       valueProperty="departmentId" textField="departmentName"
                                       valueField="departmentId" sort="true" readonly="true"/>
-                    <EF:EFComboColumn ename="procedureid" cname="工序" width="50"
+                    <EF:EFComboColumn ename="procedureid" cname="工序" width="40"
                                       blockName="procedureblock" labelProperty="departmentName"
                                       valueProperty="departmentId" textField="departmentName"
                                       valueField="departmentId" sort="true" readonly="true"/>
@@ -99,16 +114,25 @@
                                  displayType="default" maxLength="50"/>
                     <EF:EFColumn ename="variety" cname="轧机品种及规格" defaultValue="" width="100" editType="text"
                                  displayType="default" maxLength="50"/>
-                    <EF:EFComboColumn ename="istl" cname="是否脱硫" defaultValue=""  width="50"
-                                      enable="true" editType="select" displayType="default">
-                        <EF:EFOption label="是" value="01"/>
-                        <EF:EFOption label="否" value="02"/>
+                    <EF:EFColumn ename="consumption" cname="使用量" defaultValue="" width="100" editType="text"
+                                 displayType="default" maxLength="50"/>
+                    <EF:EFComboColumn ename="indexName" cname="指标" width="50"
+                                      blockName="indexblock"  textField="indexName"
+                                      valueField="indexId" sort="true" >
+                        <EF:EFOption label=" "  value="  "/>
                     </EF:EFComboColumn>
-                    <EF:EFComboColumn ename="istx" cname="是否脱硝" defaultValue="" width="50"
-                                      enable="true" editType="select" displayType="default">
-                        <EF:EFOption label="是" value="01"/>
-                        <EF:EFOption label="否" value="02"/>
-                    </EF:EFComboColumn>
+                    <EF:EFColumn ename="cost" cname="费用(元)" defaultValue="" width="100" editType="text"
+                                 displayType="default" maxLength="50"/>
+<%--                    <EF:EFComboColumn ename="istl" cname="是否脱硫" defaultValue=""  width="50"--%>
+<%--                                      enable="true" editType="select" displayType="default">--%>
+<%--                        <EF:EFOption label="是" value="01"/>--%>
+<%--                        <EF:EFOption label="否" value="02"/>--%>
+<%--                    </EF:EFComboColumn>--%>
+<%--                    <EF:EFComboColumn ename="istx" cname="是否脱硝" defaultValue="" width="50"--%>
+<%--                                      enable="true" editType="select" displayType="default">--%>
+<%--                        <EF:EFOption label="是" value="01"/>--%>
+<%--                        <EF:EFOption label="否" value="02"/>--%>
+<%--                    </EF:EFComboColumn>--%>
                     <EF:EFColumn ename="isupdate" cname="是否修改"  hidden="true" />
                 </EF:EFGrid>
             </EF:EFRegion>
