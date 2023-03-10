@@ -1758,10 +1758,10 @@
             // tabPanel.hide(1);
             // 跟踪
             //refreshTrace();
-            tabPanel.hide(1);
-            tabPanel.hide(2);
-            tabPanel.hide(4);
-            tabPanel.hide(5);
+            //tabPanel.hide(1);
+            //tabPanel.hide(2);
+            //tabPanel.hide(4);
+            //tabPanel.hide(5);
             // 已办
             refreshRecord();
             // 通知

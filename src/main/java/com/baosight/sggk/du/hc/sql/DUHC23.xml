@@ -64,9 +64,10 @@
     		  $orderBy$
    		 </isNotEmpty>
    		<isEmpty property="orderBy">
-    		  t1.SITEID asc, 
-    		  t1.FACTORID asc, 
-    		  t1.ITEMTIME asc
+    		  t1.SITEID asc,
+              t1.ITEMTIME asc,
+    		  t1.FACTORID asc
+
 		</isEmpty>
   		</dynamic>
 			
@@ -319,9 +320,9 @@
    		 </isNotEmpty>
    		<isEmpty property="orderBy">
     		  t1.SITEID asc, 
-    		  t1.FACTORID asc, 
-    		  t1.ITEMTIME asc
-		</isEmpty>
+    		  t1.ITEMTIME asc,
+            t1.FACTORID asc
+        </isEmpty>
   		</dynamic>
 			
 	</select>

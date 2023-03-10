@@ -3,10 +3,12 @@
  */
 package com.baosight.sggk.du.hc.service;
 
-import com.baosight.sggk.common.du.domain.Tduhb08;
 import com.baosight.sggk.util.PermissionUtil;
 import com.baosight.sggk.util.StrUtil;
-import com.baosight.iplat4j.core.ei.*;
+import com.baosight.iplat4j.core.ei.EiBlock;
+import com.baosight.iplat4j.core.ei.EiBlockMeta;
+import com.baosight.iplat4j.core.ei.EiColumn;
+import com.baosight.iplat4j.core.ei.EiInfo;
 import com.baosight.iplat4j.core.service.impl.ServiceEPBase;
 import com.baosight.iplat4j.core.web.threadlocal.UserSession;
 import org.apache.commons.lang.StringUtils;
@@ -15,102 +17,73 @@ import org.apache.log4j.Logger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class ServiceDUHC53 extends ServiceEPBase {
 
-	private static final Logger logger = Logger.getLogger(ServiceDUHC53.class);
+public class ServiceDUHC49 extends ServiceEPBase {
 
-	// 获取配置文件里的参数
+	private static final Logger logger = Logger.getLogger(ServiceDUHC49.class);
+
+	//获取配置文件里的参数
 	ResourceBundle dbPro = ResourceBundle.getBundle("application");
 	String DbSchema = dbPro.getString("hbSchema");
+    
+    
+    
 
 	public EiInfo initLoad(EiInfo inInfo) {
 		EiInfo outInfo = new EiInfo();
+		String status = PermissionUtil.getUserDepart(this.dao, UserSession.getLoginName());
+		outInfo.set("inqu_status-0-departmentid", status);
 
-		EiBlock queryblock = new EiBlock(EiConstant.queryBlock);
-		EiBlockMeta metadata = new EiBlockMeta();
-		EiColumn eiColumn = new EiColumn("monitorid");
-		metadata.addMeta(eiColumn);
-		eiColumn = new EiColumn("porttypeid");
-		metadata.addMeta(eiColumn);
-		queryblock.setBlockMeta(metadata);
-		Map<String, String> row = new HashMap<String, String>();
-		row.put("monitorid", "%");
-		row.put("porttypeid", "country");
-		queryblock.addRow(row);
-		outInfo.addBlock(queryblock);
-
-		EiBlock monitorblock = new EiBlock("monitor");
-		monitorblock.setBlockMeta((new Tduhb08()).eiMetadata);
-
-		List list = new ArrayList<>();
-		Map params = new HashMap();
-		params.put("monitorid", "%");
-		params.put("monitorname", "全部");
-		list.add(params);
-		params = new HashMap();
-		params.put("monitorid", "01");
-		params.put("monitorname", "废气");
-		list.add(params);
-		params = new HashMap();
-		params.put("monitorid", "02");
-		params.put("monitorname", "废水");
-		list.add(params);
-
-		monitorblock.addRows(list);
-		outInfo.setBlock(monitorblock);
-
-		outInfo.setBlock(getPortTypeBlock());
-
-		outInfo.setMsg("数据加载完成");
+	    outInfo.setMsg("数据加载完成");
 		return outInfo;
 	}
-
-	public EiInfo query(EiInfo inInfo) {
+	
+	
+	
+	public EiInfo query(EiInfo inInfo)
+	{
 		EiInfo outInfo = new EiInfo();
-		String monitorid = StringUtils.isBlank(inInfo.getString("inqu_status-0-monitorid")) ? "%"
-				: inInfo.getString("inqu_status-0-monitorid");
-		String siteid = StringUtils.isBlank(inInfo.getString("inqu_status-0-siteid")) ? "%"
-				: inInfo.getString("inqu_status-0-siteid");
-		String porttypeid = StringUtils.isBlank(inInfo.getString("inqu_status-0-porttypeid")) ? "%"
-				: inInfo.getString("inqu_status-0-porttypeid");
-		try {
+		String monitorid = StringUtils.isBlank((String) inInfo.get("inqu_status-0-monitorid")) ? "空" : (String) inInfo.get("inqu_status-0-monitorid");
+		String porttypeid = StringUtils.isBlank((String) inInfo.get("inqu_status-0-porttypeid")) ? "空" : (String) inInfo.get("inqu_status-0-porttypeid");
+ 		String departid = StringUtils.isBlank((String) inInfo.get("inqu_status-0-departmentid")) ? "空" : (String) inInfo.get("inqu_status-0-departmentid");
+		String siteid = StringUtils.isBlank(inInfo.getString("inqu_status-0-siteid")) ? "%" : inInfo.getString("inqu_status-0-siteid");
+		try
+        {
 			EiBlock oldataheaderBlock = getDataHeaderByFactors();
 			outInfo.setBlock(oldataheaderBlock);
-			String sql = "SELECT DEPARTMENTID,siteid,sitename,monitorid,monitorname,mnid,portid,dischargeportname,case when departmentname!='' then departmentname else '其它' end AS \"DEPARTMENTNAME\" FROM "
-					+ DbSchema + ".VIEW_T_HA_SITE t1  where t1.ISONLINE = '1' and t1.STATUS = '1' ";
-			if (!"%".equals(monitorid.trim())) {
-				if (!"%".equals(siteid.trim())) {
-					sql += " and t1.MONITORID = '" + monitorid + "' and t1.SITEID = '" + siteid + "' ";
-				} else {
+			String sql = "SELECT DEPARTMENTID,siteid,sitename,monitorid,monitorname,mnid,portid,dischargeportname,case when departmentname!='' then departmentname else '其它' end AS \"DEPARTMENTNAME\" FROM " + DbSchema + ".VIEW_T_HA_SITE t1  where t1.ISONLINE = '1' and t1.STATUS = '1' ";
+			if(!"%".equals(monitorid.trim())) {
+                if(!"%".equals(siteid.trim())) {
+                	sql += " and t1.MONITORID = '" + monitorid + "' and t1.SITEID = '" + siteid + "' ";
+				}else {
 					sql += " and t1.MONITORID = '" + monitorid + "' ";
 				}
-			} else {
-				if (!"%".equals(siteid.trim())) {
+			}else {
+				if(!"%".equals(siteid.trim())) {
 					sql += " and t1.SITEID = '" + siteid + "' ";
 				}
 			}
-			String status = PermissionUtil.getUserDepart(this.dao, UserSession.getLoginName());
-			// 如果不是特权管理组 则查询该厂部下的监测点
-			sql += " and t1.DEPARTMENTID like '" + status + "' ";
-
-			switch (porttypeid) {
-			case "country":
-				sql += " and t1.COUNTRYPOINT = '1' ";
-				break;
-			case "city":
-				sql += " and t1.CITYPOINT = '1' ";
-				break;
-			case "company":
-				sql += " and t1.COMPANYPOINT = '1' ";
-				break;
-			default:
-				break;
+			if(!"%".equals(departid.trim())) {
+				sql += " and t1.DEPARTMENTID = '" + departid + "' ";
+			}
+			switch(porttypeid) {
+				case "country":
+					sql += " and t1.COUNTRYPOINT = '1' ";
+					break;
+				case "city":
+					sql += " and t1.CITYPOINT = '1' ";
+					break;
+				case "company":
+					sql += " and t1.COMPANYPOINT = '1' ";
+					break;
+				default:
+					break;
 			}
 			sql += " order by DEPARTMENTID ";
 			Map sqlmap = new HashMap();
-			sqlmap.put("sqlMap", sql);
-			List sitelist = this.dao.query("DUHA01.query", sqlmap);
-			//默认查询一段时间的数据，进行比较是否存在数据
+            sqlmap.put("sqlMap", sql);
+            List sitelist = this.dao.query("DUHA01.query", sqlmap);
+            //默认查询一段时间的数据，进行比较是否存在数据
             Calendar startcalendar = Calendar.getInstance();
         	startcalendar.add(Calendar.HOUR_OF_DAY, -2);
         	Calendar endcalendar = Calendar.getInstance();	
@@ -123,13 +96,15 @@ public class ServiceDUHC53 extends ServiceEPBase {
 		    	}
 		    }
 			outInfo.setMsg("数据加载完成");
-		} catch (Exception ex) {
-			outInfo.setStatus(-1);
-			outInfo.setMsg(ex.toString());
-		}
+        }
+        catch(Exception ex)
+        {
+        	outInfo.setStatus(-1);
+        	outInfo.setMsg(ex.toString());
+        }
 		return outInfo;
 	}
-
+	
 	//返回所有配置的 MNID 在线数据最近一次数据的时间集
     private List<Map<String, String>> getAllOnlineDataLastTime(List sitelist) throws Exception 
     {
@@ -374,7 +349,7 @@ public class ServiceDUHC53 extends ServiceEPBase {
     {
     	String overline = "0";
     	
-		String factorSql = "select t3.*,t5.USEZS from (select t1.* from " + DbSchema + ".t_ha_portfactor t1 where t1.PORTID = (select t2.PORTID from " + DbSchema + ".t_ha_site t2 where t2.SITEID = '" + siteid + "') and t1.FACTORID = '" + factorid + "') t3 left join (select t4.FACTORID,t4.USEZS from " + DbSchema + ".T_HA_SITEFACTOR  t4 where t4.TYPE='2' AND t4.SITEID = '" + siteid + "' and t4.FACTORID = '" + factorid + "') t5 on t3.FACTORID = t5.FACTORID ";
+		String factorSql = "select t3.*,t5.USEZS from (select t1.* from " + DbSchema + ".t_ha_portfactor t1 where t1.PORTID = (select t2.PORTID from " + DbSchema + ".t_ha_site t2 where t2.SITEID = '" + siteid + "') and t1.FACTORID = '" + factorid + "') t3 left join (select t4.FACTORID,t4.USEZS from " + DbSchema + ".T_HA_SITEFACTOR t4 where t4.TYPE='2' AND t4.SITEID = '" + siteid + "' and t4.FACTORID = '" + factorid + "') t5 on t3.FACTORID = t5.FACTORID ";
 		
 		Map sqlmap = new HashMap();
 		sqlmap.put("sqlMap", factorSql);
@@ -384,24 +359,26 @@ public class ServiceDUHC53 extends ServiceEPBase {
 			 String temhighlimit = StrUtil.trimToString(((HashMap)list.get(0)).get("HIGHLIMIT"));
 			 String temlowlimit = StrUtil.trimToString(((HashMap)list.get(0)).get("LOWLIMIT"));
 			 String temusezs = StrUtil.trimToString(((HashMap)list.get(0)).get("USEZS"));
-			 if(!StringUtils.isBlank(temhighlimit)) {
-				 Double highvalue = StrUtil.trimToDouble(temhighlimit);
-				 
-				 String avgStr = "1".equals(temusezs) ? avg.substring((avg.indexOf("&")+1)) : avg.substring(0,avg.indexOf("&"));
-				//暂时全用实测值
-				 //String avgStr = avg.substring(0,avg.indexOf("&"));
-				 Double temavg = StrUtil.trimToDouble(avgStr);
-				 if(!StringUtils.isBlank(temlowlimit)) {
-					 Double lowvalue = StrUtil.trimToDouble(temlowlimit);
-					 if(temavg >= highvalue || temavg <= lowvalue) {
-						 overline = "1";
-					 }
-				 }else {
-					 if(temavg >= highvalue) {
-						 overline = "1";
-					 }
-				 }
-			 }
+
+            String avgStr = "1".equals(temusezs) ? avg.substring((avg.indexOf("&")+1)) : avg.substring(0,avg.indexOf("&"));
+            Double temavg = StrUtil.trimToDouble(avgStr);
+            if(!StringUtils.isBlank(temhighlimit)) {
+                if(temavg<=0){
+                    overline = "2";
+                }else{
+                    Double highvalue = StrUtil.trimToDouble(temhighlimit);
+                    if(!StringUtils.isBlank(temlowlimit)) {
+                        Double lowvalue = StrUtil.trimToDouble(temlowlimit);
+                        if(temavg >= highvalue || temavg <= lowvalue) {
+                            overline = "1";
+                        }
+                    }else {
+                        if(temavg >= highvalue) {
+                            overline = "1";
+                        }
+                    }
+                }
+            }
 		}
         return overline;
     }
@@ -461,8 +438,7 @@ public class ServiceDUHC53 extends ServiceEPBase {
     
     
     //加载在线数据根据时间段
-    private EiInfo getDataByDateSpan(EiInfo outInfo, EiBlock factorsBlock, String datatype,
-           Map tabledatemap, Map<String, String> compareMap) throws Exception
+    private EiInfo getDataByDateSpan(EiInfo outInfo, EiBlock factorsBlock, String datatype, Map tabledatemap, Map<String, String> compareMap) throws Exception
     {
         EiBlock block = outInfo.getBlock("oldata");
         List<Map> listdata = new ArrayList<>();
@@ -490,8 +466,13 @@ public class ServiceDUHC53 extends ServiceEPBase {
                 if(compareMap.containsKey(temmn + "&" + temfactorid)) {
                 	map.put("offline", "0");
                 	String overline = getFactorLimitBySite(compareMap.get(temmn + "&" + temfactorid), temfactorid, temsiteid);
-                    if(!"0".equals(overline)) {
+                    /*if(!"0".equals(overline)) {
                     	map.put("overline", "1");
+                    }*/
+                    if("1".equals(overline)) {//超标
+                    	map.put("overline", "1");
+                    }else if("2".equals(overline)){//小于等于0
+                        map.put("overline", "2");
                     }
                 }
             }
@@ -659,48 +640,5 @@ public class ServiceDUHC53 extends ServiceEPBase {
         return compareMap;
     }
     
-    private EiBlock getPortTypeBlock()
-    {
-        EiBlock block = new EiBlock("porttype");
-        EiBlockMeta metadata = new EiBlockMeta();
-        EiColumn eiColumn = new EiColumn("typeid");
-		metadata.addMeta(eiColumn);
-		eiColumn = new EiColumn("typename");
-		metadata.addMeta(eiColumn);
-		List list=new ArrayList<>();
-		Map params=new HashMap();
-		params.put("typeid", "%");
-		params.put("typename", "全部");
-		list.add(params);
-		params=new HashMap();
-		params.put("typeid", "country");
-		params.put("typename", "国控点");
-		list.add(params);
-//		params=new HashMap();
-//		params.put("typeid", "city");
-//		params.put("typename", "市控点");
-//		list.add(params);
-		params=new HashMap();
-		params.put("typeid", "company");
-		params.put("typename", "内控点");
-		list.add(params);
-		block.addRows(list);
-        return block;
-    }
     
-    public  String getUserDeptId() {
-		String departmentid = "";
-		String userid = UserSession.getLoginName();
-		String Sql = "select DEPARTMENT_ID AS \"DEPARTMENTID\" from " + DbSchema
-				+ ".t_ha_xs_user_ex WHERE user_id ='" + userid + "' ";
-		Map sqlmap = new HashMap();
-		sqlmap.put("sqlMap", Sql);
-		List list = this.dao.query("DUHA01.query", sqlmap);
-		if (list != null && list.size() > 0) {
-			for (int i = 0; i < list.size(); i++) {
-				departmentid = StrUtil.trimToString(((HashMap) list.get(i)).get("DEPARTMENTID"));
-			}
-		}
-		return departmentid;
-	}
 }

@@ -14,7 +14,7 @@
 </body>
 
 <script type="text/javascript">
-    window.location.href = '${ctx}/iPlatV6-index.jsp';
+    window.location.href = 'iPlatV6-index.jsp';
 </script>
 
 </html>

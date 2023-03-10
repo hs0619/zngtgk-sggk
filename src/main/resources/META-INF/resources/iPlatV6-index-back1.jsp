@@ -358,15 +358,47 @@
         <EF:EFTab id="page-list" showClose="false" active="0">
             <div title="首页" style="padding: 8px">
                 <div class="row">
-                    <div class="col-sm-9" id="main-left" style="height: 88vh;">
-                        <iframe id="x_duxc50" width="100%" height="100%"
-                                style="background: darkslateblue;" src="${ctx}/web/DUHC53">
-                        </iframe>
-
+                    <div class="col-sm-9 i-index-todo i-index-top">
+                        <EF:EFTab id="info-board" class="i-index-top">
+                            <div class="i-index-tab" title="待办">
+                                <div>
+                                    <ul id="todo"></ul>
+                                </div>
+                                <a class="for-refresh"><i class="fa fa-refresh"></i> 刷新</a>
+                                <div class="refresh-timer hide">距离下次刷新时间还剩<span class="spare-seconds">00:00</span>/<span
+                                        class="refresh-limits">00:00</span></div>
+                            </div>
+                            <div class="i-index-tab" title="提醒">
+                                <div id="information"></div>
+                                    <%--<a class="for-more"><i class="fa fa-angle-double-right"></i> 查看更多</a>--%>
+                                <a class="for-refresh"><i class="fa fa-refresh"></i> 刷新</a>
+                            </div>
+                            <div class="i-index-tab" title="跟踪">
+                                <div id="trace"></div>
+                                <a class="for-more"><i class="fa fa-angle-double-right"></i> 查看更多</a>
+                                <a class="for-refresh"><i class="fa fa-refresh"></i> 刷新</a>
+                            </div>
+                            <div class="i-index-tab" title="已办">
+                                <div id="record"></div>
+                                <a class="for-more"><i class="fa fa-angle-double-right"></i> 查看更多</a>
+                                <a class="for-refresh"><i class="fa fa-refresh"></i> 刷新</a>
+                            </div>
+                            <div class="i-index-tab" title="通知">
+                                <div id="notification"></div>
+                                <a class="for-more"><i class="fa fa-angle-double-right"></i> 查看更多</a>
+                                <a class="for-refresh"><i class="fa fa-refresh"></i> 刷新</a>
+                            </div>
+                            <div class="i-index-tab" title="公告">
+                                <div id="notice" style="height: 100%; overflow:hidden;"></div>
+                                <a class="for-refresh"><i class="fa fa-refresh"></i> 刷新</a>
+                            </div>
+                        </EF:EFTab>
                     </div>
-                    <div class="col-sm-3" id="main-right" style="height: 88vh;">
-                        <%--日历--%>
-                        <div class="index-apm i-index-top" >
+                    <div class="col-sm-3">
+                        <div class="index-apm i-index-top">
+                            <%--<div class="i-region-header">
+                                <span class="index-meet"></span>日历
+                            </div>--%>
                             <div class="i-region-picture">
                                 <img id="solarTermsPic" src="">
                             </div>
@@ -381,31 +413,138 @@
                                 </div>
                             </div>
                         </div>
-                        <%--收藏和友情链接--%>
-                        <EF:EFTab id="info" class="i-index-bottom">
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="col-sm-9">
+                        <div class="index-charts i-index-bottom">
+                            <div class="i-region-header"><span class="index-dashboard"></span>业务快捷</div>
+                            <div class="i-region-content" id="i-region-dots-append">
+                                <div class="slick">
+                                    <div style="background-color:rgba(255, 255, 255, 0.8)" class=" ">
+                                        <ul class="aliceblue">
+                                            <li>
+                                                <img class="onclickOpenFrom1" src="iplatui/img/index/工时填报.png" alt="项目模块信息管理">
+                                                <p class="onclickOpenFrom1">项目模块管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom2" src="iplatui/img/index/报销录入.png" alt="页面信息管理">
+                                                <p class="onclickOpenFrom2">页面信息管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom3" src="iplatui/img/index/我的报销.png" alt="按钮信息管理">
+                                                <p class="onclickOpenFrom3">按钮信息管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom4" src="iplatui/img/index/报销额度.png" alt="菜单信息管理">
+                                                <p class="onclickOpenFrom4">菜单信息管理</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div style="background-color:rgba(255, 255, 255, 0.8)" class=" ">
+                                        <ul class="aliceblue">
+                                            <li>
+                                                <img class="onclickOpenFrom5" src="iplatui/img/index/项目查询.png" alt="微服务信息管理">
+                                                <p class="onclickOpenFrom5">微服务信息管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom6" src="iplatui/img/index/项目变更.png" alt="微服务事件管理">
+                                                <p class="onclickOpenFrom6">微服务事件管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom7" src="iplatui/img/index/项目状态报告.png" alt="配置环境">
+                                                <p class="onclickOpenFrom7">配置环境管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom8" src="iplatui/img/index/完工办理.png" alt="配置信息">
+                                                <p class="onclickOpenFrom8">配置信息管理</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="background-color:rgba(255, 255, 255, 0.8)" class=" ">
+                                        <ul class="aliceblue">
+                                            <li>
+                                                <img class="onclickOpenFrom9" src="iplatui/img/index/销售合同评审.png" alt="用户信息管理">
+                                                <p class="onclickOpenFrom9">用户信息管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom10" src="iplatui/img/index/合同执行跟踪.png" alt="用户群组管理">
+                                                <p class="onclickOpenFrom10">用户群组管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom11" src="iplatui/img/index/采购申请.png" alt="代码类别维护">
+                                                <p class="onclickOpenFrom11">代码类别管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom12" src="iplatui/img/index/外协审签.png" alt="序列号定义管理">
+                                                <p class="onclickOpenFrom12">序列号管理</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="background-color:rgba(255, 255, 255, 0.8)" class=" ">
+                                        <ul class="aliceblue">
+                                            <li>
+                                                <img class="onclickOpenFrom13" src="iplatui/img/index/预算送审.png" alt="资源信息管理">
+                                                <p class="onclickOpenFrom13">资源信息管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom14" src="iplatui/img/index/预算履历.png" alt="资源组信息管理">
+                                                <p class="onclickOpenFrom14">资源组管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom15" src="iplatui/img/index/划转审批.png" alt="资源群组成员信息管理">
+                                                <p class="onclickOpenFrom15">资源群组成员管理</p>
+                                            </li>
+                                            <li>
+                                                <img class="onclickOpenFrom16" src="iplatui/img/index/划转录入.png" alt="授权管理">
+                                                <p class="onclickOpenFrom16">授权管理</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 i-index-todo">
+                        <EF:EFTab id="info">
                             <div class="i-index-tab index-favorite" title="收藏">
                                 <div class="i-region-content">
                                     <div id="fav-list" class="fav-list"></div>
                                 </div>
-                                <%--<a class="for-more moreCollection"><i class="fa fa-angle-double-right"></i> 查看更多</a>--%>
+                                <a class="for-more moreCollection"><i class="fa fa-angle-double-right"></i> 查看更多</a>
                             </div>
                             <div class="i-index-tab index-links" title="友情链接">
-                                <div class="dropup open">
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <div class="link-list">
-                                                <span class="index-icon index-related-clip"></span>
-                                                <a target="_blank" href="${ctx}/web/DUHC" style="color:#5c90d2;">添加链接</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="link-list">
-                                                <span class="index-icon index-related-clip"></span>
-                                                <a target="_blank" href="https://www.baidu.com/">百度</a>
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                                <div>
+                                    <div class="dropup open">
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <div class="link-list">
+                                                        <%--<span class="index-icon index-related-clip"></span>--%>
+                                                    <a>暂无友情链接！</a>
+                                                </div>
+                                            </li>
+                                                <%--<li>
+                                                    <div class="link-list">
+                                                        <span class="index-icon index-related-clip"></span>
+                                                        <a target="_blank" href="${ctx}/web/EDFA10">收藏页</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="link-list">
+                                                        <span class="index-icon index-related-clip"></span>
+                                                        <a target="_blank" href="${ctx}/web/EEDM4004">AutoComplete示例</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="link-list">
+                                                        <span class="index-icon index-related-clip"></span>
+                                                        <a target="_blank" href="${ctx}/web/EDFA61">用户自选风格管理表</a>
+                                                    </div>
+                                                </li>--%>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </EF:EFTab>

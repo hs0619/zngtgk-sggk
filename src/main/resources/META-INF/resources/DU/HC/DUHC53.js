@@ -77,9 +77,9 @@ $(function () {
 	
 	window.onload = function(){
 		query();
-    	setInterval(function () {
+    	/*setInterval(function () {
     		query();
-        }, 300000);//5分钟
+        }, 180000);//3分钟*/
     };
 });
 

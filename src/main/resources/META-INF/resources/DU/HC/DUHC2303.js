@@ -36,7 +36,7 @@ $(function() {
 					departs.push({ "valueField": "%", "textField": "全部" });
 				}
 				$.each(ei["blocks"]["depart"]["rows"], function(i, obj) {
-					departs.push({ "valueField": obj[1], "textField": obj[0] });
+					departs.push({ "valueField": obj[0], "textField": obj[1] });
 				});
 				var dataSource = new kendo.data.DataSource({
 					data: departs
@@ -135,7 +135,12 @@ $(function() {
 		ei.set("isquery", "true");
 		EiCommunicator.send("DUHC2303", "query", ei, {
 			onSuccess: function(ei) {
-				initolGrid(ei);
+			    if(ei.getStatus()==1){
+                    initolGrid(ei);
+                }else{
+                    $("#ef_grid_ardata").empty();
+                    NotificationUtil(ei.getMsg(), "warning");
+                }
 				IPLAT.progress($("body"), false);
 			}, onFail: function(ei) {
 				// 发生异常
