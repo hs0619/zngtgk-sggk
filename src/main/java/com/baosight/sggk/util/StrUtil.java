@@ -123,6 +123,46 @@ public class StrUtil {
 		}
 
 	}
+	/**
+	 * 判断当前系统为windows还是linux，并根据不同的系统获取不同的excel模板路径
+	 * @return
+	 */
+	public static String getExcelTemplatePath() {
+		ResourceBundle dbPro = ResourceBundle.getBundle("application");
+		String path = "";
+		if (System.getProperties().getProperty("os.name").toUpperCase().indexOf("WINDOWS") == -1) {
+			path = dbPro.getString("linuxExcelTemplatePath");
+		} else {
+			String filePath = dbPro.getString("reportPath");
+			path = filePath + "excelTemplate/";
+			File buildFile = new File(path);
+			if (!buildFile.exists() && !buildFile.isDirectory()) {
+				buildFile.mkdir();
+			}
+		}
+		return path;
+
+	}
+
+	/**
+	 * 获取生成的报表文件的路径
+	 * @return
+	 */
+	public static String getExcelReportPath() {
+		String reportDirPath = "";
+		ResourceBundle dbPro = ResourceBundle.getBundle("application");
+		if (System.getProperties().getProperty("os.name").toUpperCase().indexOf("WINDOWS") == -1) {
+			reportDirPath = dbPro.getString("linuxExcelDownloadPath");
+		} else {
+			String filePath = dbPro.getString("reportPath");
+			reportDirPath = filePath + "reportFile/";
+			File buildFile = new File(reportDirPath);
+			if (!buildFile.exists() && !buildFile.isDirectory()) {
+				buildFile.mkdir();
+			}
+		}
+		return reportDirPath;
+	}
 
 	/**
 	 * 判断一个变量是否为空

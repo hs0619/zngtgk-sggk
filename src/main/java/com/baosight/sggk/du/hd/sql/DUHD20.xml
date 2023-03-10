@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!--      table information
+		Generate time : 2023-03-09 15:12:45
+   		Version :  1.0
+		tableName :${hbSchema}.t_hd_report_info 
+		 REPORTNAME  VARCHAR   NOT NULL   primarykey, 
+		 REPORTTYPE  VARCHAR, 
+		 TIMETYPE  VARCHAR, 
+		 TIMEINFO  VARCHAR, 
+		 UPLOADMAN  VARCHAR, 
+		 UPLOADTIME  VARCHAR
+	-->
+<sqlMap namespace="DUHD20">
+
+	<select id="query" parameterClass="java.util.HashMap" 
+			resultClass="com.baosight.sggk.du.hd.domain.DUHD20">
+		SELECT
+				REPORTNAME	as "reportname",  <!-- 报表名称 -->
+				REPORTTYPE	as "reporttype",  <!-- 报表类型 -->
+				TIMETYPE	as "timetype",  <!-- 对应数字 -->
+				TIMEINFO	as "timeinfo",  
+				UPLOADMAN	as "uploadman",  <!-- 上传人员 -->
+				UPLOADTIME	as "uploadtime" <!-- 上传时间 -->
+		FROM ${hbSchema}.t_hd_report_info WHERE 1=1
+		<isNotEmpty prepend=" AND " property="reportname">
+			REPORTNAME = #reportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reporttype">
+			REPORTTYPE = #reporttype#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+         <isNotEmpty property="orderBy">
+    		  $orderBy$
+   		 </isNotEmpty>
+   		<isEmpty property="orderBy">
+    		  REPORTNAME asc
+		</isEmpty>
+  		</dynamic>
+			
+	</select>
+
+	<select id="queryReportType" parameterClass="java.util.HashMap"
+			resultClass="java.util.HashMap">
+		select
+		reporttype as "reporttype",
+		typename as "typename"
+		from ${hbSchema}.t_hd_report_type
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				seq asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.t_hd_report_info WHERE 1=1
+		<isNotEmpty prepend=" AND " property="reportname">
+			REPORTNAME = #reportname#
+		</isNotEmpty>
+	</select>
+	
+	<!--  
+		<isNotEmpty prepend=" AND " property="reportname">
+			REPORTNAME = #reportname#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="reporttype">
+			REPORTTYPE = #reporttype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="timetype">
+			TIMETYPE = #timetype#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="timeinfo">
+			TIMEINFO = #timeinfo#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="uploadman">
+			UPLOADMAN = #uploadman#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="uploadtime">
+			UPLOADTIME = #uploadtime#
+		</isNotEmpty>
+	-->
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.t_hd_report_info (REPORTNAME,  <!-- 报表名称 -->
+										REPORTTYPE,  <!-- 报表类型 -->
+										TIMETYPE,  <!-- 对应数字 -->
+										TIMEINFO,
+										UPLOADMAN,  <!-- 上传人员 -->
+										UPLOADTIME  <!-- 上传时间 -->
+										)		 
+	    VALUES (#reportname#, #reporttype#, #timetype#, #timeinfo#, #uploadman#, #uploadtime#) 
+	</insert>
+
+	<delete id="deleteFormula">
+		DELETE FROM ${hbSchema}.t_hd_report_template WHERE
+		REPORTNAME = #reportname#
+	</delete>
+  
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.t_hd_report_info WHERE 
+			REPORTNAME = #reportname#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.t_hd_report_info 
+		SET 
+					REPORTTYPE	= #reporttype#,   <!-- 报表类型 -->  
+					TIMETYPE	= #timetype#,   <!-- 对应数字 -->  
+					TIMEINFO	= #timeinfo#,   
+					UPLOADMAN	= #uploadman#,   <!-- 上传人员 -->  
+					UPLOADTIME	= #uploadtime#  <!-- 上传时间 -->  
+			WHERE 	
+			REPORTNAME = #reportname#
+	</update>
+
+	<select id="queryReportSEQByType" parameterClass="java.util.HashMap"
+			resultClass="java.util.HashMap">
+		select
+		reporttype as "reporttype",
+		typename as "typename",
+		SEQ as "seq"
+		from ${hbSchema}.t_hd_report_type
+		where 1=1
+		<isNotEmpty prepend=" AND " property="reporttype">
+			reporttype = #reporttype#
+		</isNotEmpty>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				seq asc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+  
+</sqlMap>
