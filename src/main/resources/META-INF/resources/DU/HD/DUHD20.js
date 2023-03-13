@@ -90,6 +90,7 @@ $(function() {
                 if (e.field == 'download') {
                     var model = e.model;
                     if (!model) return;
+                    //下载路劲为浏览器的默认配置，可以去浏览器设置下载地址
                     var url = IPLATUI.CONTEXT_PATH + "/upload/download.jsp?path=" + encodeURI(filePath + model.reportname);
                     window.open(url);
                 }

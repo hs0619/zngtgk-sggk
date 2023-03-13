@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--      table information
+    Generate time : 2023-03-06 13:47:44
+       Version :  1.0
+    tableName :iplat4j.t_hf_pa_appraise_stand
+     reportid  VARCHAR   NOT NULL   primarykey,
+     scoringcontent  VARCHAR   NOT NULL,
+     standardscore  VARCHAR   NOT NULL
+-->
+<sqlMap namespace="DUHF2001">
+
+    <select id="query" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hf.domain.DUHF2001">
+        SELECT
+        reportid as "reportid",  <!-- 报表id -->
+        scoringcontent as "scoringcontent",  <!-- 评价分项内容 -->
+        standardscore as "standardscore" <!-- 评价标准分 -->
+        FROM ${hbSchema}.t_hf_pa_appraise_stand WHERE 1=1
+        <isNotEmpty prepend=" AND " property="scoringcontent">
+            scoringcontent Like '%$scoringcontent$%'
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                reportid asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.t_hf_pa_appraise_stand WHERE 1=1
+        <isNotEmpty prepend=" AND " property="reportid">
+            reportid = #reportid#
+        </isNotEmpty>
+    </select>
+
+    <!--
+        <isNotEmpty prepend=" AND " property="reportid">
+            reportid = #reportid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="scoringcontent">
+            scoringcontent = #scoringcontent#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="standardscore">
+            standardscore = #standardscore#
+        </isNotEmpty>
+    -->
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.t_hf_pa_appraise_stand (reportid,  <!-- 报表id -->
+        scoringcontent,  <!-- 评价分项内容 -->
+        standardscore  <!-- 评价标准分 -->
+        )
+        VALUES (#reportid#, #scoringcontent#, #standardscore#)
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.t_hf_pa_appraise_stand WHERE
+        reportid = #reportid#
+    </delete>
+
+    <update id="update">
+        UPDATE ${hbSchema}.t_hf_pa_appraise_stand
+        SET
+        scoringcontent = #scoringcontent#,   <!-- 评价分项内容 -->
+        standardscore = #standardscore#  <!-- 评价标准分 -->
+        WHERE
+        reportid = #reportid#
+    </update>
+
+</sqlMap>

@@ -18,19 +18,19 @@ public class ServiceDUHD21 extends ServiceBase {
     public ResourceBundle dbPro = ResourceBundle.getBundle("application");
     public String DbSchema = dbPro.getString("hbSchema");
 
-    public EiInfo initLoad(EiInfo inInfo){
+    public EiInfo initLoad(EiInfo inInfo) {
         EiInfo outInfo = new EiInfo();
         outInfo.addBlock(getReportTypeBlock());
-        outInfo.set("inqu_status-0-reporttype","DAY");
+        outInfo.set("inqu_status-0-reporttype", "DAY");
         EiBlock reportInfoBlock = getReportInfo(outInfo).getBlock("reportInfoBlock");
         outInfo.addBlock(reportInfoBlock);
-        if (reportInfoBlock.getRowCount()>0){
-            outInfo.set("inqu_status-0-reportname",reportInfoBlock.getRow(0).get("reportname"));
+        if (reportInfoBlock.getRowCount() > 0) {
+            outInfo.set("inqu_status-0-reportname", reportInfoBlock.getRow(0).get("reportname"));
         }
         //默认开始时间为当前时间的前7天
-        outInfo.set("inqu_status-0-startdate", DateUtil.addDate("DAY",-7));
+        outInfo.set("inqu_status-0-startdate", DateUtil.addDate("DAY", -7));
         //结束时间为当前时间
-        outInfo.set("inqu_status-0-enddate",DateUtil.addDate("DAY",0));
+        outInfo.set("inqu_status-0-enddate", DateUtil.addDate("DAY", 0));
 
         EiBlock resultblock = new EiBlock("resul");
         resultblock.addBlockMeta(new DUHD21().eiMetadata);
@@ -38,16 +38,16 @@ public class ServiceDUHD21 extends ServiceBase {
         return outInfo;
     }
 
-    public EiInfo query(EiInfo inInfo){
+    public EiInfo query(EiInfo inInfo) {
         EiInfo outInfo = new EiInfo();
         String reporttype = inInfo.getString("inqu_status-0-reporttype");
         String reportname = inInfo.getString("inqu_status-0-reportname");
         String startdate = inInfo.getString("inqu_status-0-startdate");
         String enddate = inInfo.getString("inqu_status-0-enddate");
 
-        EiBlock resultblock = inInfo.getBlock("resul");
-        if (resultblock == null){
-            resultblock = new EiBlock("resul");
+        EiBlock resultblock = inInfo.getBlock("result");
+        if (resultblock == null) {
+            resultblock = new EiBlock("result");
             resultblock.addBlockMeta(new DUHD21().eiMetadata);
         }
 
@@ -55,16 +55,17 @@ public class ServiceDUHD21 extends ServiceBase {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            if (sdf.parse(startdate).after(sdf.parse(enddate))){
+            if (sdf.parse(startdate).after(sdf.parse(enddate))) {
                 outInfo.setMsg("终止时间不可小于起始时间");
                 return outInfo;
             }
 
             Map params = new HashMap();
-            params.put("reporttype",reporttype);
-            params.put("reportname",reportname);
+            params.put("reporttype", reporttype);
+            params.put("reportname", reportname);
             List<DUHD20> list = dao.query("DUHD20.query", params, 0, -999999);
-            if (list.size()>0){
+            if (list.size() > 0) {
+                //通过名称和类别去查只会查到一条记录出来，否则报错
                 DUHD20 reportInfo = list.get(0);
                 String filename = reportInfo.getReportname();
                 reporttype = reportInfo.getReporttype();
@@ -76,7 +77,7 @@ public class ServiceDUHD21 extends ServiceBase {
                 Date dtTmpTime = sdf.parse(startdate);
                 Date endTime = sdf.parse(enddate);
 
-                if (reporttype.equals("DAY")){
+                if (reporttype.equals("DAY")) {
                     do {
                         DUHD21 row = new DUHD21();
                         String datatime = sdf.format(dtTmpTime);
@@ -86,7 +87,7 @@ public class ServiceDUHD21 extends ServiceBase {
                         row.setFilename(fileNoSuffixName + "_" + datatime + fileSuffix);
                         result.add(row);
                         dtTmpTime = DateUtil.addDateTime(dtTmpTime, "DAY", 1);
-                    }while (dtTmpTime.compareTo(endTime) <= 0);
+                    } while (dtTmpTime.compareTo(endTime) <= 0);
                 }
 
                 if (reporttype.equals("MONTH")) {
@@ -169,7 +170,7 @@ public class ServiceDUHD21 extends ServiceBase {
             String reportDirPath = StrUtil.getExcelReportPath();// 获取报表所在文件目录
             for (int i = 0; i < result.size(); i++) {
                 DUHD21 info = result.get(i);
-                String reportpath = reportDirPath +   info.getReporttype() + "/" + info.getFilename();
+                String reportpath = reportDirPath + info.getReporttype() + "/" + info.getFilename();
                 File file = new File(reportpath);
                 if (file.exists()) {
                     info.setExist("已生成");
@@ -180,7 +181,7 @@ public class ServiceDUHD21 extends ServiceBase {
                 info.setFilepath(reportpath);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             outInfo.setMsg("报表查询出错");
         }
@@ -191,12 +192,12 @@ public class ServiceDUHD21 extends ServiceBase {
 
 //		if(limit == 0)limit = EiConstant.defaultLimit;
 
-        int formindex=offset>result.size()?result.size():offset;
-        int toindex=offset+limit>result.size()?result.size():offset+limit;
-        List<DUHD21> rows =result.subList(formindex,toindex);
+        int formindex = offset > result.size() ? result.size() : offset;
+        int toindex = offset + limit > result.size() ? result.size() : offset + limit;
+        List<DUHD21> rows = result.subList(formindex, toindex);
 
         resultblock.setRows(rows);
-        resultblock.set(EiConstant.countStr,result.size());
+        resultblock.set(EiConstant.countStr, result.size());
         outInfo.addBlock(resultblock);
         return outInfo;
     }

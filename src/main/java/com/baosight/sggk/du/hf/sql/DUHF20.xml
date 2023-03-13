@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--      table information
+    Generate time : 2023-03-06 13:47:44
+       Version :  1.0
+    tableName :iplat4j.t_hf_pa_appraise
+     reportid  VARCHAR   NOT NULL   primarykey,
+     departmentid  VARCHAR   NOT NULL   primarykey,
+     year  VARCHAR   NOT NULL   primarykey,
+     quarter  VARCHAR   NOT NULL   primarykey,
+     score  VARCHAR
+-->
+<sqlMap namespace="DUHF20">
+
+    <select id="query" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hf.domain.DUHF20">
+        SELECT
+        reportid as "reportid",  <!-- 报表id -->
+        departmentid as "departmentid",  <!-- 区域单位 -->
+        '$year$' as "year",  <!-- 年份 -->
+        '$quarter$' as "quarter",  <!-- 季度 -->
+        score as "score" <!-- 评价得分 -->
+        FROM ${hbSchema}.t_hf_pa_appraise WHERE 1=1
+        <isNotEmpty prepend=" AND " property="reportid">
+            reportid = #reportid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="departmentid">
+            departmentid = #departmentid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="year">
+            year = #year#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="quarter">
+            quarter = #quarter#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                reportid asc,
+                departmentid asc,
+                year asc,
+                quarter asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+    <select id="query1" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hf.domain.DUHF20">
+        SELECT
+        t1.reportid as "reportid",  <!-- 报表id -->
+        '$departmentid$' as "departmentid",  <!-- 区域单位 -->
+        '$year$' as "year",  <!-- 年份 -->
+        '$quarter$' as "quarter",  <!-- 季度 -->
+        t2.score as "score" ,<!-- 评价得分 -->
+        t1.scoringcontent as "scoringcontent",<!-- 评价内容 -->
+        t1.standardscore as "standardscore" <!-- 评价标准分 -->
+        FROM ${hbSchema}.t_hf_pa_appraise_stand t1
+        left join (
+            SELECT
+            t3.reportid,
+            t3.departmentid,
+            t3.year,
+            t3.quarter,
+            t3.score
+            FROM ${hbSchema}.t_hf_pa_appraise t3
+            where 1=1
+            <isNotEmpty prepend=" AND " property="year">
+                t3.year = #year#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="quarter">
+                t3.quarter = #quarter#
+            </isNotEmpty>
+            <isNotEmpty prepend=" AND " property="departmentid">
+                departmentid = #departmentid#
+            </isNotEmpty>
+        ) t2 on t1.reportid = t2.reportid
+        WHERE 1=1
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                reportid asc,
+                departmentid asc,
+                year asc,
+                quarter asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.t_hf_pa_appraise WHERE 1=1
+        <isNotEmpty prepend=" AND " property="reportid">
+            reportid = #reportid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="departmentid">
+            departmentid = #departmentid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="year">
+            year = #year#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="quarter">
+            quarter = #quarter#
+        </isNotEmpty>
+    </select>
+
+    <!--
+        <isNotEmpty prepend=" AND " property="reportid">
+            reportid = #reportid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="departmentid">
+            departmentid = #departmentid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="year">
+            year = #year#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="quarter">
+            quarter = #quarter#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="score">
+            score = #score#
+        </isNotEmpty>
+    -->
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.t_hf_pa_appraise (reportid,  <!-- 报表id -->
+        departmentid,  <!-- 区域单位 -->
+        year,  <!-- 年份 -->
+        quarter,  <!-- 季度 -->
+        score  <!-- 评价得分 -->
+        )
+        VALUES (#reportid#, #departmentid#, #year#, #quarter#, #score#)
+    </insert>
+    <insert id="insert1">
+        INSERT INTO ${hbSchema}.t_hf_pa_appraise (reportid,  <!-- 报表id -->
+        departmentid,  <!-- 区域单位 -->
+        year,  <!-- 年份 -->
+        quarter,  <!-- 季度 -->
+        score  <!-- 评价得分 -->
+        )
+        VALUES (#reportid#, #departmentid#, #year#, #quarter#, #score#)
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.t_hf_pa_appraise WHERE
+        reportid = #reportid# AND
+        departmentid = #departmentid# AND
+        year = #year# AND
+        quarter = #quarter#
+    </delete>
+
+    <update id="update">
+        UPDATE ${hbSchema}.t_hf_pa_appraise
+        SET
+        score = #score#  <!-- 评价得分 -->
+        WHERE
+        reportid = #reportid# AND
+        departmentid = #departmentid# AND
+        year = #year# AND
+        quarter = #quarter#
+    </update>
+
+</sqlMap>
