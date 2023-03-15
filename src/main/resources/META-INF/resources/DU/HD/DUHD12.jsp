@@ -18,7 +18,7 @@
             <EF:EFComboColumn ename="status" cname="是否使用" blockName="flagList"
                               labelProperty="flagname" valueProperty="flagid"
                               textField="flagname" valueField="flagid" required="true" />
-
+            <EF:EFColumn ename="description" cname="备注"  readonly="true" />
         </EF:EFGrid>
     </EF:EFRegion>
 </EF:EFPage>

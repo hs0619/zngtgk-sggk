@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--      table information
+		Generate time : 2021-03-08 14:18:02
+   		Version :  6.0.731.201809200158
+		tableName :${hbSchema}.T_HA_SITEFACTOR
+		 FACTORID  VARCHAR   NOT NULL   primarykey,
+		 SITEID  VARCHAR   NOT NULL   primarykey,
+		 TYPE  VARCHAR   NOT NULL   primarykey,
+		 DESCRIPTION  VARCHAR,
+		 STATUS  VARCHAR,
+		 CREATOR  VARCHAR,
+		 CREATED_TIME  VARCHAR,
+		 MODIFIER  VARCHAR,
+		 UPDATED_TIME  VARCHAR
+	-->
+<sqlMap namespace="tduhb0605">
+	<select id="query" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb0605">
+		SELECT
+		PFID as "pfid",
+		PORTID as "portid",
+		FACTORID as "factorid",
+		LIMIT_TYPE as "limitType",
+		LIMIT as "limit",
+		LOWLIMIT as "lowlimit",
+		LIMITNAME as "limitname",
+		STARTTIME as "starttime",
+		ENDTIMEE as "endtimee",
+		STATUS as "status",
+		REMARKS as "remarks"
+		FROM
+		${hbSchema}.T_HA_PORT_LIMIT_HISTORY WHERE 1=1
+		<isNotEmpty prepend=" AND " property="pfid">
+			PFID = #pfid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="limitType">
+			LIMIT_TYPE = #limitType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="starttime">
+			STARTTIME <![CDATA[ >= ]]> #starttime#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="endtimee">
+			STARTTIME <![CDATA[ <= ]]> #endtimee#
+		</isNotEmpty>
+
+
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="orderBy">
+				$orderBy$
+			</isNotEmpty>
+			<isEmpty property="orderBy">
+				STARTTIME desc
+			</isEmpty>
+		</dynamic>
+
+	</select>
+
+	<select id="queryLastLimt" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb0605">
+		SELECT
+		PFID as "pfid",
+		PORTID as "portid",
+		FACTORID as "factorid",
+		LIMIT_TYPE as "limitType",
+		LIMIT as "limit",
+		LOWLIMIT as "lowlimit",
+		LIMITNAME as "limitname",
+		STARTTIME as "starttime",
+		ENDTIMEE as "endtimee",
+		STATUS as "status",
+		REMARKS as "remarks"
+		FROM
+		${hbSchema}.T_HA_PORT_LIMIT_HISTORY WHERE 1=1
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="limitType">
+			LIMIT_TYPE = #limitType#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="starttime">
+			STARTTIME <![CDATA[ <= ]]> #starttime#
+		</isNotEmpty>
+
+		order by STARTTIME desc fetch first 1 rows only
+	</select>
+
+
+	<select id="getLatestHighlimit" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb0605">
+		SELECT
+			t1.PFID as "pfid",
+			t1.PORTID as "portid",
+			t1.FACTORID as "factorid",
+			t1.LIMIT_TYPE as "limitType",
+			t1.LIMIT as "limit",
+			t1.LOWLIMIT as "lowlimit",
+			t1.LIMITNAME as "limitname",
+			t1.STARTTIME as "starttime",
+			t1.ENDTIMEE as "endtimee",
+			t1.STATUS as "status",
+			t1.REMARKS as "remarks"
+		FROM
+			${hbSchema}.T_HA_PORT_LIMIT_HISTORY t1
+		LEFT JOIN
+			${hbSchema}.T_HA_PORTFACTOR t2
+		ON
+				t1.PORTID = t2.PORTID
+		RIGHT JOIN
+			${hbSchema}.T_HA_SITE t3
+		ON
+			t1.PORTID = t3.PORTID
+		WHERE
+		      1=1
+		AND
+			t1.FACTORID = t2.FACTORID
+		AND
+			t1.LIMIT_TYPE = t2.LIMIT_TYPE
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t3.SITEID = #siteid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="starttime">
+			t1.STARTTIME <![CDATA[ <= ]]> #starttime#
+		</isNotEmpty>
+		order by t1.STARTTIME desc fetch first 1 rows only
+	</select>
+
+
+	<select id="getLimitByDatatime" parameterClass="java.util.HashMap"
+			resultClass="com.baosight.sggk.common.du.domain.Tduhb0605">
+		SELECT
+			t1.PFID as "pfid",
+			t1.PORTID as "portid",
+			t1.FACTORID as "factorid",
+			t1.LIMIT_TYPE as "limitType",
+			t1.LIMIT as "limit",
+			t1.LOWLIMIT as "lowlimit",
+			t1.LIMITNAME as "limitname",
+			t1.STARTTIME as "starttime",
+			t1.ENDTIMEE as "endtimee",
+			t1.STATUS as "status",
+			t1.REMARKS as "remarks"
+		FROM
+			${hbSchema}.T_HA_PORT_LIMIT_HISTORY t1
+		LEFT JOIN
+			${hbSchema}.T_HA_PORTFACTOR t2
+		ON
+			t1.PORTID = t2.PORTID
+		RIGHT JOIN
+			${hbSchema}.T_HA_SITE t3
+		ON
+			t1.PORTID = t3.PORTID
+		WHERE
+			1=1
+		AND
+			t1.FACTORID = t2.FACTORID
+		AND
+			t1.LIMIT_TYPE = t2.LIMIT_TYPE
+		and
+			t1.STARTTIME <![CDATA[ <= ]]> #starttime#
+		<isNotEmpty prepend=" AND " property="factorid">
+			t1.FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteid">
+			t3.SITEID = #siteid#
+		</isNotEmpty>
+
+
+		order by t1.STARTTIME desc fetch first 1 rows only
+	</select>
+
+
+	<select id="count" resultClass="int">
+		SELECT COUNT(*) FROM ${hbSchema}.T_HA_PORT_LIMIT_HISTORY WHERE 1=1
+		<isNotEmpty prepend=" AND " property="pfid">
+			PFID = #pfid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="factorid">
+			FACTORID = #factorid#
+		</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="portid">
+			PORTID = #portid#
+		</isNotEmpty>
+
+	</select>
+
+
+
+	<insert id="insert">
+		INSERT INTO ${hbSchema}.T_HA_PORT_LIMIT_HISTORY (PFID,
+		                                                 PORTID,
+														 FACTORID,
+														 LIMIT_TYPE,
+														 LIMIT,
+														 LOWLIMIT,
+														 LIMITNAME,
+														 STARTTIME,
+														 ENDTIMEE,
+														 STATUS,
+														 REMARKS
+		)
+		VALUES (#pfid:VARCHAR#,
+		        #portid:VARCHAR#,
+				#factorid:VARCHAR#,
+				#limitType:VARCHAR#,
+				#limit:VARCHAR#,
+				#lowlimit:VARCHAR#,
+				#limitname:VARCHAR#,
+				#starttime:VARCHAR#,
+				#endtimee:VARCHAR#,
+				#status:VARCHAR#,
+				#remarks:VARCHAR#)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM ${hbSchema}.T_HA_PORT_LIMIT_HISTORY WHERE
+			PFID = #pfid#
+	</delete>
+
+	<update id="update">
+		UPDATE ${hbSchema}.T_HA_PORT_LIMIT_HISTORY
+		SET
+			FACTORID = #factorid#,
+			PORTID = #portid#,
+			LIMIT_TYPE = #limitType#,
+			LIMIT	= #limit#,
+			LOWLIMIT	= #lowlimit#,
+			LIMITNAME	= #limitname#,
+			STARTTIME	= #starttime#,
+			STATUS = #status#
+		WHERE
+			PFID = #pfid#
+
+	</update>
+
+	<update id="updateInfo">
+		UPDATE ${hbSchema}.T_HA_PORT_LIMIT_HISTORY
+		SET
+			FACTORID = #factorid#,
+			PORTID = #portid#,
+			LIMIT_TYPE = #limitType#,
+			LIMIT	= #limit#,
+			LOWLIMIT	= #lowlimit#,
+			LIMITNAME	= #limitname#,
+			STARTTIME	= #starttime#
+		WHERE
+			PFID = #pfid#
+
+	</update>
+</sqlMap>

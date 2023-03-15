@@ -14,7 +14,8 @@
 		SELECT
 				INDEX_ID	as "indexId",  <!-- 主键ID -->
 				INDEX_NAME	as "indexName", <!-- 指标名称 -->
-				STATUS      as "status"
+				STATUS      as "status",    <!-- 是否使用 -->
+		DESCRIPTION     as   "description"
 		FROM ${hbSchema}.t_hd_index_table WHERE 1=1
 		<isNotEmpty prepend=" AND " property="indexId">
 			INDEX_ID = #indexId#
@@ -60,9 +61,9 @@
 
 	<insert id="insert">
 		INSERT INTO ${hbSchema}.t_hd_index_table (INDEX_ID,  <!-- 主键ID -->
-										INDEX_NAME,STATUS  <!-- 指标名称 -->
+										INDEX_NAME,STATUS,DESCRIPTION  <!-- 指标名称 -->
 										)		 
-	    VALUES (#indexId#, #indexName#,#status#)
+	    VALUES (#indexId#, #indexName#,#status#,#description#)
 	</insert>
   
 	<delete id="delete">
@@ -74,7 +75,8 @@
 		UPDATE ${hbSchema}.t_hd_index_table
 		SET 
 					INDEX_NAME	= #indexName#,  <!-- 指标名称 -->
-					STATUS = #status#
+					STATUS = #status#,
+					DESCRIPTION = #description#
 			WHERE 	
 			INDEX_ID = #indexId#
 	</update>

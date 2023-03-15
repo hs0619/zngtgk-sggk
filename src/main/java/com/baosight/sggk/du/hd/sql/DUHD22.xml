@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DUHD22">
+    <!-- 根据手工计划时间查询对应的废气类型站点 -->
+    <select id="querySiteIdAndSiteName" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        t1.siteid as "siteId",
+        t2.SITENAME as "siteName"
+        from ${hbSchema}.t_hc_manualvalue t1
+        LEFT JOIN ${hbSchema}.t_ha_site t2 on t1.siteid = t2.SITEID
+        WHERE 1=1
+        AND NOT ISNULL(t1.ITEMVALUE)
+        AND t1.monitorid = '01'
+        <isNotEmpty prepend=" AND " property="reportDate">
+            SUBSTR(t1.CREATETIME,1,7) = #reportDate#
+        </isNotEmpty>
+        GROUP BY t1.siteid,t2.SITENAME
+    </select>
+
+
+    <select id="queryData" parameterClass="java.util.HashMap"
+            resultClass="java.util.HashMap">
+        SELECT
+        t1.FACTORID as "factorId",
+        t2.FACTORNAME as "factorName",
+        t1.siteid as "siteid",
+        t3.SITENAME as "siteName",
+        t1.ITEMVALUE as "itemValue",
+        t1.ITEMVALUEZS as "itemValueZs",
+        SUBSTR(t1.CREATETIME,1,10) as "createTime"
+        from ${hbSchema}.t_hc_manualvalue t1
+        INNER JOIN ${hbSchema}.t_ha_factor t2 on t1.FACTORID = t2.FACTORID
+        INNER JOIN ${hbSchema}.t_ha_site t3 on t1.siteid = t3.SITEID
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="siteId">
+            t1.siteid = #siteId#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="reportDate">
+            SUBSTR(t1.CREATETIME,1,7) = #reportDate#
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                t1.CREATETIME asc
+            </isEmpty>
+        </dynamic>
+    </select>
+
+
+    <!-- 根据监测计划的站点ID查询出对应的因子限值 -->
+    <select id="getLimit" parameterClass="java.util.HashMap"
+            resultClass="java.lang.String">
+        select
+        t1.HIGHLIMIT as "limit"
+        from ${hbSchema}.t_ha_portfactor t1
+        INNER JOIN ${hbSchema}.t_ha_site t2 on t1.PORTID = t2.PORTID
+        INNER JOIN ${hbSchema}.t_hc_manualvalue t3 on t2.SITEID = t3.siteid
+        WHERE 1=1
+        <isNotEmpty prepend=" AND " property="siteid">
+            t3.siteid = #siteid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="factorid">
+            t1.FACTORID = #factorid#
+        </isNotEmpty>
+
+    </select>
+
+</sqlMap>

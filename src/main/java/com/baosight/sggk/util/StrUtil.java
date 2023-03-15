@@ -134,7 +134,7 @@ public class StrUtil {
 			path = dbPro.getString("linuxExcelTemplatePath");
 		} else {
 			String filePath = dbPro.getString("reportPath");
-			path = filePath + "excelTemplate/";
+			path = filePath + "excelTemplate/";  //  E:/IplatFile/report/excelTemplate/
 			File buildFile = new File(path);
 			if (!buildFile.exists() && !buildFile.isDirectory()) {
 				buildFile.mkdir();
@@ -155,7 +155,7 @@ public class StrUtil {
 			reportDirPath = dbPro.getString("linuxExcelDownloadPath");
 		} else {
 			String filePath = dbPro.getString("reportPath");
-			reportDirPath = filePath + "reportFile/";
+			reportDirPath = filePath + "reportFile/";   //  E:/IplatFile/report/reportFile/
 			File buildFile = new File(reportDirPath);
 			if (!buildFile.exists() && !buildFile.isDirectory()) {
 				buildFile.mkdir();

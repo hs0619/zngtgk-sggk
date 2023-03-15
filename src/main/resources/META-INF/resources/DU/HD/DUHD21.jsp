@@ -31,7 +31,7 @@
     </EF:EFRegion>
     <EF:EFRegion title="结果" id="result" fitHeight="true">
         <EF:EFGrid blockId="result" autoDraw="false" sort="setted"
-                   rowNo="true" isFloat="true" checkMode="hidden" >
+                   rowNo="true" isFloat="true" checkMode="hidden" serviceName="DUHD21" queryMethod="query">
             <EF:EFColumn ename="filename" cname="报表名称" width="180" />
             <EF:EFColumn ename="reportname" cname="模板名称" hidden="true" />
             <EF:EFColumn ename="datatime" cname="数据时间 " width="70" />

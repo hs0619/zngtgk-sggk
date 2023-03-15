@@ -21,6 +21,7 @@ public class DUHD12 extends DaoEPBase {
     private String indexId = " ";        /* 主键ID*/
     private String indexName = " ";        /* 指标名称*/
     private String status = " ";        /* 状态*/
+    private String description = " ";   /* 备注 */
 
     /**
      * initialize the metadata
@@ -39,6 +40,10 @@ public class DUHD12 extends DaoEPBase {
 
         eiColumn = new EiColumn("status");
         eiColumn.setDescName("状态");
+        eiMetadata.addMeta(eiColumn);
+
+        eiColumn = new EiColumn("description");
+        eiColumn.setDescName("备注");
         eiMetadata.addMeta(eiColumn);
 
 
@@ -89,6 +94,14 @@ public class DUHD12 extends DaoEPBase {
         this.status = status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     /**
      * get the value from Map
      */
@@ -97,6 +110,7 @@ public class DUHD12 extends DaoEPBase {
         setIndexId(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("indexId")), indexId));
         setIndexName(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("indexName")), indexName));
         setStatus(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("status")), status));
+        setDescription(StringUtils.defaultIfEmpty(StringUtils.toString(map.get("description")), description));
 
     }
 
@@ -109,6 +123,7 @@ public class DUHD12 extends DaoEPBase {
         map.put("indexId", StringUtils.toString(indexId, eiMetadata.getMeta("indexId")));
         map.put("indexName", StringUtils.toString(indexName, eiMetadata.getMeta("indexName")));
         map.put("status", StringUtils.toString(status, eiMetadata.getMeta("status")));
+        map.put("description", StringUtils.toString(description, eiMetadata.getMeta("description")));
 
         return map;
 

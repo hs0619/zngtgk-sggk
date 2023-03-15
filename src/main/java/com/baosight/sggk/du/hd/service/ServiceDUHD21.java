@@ -5,10 +5,15 @@ import com.baosight.iplat4j.core.service.impl.ServiceBase;
 import com.baosight.sggk.du.hd.domain.DUHD20;
 import com.baosight.sggk.du.hd.domain.DUHD21;
 import com.baosight.sggk.util.DateUtil;
+import com.baosight.sggk.util.ReportFunction2;
 import com.baosight.sggk.util.StrUtil;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -187,18 +192,89 @@ public class ServiceDUHD21 extends ServiceBase {
         }
 
 
-        int offset = resultblock.getInt(EiConstant.offsetStr);
-        int limit = resultblock.getInt(EiConstant.limitStr);
-
-//		if(limit == 0)limit = EiConstant.defaultLimit;
-
-        int formindex = offset > result.size() ? result.size() : offset;
-        int toindex = offset + limit > result.size() ? result.size() : offset + limit;
-        List<DUHD21> rows = result.subList(formindex, toindex);
-
-        resultblock.setRows(rows);
-        resultblock.set(EiConstant.countStr, result.size());
+        resultblock.setRows(result);
         outInfo.addBlock(resultblock);
+
+
+//        int offset = resultblock.getInt(EiConstant.offsetStr);
+//        int limit = resultblock.getInt(EiConstant.limitStr);
+//
+////		if(limit == 0)limit = EiConstant.defaultLimit;
+//
+//        int formindex = offset > result.size() ? result.size() : offset;
+//        int toindex = offset + limit > result.size() ? result.size() : offset + limit;
+//        List<DUHD21> rows = result.subList(formindex, toindex);
+//
+//        resultblock.setRows(rows);
+        resultblock.set(EiConstant.countStr, result.size());
+//        outInfo.addBlock(resultblock);
+        return outInfo;
+    }
+
+
+    public EiInfo createReport(EiInfo inInfo) {
+        EiInfo outInfo = new EiInfo();
+        String excelFilePath = StrUtil.getExcelTemplatePath();//获取报表模板文件目录   E:/IplatFile/report/excelTemplate/
+        String reportType = inInfo.getString("reporttype");     //报表类型      "MONTH"
+        String reportDate = inInfo.getString("datatime");       //数据时间      2023-03
+        String TemplateName = inInfo.getString("reportname"); //报表名称        例如：手工监测.xls
+        String reportName = inInfo.getString("filename");// 报表文件名称         例如：手工监测_MONTH.xls
+        outInfo.set("reportDate", reportDate);
+
+        try {
+            String excelTemplatePath = excelFilePath + TemplateName; //模板具体地址
+            //判断文件是否存在，不存在直接return
+            File tempFile = new File(excelTemplatePath);
+            if (!tempFile.exists()) {
+                outInfo.setMsg("未找到对应的模板文件");
+                return outInfo;
+            }
+            String excelReportDownloadPath = StrUtil.getExcelReportPath() + reportType + "/" + reportName;
+            String type = reportName.split("\\.")[1];
+            HSSFWorkbook wb = null;
+            XSSFWorkbook xb = null;
+            if(type.equals("xls")){
+                wb = new HSSFWorkbook(new FileInputStream(excelTemplatePath));
+            }else if(type.equals("xlsx")){
+                xb = new XSSFWorkbook(new FileInputStream(excelTemplatePath));
+            }
+
+            //填充报表数据
+            if (TemplateName.equals("中南钢铁自行监测手工报告_废气.xls")){//生成月报表
+                ReportFunction2 reportfuc = new ReportFunction2(this.dao, DbSchema);
+                reportfuc.saveDataToReport_JCFQ(wb, outInfo);
+            }
+
+
+
+            File buildFile = new File(StrUtil.getExcelReportPath() + reportType);
+            if (!buildFile.exists() && !buildFile.isDirectory()) {
+                buildFile.mkdir();
+            }
+
+            if(type.equals("xls")){
+                FileOutputStream out = new FileOutputStream(excelReportDownloadPath);
+                wb.setForceFormulaRecalculation(true);
+                wb.write(out);
+                out.close();
+            }else if(type.equals("xlsx")){
+                FileOutputStream out = new FileOutputStream(excelReportDownloadPath);
+                xb.setForceFormulaRecalculation(true);
+                xb.write(out);
+                out.close();
+            }
+
+            outInfo.setStatus(1);
+            outInfo.setMsg("报表生成成功");
+//            outInfo.setBlock(query(inInfo).getBlock("result"));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            outInfo.setStatus(-1);
+            outInfo.setMsg("报表生成失败！" );
+        }
+
         return outInfo;
     }
 
