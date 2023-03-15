@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--      table information
+    Generate time : 2023-03-14 15:08:56
+       Version :  1.0
+    tableName :iplat4j.t_hc_link
+     ID  VARCHAR   NOT NULL   primarykey,
+     URLNAME  VARCHAR,
+     URL  VARCHAR,
+     USERID  VARCHAR,
+     USERNAME  VARCHAR
+-->
+<sqlMap namespace="DUHC06">
+
+    <select id="query" parameterClass="java.util.HashMap"
+            resultClass="com.baosight.sggk.du.hc.domain.DUHC06">
+        SELECT
+        ID as "id",  <!-- 主键id -->
+        URLNAME as "urlname",  <!-- 网站名称 -->
+        URL as "url",  <!-- 网址 -->
+        USERID as "userid",  <!-- 用户id -->
+        USERNAME as "username" <!-- 用户名称 -->
+        FROM ${hbSchema}.t_hc_link WHERE 1=1
+        <isNotEmpty prepend=" AND " property="urlname">
+            URLNAME LIKE '%$urlname$%'
+        </isNotEmpty>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="orderBy">
+                $orderBy$
+            </isNotEmpty>
+            <isEmpty property="orderBy">
+                ID asc
+            </isEmpty>
+        </dynamic>
+
+    </select>
+
+    <select id="count" resultClass="int">
+        SELECT COUNT(*) FROM ${hbSchema}.t_hc_link WHERE 1=1
+        <isNotEmpty prepend=" AND " property="id">
+            ID = #id#
+        </isNotEmpty>
+    </select>
+
+    <!--
+        <isNotEmpty prepend=" AND " property="id">
+            ID = #id#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="urlname">
+            URLNAME = #urlname#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="url">
+            URL = #url#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="userid">
+            USERID = #userid#
+        </isNotEmpty>
+        <isNotEmpty prepend=" AND " property="username">
+            USERNAME = #username#
+        </isNotEmpty>
+    -->
+
+    <insert id="insert">
+        INSERT INTO ${hbSchema}.t_hc_link (ID,  <!-- 主键id -->
+        URLNAME,  <!-- 网站名称 -->
+        URL,  <!-- 网址 -->
+        USERID,  <!-- 用户id -->
+        USERNAME  <!-- 用户名称 -->
+        )
+        VALUES (#id#, #urlname#, #url#, #userid#, #username#)
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM ${hbSchema}.t_hc_link WHERE
+        ID = #id#
+    </delete>
+
+    <update id="update">
+        UPDATE ${hbSchema}.t_hc_link
+        SET
+        URLNAME = #urlname#,   <!-- 网站名称 -->
+        URL = #url#,   <!-- 网址 -->
+        USERID = #userid#,   <!-- 用户id -->
+        USERNAME = #username#  <!-- 用户名称 -->
+        WHERE
+        ID = #id#
+    </update>
+
+</sqlMap>
